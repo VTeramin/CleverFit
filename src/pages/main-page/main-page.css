@@ -1,42 +1,95 @@
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+.main-page {
+    height: 100vh;
+}
+
+.main-page__sider {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    padding: 0px;
+}
+
+.sider__logo {
+    height: 64px;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    padding-right: 46px;
+    position: relative;
 }
 
 .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-}
-.logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
+    width: 191px;
 }
 
-@keyframes logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.sider__menu {
+    width: 100%;
+    height: 216px;
+    margin-bottom: 70px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    a:nth-of-type(2) .logo {
-        animation: logo-spin infinite 20s linear;
-    }
+.menu__icon[class*='ant-menu'] {
+    width: 16px;
+    height: 16px;
+    color: var(--character-light-title-85);
 }
 
-.card {
-    padding: 2em;
+.sider__menu>li[class*='ant-menu'] {
+    width: 100%;
+    height: 42px;
+    margin: auto;
+    transition: margin;
 }
 
-.read-the-docs {
-    color: #888;
+.sider__menu>li.menu__item[class*='ant-menu'],
+.sider__menu>li.menu__item:not(:last-child) {
+    margin-bottom: 16px;
+}
+
+.content {
+    background-color: transparent;
+}
+
+.main-page__wrapper {
+    position: relative;
+}
+
+.trigger {
+    width: 20px;
+    height: 66px;
+    background-image: url(../../../public/assets/img/trigger.svg);
+
+    position: absolute;
+    top: 50%;
+    padding-left: 3px;
+}
+
+.sider__exit {
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 16px;
+    box-shadow: inset 0 1px 0 0 var(--character-light-dividers);
+}
+
+.exit__icon {
+    width: 16px;
+    height: 16px;
+    background-image: url(../../../public/assets/icon/exit.svg);
+}
+
+.exit__line {
+    margin: auto;
+    margin-left: 25px;
+}
+
+.sider__menu>li[class*='ant'],
+.exit__line {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
 }
