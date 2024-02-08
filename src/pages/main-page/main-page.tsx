@@ -2,50 +2,18 @@ import React, { useState } from 'react';
 import './main-page.css';
 import 'antd/dist/antd.css';
 
-import { Layout, Menu } from 'antd';
-const { Header, Content, Footer, Sider } = Layout;
-import { MenuFoldOutlined, MenuUnfoldOutlined, CalendarOutlined, HeartFilled, TrophyFilled, IdcardOutlined } from '@ant-design/icons';
+import { Layout } from 'antd';
+const { Header, Content, Footer } = Layout;
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+
+import { SideBar } from './components/side-bar/side-bar';
 
 export const MainPage: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
 
     return (
         <Layout className="main-page">
-            <Sider
-                trigger={null}
-                collapsible
-                collapsed={collapsed}
-                width="208"
-                collapsedWidth="64"
-                theme="light"
-                className="main-page__sider sider"
-            >
-                <div
-                    className={`sider__logo ${collapsed ? "logo-collapsed" : "logo"}`}
-                    style={{ backgroundImage: `url(../../public/assets/logo/${collapsed ? "logoCollapsed" : "logo"}.svg)` }}
-                />
-                <Menu
-                    theme="light"
-                    mode="inline"
-                    defaultSelectedKeys={['4']}
-                    className="sider__menu"
-                    items={[CalendarOutlined, HeartFilled, TrophyFilled, IdcardOutlined].map((icon, index) => ({
-                        key: String(index + 1),
-                        icon: React.createElement(icon, {
-                            style: { color: "var(--primary-light-9)", fontSize: "14px" },
-                            className: "menu__icon"
-                        }),
-                        label: ["Календарь", "Тренировки", "Достижения", "Профиль"][index],
-                        style: collapsed ? {} : { paddingLeft: "16px" },
-                        className: "menu__item"
-                    })
-                    )}
-                />
-                <div className="sider__exit">
-                    <div className="exit__icon"></div>
-                    {!collapsed && <p className="exit__line">Выход</p>}
-                </div>
-            </Sider>
+            <SideBar collapsed={collapsed}/>
             <Layout className="main-page__wrapper">
                 <Header className="site-layout-sub-header-background" style={{ padding: 0 }}>
                     {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
