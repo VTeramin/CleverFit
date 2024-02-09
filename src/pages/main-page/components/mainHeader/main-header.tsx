@@ -25,7 +25,7 @@ export const MainHeader: React.FC<props> = ({ collapsed, setCollapsed }) => {
                 <p className="header__page-name">Главная</p>
                 <h1 className="header__title">Приветствуем тебя в CleverFit — приложении,<br />которое поможет тебе добиться своей мечты!</h1>
                 <div className="header__settings">
-                    {React.createElement(SettingOutlined)}
+                    {React.createElement(SettingOutlined, { className: "setting__icon" })}
                     <p className="settings__line">Настройки</p>
                 </div>
             </div>

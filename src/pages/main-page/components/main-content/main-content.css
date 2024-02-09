@@ -16,6 +16,13 @@
     margin-bottom: 24px;
 }
 
+@media (max-width: 1439px) {
+    .content__list-wrapper {
+        width: 100%;
+        height: max-content;
+    }
+}
+
 .content__list {
     list-style-type: none;
     padding: 0;
@@ -28,7 +35,7 @@
     color: var(--primary-light-9);
 }
 
-.content__slogan {
+.content__tagline {
     width: 752px;
     height: 126px;
     margin-bottom: 16px;
@@ -38,6 +45,13 @@
     font-size: 20px;
     line-height: 130%;
     color: var(--character-light-title-85);
+}
+
+@media (max-width: 1439px) {
+    .content__tagline {
+        width: 100%;
+        height: max-content;
+    }
 }
 
 .content__nav {
@@ -64,6 +78,13 @@
     font-size: 16px;
     line-height: 130%;
     color: var(--character-light-title-85);
+}
+
+@media (max-width: 1439px) {
+    .block__title {
+        height: max-content;
+        text-align: left;
+    }
 }
 
 .block__content {
