@@ -26,7 +26,7 @@ export const MainHeader: React.FC<props> = ({ collapsed, setCollapsed }) => {
                 <h1 className="header__title">Приветствуем тебя в CleverFit — приложении,<br />которое поможет тебе добиться своей мечты!</h1>
                 <div className="header__settings">
                     {React.createElement(SettingOutlined)}
-                    <p className="setting__line">Настройки</p>
+                    <p className="settings__line">Настройки</p>
                 </div>
             </div>
         </Header>

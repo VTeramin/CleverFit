@@ -87,9 +87,3 @@
     --font-family: "Inter", sans-serif;
     --second-family: "Roboto", sans-serif;
 }
-
-body {
-    background-position: top right;
-    background-repeat: no-repeat;
-    background-size: 100%;
-}
