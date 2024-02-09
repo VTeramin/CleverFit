@@ -4,17 +4,18 @@ import 'antd/dist/antd.css';
 
 import { Layout, Menu } from 'antd';
 const { Sider } = Layout;
-import { CalendarOutlined, HeartFilled, TrophyFilled, IdcardOutlined } from '@ant-design/icons';
+import { CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone } from '@ant-design/icons';
 
 interface props {
     collapsed: boolean
 }
 
 export const SideBar: React.FC<props> = ({ collapsed }) => {
-    const menuItems = [CalendarOutlined, HeartFilled, TrophyFilled, IdcardOutlined].map((icon, index) => ({
+    const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
         key: String(index + 1),
         icon: React.createElement(icon, {
-            style: { color: "var(--primary-light-9)", fontSize: "14px" },
+            style: { fontSize: "14px" },
+            twoToneColor: "var(--primary-light-9)",
             className: "menu__icon"
         }),
         label: ["Календарь", "Тренировки", "Достижения", "Профиль"][index],

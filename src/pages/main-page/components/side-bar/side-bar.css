@@ -49,7 +49,18 @@
 .menu__icon[class*='ant-menu'] {
     width: 16px;
     height: 16px;
-    color: var(--character-light-title-85);
+}
+
+.menu__item:not(:last-child) svg>path {
+    fill: var(--primary-light-9);
+}
+
+.menu__item:last-child svg>path:not(:nth-child(2)) {
+    fill: var(--primary-light-9);
+}
+
+.menu__item:last-child svg>path:nth-child(2) {
+    fill: none;
 }
 
 @media (max-width: 1439px) {

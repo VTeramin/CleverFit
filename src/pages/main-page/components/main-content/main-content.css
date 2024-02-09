@@ -138,7 +138,18 @@
 .block__icon {
     width: 14px;
     height: 14px;
-    color: var(--primary-light-6);
+}
+
+.nav__block:not(:last-child) svg>path {
+    fill: var(--primary-light-6);
+}
+
+.nav__block:last-child svg>path:not(:nth-child(2)) {
+    fill: var(--primary-light-6);
+}
+
+.nav__block:last-child svg>path:nth-child(2) {
+    fill: none;
 }
 
 @media (max-width: 1439px) {

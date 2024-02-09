@@ -4,15 +4,15 @@ import 'antd/dist/antd.css';
 import { Layout } from 'antd';
 
 const { Content } = Layout;
-import { HeartFilled, CalendarOutlined, IdcardOutlined } from '@ant-design/icons';
+import { HeartTwoTone, CalendarTwoTone, IdcardTwoTone } from '@ant-design/icons';
 
 export const MainContent: React.FC = () => {
-    const navBlocks = [HeartFilled, CalendarOutlined, IdcardOutlined].map((icon, index) => {
+    const navBlocks = [HeartTwoTone, CalendarTwoTone, IdcardTwoTone].map((icon, index) => {
         return (
             <div key={index + 1} className="nav__block box">
                 <p className="block__title">{["Расписать тренировки", "Назначить календарь", "Заполнить профиль"][index]}</p>
                 <div className="block__content">
-                    {React.createElement(icon, { className: "block__icon" })}
+                    {React.createElement(icon, { className: "block__icon", twoToneColor: "var(--primary-light-6)" })}
                     <p className="block__subtitle">{["Тренировки", "Календарь", "Профиль"][index]}</p>
                 </div>
             </div>

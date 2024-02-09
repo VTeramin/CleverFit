@@ -10,7 +10,7 @@ import { MainContent } from './components/main-content/main-content';
 import { MainFooter } from './components/main-footer/main-footer';
 
 export const MainPage: React.FC = () => {
-    const [collapsed, setCollapsed] = useState(true);
+    const [collapsed, setCollapsed] = useState(false);
 
     return (
         <Layout className="main-page">
