@@ -5,6 +5,7 @@
     align-items: flex-end;
     background: transparent;
     padding: 42px 24px;
+    padding-top: 0px;
 }
 
 @media (max-width: 833px) {

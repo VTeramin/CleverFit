@@ -12,15 +12,17 @@ interface props {
 }
 
 export const MainHeader: React.FC<props> = ({ collapsed, setCollapsed }) => {
-    const trigger = React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-        className: "trigger",
-        style: { color: "var(--neutral-gray-7)", left: collapsed && window.innerWidth < 833 ? "0" : "no" },
-        onClick: () => setCollapsed(!collapsed)
-    });
+    const trigger = React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined);
 
     return (
         <Header className="header" style={{ padding: 0 }}>
-            {trigger}
+            <div
+                className={`trigger ${collapsed ? "trigger-collapsed" : "trigger-not-collapsed"}`}
+                data-test-id={window.innerWidth < 833 ? "sider-switch-mobile" : "sider-switch"}
+                onClick={() => setCollapsed(!collapsed)}
+            >
+                {trigger}
+            </div>
             <div className="header__content">
                 <p className="header__page-name">Главная</p>
                 <h1 className="header__title">Приветствуем тебя в&nbsp;CleverFit — приложении,<br />которое поможет тебе добиться своей мечты!</h1>

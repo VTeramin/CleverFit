@@ -28,9 +28,9 @@
     margin-bottom: 24px;
 }
 
-@media (max-width: 834px) {
+@media (max-width: 1439px) {
     .content__list-wrapper {
-        width: 100%;
+        width: auto;
         height: max-content;
     }
 }
@@ -65,9 +65,9 @@
     color: var(--character-light-title-85);
 }
 
-@media (max-width: 834px) {
+@media (max-width: 1439px) {
     .content__tagline {
-        width: 100%;
+        width: auto;
         height: max-content;
     }
 }
