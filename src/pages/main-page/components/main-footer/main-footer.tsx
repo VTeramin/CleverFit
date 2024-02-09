@@ -20,7 +20,7 @@ export const MainFooter: React.FC = () => {
                         return (
                             <div key={index + 1} className="download-block__content">
                                 {React.createElement(icon, { className: "download-block__icon" })}
-                                <p className="download-block__content-title">{["Android OS", "Apple IOS"][index]}</p>
+                                <p className="download-block__content-title">{["Android OS", "Apple iOS"][index]}</p>
                             </div>
                         )
                     })}

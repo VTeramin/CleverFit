@@ -18,12 +18,20 @@ export const SideBar: React.FC<props> = ({ collapsed }) => {
             className: "menu__icon"
         }),
         label: ["Календарь", "Тренировки", "Достижения", "Профиль"][index],
-        style: collapsed ? {} : { paddingLeft: "16px" },
+        style: collapsed ? {} : { paddingLeft: window.innerWidth > 833 ? "16px" : "0px" },
         className: "menu__item"
     }));
 
     return (
-        <Sider trigger={null} collapsible collapsed={collapsed} width="208" collapsedWidth="64" theme="light" className="main-page__sider sider">
+        <Sider
+            trigger={null}
+            collapsible
+            collapsed={collapsed}
+            width={window.innerWidth > 833 ? "208" : "106"}
+            collapsedWidth={window.innerWidth > 833 ? "64" : "0"}
+            theme="light"
+            className="main-page__sider sider"
+        >
             <div
                 className={`sider__logo ${collapsed ? "logo-collapsed" : "logo"}`}
             />

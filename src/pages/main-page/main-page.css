@@ -1,5 +1,6 @@
 .main-page[class*='ant-layout'] {
-    height: 100vh;
+    min-height: 100vh;
+    height: max-content;
     position: relative;
     background-image: url(../../assets/img/main-page-bg-light.png);
     background-position: center;
