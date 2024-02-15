@@ -1,0 +1,80 @@
+.result-modal {
+    width: 539px;
+    height: max-content;
+    padding: 0px;
+    padding-top: 64px;
+}
+
+.result-modal__icon-wrapper {
+    width: 81px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.result-modal__icon {
+    font-size: 71px;
+}
+
+.result-modal__image {
+    width: 255px;
+    height: 294px;
+    background-image: url(../../../assets/img/error-image.png);
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 24px;
+}
+
+.result-modal__text-wrapper {
+    margin-bottom: 24px;
+}
+
+.result-modal__title {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 130%;
+    text-align: center;
+    color: var(--character-light-title-85);
+    margin-bottom: 0px;
+    text-wrap: nowrap;
+}
+
+.result-modal__subtitle {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    text-align: center;
+    color: var(--character-light-secondary-45);
+    margin-bottom: 0px;
+}
+
+.result-modal__button {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 64px;
+
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    text-align: center;
+    color: var(--character-light-primary-inverse);
+}
+
+.result-modal__button.medium {
+    width: 167px;
+}
+
+.result-modal__button.small {
+    width: 74px;
+}
+
+.result-modal__button.margin {
+    margin-bottom: 56px;
+}
