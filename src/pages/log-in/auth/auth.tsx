@@ -53,7 +53,7 @@ export const Auth: React.FC = () => {
                         <Button className="login-form__button conf-button"  type="primary" htmlType="submit">Войти</Button>
                     </Form.Item>
                     <Form.Item>
-                        <Button className="login-form__button" type="ghost" htmlType="button"><GooglePlusOutlined />{isReg ? "Регистрация" : "Войти"} через Google</Button>
+                        <Button className="login-form__button" type="ghost" htmlType="button"><GooglePlusOutlined className="login-form__button-icon" />{isReg ? "Регистрация" : "Войти"} через Google</Button>
                     </Form.Item>
                 </Form>
             </div>

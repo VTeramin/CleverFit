@@ -33,6 +33,13 @@
     align-items: center;
 }
 
+@media (max-width: 833px) {
+    .modal {
+        width: 328px;
+        padding: 32px 16px 12px;
+    }
+}
+
 .auth-modal__logo {
     width: 309px;
     height: 79px;
@@ -43,9 +50,24 @@
     margin-bottom: 44px;
 }
 
+@media (max-width: 833px) {
+    .auth-modal__logo {
+        width: 203px;
+        height: 50px;
+        background-size: cover;
+        margin-bottom: 30px;
+    }
+}
+
 .auth-modal__login-form {
     width: 368px;
     height: 380px;
+}
+
+@media (max-width: 833px) {
+    .auth-modal__login-form {
+        width: 100%;
+    }
 }
 
 .auth-modal__login-form * {
@@ -76,6 +98,12 @@
 .text-button.active {
     border-bottom: 2px solid var(--primary-light-6);
     color: var(--primary-light-6);
+}
+
+@media (max-width: 833px) {
+    .text-button {
+        font-size: 14px;
+    }
 }
 
 .login-form__input {
@@ -124,6 +152,12 @@
     margin-bottom: 28px;
 }
 
+@media (max-width: 833px) {
+    .login-form__remember-group [class$="input-content"] {
+        margin-bottom: 22px;
+    }
+}
+
 [class*="checkbox-checked"] [class*="checkbox-inner"],
 [class*="checkbox-checked"]:focus [class*="checkbox-inner"],
 [class*="checkbox-checked"]:hover [class*="checkbox-inner"] {
@@ -154,6 +188,13 @@
     color: var(--primary-light-6);
 }
 
+@media (max-width: 833px) {
+    .remember-group__link {
+        font-size: 14px;
+        margin-right: 8px;
+    }
+}
+
 .login-form__button {
     width: 100%;
     height: 40px;
@@ -169,8 +210,32 @@
     color: var(--character-light-title-85);
 }
 
+@media (max-width: 833px) {
+    .login-form__button {
+        font-size: 14px;
+    }
+
+    span.login-form__button-icon {
+        display: none;
+    }
+}
+
 .conf-button {
     border: 1px solid var(--primary-light-6);
     background: var(--primary-light-6);
     color: var(--character-light-primary-inverse);
+}
+
+@media (max-width: 833px) {
+    .login-form__button {
+        font-size: 14px;
+    }
+
+    span.login-form__button-icon {
+        display: none;
+    }
+
+    .login-form__button[class*="ant-btn"] span {
+        margin-left: 0px;
+    }
 }

@@ -14,7 +14,7 @@ root.render(
     <React.StrictMode>
         <HashRouter>
             <Routes>
-                <Route path='/' element={<ChangePassword/>} />
+                <Route path='/' element={<ConfirmEmail/>} />
             </Routes>
         </HashRouter>
     </React.StrictMode>,
