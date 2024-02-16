@@ -1,8 +1,11 @@
+import { store } from '@redux/configure-store';
+import { toggleLoader } from '@redux/loaderSlice';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 const API = "https://marathon-api.clevertec.ru";
 
 export async function login(email, password) {
+    store.dispatch(toggleLoader());
     return axios({
         method: "post",
         url: `${API}/auth/login`,
@@ -13,10 +16,12 @@ export async function login(email, password) {
             localStorage.setItem("token", token);
             return "/main";
         })
-        .catch(() => "/result/error-login");
+        .catch(() => "/result/error-login")
+        .finally(() => store.dispatch(toggleLoader()));
 }
 
 export async function register(email, password) {
+    store.dispatch(toggleLoader());
     return axios({
         method: "post",
         url: `${API}/auth/registration`,
@@ -29,10 +34,12 @@ export async function register(email, password) {
                 path = "/result/error-user-exist"
             }
             return path;
-        });
+        })
+        .finally(() => store.dispatch(toggleLoader()));
 }
 
 export async function checkEmail(email) {
+    store.dispatch(toggleLoader());
     return axios({
         method: "post",
         url: `${API}/auth/check-email`,
@@ -45,20 +52,24 @@ export async function checkEmail(email) {
                 path = "/result/error-check-email-no-exist"
             }
             return path;
-        });
+        })
+        .finally(() => store.dispatch(toggleLoader()));
 }
 
 export async function confirmEmail(email, code) {
+    store.dispatch(toggleLoader());
     return axios({
         method: "post",
         url: `${API}/auth/confirm-email`,
         data: { email, code }
     })
         .then(() => "/auth/change-password")
-        .catch(() => "error");
+        .catch(() => "error")
+        .finally(() => store.dispatch(toggleLoader()));
 }
 
 export async function changePassword(password, confirmPassword) {
+    store.dispatch(toggleLoader());
     axios.defaults.withCredentials = true;
     return axios({
         method: "post",
@@ -72,5 +83,6 @@ export async function changePassword(password, confirmPassword) {
         .catch((error) => {
             console.log(error.response.data.message)
             return "/result/error-change-password";
-        });
+        })
+        .finally(() => store.dispatch(toggleLoader()));
 }

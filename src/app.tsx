@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { HistoryRouter } from 'redux-first-history/rr6'
 import { history, store } from '@redux/configure-store';
+import { Loader } from '@pages/components/loader';
 import { routes } from './routes';
 
 export const App: React.FC = () => {
@@ -9,6 +10,7 @@ export const App: React.FC = () => {
         <Provider store={store}>
             <HistoryRouter history={history}>
                 {routes}
+                <Loader/>
             </HistoryRouter>
         </Provider>
     );
