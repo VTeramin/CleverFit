@@ -1,6 +1,6 @@
 import React from 'react';
 import loadJSON from '../../assets/loader.json';
-import Lottie from 'react-lottie';
+import { Lottie } from '@crello/react-lottie'
 import "./loader.css";
 import { useSelector } from 'react-redux';
 import { store } from '@redux/configure-store';
@@ -14,16 +14,16 @@ export const Loader: React.FC = () => {
         animationData: loadJSON,
         rendererSettings: {
             preserveAspectRatio: 'xMidYMid slice'
-        }
+        },
+        isClickToPauseDisabled: true
     };
 
     return (
-        <div onClick={(event) => event.stopPropagation()} className="loader" style={{ display: isLoading ? "flex" : "none" }}>
+        <div className="loader" style={{ display: isLoading ? "flex" : "none" }}>
             <Lottie
-                options={defaultOptions}
-                height={150}
-                width={150}
-                isClickToPauseDisabled={true}
+                config={defaultOptions}
+                height="150px"
+                width="150px"
             />
         </div>
     )

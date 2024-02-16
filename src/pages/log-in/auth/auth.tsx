@@ -17,7 +17,15 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
 
     const [isReg, setIsReg] = useState(isRegistration);
 
-    const [formData, setFormData] = useState(store.getState().form);
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        password2: "",
+        isEmailValid: false,
+        isPasswordValid: false,
+        isPassword2Valid: false,
+        isRemember: true
+    });
     useEffect(() => {
         store.dispatch(changeFormData(formData));
     }, [formData]);
@@ -137,7 +145,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                     </Form.Item>
                     {isReg && <Form.Item
                         name="password-repeat"
-                        validateStatus={!validStatus.password2 ? "success": "error"}
+                        validateStatus={!validStatus.password2 ? "success" : "error"}
                         help={validStatus.password2Help && <p className={!validStatus.password2Help ? "normal" : "error"}>Пароли не совпадают</p>}
                     >
                         <Input.Password
@@ -155,7 +163,13 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                     </Form.Item>}
                     {!isReg && <Form.Item className="login-form__remember-group">
                         <Form.Item className="remember-group__checkbox" name="remember" valuePropName="checked" noStyle>
-                            <Checkbox className="checkbox__label">Запомнить меня</Checkbox>
+                            <Checkbox
+                                className="checkbox__label"
+                                value={formData.isRemember}
+                                onClick={() => setFormData(prev => ({ ...prev, isRemember: !prev.isRemember }))}
+                            >
+                                Запомнить меня
+                            </Checkbox>
                         </Form.Item>
                         <Button
                             className="remember-group__link text-button"

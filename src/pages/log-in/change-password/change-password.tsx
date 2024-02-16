@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./change-password.css";
 import 'antd/dist/antd.css';
 import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { changePassword } from '../../../requests';
 import { useNavigate } from 'react-router-dom';
+import { store } from '@redux/configure-store';
+import { changeFormData } from '@redux/formDataSlice';
 
 export const ChangePassword: React.FC = () => {
     const navigate = useNavigate();
@@ -15,8 +17,29 @@ export const ChangePassword: React.FC = () => {
         isPassValid: false,
         isConfPassValid: false
     });
+    useEffect(() => {
+        store.dispatch(changeFormData({
+            ...store.getState().form,
+            password: passwords.password,
+            password2: passwords.confirmPassword
+        }));
+    }, [passwords]);
+
+    const [validStatus, setValidStatus] = useState({
+        password: true,
+        confirmPassword: true
+    });
+    useEffect(() => {
+        setValidStatus(() => {
+                return {
+                    password: passwords.isPassValid || passwords.password === "",
+                    confirmPassword: passwords.isConfPassValid || (!passwords.isPassValid && passwords.confirmPassword === "")
+                }
+            })
+    }, [passwords])
+
     function validPassword(password: string): boolean {
-        const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        const pattern = /^(?=.*[A-ZА-ЯЁ])(?=.*\d)[а-яА-ЯёЁa-zA-Z\d\W]{8,}$/;
         return pattern.test(password);
     }
 
@@ -32,7 +55,7 @@ export const ChangePassword: React.FC = () => {
                     <Form.Item
                         name="password"
                         help="Пароль не менее 8 символов, с заглавной буквой и цифрой"
-                        validateStatus={passwords.isPassValid || !passwords.password ? "success" : "error"}
+                        validateStatus={validStatus.password ? "success" : "error"}
                     >
                         <Input.Password
                             className="change-modal__input"
@@ -49,7 +72,8 @@ export const ChangePassword: React.FC = () => {
                     </Form.Item>
                     <Form.Item
                         name="password-repeat"
-                        validateStatus={passwords.isConfPassValid || !passwords.confirmPassword ? "success" : "error"}
+                        help={!validStatus.confirmPassword && "Пароли не совпадают"}
+                        validateStatus={validStatus.confirmPassword ? "success" : "error"}
                     >
                         <Input.Password
                             className="change-modal__input"
@@ -69,11 +93,8 @@ export const ChangePassword: React.FC = () => {
                             className="change-modal__button conf-button"
                             type="primary"
                             htmlType="submit"
-                            onClick={() => {
-                                if(Object.values(passwords).some(el => el === true)) {
-                                    changePassword(passwords.password, passwords.confirmPassword).then(navigate)
-                                }
-                            }}
+                            disabled={!Object.values(validStatus).every(el => el === true) || passwords.password === "" || passwords.confirmPassword === ""}
+                            onClick={() => { changePassword(passwords.password, passwords.confirmPassword).then(navigate) }}
                         >
                             Сохранить
                         </Button>

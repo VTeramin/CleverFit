@@ -6,7 +6,8 @@ export const initialState = {
     password2: "",
     isEmailValid: false,
     isPasswordValid: false,
-    isPassword2Valid: false
+    isPassword2Valid: false,
+    isRemember: true
 }
 
 export const formDataSlice = createSlice({

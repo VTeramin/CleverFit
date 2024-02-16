@@ -4,7 +4,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 const API = "https://marathon-api.clevertec.ru";
 
-export async function login(email, password) {
+export async function login(email: string, password: string) {
     store.dispatch(toggleLoader());
     return axios({
         method: "post",
@@ -13,14 +13,14 @@ export async function login(email, password) {
     })
         .then((responce) => {
             const token = responce.data.accessToken;
-            localStorage.setItem("token", token);
+            if(store.getState().form.isRemember) localStorage.setItem("token", token);
             return "/main";
         })
         .catch(() => "/result/error-login")
         .finally(() => store.dispatch(toggleLoader()));
 }
 
-export async function register(email, password) {
+export async function register(email: string, password: string) {
     store.dispatch(toggleLoader());
     return axios({
         method: "post",
@@ -38,7 +38,7 @@ export async function register(email, password) {
         .finally(() => store.dispatch(toggleLoader()));
 }
 
-export async function checkEmail(email) {
+export async function checkEmail(email: string) {
     store.dispatch(toggleLoader());
     return axios({
         method: "post",
@@ -56,7 +56,7 @@ export async function checkEmail(email) {
         .finally(() => store.dispatch(toggleLoader()));
 }
 
-export async function confirmEmail(email, code) {
+export async function confirmEmail(email: string, code: string) {
     store.dispatch(toggleLoader());
     return axios({
         method: "post",
@@ -68,7 +68,7 @@ export async function confirmEmail(email, code) {
         .finally(() => store.dispatch(toggleLoader()));
 }
 
-export async function changePassword(password, confirmPassword) {
+export async function changePassword(password: string, confirmPassword: string) {
     store.dispatch(toggleLoader());
     axios.defaults.withCredentials = true;
     return axios({
@@ -80,9 +80,6 @@ export async function changePassword(password, confirmPassword) {
         }
     })
         .then(() => "/result/success-change-password")
-        .catch((error) => {
-            console.log(error.response.data.message)
-            return "/result/error-change-password";
-        })
+        .catch(() => "/result/error-change-password")
         .finally(() => store.dispatch(toggleLoader()));
 }

@@ -3,6 +3,8 @@ import "./result.css"
 import { WarningFilled, CloseCircleFilled, CheckCircleFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
+import { changePassword, checkEmail } from '../../../requests';
+import { store } from '@redux/configure-store';
 
 interface props {
     resultType: string
@@ -43,7 +45,10 @@ export const Result: React.FC<props> = ({ resultType }) => {
             </div>,
             title: "Данные не сохранились",
             subtitle: "Что-то пошло не так и ваша регистрация не\u00A0завершилась. Попробуйте ещё раз.",
-            button: <Button className="result-modal__button conf-button" onClick={() => navigate("/auth/registration")}>Повторить</Button>
+            button: <Button className="result-modal__button conf-button" onClick={() => {
+                navigate("/auth/registration");
+                checkEmail(store.getState().form.email);
+            }}>Повторить</Button>
         },
         success: {
             icon: <div className="result-modal__icon-wrapper">
@@ -75,7 +80,10 @@ export const Result: React.FC<props> = ({ resultType }) => {
             </div>,
             title: "Данные не сохранились",
             subtitle: "Что-то пошло не так. Попробуйте еще раз",
-            button: <Button className="result-modal__button conf-button margin margin-shrink" onClick={() => navigate("/auth/change-password")}>Повторить</Button>
+            button: <Button className="result-modal__button conf-button margin margin-shrink" onClick={() => {
+                navigate("/auth/change-password");
+                changePassword(store.getState().form.password, store.getState().form.password2);
+            }}>Повторить</Button>
         },
         errorCheckEmail: {
             icon: <div className="result-modal__image"></div>,
