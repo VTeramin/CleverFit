@@ -5,12 +5,15 @@ import 'antd/dist/antd.css';
 import { Layout, Menu } from 'antd';
 const { Sider } = Layout;
 import { CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 interface props {
     collapsed: boolean
 }
 
 export const SideBar: React.FC<props> = ({ collapsed }) => {
+    const navigate = useNavigate();
+
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
         key: String(index + 1),
         icon: React.createElement(icon, {
@@ -43,7 +46,10 @@ export const SideBar: React.FC<props> = ({ collapsed }) => {
                 className="sider__menu"
                 items={menuItems}
             />
-            <div className="sider__exit">
+            <div className="sider__exit" onClick={() => {
+                navigate("/auth");
+                localStorage.clear();
+            }}>
                 <div className="exit__icon"></div>
                 {!collapsed && <p className="exit__line">Выход</p>}
             </div>

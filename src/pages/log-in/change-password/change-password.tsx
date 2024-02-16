@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./change-password.css";
 import 'antd/dist/antd.css';
 import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { changePassword } from '../../../requests';
+import { useNavigate } from 'react-router-dom';
 
 export const ChangePassword: React.FC = () => {
+    const navigate = useNavigate();
+
+    const [passwords, setPasswords] = useState({
+        password: "",
+        confirmPassword: ""
+    });
+    function validPassword(password: string): boolean {
+        const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        return pattern.test(password);
+    }
+
     return (
         <div className="modal-wrapper">
             <div className="change-modal modal">
@@ -19,10 +32,12 @@ export const ChangePassword: React.FC = () => {
                         rules={[{ required: true }]}
                     >
                         <Input.Password
-                            className="change-modal__input"
+                            className={`change-modal__input ${validPassword(passwords.password) || passwords.password === "" ? "" : "warning"}`}
                             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             type="password"
                             placeholder="Новый пароль"
+                            value={passwords.password}
+                            onChange={event => setPasswords(prev => ({ ...prev, password: event.target.value }))}
                         />
                     </Form.Item>
                     <p className="change-modal__password-desc">Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
@@ -31,14 +46,23 @@ export const ChangePassword: React.FC = () => {
                         rules={[{ required: true }]}
                     >
                         <Input.Password
-                            className="change-modal__input"
+                            className={`change-modal__input ${validPassword(passwords.confirmPassword) || passwords.password === "" ? "" : "warning"}`}
                             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             type="password"
                             placeholder="Повторите пароль"
+                            value={passwords.confirmPassword}
+                            onChange={event => setPasswords(prev => ({ ...prev, confirmPassword: event.target.value }))}
                         />
                     </Form.Item>
                     <Form.Item>
-                        <Button className="change-modal__button conf-button" type="primary" htmlType="submit">Сохранить</Button>
+                        <Button
+                            className="change-modal__button conf-button"
+                            type="primary"
+                            htmlType="submit"
+                            onClick={() => changePassword(passwords.password, passwords.confirmPassword).then(navigate)}
+                        >
+                            Сохранить
+                        </Button>
                     </Form.Item>
                 </Form>
             </div>

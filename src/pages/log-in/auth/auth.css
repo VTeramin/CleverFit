@@ -62,11 +62,23 @@
 .auth-modal__login-form {
     width: 368px;
     height: 380px;
+    margin-bottom: 110px;
+}
+
+.auth-modal__login-form.registration {
+    margin-bottom: 60px;
+}
+
+@media (max-width: 833px) {
+    .auth-modal__login-form.registration {
+        margin-bottom: 0px;
+    }
 }
 
 @media (max-width: 833px) {
     .auth-modal__login-form {
         width: 100%;
+        height: fit-content
     }
 }
 
@@ -112,6 +124,11 @@
     border: 1px solid var(--character-light-border);
     border-radius: 2px;
     margin-bottom: 32px;
+}
+
+.login-form__input.warning,
+.login-form__input[class$="tatus-error"] {
+    border: 1px solid var(--character-light-error);
 }
 
 .login-form__input * {
