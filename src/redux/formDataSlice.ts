@@ -4,9 +4,9 @@ export const initialState = {
     email: "",
     password: "",
     password2: "",
-    isEmailValid: true,
-    isPasswordValid: true,
-    isPassword2Valid: true
+    isEmailValid: false,
+    isPasswordValid: false,
+    isPassword2Valid: false
 }
 
 export const formDataSlice = createSlice({

@@ -22,12 +22,52 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
         store.dispatch(changeFormData(formData));
     }, [formData]);
 
+    const [isDisabled, setIsDisabled] = useState(true);
+    useEffect(() => {
+        isReg ? setIsDisabled(!Object.values(formData).every(el => el))
+            : setIsDisabled(![
+                formData.email,
+                formData.isEmailValid,
+                formData.password,
+                formData.isPasswordValid
+            ].every(el => el))
+    }, [formData, isReg]);
+
+    const [validStatus, setValidStatus] = useState({
+        email: true,
+        password: true,
+        password2: true,
+        passwordHelp: true,
+        password2Help: true
+    });
+    useEffect(() => {
+        setValidStatus(() => {
+            if (isReg) {
+                return {
+                    email: (!formData.isEmailValid && formData.email !== "") || (formData.isPassword2Valid && !formData.email),
+                    password: (!formData.isPasswordValid && formData.password !== "") || (formData.isEmailValid && !formData.password),
+                    password2: (!formData.isPassword2Valid && formData.password2 !== "") || (formData.isPasswordValid && !formData.isPassword2Valid) || (formData.isEmailValid && !formData.password2),
+                    passwordHelp: (!formData.isPasswordValid && formData.password !== ""),
+                    password2Help: (!formData.isPassword2Valid && formData.password2 !== "")
+                }
+            } else {
+                return {
+                    email: (!formData.isEmailValid && formData.email !== "") || (formData.isPasswordValid && formData.password !== "" && formData.email === ""),
+                    password: !formData.isPasswordValid && formData.password !== "",
+                    password2: true,
+                    passwordHelp: true,
+                    password2Help: true
+                }
+            }
+        })
+    }, [formData, isReg])
+
     function validEmail(email: string): boolean {
-        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const pattern = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
         return pattern.test(email);
     }
     function validPassword(password: string): boolean {
-        const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        const pattern = /^(?=.*[A-ZА-ЯЁ])(?=.*\d)[а-яА-ЯёЁa-zA-Z\d\W]{8,}$/;
         return pattern.test(password);
     }
 
@@ -46,7 +86,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                             type="text"
                             onClick={() => {
                                 navigate("/auth");
-                                setIsReg(!isReg);
+                                setIsReg(false);
                             }}
                             className={`text-button ${!isReg && "active"}`}
                         >
@@ -56,29 +96,33 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                             type="text"
                             onClick={() => {
                                 navigate("/auth/registration");
-                                setIsReg(!isReg);
+                                setIsReg(true);
                             }}
                             className={`text-button ${isReg && "active"}`}
                         >
                             Регистрация
                         </Button>
                     </Form.Item>
-                    <Form.Item name="email" rules={[{ required: true }]}>
+                    <Form.Item name="email" validateStatus={!validStatus.email ? "success" : "error"}>
                         <Input
-                            className={`login-form__input ${formData.isEmailValid ? "" : "warning"}`}
+                            className="login-form__input"
                             addonBefore="e-mail:"
+                            type="email"
                             value={formData.email}
                             onChange={(e) => setFormData(prev => ({
                                 ...prev,
                                 email: e.target.value,
                                 isEmailValid: validEmail(e.target.value)
                             }))}
-                            status={formData.isEmailValid ? "" : "error"}
                         />
                     </Form.Item>
-                    <Form.Item name="password" rules={[{ required: true }]}>
+                    <Form.Item
+                        name="password"
+                        validateStatus={!validStatus.password ? "success" : "error"}
+                        help={isReg && <p className={!validStatus.passwordHelp ? "normal" : "error"}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>}
+                    >
                         <Input.Password
-                            className={`login-form__input ${formData.isPasswordValid ? "" : "warning"}`}
+                            className="login-form__input"
                             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             type="password"
                             placeholder="Пароль"
@@ -86,18 +130,21 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                             onChange={(e) => setFormData(prev => ({
                                 ...prev,
                                 password: e.target.value,
-                                isPasswordValid: validPassword(e.target.value)
+                                isPasswordValid: validPassword(e.target.value),
+                                isPassword2Valid: formData.password2 === e.target.value
                             }))}
                         />
                     </Form.Item>
-                    {isReg && <p className="login-form__password-desc">Пароль не менее 8 символов, с заглавной буквой и цифрой</p>}
-                    {isReg && <Form.Item name="password-repeat" rules={[{ required: true }]}>
+                    {isReg && <Form.Item
+                        name="password-repeat"
+                        validateStatus={!validStatus.password2 ? "success": "error"}
+                        help={validStatus.password2Help && <p className={!validStatus.password2Help ? "normal" : "error"}>Пароли не совпадают</p>}
+                    >
                         <Input.Password
-                            className={`login-form__input ${formData.isPassword2Valid ? "" : "warning"}`}
+                            className="login-form__input"
                             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             type="password"
                             placeholder="Повторите пароль"
-                            style={{ marginBottom: `${isReg ? "62px" : "32px"}` }}
                             value={formData.password2}
                             onChange={(e) => setFormData(prev => ({
                                 ...prev,
@@ -121,10 +168,14 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                         </Button>
                     </Form.Item>}
                     <Form.Item>
-                        <Button className="login-form__button conf-button" type="primary" htmlType="submit" onClick={
-                            isReg ? () => register(formData.email, formData.password).then(navigate)
-                                : () => login(formData.email, formData.password).then(navigate)
-                        }>
+                        <Button
+                            className="login-form__button conf-button"
+                            type="primary"
+                            htmlType="submit"
+                            disabled={isDisabled}
+                            onClick={
+                                isReg ? () => register(formData.email, formData.password).then(navigate)
+                                    : () => login(formData.email, formData.password).then(navigate)}>
                             Войти
                         </Button>
                     </Form.Item>

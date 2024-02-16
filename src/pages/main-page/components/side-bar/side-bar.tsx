@@ -32,7 +32,7 @@ export const SideBar: React.FC<props> = ({ collapsed }) => {
             collapsible
             collapsed={collapsed}
             width={window.innerWidth > 833 ? "208" : "106"}
-            collapsedWidth={window.innerWidth > 833 ? "64" : "0"}
+            collapsedWidth={window.innerWidth > 833 ? "64" : "1"}
             theme="light"
             className="main-page__sider sider"
         >

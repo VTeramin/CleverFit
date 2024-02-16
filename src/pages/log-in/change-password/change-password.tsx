@@ -11,7 +11,9 @@ export const ChangePassword: React.FC = () => {
 
     const [passwords, setPasswords] = useState({
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        isPassValid: false,
+        isConfPassValid: false
     });
     function validPassword(password: string): boolean {
         const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
@@ -29,29 +31,37 @@ export const ChangePassword: React.FC = () => {
                 >
                     <Form.Item
                         name="password"
-                        rules={[{ required: true }]}
+                        help="Пароль не менее 8 символов, с заглавной буквой и цифрой"
+                        validateStatus={passwords.isPassValid || !passwords.password ? "success" : "error"}
                     >
                         <Input.Password
-                            className={`change-modal__input ${validPassword(passwords.password) || passwords.password === "" ? "" : "warning"}`}
+                            className="change-modal__input"
                             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             type="password"
                             placeholder="Новый пароль"
                             value={passwords.password}
-                            onChange={event => setPasswords(prev => ({ ...prev, password: event.target.value }))}
+                            onChange={event => setPasswords(prev => ({
+                                ...prev,
+                                password: event.target.value,
+                                isPassValid: validPassword(event.target.value)
+                            }))}
                         />
                     </Form.Item>
-                    <p className="change-modal__password-desc">Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
                     <Form.Item
                         name="password-repeat"
-                        rules={[{ required: true }]}
+                        validateStatus={passwords.isConfPassValid || !passwords.confirmPassword ? "success" : "error"}
                     >
                         <Input.Password
-                            className={`change-modal__input ${validPassword(passwords.confirmPassword) || passwords.password === "" ? "" : "warning"}`}
+                            className="change-modal__input"
                             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             type="password"
                             placeholder="Повторите пароль"
                             value={passwords.confirmPassword}
-                            onChange={event => setPasswords(prev => ({ ...prev, confirmPassword: event.target.value }))}
+                            onChange={event => setPasswords(prev => ({
+                                ...prev,
+                                confirmPassword: event.target.value,
+                                isConfPassValid: passwords.password === event.target.value
+                            }))}
                         />
                     </Form.Item>
                     <Form.Item>
@@ -59,7 +69,11 @@ export const ChangePassword: React.FC = () => {
                             className="change-modal__button conf-button"
                             type="primary"
                             htmlType="submit"
-                            onClick={() => changePassword(passwords.password, passwords.confirmPassword).then(navigate)}
+                            onClick={() => {
+                                if(Object.values(passwords).some(el => el === true)) {
+                                    changePassword(passwords.password, passwords.confirmPassword).then(navigate)
+                                }
+                            }}
                         >
                             Сохранить
                         </Button>
