@@ -5,12 +5,17 @@ import 'antd/dist/antd.css';
 import { Layout, Menu } from 'antd';
 const { Sider } = Layout;
 import { CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { store } from '@redux/configure-store';
+import { toggleIsAuthorized } from '@redux/userData';
 
 interface props {
     collapsed: boolean
 }
 
 export const SideBar: React.FC<props> = ({ collapsed }) => {
+    const navigate = useNavigate();
+
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
         key: String(index + 1),
         icon: React.createElement(icon, {
@@ -29,7 +34,7 @@ export const SideBar: React.FC<props> = ({ collapsed }) => {
             collapsible
             collapsed={collapsed}
             width={window.innerWidth > 833 ? "208" : "106"}
-            collapsedWidth={window.innerWidth > 833 ? "64" : "0"}
+            collapsedWidth={window.innerWidth > 833 ? "64" : "1"}
             theme="light"
             className="main-page__sider sider"
         >
@@ -43,7 +48,11 @@ export const SideBar: React.FC<props> = ({ collapsed }) => {
                 className="sider__menu"
                 items={menuItems}
             />
-            <div className="sider__exit">
+            <div className="sider__exit" onClick={() => {
+                localStorage.clear();
+                store.dispatch(toggleIsAuthorized(false));
+                navigate("/auth");
+            }}>
                 <div className="exit__icon"></div>
                 {!collapsed && <p className="exit__line">Выход</p>}
             </div>
