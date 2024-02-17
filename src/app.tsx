@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { HistoryRouter } from 'redux-first-history/rr6'
 import { history, store } from '@redux/configure-store';
 import { Loader } from '@pages/components/loader';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { MainPage, Auth, Result, ConfirmEmail, ChangePassword } from './pages';
 import { PrivateRoutes } from './route/PrivateRoutes';
 import { AuthRoutes } from './route/AuthRoutes';
@@ -15,7 +15,7 @@ export const App: React.FC = () => {
             <HistoryRouter history={history}>
                 <Routes>
                     <Route element={<AuthRoutes />}>
-                        <Route path="/" element={"/auth"} />
+                        <Route path="/" element={<Navigate to="/auth"/>} />
                         <Route path="/auth">
                             <Route index element={<Auth isRegistration={false} />} />
                             <Route path="registration" element={<Auth isRegistration={true} />} />

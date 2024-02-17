@@ -14,17 +14,10 @@ interface props {
 
 export const Auth: React.FC<props> = ({ isRegistration }) => {
     const navigate = useNavigate();
+
     const [isReg, setIsReg] = useState(isRegistration);
 
-    const [formData, setFormData] = useState({
-        email: "",
-        password: "",
-        password2: "",
-        isEmailValid: false,
-        isPasswordValid: false,
-        isPassword2Valid: false,
-        isRemember: true
-    });
+    const [formData, setFormData] = useState(() => store.getState().form);
     useEffect(() => {
         store.dispatch(changeFormData(formData));
     }, [formData]);
@@ -32,12 +25,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
     const [isDisabled, setIsDisabled] = useState(true);
     useEffect(() => {
         isReg ? setIsDisabled(!Object.values(formData).every(el => el))
-            : setIsDisabled(![
-                formData.email,
-                formData.isEmailValid,
-                formData.password,
-                formData.isPasswordValid
-            ].every(el => el))
+            : setIsDisabled(![formData.email, formData.password].every(el => el))
     }, [formData, isReg]);
 
     const [validStatus, setValidStatus] = useState({
@@ -178,8 +166,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                             className="remember-group__link text-button"
                             type="text"
                             htmlType="button"
-                            disabled={!formData.isEmailValid}
-                            onClick={() => checkEmail(formData.email).then(navigate)}
+                            onClick={() => formData.isEmailValid ? checkEmail(formData.email).then(navigate) : ""}
                             data-test-id="login-forgot-button"
                         >
                             Забыли пароль?
@@ -193,7 +180,9 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                             disabled={isDisabled}
                             onClick={
                                 isReg ? () => register(formData.email, formData.password).then(navigate)
-                                    : () => login(formData.email, formData.password).then(navigate)}
+                                    : () => {
+                                        if(formData.isEmailValid && formData.isPasswordValid) login(formData.email, formData.password).then(navigate);
+                                    }}
                             data-test-id={isReg ? "registration-submit-button" : "login-submit-button"}
                         >
                             Войти

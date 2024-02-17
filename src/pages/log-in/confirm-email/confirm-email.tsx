@@ -35,9 +35,22 @@ export const ConfirmEmail: React.FC = () => {
                         characterInactive: "verif-input__char--inactive"
                     }}
                     value={code}
+                    autoFocus
                     onChange={(value) => setCode(value)}
-                    onComplete={(value) => confirmEmail(email, value).then((resp) => resp === "error" ? setIsError(true) : navigate(resp))}
-                    data-test-id="verification-input"
+                    onComplete={(value) => confirmEmail(email, value).then((resp) => {
+                        if(resp === "error") {
+                            setIsError(true);
+                            confirmEmail(email, code).then((resp) => {
+                                if(resp !== "error") navigate(resp);
+                            })
+                            setCode("");
+                        } else {
+                            navigate(resp);
+                        }
+                    })}
+                    inputProps={{
+                        "data-test-id": "verification-input"
+                    }}
                 />
                 <p className="confirm-modal__desc">Не пришло письмо? Проверьте папку Спам.</p>
             </div>

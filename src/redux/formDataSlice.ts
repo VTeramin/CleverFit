@@ -15,8 +15,7 @@ export const formDataSlice = createSlice({
     initialState,
     reducers: {
         changeFormData: (state, action) => {
-            state;
-            return action.payload;
+            return {...state, ...action.payload};
         }
     }
 });

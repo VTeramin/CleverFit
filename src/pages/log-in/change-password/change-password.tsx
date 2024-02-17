@@ -19,7 +19,6 @@ export const ChangePassword: React.FC = () => {
     });
     useEffect(() => {
         store.dispatch(changeFormData({
-            ...store.getState().form,
             password: passwords.password,
             password2: passwords.confirmPassword
         }));

@@ -76,6 +76,10 @@
     background: transparent;
 }
 
+.verif-input__char.valid-error {
+    border: 1px solid var(--character-light-error);
+}
+
 .confirm-modal__desc {
     font-family: var(--font-family);
     font-weight: 400;

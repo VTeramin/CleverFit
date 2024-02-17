@@ -3,7 +3,7 @@ import "./result.css"
 import { WarningFilled, CloseCircleFilled, CheckCircleFilled } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'antd';
-import { changePassword, checkEmail } from '../../../requests';
+import { changePassword, checkEmail, register } from '../../../requests';
 import { store } from '@redux/configure-store';
 
 interface inputs {
@@ -60,7 +60,7 @@ export const Result: React.FC = () => {
                 className="result-modal__button conf-button"
                 onClick={() => {
                     navigate("/auth/registration");
-                    checkEmail(store.getState().form.email);
+                    register(store.getState().form.email, store.getState().form.password).then(navigate);
                 }}
                 data-test-id="registration-retry-button"
             >Повторить</Button>
@@ -111,7 +111,7 @@ export const Result: React.FC = () => {
                 className="result-modal__button conf-button margin margin-shrink"
                 onClick={() => {
                     navigate("/auth/change-password");
-                    changePassword(store.getState().form.password, store.getState().form.password2);
+                    changePassword(store.getState().form.password, store.getState().form.password2).then(navigate);
                 }}
                 data-test-id="change-retry-button"
             >Повторить</Button>
@@ -122,7 +122,10 @@ export const Result: React.FC = () => {
             subtitle: "Произошла ошибка, попробуйте отправить форму ещё раз.",
             button: <Button
                 className="result-modal__button conf-button small margin margin-shrink"
-                onClick={() => navigate("/auth")}
+                onClick={() => {
+                    navigate("/auth");
+                    checkEmail(store.getState().form.email).then(navigate);
+                }}
                 data-test-id="check-back-button"
             >Назад</Button>
         }
