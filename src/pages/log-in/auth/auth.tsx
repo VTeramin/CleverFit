@@ -14,7 +14,6 @@ interface props {
 
 export const Auth: React.FC<props> = ({ isRegistration }) => {
     const navigate = useNavigate();
-
     const [isReg, setIsReg] = useState(isRegistration);
 
     const [formData, setFormData] = useState({
@@ -122,6 +121,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                                 email: e.target.value,
                                 isEmailValid: validEmail(e.target.value)
                             }))}
+                            data-test-id={isReg ? "registration-email" : "login-email"}
                         />
                     </Form.Item>
                     <Form.Item
@@ -141,6 +141,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                                 isPasswordValid: validPassword(e.target.value),
                                 isPassword2Valid: formData.password2 === e.target.value
                             }))}
+                            data-test-id={isReg ? "registration-password" : "login-password"}
                         />
                     </Form.Item>
                     {isReg && <Form.Item
@@ -159,6 +160,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                                 password2: e.target.value,
                                 isPassword2Valid: formData.password === e.target.value
                             }))}
+                            data-test-id="registration-confirm-password"
                         />
                     </Form.Item>}
                     {!isReg && <Form.Item className="login-form__remember-group">
@@ -167,6 +169,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                                 className="checkbox__label"
                                 value={formData.isRemember}
                                 onClick={() => setFormData(prev => ({ ...prev, isRemember: !prev.isRemember }))}
+                                data-test-id="login-remember"
                             >
                                 Запомнить меня
                             </Checkbox>
@@ -177,6 +180,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                             htmlType="button"
                             disabled={!formData.isEmailValid}
                             onClick={() => checkEmail(formData.email).then(navigate)}
+                            data-test-id="login-forgot-button"
                         >
                             Забыли пароль?
                         </Button>
@@ -189,7 +193,9 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                             disabled={isDisabled}
                             onClick={
                                 isReg ? () => register(formData.email, formData.password).then(navigate)
-                                    : () => login(formData.email, formData.password).then(navigate)}>
+                                    : () => login(formData.email, formData.password).then(navigate)}
+                            data-test-id={isReg ? "registration-submit-button" : "login-submit-button"}
+                        >
                             Войти
                         </Button>
                     </Form.Item>

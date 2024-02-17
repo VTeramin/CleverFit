@@ -4,6 +4,7 @@ import { createReduxHistoryContext } from "redux-first-history";
 import { createBrowserHistory } from "history";
 import formDataReducer from "./formDataSlice";
 import loaderReducer from "./loaderSlice";
+import userDataReducer from "./userData";
 
 const {
     createReduxHistory,
@@ -15,6 +16,7 @@ export const store = configureStore({
     reducer: combineReducers({
         form: formDataReducer,
         loader: loaderReducer,
+        user: userDataReducer,
         router: routerReducer
     }),
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware),

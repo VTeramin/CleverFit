@@ -19,7 +19,7 @@ export const Loader: React.FC = () => {
     };
 
     return (
-        <div className="loader" style={{ display: isLoading ? "flex" : "none" }}>
+        <div className="loader" style={{ display: isLoading ? "flex" : "none" }} data-test-id="loader">
             <Lottie
                 config={defaultOptions}
                 height="150px"

@@ -68,6 +68,7 @@ export const ChangePassword: React.FC = () => {
                                 password: event.target.value,
                                 isPassValid: validPassword(event.target.value)
                             }))}
+                            data-test-id="change-password"
                         />
                     </Form.Item>
                     <Form.Item
@@ -86,6 +87,7 @@ export const ChangePassword: React.FC = () => {
                                 confirmPassword: event.target.value,
                                 isConfPassValid: passwords.password === event.target.value
                             }))}
+                            data-test-id="change-confirm-password"
                         />
                     </Form.Item>
                     <Form.Item>
@@ -95,6 +97,7 @@ export const ChangePassword: React.FC = () => {
                             htmlType="submit"
                             disabled={!Object.values(validStatus).every(el => el === true) || passwords.password === "" || passwords.confirmPassword === ""}
                             onClick={() => { changePassword(passwords.password, passwords.confirmPassword).then(navigate) }}
+                            data-test-id="change-submit-button"
                         >
                             Сохранить
                         </Button>

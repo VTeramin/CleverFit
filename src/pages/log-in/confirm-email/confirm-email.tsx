@@ -37,6 +37,7 @@ export const ConfirmEmail: React.FC = () => {
                     value={code}
                     onChange={(value) => setCode(value)}
                     onComplete={(value) => confirmEmail(email, value).then((resp) => resp === "error" ? setIsError(true) : navigate(resp))}
+                    data-test-id="verification-input"
                 />
                 <p className="confirm-modal__desc">Не пришло письмо? Проверьте папку Спам.</p>
             </div>
