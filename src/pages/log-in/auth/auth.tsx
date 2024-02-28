@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
-import "./auth.css"
+import '../modal.css';
+import styles from './auth.module.css';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { GooglePlusOutlined, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 import { checkEmail, login, register } from '../../../requests';
 import { useNavigate } from 'react-router-dom';
 import { store } from '@redux/configure-store';
-import { changeFormData } from '@redux/formDataSlice';
+import { changeLoginData } from '@redux/loginSlice';
 
-interface props {
+type props = {
     isRegistration: boolean
 }
 
@@ -17,9 +18,19 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
 
     const [isReg, setIsReg] = useState(isRegistration);
 
-    const [formData, setFormData] = useState(() => store.getState().form);
+    const [formData, setFormData] = useState(() => ({
+        isEmailValid: false,
+        isPasswordValid: false,
+        isPassword2Valid: false,
+        ...store.getState().login
+    }));
     useEffect(() => {
-        store.dispatch(changeFormData(formData));
+        store.dispatch(changeLoginData({
+            email: formData.email,
+            password: formData.password,
+            password2: formData.password2,
+            isRemember: formData.isRemember
+        }));
     }, [formData]);
 
     const [isDisabled, setIsDisabled] = useState(true);
@@ -55,7 +66,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                 }
             }
         })
-    }, [formData, isReg])
+    }, [formData, isReg]);
 
     function validEmail(email: string): boolean {
         const pattern = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
@@ -68,22 +79,22 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
 
     return (
         <div className="modal-wrapper">
-            <div className="auth-modal modal">
-                <div className="auth-modal__logo"></div>
+            <div className={`${styles["auth-modal"]} modal`}>
+                <div className={styles["auth-modal__logo"]}></div>
                 <Form
                     name="normal_login"
-                    className={`auth-modal__login-form ${isReg ? "registration" : ""}`}
+                    className={`${styles["auth-modal__login-form"]} ${styles[isReg ? "registration" : ""]}`}
                     initialValues={{ remember: true }}
                     validateMessages={{ required: "" }}
                 >
-                    <Form.Item className="login-form__form-select-buttons" style={{ marginBottom: `${isReg ? "32px" : "24px"}` }}>
+                    <Form.Item className={styles["login-form__form-select-buttons"]}>
                         <Button
                             type="text"
                             onClick={() => {
                                 navigate("/auth");
                                 setIsReg(false);
                             }}
-                            className={`text-button ${!isReg && "active"}`}
+                            className={`${styles["text-button"]} ${styles[isReg ? "" : "active"]}`}
                         >
                             Вход
                         </Button>
@@ -93,14 +104,14 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                                 navigate("/auth/registration");
                                 setIsReg(true);
                             }}
-                            className={`text-button ${isReg && "active"}`}
+                            className={`${styles["text-button"]} ${styles[isReg ? "active" : ""]}`}
                         >
                             Регистрация
                         </Button>
                     </Form.Item>
                     <Form.Item name="email" validateStatus={!validStatus.email ? "success" : "error"}>
                         <Input
-                            className="login-form__input"
+                            className={styles["login-form__input"]}
                             addonBefore="e-mail:"
                             type="email"
                             value={formData.email}
@@ -115,10 +126,10 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                     <Form.Item
                         name="password"
                         validateStatus={!validStatus.password ? "success" : "error"}
-                        help={isReg && <p className={!validStatus.passwordHelp ? "normal" : "error"}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>}
+                        help={isReg && <p className={styles[!validStatus.passwordHelp ? "normal" : "error"]}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>}
                     >
                         <Input.Password
-                            className="login-form__input"
+                            className={styles["login-form__input"]}
                             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             type="password"
                             placeholder="Пароль"
@@ -135,10 +146,10 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                     {isReg && <Form.Item
                         name="password-repeat"
                         validateStatus={!validStatus.password2 ? "success" : "error"}
-                        help={validStatus.password2Help && <p className={!validStatus.password2Help ? "normal" : "error"}>Пароли не совпадают</p>}
+                        help={validStatus.password2Help && <p className={styles[!validStatus.password2Help ? "normal" : "error"]}>Пароли не совпадают</p>}
                     >
                         <Input.Password
-                            className="login-form__input"
+                            className={styles["login-form__input"]}
                             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             type="password"
                             placeholder="Повторите пароль"
@@ -151,10 +162,10 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                             data-test-id="registration-confirm-password"
                         />
                     </Form.Item>}
-                    {!isReg && <Form.Item className="login-form__remember-group">
-                        <Form.Item className="remember-group__checkbox" name="remember" valuePropName="checked" noStyle>
+                    {!isReg && <Form.Item className={styles["login-form__remember-group"]}>
+                        <Form.Item className={styles["remember-group__checkbox"]} name="remember" valuePropName="checked" noStyle>
                             <Checkbox
-                                className="checkbox__label"
+                                className={styles["checkbox__label"]}
                                 value={formData.isRemember}
                                 onClick={() => setFormData(prev => ({ ...prev, isRemember: !prev.isRemember }))}
                                 data-test-id="login-remember"
@@ -163,7 +174,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                             </Checkbox>
                         </Form.Item>
                         <Button
-                            className="remember-group__link text-button"
+                            className={styles["remember-group__link"]}
                             type="text"
                             htmlType="button"
                             onClick={() => formData.isEmailValid ? checkEmail(formData.email).then(navigate) : ""}
@@ -174,14 +185,14 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                     </Form.Item>}
                     <Form.Item>
                         <Button
-                            className="login-form__button conf-button"
+                            className={`${styles["login-form__button"]} ${styles["conf-button"]}`}
                             type="primary"
                             htmlType="submit"
                             disabled={isDisabled}
                             onClick={
                                 isReg ? () => register(formData.email, formData.password).then(navigate)
                                     : () => {
-                                        if(formData.isEmailValid && formData.isPasswordValid) login(formData.email, formData.password).then(navigate);
+                                        if (formData.isEmailValid && formData.isPasswordValid) login(formData.email, formData.password).then(navigate);
                                     }}
                             data-test-id={isReg ? "registration-submit-button" : "login-submit-button"}
                         >
@@ -189,8 +200,8 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                         </Button>
                     </Form.Item>
                     <Form.Item>
-                        <Button className="login-form__button" type="ghost" htmlType="button">
-                            <GooglePlusOutlined className="login-form__button-icon" />{isReg ? "Регистрация" : "Войти"} через Google
+                        <Button className={styles["login-form__button"]} type="ghost" htmlType="button">
+                            <GooglePlusOutlined className={styles["login-form__button-icon"]} />{isReg ? "Регистрация" : "Войти"} через Google
                         </Button>
                     </Form.Item>
                 </Form>

@@ -29,7 +29,7 @@
     line-height: 130%;
     text-align: center;
     color: var(--character-light-title-85);
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .confirm-modal__subtitle {
@@ -42,9 +42,9 @@
     margin-bottom: 24px;
 }
 
-.confirm-modal__verif-input {
+.verif-input {
     margin-bottom: 24px;
-    padding: 0px;
+    padding: 0;
     width: max-content;
     height: max-content;
     display: flex;
@@ -52,7 +52,7 @@
 }
 
 @media (max-width: 833px) {
-    .confirm-modal__verif-input {
+    .verif-input {
         gap: 8px;
     }
 }
@@ -78,6 +78,10 @@
 
 .verif-input__char.valid-error {
     border: 1px solid var(--character-light-error);
+}
+
+.verif-input__char--selected.valid-error {
+    outline: 2px solid var(--character-light-error);
 }
 
 .confirm-modal__desc {

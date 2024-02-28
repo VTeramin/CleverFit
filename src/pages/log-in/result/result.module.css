@@ -1,8 +1,12 @@
 .result-modal {
     width: 539px;
     height: max-content;
-    padding: 0px;
+    padding: 0;
     padding-top: 64px;
+
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
 }
 
 @media (max-width: 833px) {
@@ -41,13 +45,12 @@
 }
 
 .result-modal__title {
-    font-family: var(--font-family);
     font-weight: 500;
     font-size: 24px;
     line-height: 130%;
     text-align: center;
     color: var(--character-light-title-85);
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 @media (max-width: 833px) {
@@ -57,13 +60,10 @@
 }
 
 .result-modal__subtitle {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
     line-height: 130%;
     text-align: center;
     color: var(--character-light-secondary-45);
-    margin-bottom: 0px;
+    margin-bottom: 0;
     width: 368px;
 }
 
@@ -77,13 +77,11 @@
     width: 368px;
     height: 40px;
     margin-bottom: 64px;
-
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
     line-height: 130%;
     text-align: center;
     color: var(--character-light-primary-inverse);
+    border: 1px solid var(--primary-light-6);
+    background: var(--primary-light-6);
 }
 
 @media (max-width: 833px) {

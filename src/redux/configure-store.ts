@@ -2,9 +2,9 @@ import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { createReduxHistoryContext } from "redux-first-history";
 import { createBrowserHistory } from "history";
-import formDataReducer from "./formDataSlice";
+import loginReducer from "./loginSlice";
 import loaderReducer from "./loaderSlice";
-import userDataReducer from "./userData";
+import userDataReducer from "./userDataSlice";
 
 const {
     createReduxHistory,
@@ -14,7 +14,7 @@ const {
 
 export const store = configureStore({
     reducer: combineReducers({
-        form: formDataReducer,
+        login: loginReducer,
         loader: loaderReducer,
         user: userDataReducer,
         router: routerReducer

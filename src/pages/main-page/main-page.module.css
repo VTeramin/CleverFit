@@ -1,4 +1,4 @@
-.main-page[class*='ant-layout'] {
+.main-page {
     min-height: 100vh;
     height: max-content;
     position: relative;
@@ -8,6 +8,6 @@
     background-size: cover;
 }
 
-.main-page__container[class*='ant-layout'] {
+.main-page__layout {
     background: transparent;
 }

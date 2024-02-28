@@ -1,5 +1,8 @@
 .content {
     padding: 24px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
 }
 
 @media (max-width: 833px) {
@@ -40,8 +43,7 @@
     padding: 0;
     margin: 0;
 
-    font-family: var(--font-family);
-    font-weight: 400;
+
     font-size: 16px;
     line-height: 130%;
     color: var(--primary-light-9);
@@ -58,7 +60,6 @@
     height: 126px;
     margin-bottom: 16px;
 
-    font-family: var(--font-family);
     font-weight: 500;
     font-size: 20px;
     line-height: 130%;
@@ -104,8 +105,6 @@
     margin: 0;
     text-align: center;
 
-    font-family: var(--font-family);
-    font-weight: 400;
     font-size: 16px;
     line-height: 130%;
     color: var(--character-light-title-85);
@@ -120,7 +119,6 @@
 
 @media (max-width: 833px) {
     .block__title {
-        height: max-content;
         text-align: center;
     }
 }
@@ -160,9 +158,6 @@
 }
 
 .block__subtitle {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
     line-height: 130%;
     text-align: center;
     color: var(--primary-light-6);

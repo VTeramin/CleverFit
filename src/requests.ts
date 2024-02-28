@@ -1,6 +1,6 @@
 import { store } from '@redux/configure-store';
 import { toggleLoader } from '@redux/loaderSlice';
-import { toggleIsAuthorized } from '@redux/userData';
+import { toggleIsAuthorized } from '@redux/userDataSlice';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 const API = "https://marathon-api.clevertec.ru";
@@ -14,7 +14,7 @@ export async function login(email: string, password: string) {
     })
         .then((responce) => {
             const token = responce.data.accessToken;
-            if(store.getState().form.isRemember) localStorage.setItem("token", token);
+            if(store.getState().login.isRemember) localStorage.setItem("token", token);
             store.dispatch(toggleIsAuthorized(true));
             console.log(store.getState().user.isAuthorized)
             return "/main";

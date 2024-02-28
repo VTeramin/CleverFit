@@ -1,0 +1,41 @@
+.modal-wrapper {
+    min-height: 100vh;
+    height: max-content;
+    background-image: url(../../assets/img/log-in-bg-light.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-wrapper:before {
+    height: 100vh;
+    width: 100vw;
+    content: "";
+    display: block;
+    backdrop-filter: blur(6px);
+    background: rgba(121, 156, 212, 0.5);
+    position: absolute;
+}
+
+.modal {
+    width: 539px;
+    height: fit-content;
+    border-radius: 2px;
+    padding: 64px 32px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    background: var(--character-light-primary-inverse);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 833px) {
+    .modal {
+        width: 328px;
+        padding: 32px 16px 12px;
+    }
+}

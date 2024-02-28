@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import "./change-password.css";
 import 'antd/dist/antd.css';
+import '../modal.css';
+import styles from './change-password.module.css';
 import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { changePassword } from '../../../requests';
 import { useNavigate } from 'react-router-dom';
 import { store } from '@redux/configure-store';
-import { changeFormData } from '@redux/formDataSlice';
+import { changeLoginData } from '@redux/loginSlice';
 
 export const ChangePassword: React.FC = () => {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ export const ChangePassword: React.FC = () => {
         isConfPassValid: false
     });
     useEffect(() => {
-        store.dispatch(changeFormData({
+        store.dispatch(changeLoginData({
             password: passwords.password,
             password2: passwords.confirmPassword
         }));
@@ -44,11 +45,11 @@ export const ChangePassword: React.FC = () => {
 
     return (
         <div className="modal-wrapper">
-            <div className="change-modal modal">
-                <p className="change-modal__title">Восстановление аккаунта</p>
+            <div className={`${styles["change-modal"]} modal`}>
+                <p className={styles["change-modal__title"]}>Восстановление аккаунта</p>
                 <Form
                     name="normal_login"
-                    className="change-modal__form"
+                    className={styles["change-modal__form"]}
                     initialValues={{ remember: true }}
                 >
                     <Form.Item
@@ -57,7 +58,7 @@ export const ChangePassword: React.FC = () => {
                         validateStatus={validStatus.password ? "success" : "error"}
                     >
                         <Input.Password
-                            className="change-modal__input"
+                            className={styles["change-modal__input"]}
                             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             type="password"
                             placeholder="Новый пароль"
@@ -76,7 +77,7 @@ export const ChangePassword: React.FC = () => {
                         validateStatus={validStatus.confirmPassword ? "success" : "error"}
                     >
                         <Input.Password
-                            className="change-modal__input"
+                            className={styles["change-modal__input"]}
                             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             type="password"
                             placeholder="Повторите пароль"
@@ -91,11 +92,11 @@ export const ChangePassword: React.FC = () => {
                     </Form.Item>
                     <Form.Item>
                         <Button
-                            className="change-modal__button conf-button"
+                            className={styles["change-modal__button"]}
                             type="primary"
                             htmlType="submit"
                             disabled={!Object.values(validStatus).every(el => el === true) || passwords.password === "" || passwords.confirmPassword === ""}
-                            onClick={() => { changePassword(passwords.password, passwords.confirmPassword).then(navigate) }}
+                            onClick={() => changePassword(passwords.password, passwords.confirmPassword).then(navigate)}
                             data-test-id="change-submit-button"
                         >
                             Сохранить
