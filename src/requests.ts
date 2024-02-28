@@ -12,8 +12,8 @@ export async function login(email: string, password: string) {
         url: `${API}/auth/login`,
         data: { email, password }
     })
-        .then((responce) => {
-            const token = responce.data.accessToken;
+        .then((response) => {
+            const token = response.data.accessToken;
             if(store.getState().login.isRemember) localStorage.setItem("token", token);
             store.dispatch(toggleIsAuthorized(true));
             return "/main";
@@ -72,7 +72,6 @@ export async function confirmEmail(email: string, code: string) {
 
 export async function changePassword(password: string, confirmPassword: string) {
     store.dispatch(toggleLoader());
-    axios.defaults.withCredentials = true;
     return axios({
         method: "post",
         url: `${API}/auth/change-password`,
@@ -83,5 +82,19 @@ export async function changePassword(password: string, confirmPassword: string) 
     })
         .then(() => "/result/success-change-password")
         .catch(() => "/result/error-change-password")
+        .finally(() => store.dispatch(toggleLoader()));
+}
+
+export async function getFeedbacks() {
+    store.dispatch(toggleLoader());
+    return axios({
+        method: "get",
+        url: `${API}/feedback`,
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    })
+        .then((response) => response.data)
+        .catch((error) => error)
         .finally(() => store.dispatch(toggleLoader()));
 }

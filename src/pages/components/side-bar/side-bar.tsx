@@ -4,7 +4,7 @@ import styles from './side-bar.module.css';
 import { Breadcrumb, Layout, Menu } from 'antd';
 const { Sider } = Layout;
 import { CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { store } from '@redux/configure-store';
 import { toggleIsAuthorized } from '@redux/userDataSlice';
 
@@ -14,6 +14,7 @@ type props = {
 
 export const SideBar: React.FC<props> = ({ innerLayout }) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [collapsed, setCollapsed] = useState(false);
 
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
@@ -60,6 +61,7 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
             <Layout className={styles["page-layout"]}>
                 <Breadcrumb className={styles["page-layout__breadcrumbs"]}>
                     <Breadcrumb.Item className={styles["breadcrumbs__item"]}>Главная</Breadcrumb.Item>
+                    {location.pathname === "/feedbacks" && <Breadcrumb.Item className={styles["breadcrumbs__item"]}>Отзывы пользователей</Breadcrumb.Item>}
                 </Breadcrumb>
                 {innerLayout}
                 <div

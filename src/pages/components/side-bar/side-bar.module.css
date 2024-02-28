@@ -14,6 +14,7 @@
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 14px;
+    z-index: 2;
 }
 
 @media (max-width: 833px) {
@@ -209,6 +210,13 @@
     padding: 16px 24px;
     background-color: var(--primary-light-1);
     font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    color: var(--character-light-secondary-45);
+}
+
+.page-layout__breadcrumbs:last-child {
     font-weight: 400;
     font-size: 14px;
     line-height: 130%;

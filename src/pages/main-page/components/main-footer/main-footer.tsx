@@ -1,14 +1,14 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import styles from './main-footer.module.css';
-import { Layout } from 'antd';
+import { Button, Layout } from 'antd';
 const { Footer } = Layout;
 import { AndroidFilled, AppleFilled } from '@ant-design/icons';
 
 export const MainFooter: React.FC = () => {
     return (
         <Footer className={styles["footer"]}>
-            <a className={styles["footer__reviews"]}>Смотреть отзывы</a>
+            <Button type="text" className={styles["footer__reviews"]}>Смотреть отзывы</Button>
             <div className={styles["footer__download-block"]}>
                 <div className={styles["download-block__title-wrapper"]}>
                     <p className={styles["download-block__title"]}>Скачать на телефон</p>
