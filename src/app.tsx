@@ -8,6 +8,7 @@ import { MainPage, Auth, Result, ConfirmEmail, ChangePassword } from './pages';
 import { PrivateRoutes } from './route/PrivateRoutes';
 import { AuthRoutes } from './route/AuthRoutes';
 import { PushRoutes } from './route/PushRoutes';
+import { FeedbacksPage } from '@pages/feedbacks-page/feedbacks-page';
 
 export const App: React.FC = () => {
     return (
@@ -28,6 +29,7 @@ export const App: React.FC = () => {
                     </Route>
                     <Route element={<PrivateRoutes />}>
                         <Route path="/main" element={<MainPage />} />
+                        <Route path="/feedbacks" element={<FeedbacksPage />} />
                     </Route>
                     <Route element={<PushRoutes />}>
                         <Route path="/result/:result" element={<Result />} />

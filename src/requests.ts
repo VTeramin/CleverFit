@@ -16,7 +16,6 @@ export async function login(email: string, password: string) {
             const token = responce.data.accessToken;
             if(store.getState().login.isRemember) localStorage.setItem("token", token);
             store.dispatch(toggleIsAuthorized(true));
-            console.log(store.getState().user.isAuthorized)
             return "/main";
         })
         .catch(() => "/result/error-login")

@@ -6,64 +6,21 @@
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 14px;
-}
 
-.trigger {
-    width: 20px;
-    height: 66px;
-    clip-path: path("M0 -1.52588e-05L20 7.99998V58L0 66V-1.52588e-05Z");
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
-    background: var(--character-light-primary-inverse);
-    color: var(--neutral-gray-7);
     display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 47%;
-    cursor: pointer;
-}
-
-@media (max-width: 833px) {
-    .trigger {
-        width: 32px;
-        height: 48px;
-        clip-path: path("M0 0L32 5.81818V42.1818L0 48V0Z");
-        top: 24px;
-        transition: transform 0.2s;
-    }
-
-    .trigger-collapsed {
-        transform: translateX(0);
-    }
-
-    .trigger-not-collapsed {
-        transform: translateX(106px);
-    }
-}
-
-.header__content {
-    display: grid;
-    grid-template-areas:
-        "pageName settings"
-        "title settings";
-    grid-template-rows: 33px max-content;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
     padding: 16px 24px;
 }
 
 @media (max-width: 833px) {
-    .header__content {
-        grid-template-rows: 23px max-content;
+    .header {
+        padding: 0 24px;
     }
 }
 
-.header__page-name {
-    grid-area: pageName;
-    line-height: 130%;
-    color: var(--character-light-title-85);
-}
-
 .header__title {
-    grid-area: title;
     font-weight: 700;
     font-size: 38px;
     line-height: 130%;
@@ -84,22 +41,24 @@
 @media (max-width: 833px) {
     .header__title {
         font-size: 20px;
-        margin-bottom: 6px;
+        margin-top: 6px;
+        margin-bottom: 24px;
     }
 }
 
 .header__settings {
-    grid-area: settings;
-    height: 32px;
+    width: 129px;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     gap: 10px;
-    margin-top: 26px;
-    margin-left: auto;
-    margin-right: 15px;
 }
 
 @media (max-width: 1439px) {
+    .header__settings {
+        width: 129px;
+    }
+
     .settings__icon {
         display: none;
     }
@@ -107,12 +66,9 @@
 
 @media (max-width: 833px) {
     .header__settings {
-        margin-top: 17px;
-        margin-right: 0;
+        width: 32px;
     }
-}
 
-@media (max-width: 833px) {
     .settings__icon {
         display: flex;
         align-items: center;
