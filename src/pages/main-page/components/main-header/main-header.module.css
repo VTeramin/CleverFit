@@ -12,11 +12,13 @@
     align-items: flex-start;
     justify-content: space-between;
     padding: 16px 24px;
+    padding-top: 0;
 }
 
 @media (max-width: 833px) {
     .header {
         padding: 0 24px;
+        margin-top: -10px;
     }
 }
 
@@ -41,8 +43,7 @@
 @media (max-width: 833px) {
     .header__title {
         font-size: 20px;
-        margin-top: 6px;
-        margin-bottom: 24px;
+        margin-bottom: 20px;
     }
 }
 
@@ -79,7 +80,7 @@
         height: 32px;
         box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
         background: var(--character-light-primary-inverse);
-        margin-top: 0;
+        margin-top: -6px;
         margin-right: 0;
     }
 }

@@ -205,8 +205,8 @@
 }
 
 .page-layout__breadcrumbs {
-    height: 32px;
-    padding: 16px 0 0 24px;
+    height: 50px;
+    padding: 16px 24px;
     background-color: var(--primary-light-1);
     font-family: var(--font-family);
     font-weight: 400;
