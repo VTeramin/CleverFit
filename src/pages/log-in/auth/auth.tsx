@@ -4,7 +4,7 @@ import '../modal.css';
 import styles from './auth.module.css';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { GooglePlusOutlined, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
-import { checkEmail, login, register } from '../../../requests';
+import { checkEmail, googleAuth, login, register } from '../../../requests';
 import { useNavigate } from 'react-router-dom';
 import { store } from '@redux/configure-store';
 import { changeLoginData } from '@redux/loginSlice';
@@ -201,7 +201,12 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                         </Button>
                     </Form.Item>
                     <Form.Item>
-                        <Button className={styles["login-form__button"]} type="ghost" htmlType="button">
+                        <Button
+                            className={styles["login-form__button"]}
+                            type="ghost"
+                            htmlType="button"
+                            onClick={() => googleAuth().then()}
+                        >
                             <GooglePlusOutlined className={styles["login-form__button-icon"]} />{isReg ? "Регистрация" : "Войти"} через Google
                         </Button>
                     </Form.Item>

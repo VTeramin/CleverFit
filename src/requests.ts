@@ -117,3 +117,8 @@ export async function sendFeedback(message: string, rating: number) {
         .catch(() => "error")
         .finally(() => store.dispatch(toggleLoader()));
 }
+
+export async function googleAuth() {
+    store.dispatch(toggleLoader());
+    window.location.href = `${API}/auth/google`;
+}

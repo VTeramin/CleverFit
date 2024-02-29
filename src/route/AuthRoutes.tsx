@@ -1,8 +1,24 @@
 import { store } from '@redux/configure-store';
+import { toggleIsAuthorized } from '@redux/userDataSlice';
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
+function getTokenFromSearch() {
+    const searchParams = window.location.search;
+    if (searchParams) {
+        const searchParamsArray = searchParams.replace("?", "").split("&");
+        const serachToken = searchParamsArray.find(el => el.startsWith("accessToken")) || "";
+        return serachToken ? serachToken.split("=")[1] : "";
+    }
+}
+
 export const AuthRoutes: React.FC = () => {
+    const token = getTokenFromSearch();
+    if (token) {
+        localStorage.setItem("token", token);
+        store.dispatch(toggleIsAuthorized(true));
+    }
+
     const isAuthorized = store.getState().user.isAuthorized;
     return isAuthorized ? <Navigate to="/main" /> : <Outlet />;
 };
