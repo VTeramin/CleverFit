@@ -14,7 +14,7 @@ export async function login(email: string, password: string) {
     })
         .then((response) => {
             const token = response.data.accessToken;
-            if(store.getState().login.isRemember) localStorage.setItem("token", token);
+            if (store.getState().login.isRemember) localStorage.setItem("token", token);
             store.dispatch(toggleIsAuthorized(true));
             return "/main";
         })
@@ -100,5 +100,20 @@ export async function getFeedbacks() {
             if (error.response.status === 403) return "redirect";
             return "error";
         })
+        .finally(() => store.dispatch(toggleLoader()));
+}
+
+export async function sendFeedback(message: string, rating: number) {
+    store.dispatch(toggleLoader());
+    return axios({
+        method: "post",
+        url: `${API}/feedback`,
+        data: { message, rating },
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    })
+        .then(() => "success")
+        .catch(() => "error")
         .finally(() => store.dispatch(toggleLoader()));
 }
