@@ -1,28 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
 import styles from './feedbacks-page.module.css';
 import { Avatar, Button, Card, Comment, Layout, Rate } from 'antd';
 import { StarTwoTone, UserOutlined } from '@ant-design/icons';
-import { getFeedbacks } from '../../requests';
+import { store } from '@redux/configure-store';
 
 export const FeedbacksPage: React.FC = () => {
+    const cardsData = store.getState().feedback;
     function convertDate(date: string) {
         return date.substring(0, 10).split("-").reverse().join(".");
     }
-
-    const [cardsData, setCardsData] = useState([
-        {
-            fullName: "",
-            imageSrc: "",
-            message: "",
-            rating: 0,
-            createdAt: ""
-        }
-    ]);
-
-    useEffect(() => {
-        getFeedbacks().then(data => setCardsData(data));
-    }, []);
 
     const cards = cardsData.map((cardData, ind) => (
         <Card key={ind} className={styles["card"]}>

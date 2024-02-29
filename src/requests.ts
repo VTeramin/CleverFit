@@ -94,7 +94,11 @@ export async function getFeedbacks() {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
     })
-        .then((response) => response.data)
-        .catch((error) => error)
+        .then(response => response.data)
+        .catch(error => {
+            if (error.config.headers.Authorization === "Bearer null") return "no token";
+            if (error.response.status === 403) return "redirect";
+            return "error";
+        })
         .finally(() => store.dispatch(toggleLoader()));
 }

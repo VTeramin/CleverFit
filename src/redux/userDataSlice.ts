@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const initialState = {
+const initialState = {
     isAuthorized: localStorage.getItem("token") !== null
-}
+};
 
 export const userDataSlice = createSlice({
     name: 'userData',

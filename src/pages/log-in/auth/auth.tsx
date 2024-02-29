@@ -22,7 +22,8 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
         isEmailValid: false,
         isPasswordValid: false,
         isPassword2Valid: false,
-        ...store.getState().login
+        ...store.getState().login,
+        isRemember: true
     }));
     useEffect(() => {
         store.dispatch(changeLoginData({
@@ -166,8 +167,8 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                         <Form.Item className={styles["remember-group__checkbox"]} name="remember" valuePropName="checked" noStyle>
                             <Checkbox
                                 className={styles["checkbox__label"]}
-                                value={formData.isRemember}
-                                onClick={() => setFormData(prev => ({ ...prev, isRemember: !prev.isRemember }))}
+                                checked={formData.isRemember}
+                                onChange={() => setFormData(prev => ({ ...prev, isRemember: !prev.isRemember }))}
                                 data-test-id="login-remember"
                             >
                                 Запомнить меня
