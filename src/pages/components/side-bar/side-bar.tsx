@@ -60,8 +60,8 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
             </Sider>
             <Layout className={styles["page-layout"]}>
                 <Breadcrumb className={styles["page-layout__breadcrumbs"]}>
-                    <Breadcrumb.Item className={styles["breadcrumbs__item"]}>Главная</Breadcrumb.Item>
-                    {location.pathname === "/feedbacks" && <Breadcrumb.Item className={styles["breadcrumbs__item"]}>Отзывы пользователей</Breadcrumb.Item>}
+                    <Breadcrumb.Item onClick={() => navigate("/main")}>Главная</Breadcrumb.Item>
+                    {location.pathname === "/feedbacks" && <Breadcrumb.Item>Отзывы пользователей</Breadcrumb.Item>}
                 </Breadcrumb>
                 {innerLayout}
                 <div

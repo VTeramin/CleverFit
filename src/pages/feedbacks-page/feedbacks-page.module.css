@@ -1,4 +1,5 @@
 .page {
+    min-height: max-content;
     background: transparent;
     padding: 24px;
 
@@ -32,10 +33,14 @@
     flex-direction: column;
     gap: 20px;
     margin-bottom: 132px;
+
+    max-height: 730px;
+    overflow: scroll;
 }
 
 @media (max-width: 833px) {
     .page__cards {
+        max-height: max-content;
         gap: 16px;
         margin-bottom: 48px;
     }
@@ -45,7 +50,7 @@
     border-radius: 2px;
     padding: 16px;
     width: 100%;
-    height: 128px;
+    min-height: 128px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
 }
 
@@ -56,8 +61,15 @@
 }
 
 .card [class*="card-body"] {
-    height: max-content;
+    height: 100%;
     padding: 0;
+}
+
+@media (max-width: 833px) {
+    .card [class*="card-body"] {
+        height: max-content;
+        padding: 0;
+    }
 }
 
 .card__person {
@@ -158,8 +170,10 @@
     }
 }
 
-.page.no-feedback .page__buttons {
-    width: 100%;
+@media (max-width: 833px) {
+    .page.no-feedback .page__buttons {
+        width: 100%;
+    }
 }
 
 .conf-button {
