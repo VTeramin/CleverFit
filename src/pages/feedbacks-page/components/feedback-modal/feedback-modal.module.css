@@ -1,0 +1,94 @@
+.conf-button {
+    width: 142px;
+    height: 40px;
+    border: 1px solid var(--primary-light-6);
+    border-radius: 2px;
+    padding: 4px 15px;
+    margin-right: 8px;
+
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+    background: var(--primary-light-6);
+
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    text-align: center;
+    color: var(--character-light-primary-inverse);
+}
+
+@media (max-width: 833px) {
+    .conf-button {
+        width: 100%;
+        margin-bottom: 16px;
+    }
+}
+
+.modal [class*="modal-title"] {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 130%;
+    color: var(--character-light-title-85);
+}
+
+.modal [class*="modal-close-icon"] {
+    width: 14px;
+    height: 14px;
+}
+
+.modal [class*="modal-close"] path {
+    fill: rgba(0, 0, 0, 0.85);
+}
+
+.modal [class*="form-item"] {
+    margin-bottom: 0;
+}
+
+@media (max-width: 833px) {
+    .modal [class*="modal-body"] {
+        padding: 24px 16px;
+    }
+}
+
+.modal__rate {
+    width: 136px;
+    height: 24px;
+    font-size: 22px;
+    margin-bottom: 16px;
+}
+
+.rate [class*="anticon-star"] {
+    vertical-align: baseline;
+}
+
+.rate li:not(:last-child) {
+    margin-right: 6px;
+}
+
+[class*="star-full"] svg>path:first-child,
+[class*="star-focused"] svg>path:first-child {
+    fill: var(--character-light-warning);
+}
+
+[class*="star-zero"] svg>path:first-child {
+    fill: transparent;
+}
+
+.modal__textarea {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    color: var(--character-light-title-85);
+}
+
+.modal__button {
+    width: 130px;
+}
+
+@media (max-width: 833px) {
+    .modal__button {
+        width: 100%;
+    }
+}

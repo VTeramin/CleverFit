@@ -48,6 +48,7 @@ export const MainFooter: React.FC = () => {
                 type="text"
                 className={styles["footer__reviews"]}
                 onClick={handleFeedback}
+                data-test-id="see-reviews"
             >Смотреть отзывы</Button>
             <div className={styles["footer__download-block"]}>
                 <div className={styles["download-block__title-wrapper"]}>

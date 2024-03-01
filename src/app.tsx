@@ -4,11 +4,10 @@ import { HistoryRouter } from 'redux-first-history/rr6'
 import { history, store } from '@redux/configure-store';
 import { Loader } from '@pages/components/loader/loader';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { MainPage, Auth, Result, ConfirmEmail, ChangePassword } from './pages';
+import { MainPage, Auth, Result, ConfirmEmail, ChangePassword, FeedbacksPage } from './pages';
 import { PrivateRoutes } from './route/PrivateRoutes';
 import { AuthRoutes } from './route/AuthRoutes';
 import { PushRoutes } from './route/PushRoutes';
-import { FeedbacksPage } from '@pages/feedbacks-page/feedbacks-page';
 
 export const App: React.FC = () => {
     return (
