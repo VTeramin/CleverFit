@@ -22,8 +22,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
         isEmailValid: false,
         isPasswordValid: false,
         isPassword2Valid: false,
-        ...store.getState().login,
-        isRemember: true
+        ...store.getState().login
     }));
     useEffect(() => {
         store.dispatch(changeLoginData({
@@ -85,7 +84,6 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                 <Form
                     name="normal_login"
                     className={`${styles["auth-modal__login-form"]} ${styles[isReg ? "registration" : ""]}`}
-                    initialValues={{ remember: true }}
                     validateMessages={{ required: "" }}
                 >
                     <Form.Item className={styles["login-form__form-select-buttons"]}>

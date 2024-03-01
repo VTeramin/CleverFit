@@ -4,24 +4,16 @@ import styles from './feedback-modal.module.css';
 import { Button, Form, Input, Modal, Rate } from 'antd';
 import { StarTwoTone } from '@ant-design/icons';
 import { sendFeedback } from '../../../../requests';
-
-type feedback = {
-    imageSrc: string,
-    fullName: string,
-    rating: number,
-    createdAt: string,
-    message: string
-};
+import { store } from '@redux/configure-store';
+import { addNewFeedback } from '@redux/feedbackSlice';
 
 type props = {
     isModalOpen: boolean,
     setIsModalOpen: (a: boolean) => void,
-    setCardsData: React.Dispatch<React.SetStateAction<feedback[]>>,
-    setResultType:  (a: string) => void,
-    setIsNoFeedback: (a: boolean) => void
+    setResultType: (a: string) => void
 }
 
-export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, setCardsData, setResultType, setIsNoFeedback }) => {
+export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, setResultType }) => {
     const [feedback, setFeedback] = useState({
         message: "",
         rating: 0
@@ -29,18 +21,14 @@ export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, se
 
     function handleFeedback() {
         sendFeedback(feedback.message, feedback.rating).then((response) => {
-            if (response === "success") setCardsData(prev => [
-                {
-                    imageSrc: "",
-                    fullName: "",
-                    rating: feedback.rating,
-                    createdAt: new Date(Date.now()).toISOString(),
-                    message: feedback.message
-                },
-                ...prev
-            ]);
+            if (response === "success") store.dispatch(addNewFeedback({
+                imageSrc: "",
+                fullName: "",
+                rating: feedback.rating,
+                createdAt: new Date(Date.now()).toISOString(),
+                message: feedback.message
+            }));
             setResultType(response);
-            setIsNoFeedback(false);
         }).finally(() => setIsModalOpen(false));
     }
 
@@ -76,6 +64,7 @@ export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, se
                     <Input.TextArea
                         value={feedback.message}
                         placeholder="Autosize height based on content lines"
+                        style={{ resize: "vertical" }}
                         autoSize={{ minRows: 1.64 }}
                         onChange={(event) => setFeedback(prev => ({ ...prev, message: event.target.value }))}
                         className={styles["modal__textarea"]}

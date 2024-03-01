@@ -1,5 +1,5 @@
 import { store } from '@redux/configure-store';
-import { toggleIsAuthorized } from '@redux/userDataSlice';
+import { changeSessionToken, toggleIsAuthorized } from '@redux/userDataSlice';
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ function getTokenFromSearch() {
 export const AuthRoutes: React.FC = () => {
     const token = getTokenFromSearch();
     if (token) {
-        localStorage.setItem("token", token);
+        store.dispatch(changeSessionToken(token));
         store.dispatch(toggleIsAuthorized(true));
     }
 

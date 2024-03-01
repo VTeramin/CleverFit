@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import styles from './side-bar.module.css';
 import { Breadcrumb, Layout, Menu } from 'antd';
@@ -16,6 +16,16 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [collapsed, setCollapsed] = useState(false);
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        function updateWidth() {
+            setWidth(window.innerWidth);
+        }
+        window.addEventListener('resize', updateWidth);
+        updateWidth();
+        return () => window.removeEventListener('resize', updateWidth);
+    }, []);
 
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
         key: index,
@@ -24,7 +34,7 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
             className: styles["menu__icon"]
         }),
         label: ["Календарь", "Тренировки", "Достижения", "Профиль"][index],
-        style: collapsed ? {} : { paddingLeft: window.innerWidth > 833 ? "16px" : "0" },
+        style: collapsed ? {} : { paddingLeft: width > 800 ? "16px" : "0" },
         className: styles["menu__item"]
     }));
 
@@ -40,8 +50,8 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
                 trigger={null}
                 collapsible
                 collapsed={collapsed}
-                width={window.innerWidth > 833 ? "208" : "106"}
-                collapsedWidth={window.innerWidth > 833 ? "64" : "1"}
+                width={width > 800 ? "208" : "106"}
+                collapsedWidth={width > 800 ? "64" : "1"}
                 theme="light"
                 className={styles["sider"]}
             >
@@ -66,7 +76,7 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
                 {innerLayout}
                 <div
                     className={`${styles["trigger"]} ${styles[collapsed ? "trigger-collapsed" : "trigger-not-collapsed"]}`}
-                    data-test-id={window.innerWidth < 833 ? "sider-switch-mobile" : "sider-switch"}
+                    data-test-id={width < 800 ? "sider-switch-mobile" : "sider-switch"}
                     onClick={() => setCollapsed(!collapsed)}
                 >
                     {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}

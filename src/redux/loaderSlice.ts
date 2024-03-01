@@ -8,8 +8,9 @@ export const loaderSlice = createSlice({
     name: 'loader',
     initialState,
     reducers: {
-        toggleLoader: (state) => {
-            return { isLoading: !state.isLoading };
+        toggleLoader: (state, action) => {
+            state;
+            return { isLoading: action.payload };
         }
     }
 });

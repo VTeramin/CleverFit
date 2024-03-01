@@ -12,7 +12,7 @@
     font-size: 14px;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .footer {
         flex-direction: column-reverse;
         padding: 0 16px 42px;
@@ -32,7 +32,7 @@
     color: var(--primary-light-6);
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .footer__reviews {
         margin-top: 24px;
     }
@@ -46,7 +46,7 @@
     border-radius: 2px;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .footer__download-block {
         width: 100%;
     }
@@ -61,7 +61,7 @@
     justify-content: space-between;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .download-block__title-wrapper {
         align-items: center;
     }
@@ -117,67 +117,4 @@
     color: var(--character-light-title-85);
     margin: 0;
     text-wrap: nowrap;
-}
-
-.modal [class*="modal-body"] {
-    padding: 64px 32px 56px;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
-    background: var(--character-light-primary-inverse);
-}
-
-.modal [class*="anticon"] {
-    display: none;
-}
-
-.modal [class*="confirm-content"] {
-    margin-top: 0;
-}
-
-.modal [class*="ant-result"] {
-    padding: 0;
-}
-
-.modal [class*="result-title"] {
-    font-family: var(--font-family);
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 130%;
-    color: var(--character-light-title-85);
-}
-
-.modal [class*="result-subtitle"] {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
-    color: var(--character-light-secondary-45);
-}
-
-@media (max-width: 833px) {
-    .modal [class*="result-subtitle"] {
-        padding: 0 25px;
-    }
-}
-
-.modal [class*="confirm-btns"] {
-    display: flex;
-    justify-content: center;
-}
-
-.modal [class*="ant-btn"] {
-    border: 1px solid var(--primary-light-6);
-    border-radius: 2px;
-    padding: 4px 15px;
-    width: 74px;
-    height: 40px;
-    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
-    background: var(--primary-light-6);
-
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
-    text-align: center;
-    color: var(--character-light-primary-inverse);
 }

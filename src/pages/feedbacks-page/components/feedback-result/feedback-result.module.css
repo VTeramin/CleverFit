@@ -7,7 +7,7 @@
     background: var(--character-light-primary-inverse);
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .result [class*="modal-body"] {
         padding: 32px 16px;
     }
@@ -78,7 +78,7 @@
     width: 180px;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .result [class*="result-error"] [class*="ant-btn"] {
         width: 144px;
     }

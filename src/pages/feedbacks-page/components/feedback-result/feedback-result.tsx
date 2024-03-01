@@ -2,21 +2,24 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import styles from './feedback-result.module.css';
 import { Button, Modal, Result } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 type props = {
-    resultType: "success" | "error",
+    resultType: "success" | "error" | "noToken",
     setResultType: (a: string) => void,
     setIsModalOpen: (a: boolean) => void
 }
 
 export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, setIsModalOpen }) => {
-    const result: { success: JSX.Element, error: JSX.Element } = {
+    const navigate = useNavigate();
+    const result: { [name: string]: JSX.Element } = {
         error: <Result
             status="error"
             title="Данные не сохранились"
             subTitle="Что-то пошло не так. Попробуйте еще раз"
             extra={[
                 <Button
+                    key="Написать отзыв"
                     className={styles["conf-button"]}
                     onClick={() => {
                         setIsModalOpen(true);
@@ -27,6 +30,7 @@ export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, set
                     Написать отзыв
                 </Button>,
                 <Button
+                    key="Закрыть"
                     className={`${styles["conf-button"]} ${styles["conf-button-white"]}`}
                     onClick={() => setResultType("")}
                 >
@@ -39,10 +43,25 @@ export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, set
             title="Отзыв успешно опубликован"
             extra={[
                 <Button
+                    key="Отлично"
                     className={`${styles["conf-button"]}`}
                     onClick={() => setResultType("")}
                 >
                     Отлично
+                </Button>
+            ]}
+        />,
+        noToken: <Result
+            status="500"
+            title="Что-то пошло не так"
+            subTitle="Произошла ошибка, попробуйте еще раз"
+            extra={[
+                <Button
+                    key="Назад"
+                    className={`${styles["conf-button"]}`}
+                    onClick={() => navigate("/")}
+                >
+                    Назад
                 </Button>
             ]}
         />
@@ -59,8 +78,7 @@ export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, set
             closable={false}
             footer={null}
         >
-            {resultType === "success" && result["success"]}
-            {resultType === "error" && result["error"]}
+            {result[resultType]}
         </Modal>
     );
 };

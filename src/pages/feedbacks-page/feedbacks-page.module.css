@@ -1,14 +1,17 @@
 .page {
-    min-height: max-content;
+    height: calc(100vh - 50px);
     background: transparent;
     padding: 24px;
 
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 14px;
+
+    display: grid;
+    grid-template-rows: auto 1fr;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .page {
         padding: 24px 16px;
     }
@@ -22,13 +25,13 @@
     padding-bottom: 42px;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .page.no-feedback {
         justify-content: flex-start;
     }
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .page.no-feedback .page__buttons {
         width: 100%;
     }
@@ -53,7 +56,7 @@
     color: var(--character-light-primary-inverse);
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .conf-button {
         width: 100%;
         margin-bottom: 16px;
@@ -65,7 +68,7 @@
     margin-right: 0;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .conf-button.no-feedback {
         margin-top: 48px;
     }
@@ -84,7 +87,7 @@
     color: var(--primary-light-6);
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .text-button {
         width: 100%;
         margin-bottom: 18px;
@@ -100,14 +103,14 @@
     background: var(--character-light-primary-inverse);
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .firstFeedback {
         height: 314px;
         padding: 48px 32px;
     }
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .modal [class*="modal-header"] {
         padding: 16px;
         padding-right: 10px;

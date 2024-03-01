@@ -3,12 +3,10 @@
     flex-direction: column;
     gap: 20px;
     margin-bottom: 132px;
-
-    max-height: 730px;
-    overflow: scroll;
+    overflow-y: auto;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .page__cards {
         max-height: max-content;
         gap: 16px;
@@ -16,17 +14,21 @@
     }
 }
 
+.page__cards::-webkit-scrollbar {
+    display: none;
+}
+
 .card {
     border-radius: 2px;
     padding: 16px;
     width: 100%;
-    min-height: 128px;
+    min-height: max-content;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .card {
-        height: max-content;
+        min-height: max-content;
     }
 }
 
@@ -35,7 +37,7 @@
     padding: 0;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .card [class*="card-body"] {
         height: max-content;
         padding: 0;
@@ -44,15 +46,16 @@
 
 .card__person {
     width: 174px;
-    height: 100%;
+    height: 96px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .card__person {
+        height: auto;
         flex-direction: row;
         justify-content: flex-start;
         gap: 16px;
@@ -73,6 +76,7 @@
     line-height: 130%;
     color: var(--character-light-title-85);
     margin-bottom: 0;
+    text-align: center;
 }
 
 .card__rate {
@@ -113,7 +117,7 @@
     margin-bottom: 12px;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .card__comment [class*="content-author"] {
         margin-bottom: 16px;
     }
@@ -134,7 +138,7 @@
     color: var(--character-light-secondary-45);
 }
 
-@media (max-width: 833px) {
+@media (max-width: 800px) {
     .card__comment [class*="comment-inner"] {
         flex-direction: column;
         gap: 11px;

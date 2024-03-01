@@ -17,7 +17,7 @@
     color: var(--character-light-primary-inverse);
 }
 
-@media (max-width: 833px) {
+@media (max-width: 834px) {
     .conf-button {
         width: 100%;
         margin-bottom: 16px;
@@ -45,7 +45,7 @@
     margin-bottom: 0;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 834px) {
     .modal [class*="modal-body"] {
         padding: 24px 16px;
     }
@@ -87,7 +87,7 @@
     width: 130px;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 834px) {
     .modal__button {
         width: 100%;
     }

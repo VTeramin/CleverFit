@@ -4,7 +4,7 @@ const initialState = {
     email: "",
     password: "",
     password2: "",
-    isRemember: true
+    isRemember: false
 };
 
 export const loginSlice = createSlice({

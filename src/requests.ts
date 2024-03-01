@@ -1,12 +1,13 @@
 import { store } from '@redux/configure-store';
+import { changeFeedbackData } from '@redux/feedbackSlice';
 import { toggleLoader } from '@redux/loaderSlice';
-import { toggleIsAuthorized } from '@redux/userDataSlice';
+import { changeSessionToken, toggleIsAuthorized } from '@redux/userDataSlice';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 const API = "https://marathon-api.clevertec.ru";
 
 export async function login(email: string, password: string) {
-    store.dispatch(toggleLoader());
+    store.dispatch(toggleLoader(true));
     return axios({
         method: "post",
         url: `${API}/auth/login`,
@@ -15,15 +16,16 @@ export async function login(email: string, password: string) {
         .then((response) => {
             const token = response.data.accessToken;
             if (store.getState().login.isRemember) localStorage.setItem("token", token);
+            store.dispatch(changeSessionToken(token));
             store.dispatch(toggleIsAuthorized(true));
             return "/main";
         })
         .catch(() => "/result/error-login")
-        .finally(() => store.dispatch(toggleLoader()));
+        .finally(() => store.dispatch(toggleLoader(false)));
 }
 
 export async function register(email: string, password: string) {
-    store.dispatch(toggleLoader());
+    store.dispatch(toggleLoader(true));
     return axios({
         method: "post",
         url: `${API}/auth/registration`,
@@ -37,11 +39,11 @@ export async function register(email: string, password: string) {
             }
             return path;
         })
-        .finally(() => store.dispatch(toggleLoader()));
+        .finally(() => store.dispatch(toggleLoader(false)));
 }
 
 export async function checkEmail(email: string) {
-    store.dispatch(toggleLoader());
+    store.dispatch(toggleLoader(true));
     return axios({
         method: "post",
         url: `${API}/auth/check-email`,
@@ -55,11 +57,11 @@ export async function checkEmail(email: string) {
             }
             return path;
         })
-        .finally(() => store.dispatch(toggleLoader()));
+        .finally(() => store.dispatch(toggleLoader(false)));
 }
 
 export async function confirmEmail(email: string, code: string) {
-    store.dispatch(toggleLoader());
+    store.dispatch(toggleLoader(true));
     return axios({
         method: "post",
         url: `${API}/auth/confirm-email`,
@@ -67,11 +69,11 @@ export async function confirmEmail(email: string, code: string) {
     })
         .then(() => "/auth/change-password")
         .catch(() => "error")
-        .finally(() => store.dispatch(toggleLoader()));
+        .finally(() => store.dispatch(toggleLoader(false)));
 }
 
 export async function changePassword(password: string, confirmPassword: string) {
-    store.dispatch(toggleLoader());
+    store.dispatch(toggleLoader(true));
     return axios({
         method: "post",
         url: `${API}/auth/change-password`,
@@ -82,43 +84,50 @@ export async function changePassword(password: string, confirmPassword: string) 
     })
         .then(() => "/result/success-change-password")
         .catch(() => "/result/error-change-password")
-        .finally(() => store.dispatch(toggleLoader()));
+        .finally(() => store.dispatch(toggleLoader(false)));
 }
 
 export async function getFeedbacks() {
-    store.dispatch(toggleLoader());
+    store.dispatch(toggleLoader(true));
     return axios({
         method: "get",
         url: `${API}/feedback`,
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            "Authorization": `Bearer ${store.getState().user.sessionToken}`
         }
     })
-        .then(response => response.data)
-        .catch(error => {
-            if (error.config.headers.Authorization === "Bearer null") return "no token";
-            if (error.response.status === 403) return "redirect";
-            return "error";
+        .then(response => {
+            store.dispatch(changeFeedbackData(response.data));
+            return response.data;
         })
-        .finally(() => store.dispatch(toggleLoader()));
+        .catch(error => {
+
+            if (error.config.headers.Authorization === "Bearer null") return "no token";
+            if (error.response.status === 403) {
+                localStorage.clear();
+                store.dispatch(toggleIsAuthorized(false));
+                return "redirect";
+            }
+            return "error";
+        }).finally(() => store.dispatch(toggleLoader(false)));
 }
 
 export async function sendFeedback(message: string, rating: number) {
-    store.dispatch(toggleLoader());
+    store.dispatch(toggleLoader(true));
     return axios({
         method: "post",
         url: `${API}/feedback`,
         data: { message, rating },
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            "Authorization": `Bearer ${store.getState().user.sessionToken}`
         }
     })
         .then(() => "success")
         .catch(() => "error")
-        .finally(() => store.dispatch(toggleLoader()));
+        .finally(() => store.dispatch(toggleLoader(false)));
 }
 
 export async function googleAuth() {
-    store.dispatch(toggleLoader());
+    store.dispatch(toggleLoader(true));
     window.location.href = `${API}/auth/google`;
 }

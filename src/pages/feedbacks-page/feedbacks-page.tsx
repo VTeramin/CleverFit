@@ -6,17 +6,27 @@ import { store } from '@redux/configure-store';
 import { FeedbackCards } from './components/feeback-cards/feedback-cards';
 import { FeedbackModal } from './components/feedback-modal/feedback-modal';
 import { FeedbackResult } from './components/feedback-result/feedback-result';
+import { getFeedbacks } from '../../requests';
+import { useNavigate } from 'react-router-dom';
 
 export const FeedbacksPage: React.FC = () => {
+    const navigate = useNavigate();
     const [cardsData, setCardsData] = useState(() => store.getState().feedback);
-    const [isNoFeedback, setIsNoFeedback] = useState(cardsData.length === 0);
     const [isShowAll, setIsShowAll] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [resultType, setResultType] = useState("");
 
     useEffect(() => {
-        setCardsData(prev => isShowAll ? [...new Set([...prev, ...store.getState().feedback])] : prev.slice(0, 4));
-    }, [isShowAll, isModalOpen]);
+        getFeedbacks().then(response => {
+            if (response === "redirect") navigate("/auth");
+            if (response === "no token" || response === "error") setResultType("noToken");
+            setCardsData(store.getState().feedback.slice(0, 4));
+        });
+    }, [navigate]);
+
+    useEffect(() => {
+        setCardsData(isShowAll ? store.getState().feedback : store.getState().feedback.slice(0, 4));
+    }, [isShowAll, resultType]);
 
     const firstFeedback = (
         <div className={styles["firstFeedback"]}>
@@ -26,17 +36,17 @@ export const FeedbacksPage: React.FC = () => {
     );
 
     return (
-        <Layout className={`${styles["page"]} ${styles[isNoFeedback ? "no-feedback" : ""]}`}>
-            {isNoFeedback ? firstFeedback : <FeedbackCards cardsData={cardsData} />}
+        <Layout className={`${styles["page"]} ${styles[cardsData.length === 0 ? "no-feedback" : ""]}`}>
+            {cardsData.length === 0 ? firstFeedback : <FeedbackCards cardsData={cardsData} />}
             <div className={styles["page__buttons"]}>
                 <Button
-                    className={`${styles["conf-button"]} ${styles[isNoFeedback ? "no-feedback" : ""]}`}
+                    className={`${styles["conf-button"]} ${styles[cardsData.length === 0 ? "no-feedback" : ""]}`}
                     onClick={() => setIsModalOpen(true)}
                     data-test-id="write-review"
                 >
                     Написать отзыв
                 </Button>
-                {!isNoFeedback && <Button
+                {cardsData.length !== 0 && <Button
                     type="text"
                     className={styles["text-button"]}
                     onClick={() => setIsShowAll(prev => !prev)}
@@ -48,11 +58,9 @@ export const FeedbacksPage: React.FC = () => {
             <FeedbackModal
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
-                setCardsData={setCardsData}
                 setResultType={setResultType}
-                setIsNoFeedback={setIsNoFeedback}
             />
-            {(resultType === "success" || resultType === "error") && <FeedbackResult
+            {(resultType === "success" || resultType === "error" || resultType === "noToken") && <FeedbackResult
                 resultType={resultType}
                 setResultType={setResultType}
                 setIsModalOpen={setIsModalOpen}

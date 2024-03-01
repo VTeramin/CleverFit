@@ -17,9 +17,12 @@ export const feedbackSlice = createSlice({
         changeFeedbackData: (state, action) => {
             state;
             return [...action.payload].reverse();
+        },
+        addNewFeedback: (state, action) => {
+            return [action.payload, ...state];
         }
     }
 });
 
-export const { changeFeedbackData } = feedbackSlice.actions;
+export const { changeFeedbackData, addNewFeedback } = feedbackSlice.actions;
 export default feedbackSlice.reducer;

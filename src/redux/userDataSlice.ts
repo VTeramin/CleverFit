@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isAuthorized: localStorage.getItem("token") !== null
+    isAuthorized: localStorage.getItem("token") !== null,
+    sessionToken: localStorage.getItem("token")
 };
 
 export const userDataSlice = createSlice({
@@ -10,9 +11,12 @@ export const userDataSlice = createSlice({
     reducers: {
         toggleIsAuthorized: (state, action) => {
             return { ...state, isAuthorized: action.payload };
+        },
+        changeSessionToken: (state, action) => {
+            return { ...state, sessionToken: action.payload }
         }
     }
 });
 
-export const { toggleIsAuthorized } = userDataSlice.actions;
+export const { toggleIsAuthorized, changeSessionToken } = userDataSlice.actions;
 export default userDataSlice.reducer;
