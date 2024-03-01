@@ -22,6 +22,7 @@ export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, set
                         setIsModalOpen(true);
                         setResultType("");
                     }}
+                    data-test-id="write-review-not-saved-modal"
                 >
                     Написать отзыв
                 </Button>,

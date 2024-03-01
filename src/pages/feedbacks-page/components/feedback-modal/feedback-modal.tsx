@@ -53,6 +53,7 @@ export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, se
                 className={`${styles["conf-button"]} ${styles["modal__button"]}`}
                 onClick={handleFeedback}
                 disabled={feedback.rating === 0}
+                data-test-id="new-review-submit-button"
             >
                 Опубликовать
             </Button>}

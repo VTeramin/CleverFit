@@ -32,6 +32,7 @@ export const FeedbacksPage: React.FC = () => {
                 <Button
                     className={`${styles["conf-button"]} ${styles[isNoFeedback ? "no-feedback" : ""]}`}
                     onClick={() => setIsModalOpen(true)}
+                    data-test-id="write-review"
                 >
                     Написать отзыв
                 </Button>
@@ -39,6 +40,7 @@ export const FeedbacksPage: React.FC = () => {
                     type="text"
                     className={styles["text-button"]}
                     onClick={() => setIsShowAll(prev => !prev)}
+                    data-test-id="all-reviews-button"
                 >
                     {isShowAll ? "Свернуть все отзывы" : "Разернуть все отзывы"}
                 </Button>}
