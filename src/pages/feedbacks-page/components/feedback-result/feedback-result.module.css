@@ -25,6 +25,12 @@
     padding: 0;
 }
 
+@media (max-width: 800px) {
+    [class*="ant-modal-body"]>.no-token[class*="ant-result"] {
+        padding: 32px 16px 24px;
+    }
+}
+
 .result [class*="ant-result-icon"] {
     padding: 4px;
 }
@@ -45,6 +51,12 @@
     color: var(--character-light-secondary-45);
 }
 
+@media (max-width: 800px) {
+    .no-token [class*="result-subtitle"] {
+        padding: 0 50px;
+    }
+}
+
 .conf-button {
     width: 142px;
     height: 40px;
@@ -62,6 +74,10 @@
     line-height: 130%;
     text-align: center;
     color: var(--character-light-primary-inverse);
+}
+
+.no-token .conf-button {
+    width: 74px;
 }
 
 .conf-button-white {

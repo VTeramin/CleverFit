@@ -50,7 +50,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
 }
 
 @media (max-width: 800px) {
@@ -64,6 +63,7 @@
 
 .card__person span {
     background: var(--character-light-background);
+    margin-bottom: 12px;
 }
 
 .person__img path {

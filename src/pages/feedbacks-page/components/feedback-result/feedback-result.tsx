@@ -16,7 +16,7 @@ export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, set
         error: <Result
             status="error"
             title="Данные не сохранились"
-            subTitle="Что-то пошло не так. Попробуйте еще раз"
+            subTitle="Что-то пошло не так. Попробуйте еще раз."
             extra={[
                 <Button
                     key="Написать отзыв"
@@ -54,7 +54,8 @@ export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, set
         noToken: <Result
             status="500"
             title="Что-то пошло не так"
-            subTitle="Произошла ошибка, попробуйте еще раз"
+            subTitle="Произошла ошибка, попробуйте еще раз."
+            className={styles["no-token"]}
             extra={[
                 <Button
                     key="Назад"
