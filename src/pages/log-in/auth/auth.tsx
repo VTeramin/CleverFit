@@ -6,8 +6,8 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { GooglePlusOutlined, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 import { checkEmail, googleAuth, login, register } from '../../../requests';
 import { useNavigate } from 'react-router-dom';
-import { store } from '@redux/configure-store';
-import { changeLoginData } from '@redux/loginSlice';
+import { changeLoginData, selectLogin } from '@redux/loginSlice';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 
 type props = {
     isRegistration: boolean
@@ -15,27 +15,27 @@ type props = {
 
 export const Auth: React.FC<props> = ({ isRegistration }) => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const [isReg, setIsReg] = useState(isRegistration);
-
-    const [formData, setFormData] = useState(() => ({
+    const [formData, setFormData] = useState({
         isEmailValid: false,
         isPasswordValid: false,
         isPassword2Valid: false,
-        ...store.getState().login
-    }));
+        ...useAppSelector(selectLogin)
+    });
     useEffect(() => {
-        store.dispatch(changeLoginData({
+        dispatch(changeLoginData({
             email: formData.email,
             password: formData.password,
             password2: formData.password2,
             isRemember: formData.isRemember
         }));
-    }, [formData]);
+    }, [dispatch, formData]);
 
     const [isDisabled, setIsDisabled] = useState(true);
     useEffect(() => {
-        isReg ? setIsDisabled(!Object.values(formData).every(el => el))
+        isReg ? setIsDisabled(!Object.values({...formData, isRemember: true}).every(el => el))
             : setIsDisabled(![formData.email, formData.password].every(el => el))
     }, [formData, isReg]);
 

@@ -20,6 +20,6 @@ export const AuthRoutes: React.FC = () => {
         store.dispatch(toggleIsAuthorized(true));
     }
 
-    const isAuthorized = store.getState().user.isAuthorized;
+    const isAuthorized = store.getState().userData.isAuthorized;
     return isAuthorized ? <Navigate to={ROUTE.MAIN} /> : <Outlet />;
 };

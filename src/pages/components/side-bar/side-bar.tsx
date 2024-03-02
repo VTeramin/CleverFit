@@ -5,8 +5,8 @@ import { Breadcrumb, Layout, Menu } from 'antd';
 const { Sider } = Layout;
 import { CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { store } from '@redux/configure-store';
 import { toggleIsAuthorized } from '@redux/userDataSlice';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 
 type props = {
     innerLayout: React.ReactElement
@@ -14,9 +14,11 @@ type props = {
 
 export const SideBar: React.FC<props> = ({ innerLayout }) => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const location = useLocation();
     const [collapsed, setCollapsed] = useState(false);
     const [width, setWidth] = useState(window.innerWidth);
+    const isFullWidth = width > 800;
 
     useEffect(() => {
         function updateWidth() {
@@ -34,13 +36,13 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
             className: styles["menu__icon"]
         }),
         label: ["Календарь", "Тренировки", "Достижения", "Профиль"][index],
-        style: collapsed ? {} : { paddingLeft: width > 800 ? "16px" : "0" },
+        style: collapsed ? {} : { paddingLeft: isFullWidth ? "16px" : "0" },
         className: styles["menu__item"]
     }));
 
     function handleExit() {
         localStorage.clear();
-        store.dispatch(toggleIsAuthorized(false));
+        dispatch(toggleIsAuthorized(false));
         navigate("/auth");
     }
 
@@ -50,8 +52,8 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
                 trigger={null}
                 collapsible
                 collapsed={collapsed}
-                width={width > 800 ? "208" : "106"}
-                collapsedWidth={width > 800 ? "64" : "1"}
+                width={isFullWidth ? "208" : "106"}
+                collapsedWidth={isFullWidth ? "64" : "1"}
                 theme="light"
                 className={styles["sider"]}
             >
@@ -76,7 +78,7 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
                 {innerLayout}
                 <div
                     className={`${styles["trigger"]} ${styles[collapsed ? "trigger-collapsed" : "trigger-not-collapsed"]}`}
-                    data-test-id={width < 800 ? "sider-switch-mobile" : "sider-switch"}
+                    data-test-id={isFullWidth ? "sider-switch" : "sider-switch-mobile"}
                     onClick={() => setCollapsed(!collapsed)}
                 >
                     {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}

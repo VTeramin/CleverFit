@@ -5,11 +5,12 @@ import { Button, Layout } from 'antd';
 const { Footer } = Layout;
 import { AndroidFilled, AppleFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { store } from '@redux/configure-store';
 import { toggleIsAuthorized } from '@redux/userDataSlice';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 
 export const MainFooter: React.FC = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     return (
         <Footer className={styles["footer"]}>
@@ -17,7 +18,7 @@ export const MainFooter: React.FC = () => {
                 type="text"
                 className={styles["footer__reviews"]}
                 onClick={() => {
-                    if(localStorage.getItem("token") === "") store.dispatch(toggleIsAuthorized(false));
+                    if(localStorage.getItem("token") === "") dispatch(toggleIsAuthorized(false));
                     navigate("/feedbacks");
                 }}
                 data-test-id="see-reviews"

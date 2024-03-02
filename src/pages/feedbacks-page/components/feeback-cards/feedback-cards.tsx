@@ -3,14 +3,7 @@ import 'antd/dist/antd.css';
 import styles from './feedback-cards.module.css';
 import { Avatar, Card, Comment, Rate } from 'antd';
 import { StarTwoTone, UserOutlined } from '@ant-design/icons';
-
-type feedback = {
-    imageSrc: string,
-    fullName: string,
-    rating: number,
-    createdAt: string,
-    message: string
-};
+import { feedback } from '@redux/feedbackSlice';
 
 type props = {
     cardsData: feedback[]

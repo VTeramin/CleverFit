@@ -6,11 +6,12 @@ import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { changePassword } from '../../../requests';
 import { useNavigate } from 'react-router-dom';
-import { store } from '@redux/configure-store';
-import { changeLoginData } from '@redux/loginSlice';
+import { changePasswords } from '@redux/loginSlice';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 
 export const ChangePassword: React.FC = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const [passwords, setPasswords] = useState({
         password: "",
@@ -19,11 +20,11 @@ export const ChangePassword: React.FC = () => {
         isConfPassValid: false
     });
     useEffect(() => {
-        store.dispatch(changeLoginData({
+        dispatch(changePasswords({
             password: passwords.password,
             password2: passwords.confirmPassword
         }));
-    }, [passwords]);
+    }, [dispatch, passwords]);
 
     const [validStatus, setValidStatus] = useState({
         password: true,

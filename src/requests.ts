@@ -93,7 +93,7 @@ export async function getFeedbacks() {
         method: "get",
         url: `${API}/feedback`,
         headers: {
-            "Authorization": `Bearer ${store.getState().user.sessionToken}`
+            "Authorization": `Bearer ${store.getState().userData.sessionToken}`
         }
     })
         .then(response => {
@@ -119,7 +119,7 @@ export async function sendFeedback(message: string, rating: number) {
         url: `${API}/feedback`,
         data: { message, rating },
         headers: {
-            "Authorization": `Bearer ${store.getState().user.sessionToken}`
+            "Authorization": `Bearer ${store.getState().userData.sessionToken}`
         }
     })
         .then(() => "success")

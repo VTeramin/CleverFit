@@ -1,12 +1,12 @@
 import React from 'react';
 import loadJSON from './loader.json';
 import styles from './loader.module.css';
-import { useSelector } from 'react-redux';
-import { store } from '@redux/configure-store';
 import Lottie from 'lottie-react';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { selectLoader } from '@redux/loaderSlice';
 
 export const Loader: React.FC = () => {
-    const isLoading = useSelector(() => store.getState().loader.isLoading);
+    const isLoading = useAppSelector(selectLoader);
 
     return (
         <div className={styles.loader} style={{ display: isLoading ? "flex" : "none" }} data-test-id="loader">

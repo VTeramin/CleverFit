@@ -4,8 +4,8 @@ import styles from './feedback-modal.module.css';
 import { Button, Form, Input, Modal, Rate } from 'antd';
 import { StarTwoTone } from '@ant-design/icons';
 import { sendFeedback } from '../../../../requests';
-import { store } from '@redux/configure-store';
 import { addNewFeedback } from '@redux/feedbackSlice';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 
 type props = {
     isModalOpen: boolean,
@@ -14,6 +14,7 @@ type props = {
 }
 
 export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, setResultType }) => {
+    const dispatch = useAppDispatch();
     const [feedback, setFeedback] = useState({
         message: "",
         rating: 0
@@ -21,7 +22,7 @@ export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, se
 
     function handleFeedback() {
         sendFeedback(feedback.message, feedback.rating).then((response) => {
-            if (response === "success") store.dispatch(addNewFeedback({
+            if (response === "success") dispatch(addNewFeedback({
                 imageSrc: "",
                 fullName: "",
                 rating: feedback.rating,

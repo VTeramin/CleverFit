@@ -5,13 +5,28 @@ import VerificationInput from 'react-verification-input';
 import { CloseCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
 import { confirmEmail } from '../../../requests';
 import { useNavigate } from 'react-router-dom';
-import { store } from '@redux/configure-store';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { selectLogin } from '@redux/loginSlice';
 
 export const ConfirmEmail: React.FC = () => {
     const navigate = useNavigate();
-    const { email } = store.getState().login;
+    const { email } = useAppSelector(selectLogin);
     const [code, setCode] = useState("");
     const [isError, setIsError] = useState(false);
+
+    function handleVerifInputComplete(value: string) {
+        if(email) confirmEmail(email, value).then((resp) => {
+            if (resp === "error") {
+                setIsError(true);
+                confirmEmail(email, code).then((resp) => {
+                    if (resp !== "error") navigate(resp);
+                })
+                setCode("");
+            } else {
+                navigate(resp);
+            }
+        })
+    }
 
     return (
         <div className="modal-wrapper">
@@ -39,17 +54,7 @@ export const ConfirmEmail: React.FC = () => {
                     value={code}
                     autoFocus
                     onChange={(value) => setCode(value)}
-                    onComplete={(value) => confirmEmail(email, value).then((resp) => {
-                        if (resp === "error") {
-                            setIsError(true);
-                            confirmEmail(email, code).then((resp) => {
-                                if (resp !== "error") navigate(resp);
-                            })
-                            setCode("");
-                        } else {
-                            navigate(resp);
-                        }
-                    })}
+                    onComplete={handleVerifInputComplete}
                     inputProps={{ "data-test-id": "verification-input" }}
                 />
                 <p className={styles["confirm-modal__desc"]}>Не пришло письмо? Проверьте папку Спам.</p>

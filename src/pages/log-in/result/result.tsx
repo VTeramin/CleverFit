@@ -5,7 +5,8 @@ import '../modal.css';
 import { WarningFilled, CloseCircleFilled, CheckCircleFilled } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { changePassword, checkEmail, register } from '../../../requests';
-import { store } from '@redux/configure-store';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { selectLogin } from '@redux/loginSlice';
 
 type resultData = {
     [key: string]: {
@@ -20,6 +21,7 @@ export const Result: React.FC = () => {
     const navigate = useNavigate();
     const { result } = useParams();
     const resultType = result ? result : "";
+    const { email, password, password2 } = useAppSelector(selectLogin);
 
     const resultData: resultData = {
         "error-login": {
@@ -56,7 +58,7 @@ export const Result: React.FC = () => {
                 className={styles["result-modal__button"]}
                 onClick={() => {
                     navigate("/auth/registration");
-                    register(store.getState().login.email, store.getState().login.password).then(navigate);
+                    register(email, password).then(navigate);
                 }}
                 data-test-id="registration-retry-button"
             >Повторить</Button>
@@ -107,7 +109,7 @@ export const Result: React.FC = () => {
                 className={`${styles["result-modal__button"]} ${styles["margin-shrink"]} ${styles["margin"]}`}
                 onClick={() => {
                     navigate("/auth/change-password");
-                    changePassword(store.getState().login.password, store.getState().login.password2).then(navigate);
+                    changePassword(email, password2).then(navigate);
                 }}
                 data-test-id="change-retry-button"
             >Повторить</Button>
@@ -120,7 +122,7 @@ export const Result: React.FC = () => {
                 className={`${styles["result-modal__button"]} ${styles["margin-shrink"]} ${styles["margin"]} ${styles["small"]}`}
                 onClick={() => {
                     navigate("/auth");
-                    checkEmail(store.getState().login.email).then(navigate);
+                    checkEmail(email).then(navigate);
                 }}
                 data-test-id="check-back-button"
             >Назад</Button>

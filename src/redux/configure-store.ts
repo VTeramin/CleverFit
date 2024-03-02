@@ -17,7 +17,7 @@ export const store = configureStore({
     reducer: combineReducers({
         login: loginReducer,
         loader: loaderReducer,
-        user: userDataReducer,
+        userData: userDataReducer,
         feedback: feedbackReducer,
         router: routerReducer
     }),
@@ -25,3 +25,5 @@ export const store = configureStore({
 });
 
 export const history = createReduxHistory(store);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
