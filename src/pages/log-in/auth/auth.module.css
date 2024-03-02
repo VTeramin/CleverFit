@@ -1,7 +1,7 @@
 .auth-modal__logo {
     width: 309px;
     height: 79px;
-    background-image: url(../../../assets/logo/logo.svg);
+    background-image: var(--logo);
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: contain;
@@ -21,6 +21,10 @@
     width: 368px;
     height: 380px;
     margin-bottom: 110px;
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
 }
 
 .auth-modal__login-form.registration {
@@ -45,7 +49,7 @@
 
 .login-form__form-select-buttons {
     width: 100%;
-    border-bottom: 1px solid var(--character-light-dividers);
+    border-bottom: var(--button-border-auth);
     margin-bottom: 24px;
 }
 
@@ -63,10 +67,8 @@
     width: 50%;
     height: 46px;
 
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 130%;
+    font-size: var(--font-size-larger);
+    line-height: var(--line-height);
     color: var(--character-light-title-85);
 }
 
@@ -75,27 +77,24 @@
 }
 
 .text-button.active {
-    border-bottom: 2px solid var(--primary-light-6);
+    border-bottom: var(--button-border-auth-active);
     color: var(--primary-light-6);
 }
 
 @media (max-width: 833px) {
     .text-button {
-        font-size: 14px;
+        font-size: var(--font-size);
     }
 }
 
 .login-form__input {
     width: 100%;
     height: 40px;
-    border: 1px solid var(--character-light-border);
-    border-radius: 2px;
+    border: var(--button-border-light);
+    border-radius: var(--border-radius);
     margin-bottom: 32px;
 
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
+    line-height: var(--line-height);
     color: var(--character-light-title-85);
 }
 
@@ -105,18 +104,15 @@
 }
 
 .login-form__input [class*="addon"] {
-    border-right: 1px solid var(--character-light-border);
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
+    border-right: var(--button-border-light);
+    line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-title-85);
     width: 71px;
 }
 
 .login-form__input[class*="status-error"] {
-    border: 1px solid var(--character-light-error);
+    border: var(--button-border-error);
 }
 
 .login-form__input[class*="input-password"] {
@@ -134,10 +130,8 @@
 }
 
 .auth-modal [class*="item-explain"] {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 130%;
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
     margin-bottom: 0;
     transform: translateY(-22px);
     position: absolute;
@@ -185,18 +179,13 @@
 }
 
 .checkbox__label {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
-    color: rgba(0, 0, 0, 0.85);
+    line-height: var(--line-height);
+    color: var(--character-dark-close);
     text-wrap: nowrap;
 }
 
 .remember-group__link {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 16px;
+    font-size: var(--font-size-larger);
     line-height: 130%;
     text-align: center;
     color: var(--primary-light-6);
@@ -221,19 +210,19 @@
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 16px;
-    line-height: 130%;
+    line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-title-85);
 }
 
 .login-form__button-icon {
-    font-size: 14px;
+    font-size: var(--font-size);
     margin-right: 2px;
 }
 
 @media (max-width: 833px) {
     .login-form__button {
-        font-size: 14px;
+        font-size: var(--font-size);
     }
 
     .registration .login-form__button {
@@ -251,7 +240,7 @@
 }
 
 .conf-button {
-    border: 1px solid var(--primary-light-6);
+    border: var(--button-border);
     background: var(--primary-light-6);
     color: var(--character-light-primary-inverse);
     margin-top: 16px;

@@ -8,6 +8,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(6px);
-    background: rgba(121, 156, 212, 0.5);
+    backdrop-filter: var(--background-blur-filter);
+    background: var(--background-blur-color);
 }

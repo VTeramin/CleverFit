@@ -1,7 +1,7 @@
 .page__cards {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: var(--flex-gap);
     margin-bottom: 132px;
     overflow-y: auto;
 }
@@ -9,7 +9,7 @@
 @media (max-width: 800px) {
     .page__cards {
         max-height: max-content;
-        gap: 16px;
+        gap: var(--flex-gap-small);
         margin-bottom: 48px;
     }
 }
@@ -19,11 +19,11 @@
 }
 
 .card {
-    border-radius: 2px;
-    padding: 16px;
+    border-radius: var(--border-radius);
+    padding: var(--flex-gap-small);
     width: 100%;
     min-height: max-content;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: var(--box-shadow);
 }
 
 @media (max-width: 800px) {
@@ -57,7 +57,7 @@
         height: auto;
         flex-direction: row;
         justify-content: flex-start;
-        gap: 16px;
+        gap: var(--flex-gap-small);
     }
 }
 
@@ -72,8 +72,8 @@
 
 .person__name {
     width: min-content;
-    font-size: 16px;
-    line-height: 130%;
+    font-size: var(--font-size-larger);
+    line-height: var(--line-height);
     color: var(--character-light-title-85);
     margin-bottom: 0;
     text-align: center;
@@ -82,7 +82,7 @@
 .card__rate {
     width: 96px;
     height: 16px;
-    font-size: 14px;
+    font-size: var(--font-size);
 }
 
 .rate [class*="anticon-star"] {
@@ -103,8 +103,8 @@
 }
 
 .card__time {
-    font-size: 12px;
-    line-height: 130%;
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
     color: var(--character-light-disable-25);
 }
 
@@ -134,7 +134,7 @@
 .card__comment [class*="comment-inner"] {
     height: 100%;
     padding: 0;
-    line-height: 130%;
+    line-height: var(--line-height);
     color: var(--character-light-secondary-45);
 }
 

@@ -29,7 +29,7 @@ export const App: React.FC = () => {
                         <Route path={ROUTE.FEEDBACKS} element={<FeedbacksPage />} />
                     </Route>
                     <Route element={<PushRoutes />}>
-                        <Route path={ROUTE.FEEDBACKS} element={<Result />} />
+                        <Route path={ROUTE.RESULT} element={<Result />} />
                     </Route>
                 </Routes>
                 <Loader />

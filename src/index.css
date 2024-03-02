@@ -81,15 +81,60 @@
     --character-dark-link: #177ddc;
     --character-dark-red-4: #791a1f;
     --character-dark-sider-background: #111d2c;
-}
+    --character-dark-close: rgba(0, 0, 0, 0.85);
 
-:root {
     --font-family: "Inter", sans-serif;
     --second-family: "Roboto", sans-serif;
+    --font-size-large2: 38px;
+    --font-size-large: 24px;
+    --font-size-larger: 16px;
+    --font-size: 14px;
+    --font-size-smaller: 12px;
+    --font-weight: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+    --line-height: 130%;
+
+    --background-img: url(./assets/img/main-page-bg-light.png);
+    --background-img-login: url(./assets/img/log-in-bg-light.png);
+    --logo: url(./assets/logo/logo.svg);
+    --logo-collapsed: url(./assets/logo/logoCollapsed.svg);
+    --exit-icon: url(./assets/icon/exit.svg);
+    --error-img: url(./assets/img/error-image.png);
+    --trigger-clip-path: path("M0 -1.52588e-05L20 7.99998V58L0 66V-1.52588e-05Z");
+    --trigger-collapsed-clip-path: path("M0 0L32 5.81818V42.1818L0 48V0Z");
+
+    --background-blur-filter: blur(6px);
+    --background-blur-color: rgba(121, 156, 212, 0.5);
+    --box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    --box-shadow-exit: inset 0 1px 0 0 var(--character-light-dividers);
+    --box-shadow-button: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+
+    --icon-large: 32px;
+    --icon-size: 16px;
+    --icon-size-medium: 14px;
+    --icon-size-small: 12px;
+
+    --button-width-large: 216px;
+    --button-width-larger: 180px;
+    --button-width: 142px;
+    --button-width-smaller: 130px;
+    --button-width-small: 74px;
+    --button-height: 40px;
+    --button-border: 1px solid var(--primary-light-6);
+    --button-border-light: 1px solid var(--character-light-border);
+    --button-border-auth: 1px solid var(--character-light-dividers);
+    --button-border-auth-active: 2px solid var(--primary-light-6);
+    --button-border-error: 1px solid var(--character-light-error);
+    --button-padding: 4px 15px;
+    --border-radius: 2px;
+
+    --flex-gap: 20px;
+    --flex-gap-small: 16px;
 }
 
 html {
     font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
 }

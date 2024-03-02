@@ -2,9 +2,13 @@
     width: 100%;
     height: max-content;
     padding: 64px 85.5px;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
     background: var(--character-light-primary-inverse);
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
 }
 
 @media (max-width: 800px) {
@@ -36,18 +40,14 @@
 }
 
 .result [class*="result-title"] {
-    font-family: var(--font-family);
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 130%;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-large);
+    line-height: var(--line-height);
     color: var(--character-light-title-85);
 }
 
 .result [class*="result-subtitle"] {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
+    line-height: var(--line-height);
     color: var(--character-light-secondary-45);
 }
 
@@ -58,30 +58,25 @@
 }
 
 .conf-button {
-    width: 142px;
-    height: 40px;
-    border: 1px solid var(--primary-light-6);
-    border-radius: 2px;
-    padding: 4px 15px;
-    margin-right: 8px;
-
-    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+    width: var(--button-width);
+    height: var(--button-height);
+    border: var(--button-border);
+    border-radius: var(--border-radius);
+    padding: var(--button-padding);
+    box-shadow: var(--box-shadow-button);
     background: var(--primary-light-6);
 
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
+    line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-primary-inverse);
 }
 
 .no-token .conf-button {
-    width: 74px;
+    width: var(--button-width-small);
 }
 
 .conf-button-white {
-    border: 1px solid var(--character-light-border);
+    border: var(--button-border-light);
     background: var(--character-light-primary-inverse);
     color: var(--character-light-title-85);
 }
@@ -91,11 +86,11 @@
 }
 
 .result [class*="result-error"] [class*="ant-btn"] {
-    width: 180px;
+    width: var(--button-width-larger);
 }
 
 @media (max-width: 800px) {
     .result [class*="result-error"] [class*="ant-btn"] {
-        width: 144px;
+        width: var(--button-width);
     }
 }
