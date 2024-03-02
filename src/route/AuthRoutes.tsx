@@ -2,6 +2,7 @@ import { store } from '@redux/configure-store';
 import { changeSessionToken, toggleIsAuthorized } from '@redux/userDataSlice';
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
+import { ROUTE } from './routes';
 
 function getTokenFromSearch() {
     const searchParams = window.location.search;
@@ -20,5 +21,5 @@ export const AuthRoutes: React.FC = () => {
     }
 
     const isAuthorized = store.getState().user.isAuthorized;
-    return isAuthorized ? <Navigate to="/main" /> : <Outlet />;
+    return isAuthorized ? <Navigate to={ROUTE.MAIN} /> : <Outlet />;
 };
