@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import 'antd/dist/antd.css';
 import styles from './side-bar.module.css';
 import { Breadcrumb, Layout, Menu } from 'antd';
@@ -7,6 +7,7 @@ import { CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone, MenuUnfold
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toggleIsAuthorized } from '@redux/userDataSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { useWindowSize } from '@uidotdev/usehooks';
 
 type props = {
     innerLayout: React.ReactElement
@@ -17,17 +18,8 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
     const dispatch = useAppDispatch();
     const location = useLocation();
     const [collapsed, setCollapsed] = useState(false);
-    const [width, setWidth] = useState(window.innerWidth);
+    const width = useWindowSize().width || 0;
     const isFullWidth = width > 800;
-
-    useEffect(() => {
-        function updateWidth() {
-            setWidth(window.innerWidth);
-        }
-        window.addEventListener('resize', updateWidth);
-        updateWidth();
-        return () => window.removeEventListener('resize', updateWidth);
-    }, []);
 
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
         key: index,
