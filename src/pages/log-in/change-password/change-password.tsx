@@ -4,7 +4,7 @@ import '../modal.css';
 import styles from './change-password.module.css';
 import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { changePassword } from '../../../requests';
+import { changePassword } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
 import { changePasswords } from '@redux/loginSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
@@ -97,7 +97,7 @@ export const ChangePassword: React.FC = () => {
                             type="primary"
                             htmlType="submit"
                             disabled={!Object.values(validStatus).every(el => el === true) || passwords.password === "" || passwords.confirmPassword === ""}
-                            onClick={() => changePassword(passwords.password, passwords.confirmPassword).then(navigate)}
+                            onClick={() => dispatch(changePassword()).then(navigate)}
                             data-test-id="change-submit-button"
                         >
                             Сохранить

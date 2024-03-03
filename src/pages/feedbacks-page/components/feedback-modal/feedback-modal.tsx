@@ -3,14 +3,13 @@ import 'antd/dist/antd.css';
 import styles from './feedback-modal.module.css';
 import { Button, Form, Input, Modal, Rate } from 'antd';
 import { StarTwoTone } from '@ant-design/icons';
-import { sendFeedback } from '../../../../requests';
-import { addNewFeedback } from '@redux/feedbackSlice';
+import { sendFeedback, status } from '@utils/requests';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 
 type props = {
     isModalOpen: boolean,
-    setIsModalOpen: (a: boolean) => void,
-    setResultType: (a: string) => void
+    setResultType: React.Dispatch<React.SetStateAction<status>>,
+    setIsModalOpen: (a: boolean) => void
 }
 
 export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, setResultType }) => {
@@ -21,16 +20,10 @@ export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, se
     });
 
     function handleFeedback() {
-        sendFeedback(feedback.message, feedback.rating).then((response) => {
-            if (response === "success") dispatch(addNewFeedback({
-                imageSrc: "",
-                fullName: "",
-                rating: feedback.rating,
-                createdAt: new Date(Date.now()).toISOString(),
-                message: feedback.message
-            }));
+        dispatch(sendFeedback(feedback.message, feedback.rating)).then((response) => {
             setResultType(response);
-        }).finally(() => setIsModalOpen(false));
+            setIsModalOpen(false);
+        })
     }
 
     return (

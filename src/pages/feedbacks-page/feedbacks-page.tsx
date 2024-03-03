@@ -5,27 +5,30 @@ import { Button, Layout } from 'antd';
 import { FeedbackCards } from './components/feeback-cards/feedback-cards';
 import { FeedbackModal } from './components/feedback-modal/feedback-modal';
 import { FeedbackResult } from './components/feedback-result/feedback-result';
-import { getFeedbacks } from '../../requests';
+import { getFeedbacks, status } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectFeedback } from '@redux/feedbackSlice';
 import { ROUTE } from '@route/routes';
+import { selectUserData } from '@redux/userDataSlice';
 
 export const FeedbacksPage: React.FC = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const feedbackData = useAppSelector(selectFeedback);
     const [isShowAll, setIsShowAll] = useState(false);
     const cardsData = isShowAll ? feedbackData : feedbackData.slice(0, 4);
     const isNoCards = cardsData.length === 0;
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [resultType, setResultType] = useState("");
+    const [resultType, setResultType] = useState(status.empty);
+    const { sessionToken } = useAppSelector(selectUserData);
 
     useEffect(() => {
-        getFeedbacks().then(response => {
-            if (response === "redirect") navigate(ROUTE.AUTH);
-            if (response === "no token" || response === "error") setResultType("noToken");
+        dispatch(getFeedbacks()).then(response => {
+            if (response === status.redirect) navigate(ROUTE.AUTH);
+            if (response === status.noToken || response === status.error) setResultType(status.noToken);
         });
-    }, [navigate]);
+    }, [dispatch, sessionToken, navigate]);
 
     const firstFeedback = (
         <div className={styles["firstFeedback"]}>
@@ -59,7 +62,7 @@ export const FeedbacksPage: React.FC = () => {
                 setIsModalOpen={setIsModalOpen}
                 setResultType={setResultType}
             />
-            {(resultType === "success" || resultType === "error" || resultType === "noToken") && <FeedbackResult
+            {resultType !== status.empty && <FeedbackResult
                 resultType={resultType}
                 setResultType={setResultType}
                 setIsModalOpen={setIsModalOpen}

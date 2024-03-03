@@ -3,7 +3,7 @@ import { RootState } from "./configure-store";
 
 const initialState = {
     isAuthorized: localStorage.getItem("token") !== null,
-    sessionToken: localStorage.getItem("token")
+    sessionToken: localStorage.getItem("token") || ""
 };
 
 export const userDataSlice = createSlice({

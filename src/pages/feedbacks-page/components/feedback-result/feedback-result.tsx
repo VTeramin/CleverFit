@@ -4,10 +4,11 @@ import styles from './feedback-result.module.css';
 import { Button, Modal, Result } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '@route/routes';
+import { status } from '@utils/requests';
 
 type props = {
-    resultType: "success" | "error" | "noToken",
-    setResultType: (a: string) => void,
+    resultType: status,
+    setResultType: React.Dispatch<React.SetStateAction<status>>,
     setIsModalOpen: (a: boolean) => void
 }
 
@@ -24,7 +25,7 @@ export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, set
                     className={styles["conf-button"]}
                     onClick={() => {
                         setIsModalOpen(true);
-                        setResultType("");
+                        setResultType(status.empty);
                     }}
                     data-test-id="write-review-not-saved-modal"
                 >
@@ -33,7 +34,7 @@ export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, set
                 <Button
                     key="Закрыть"
                     className={`${styles["conf-button"]} ${styles["conf-button-white"]}`}
-                    onClick={() => setResultType("")}
+                    onClick={() => setResultType(status.empty)}
                 >
                     Закрыть
                 </Button>
@@ -46,7 +47,7 @@ export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, set
                 <Button
                     key="Отлично"
                     className={`${styles["conf-button"]}`}
-                    onClick={() => setResultType("")}
+                    onClick={() => setResultType(status.empty)}
                 >
                     Отлично
                 </Button>

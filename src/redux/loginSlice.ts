@@ -11,6 +11,10 @@ export type login = {
     isRemember: boolean
 } & passwords;
 
+type changeData = {
+    [name:string]: string | boolean
+}
+
 const initialState: login = {
     email: "",
     password: "",
@@ -22,7 +26,7 @@ export const loginSlice = createSlice({
     name: 'login',
     initialState,
     reducers: {
-        changeLoginData: (state, action: PayloadAction<login>) => {
+        changeLoginData: (state, action: PayloadAction<changeData>) => {
             Object.assign(state, action.payload)
         },
         changePasswords: (state, action: PayloadAction<passwords>) => {

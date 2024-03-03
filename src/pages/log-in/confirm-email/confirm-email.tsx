@@ -3,28 +3,26 @@ import '../modal.css';
 import styles from './confirm-email.module.css';
 import VerificationInput from 'react-verification-input';
 import { CloseCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
-import { confirmEmail } from '../../../requests';
+import { confirmEmail, status } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectLogin } from '@redux/loginSlice';
 
 export const ConfirmEmail: React.FC = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const { email } = useAppSelector(selectLogin);
     const [code, setCode] = useState("");
     const [isError, setIsError] = useState(false);
 
     function handleVerifInputComplete(value: string) {
-        if(email) confirmEmail(email, value).then((resp) => {
-            if (resp === "error") {
-                setIsError(true);
-                confirmEmail(email, code).then((resp) => {
-                    if (resp !== "error") navigate(resp);
-                })
-                setCode("");
-            } else {
-                navigate(resp);
-            }
+        if (email) dispatch(confirmEmail(value)).then((resp) => {
+            if (resp !== status.error) navigate(resp);
+            setIsError(true);
+            dispatch(confirmEmail(value)).then((resp) => {
+                if (resp !== status.error) navigate(resp);
+            })
+            setCode("");
         })
     }
 

@@ -4,9 +4,8 @@ import styles from './result.module.css';
 import '../modal.css';
 import { WarningFilled, CloseCircleFilled, CheckCircleFilled } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
-import { changePassword, checkEmail, register } from '../../../requests';
-import { useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { selectLogin } from '@redux/loginSlice';
+import { changePassword, checkEmail, register } from '@utils/requests';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { ROUTE } from '@route/routes';
 
 type resultData = {
@@ -19,10 +18,10 @@ type resultData = {
 }
 
 export const Result: React.FC = () => {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { result } = useParams();
     const resultType = result ? result : "";
-    const { email, password, password2 } = useAppSelector(selectLogin);
 
     const resultData: resultData = {
         "error-login": {
@@ -59,7 +58,7 @@ export const Result: React.FC = () => {
                 className={styles["result-modal__button"]}
                 onClick={() => {
                     navigate(ROUTE.REGISTRATION);
-                    register(email, password).then(navigate);
+                    dispatch(register()).then(navigate);
                 }}
                 data-test-id="registration-retry-button"
             >Повторить</Button>
@@ -110,7 +109,7 @@ export const Result: React.FC = () => {
                 className={`${styles["result-modal__button"]} ${styles["margin-shrink"]} ${styles["margin"]}`}
                 onClick={() => {
                     navigate(ROUTE.CHANGE_PASSWORD);
-                    changePassword(email, password2).then(navigate);
+                    dispatch(changePassword()).then(navigate);
                 }}
                 data-test-id="change-retry-button"
             >Повторить</Button>
@@ -123,7 +122,7 @@ export const Result: React.FC = () => {
                 className={`${styles["result-modal__button"]} ${styles["margin-shrink"]} ${styles["margin"]} ${styles["small"]}`}
                 onClick={() => {
                     navigate(ROUTE.AUTH);
-                    checkEmail(email).then(navigate);
+                    dispatch(checkEmail()).then(navigate);
                 }}
                 data-test-id="check-back-button"
             >Назад</Button>
