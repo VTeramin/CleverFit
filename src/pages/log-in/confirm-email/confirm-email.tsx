@@ -16,14 +16,15 @@ export const ConfirmEmail: React.FC = () => {
     const [isError, setIsError] = useState(false);
 
     function handleVerifInputComplete(value: string) {
-        if (email) dispatch(confirmEmail(value)).then((resp) => {
+        if(!email) return;
+        dispatch(confirmEmail(value)).then((resp) => {
             if (resp !== status.error) navigate(resp);
             setIsError(true);
+            setCode("");
             dispatch(confirmEmail(value)).then((resp) => {
                 if (resp !== status.error) navigate(resp);
-            })
-            setCode("");
-        })
+            });
+        });
     }
 
     return (

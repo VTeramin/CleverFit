@@ -14,6 +14,12 @@ type props = {
 
 export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, setIsModalOpen }) => {
     const navigate = useNavigate();
+
+    function handleWriteReview() {
+        setIsModalOpen(true);
+        setResultType(status.empty);
+    }
+
     const result: { [name: string]: JSX.Element } = {
         error: <Result
             status="error"
@@ -23,10 +29,7 @@ export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, set
                 <Button
                     key="Написать отзыв"
                     className={styles["conf-button"]}
-                    onClick={() => {
-                        setIsModalOpen(true);
-                        setResultType(status.empty);
-                    }}
+                    onClick={handleWriteReview}
                     data-test-id="write-review-not-saved-modal"
                 >
                     Написать отзыв

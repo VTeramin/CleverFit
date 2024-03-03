@@ -6,7 +6,7 @@ import loginReducer from "./loginSlice";
 import loaderReducer from "./loaderSlice";
 import userDataReducer from "./userDataSlice";
 import feedbackReducer from "./feedbackSlice";
-import {thunk} from "redux-thunk";
+import { thunk } from "redux-thunk";
 
 const {
     createReduxHistory,

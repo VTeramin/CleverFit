@@ -9,17 +9,12 @@ import { useNavigate } from 'react-router-dom';
 import { changeLoginData, selectLogin } from '@redux/loginSlice';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { ROUTE } from '@route/routes';
+import { validPassword } from '@utils/valid-password';
+import { validEmail } from '@utils/valid-email';
+import { checkDisabledAuth, checkValidAuth, validAuth } from '@utils/check-valid-status';
 
 type props = {
     isRegistration: boolean
-}
-
-type valid = {
-    email: "error" | "success",
-    password: "error" | "success",
-    password2: "error" | "success",
-    passwordHelp: "error" | "normal",
-    password2Help: "error" | "normal"
 }
 
 export const Auth: React.FC<props> = ({ isRegistration }) => {
@@ -27,60 +22,30 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
     const dispatch = useAppDispatch();
     const formData = useAppSelector(selectLogin);
 
-    const [isDisabled, setIsDisabled] = useState(true);
-    useEffect(() => {
-        isRegistration ? setIsDisabled(!Object.values({ ...formData, isRemember: true }).every(el => el))
-            : setIsDisabled(![formData.email, formData.password].every(el => el))
-    }, [formData, isRegistration]);
-
     const [isValid, setIsValid] = useState({
-        email: false,
-        password: false,
-        pasword2: false
+        email: true,
+        password: true,
+        password2: true
     });
-    const [validStatus, setValidStatus] = useState<valid>({
+    const [validStatus, setValidStatus] = useState<validAuth>({
         email: "success",
         password: "success",
         password2: "success",
         passwordHelp: "normal",
         password2Help: "normal"
     });
+    const [isDisabled, setIsDisabled] = useState(true);
     useEffect(() => {
-        setValidStatus(() => {
-            if (isRegistration) {
-                return {
-                    email: (!isValid.email && formData.email !== "") || (isValid.pasword2 && !formData.email) ? "error" : "success",
-                    password: (!isValid.password && formData.password !== "") || (isValid.email && !formData.password) ? "error" : "success",
-                    password2: (!isValid.pasword2 && formData.password2 !== "") || (isValid.password && !isValid.pasword2) || (isValid.email && !formData.password2) ? "error" : "success",
-                    passwordHelp: (!isValid.password && formData.password !== "") ? "error" : "normal",
-                    password2Help: (!isValid.pasword2 && formData.password2 !== "") ? "error" : "normal"
-                }
-            } else {
-                return {
-                    email: (!isValid.email && formData.email !== "") || (isValid.password && formData.password !== "" && formData.email === "") ? "error" : "success",
-                    password: !isValid.password && formData.password !== "" ? "error" : "success",
-                    password2: "success",
-                    passwordHelp: "normal",
-                    password2Help: "normal"
-                }
-            }
-        });
-    }, [isValid, formData, isRegistration]);
+        setValidStatus(checkValidAuth(isRegistration, isValid, formData));
+        setIsDisabled(checkDisabledAuth(isRegistration, isValid, formData));
+    }, [isRegistration, isValid, formData]);
 
     function handleEmailChange(event: { target: HTMLInputElement }) {
-        function validEmail(email: string): boolean {
-            const pattern = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
-            return pattern.test(email);
-        }
         dispatch(changeLoginData({ email: event.target.value }));
         setIsValid(prev => ({ ...prev, email: validEmail(event.target.value) }));
     }
 
     function handlePasswordChange(event: { target: HTMLInputElement }) {
-        function validPassword(password: string): boolean {
-            const pattern = /^(?=.*[A-ZА-ЯЁ])(?=.*\d)[а-яА-ЯёЁa-zA-Z\d\W]{8,}$/;
-            return pattern.test(password);
-        }
         dispatch(changeLoginData({ password: event.target.value }));
         setIsValid(prev => ({
             ...prev,
@@ -99,10 +64,10 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
     }
 
     function handleForgetClick() {
-        if (isValid.email) dispatch(checkEmail()).then(navigate);
+        if (isValid.email && formData.email !== "") dispatch(checkEmail()).then(navigate);
     }
 
-    function handleLogin() {
+    function handleLoginButton() {
         if (isRegistration) {
             dispatch(register()).then(navigate);
         } else {
@@ -211,7 +176,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                             type="primary"
                             htmlType="submit"
                             disabled={isDisabled}
-                            onClick={handleLogin}
+                            onClick={handleLoginButton}
                             data-test-id={isRegistration ? "registration-submit-button" : "login-submit-button"}
                         >
                             Войти

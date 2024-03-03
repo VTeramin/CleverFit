@@ -4,6 +4,7 @@ import styles from './feedback-cards.module.css';
 import { Avatar, Card, Comment, Rate } from 'antd';
 import { StarTwoTone, UserOutlined } from '@ant-design/icons';
 import { feedback } from '@redux/feedbackSlice';
+import { convertDate } from '@utils/convert-date';
 
 type props = {
     cardsData: feedback[]
@@ -30,7 +31,9 @@ export const FeedbackCards: React.FC<props> = ({ cardsData }) => {
                             character={<StarTwoTone twoToneColor="var(--character-light-warning)" className={styles["rate__star"]} />}
                             className={`${styles["card__rate"]} ${styles["rate"]}`}
                         />}
-                        datetime={<span className={styles["card__time"]}>{cardData.createdAt.substring(0, 10).split("-").reverse().join(".")}</span>}
+                        datetime={<span className={styles["card__time"]}>
+                            {convertDate(cardData.createdAt)}
+                        </span>}
                         content={<p>{cardData.message}</p>}
                         className={styles["card__comment"]}
                     />

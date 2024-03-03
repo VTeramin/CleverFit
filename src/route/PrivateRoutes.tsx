@@ -1,10 +1,11 @@
 import { SideBar } from '@pages/components/side-bar/side-bar';
-import { store } from '@redux/configure-store';
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { ROUTE } from './routes';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { selectUserData } from '@redux/userDataSlice';
 
 export const PrivateRoutes: React.FC = () => {
-    const isAuthorized = store.getState().userData.isAuthorized;
+    const { isAuthorized } = useAppSelector(selectUserData);
     return isAuthorized ? <SideBar innerLayout={<Outlet />} /> : <Navigate to={ROUTE.AUTH} />;
 };

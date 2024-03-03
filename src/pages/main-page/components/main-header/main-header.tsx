@@ -10,7 +10,7 @@ export const MainHeader: React.FC = () => {
         <Header className={styles["header"]}>
             <h1 className={styles["header__title"]}>Приветствуем тебя в&nbsp;CleverFit — приложении,<br />которое поможет тебе добиться своей мечты!</h1>
             <div className={styles["header__settings"]}>
-                {React.createElement(SettingOutlined, { className: styles["settings__icon"] })}
+                {<SettingOutlined className={styles["settings__icon"]} />}
                 <p className={styles["settings__line"]}>Настройки</p>
             </div>
         </Header>

@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectFeedback } from '@redux/feedbackSlice';
 import { ROUTE } from '@route/routes';
-import { selectUserData } from '@redux/userDataSlice';
 
 export const FeedbacksPage: React.FC = () => {
     const navigate = useNavigate();
@@ -21,14 +20,13 @@ export const FeedbacksPage: React.FC = () => {
     const isNoCards = cardsData.length === 0;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [resultType, setResultType] = useState(status.empty);
-    const { sessionToken } = useAppSelector(selectUserData);
 
     useEffect(() => {
         dispatch(getFeedbacks()).then(response => {
             if (response === status.redirect) navigate(ROUTE.AUTH);
             if (response === status.noToken || response === status.error) setResultType(status.noToken);
         });
-    }, [dispatch, sessionToken, navigate]);
+    }, [dispatch, navigate]);
 
     const firstFeedback = (
         <div className={styles["firstFeedback"]}>
@@ -38,11 +36,11 @@ export const FeedbacksPage: React.FC = () => {
     );
 
     return (
-        <Layout className={`${styles["page"]} ${styles[isNoCards ? "no-feedback" : ""]}`}>
+        <Layout className={`${styles["page"]} ${isNoCards && styles["no-feedback"]}`}>
             {isNoCards ? firstFeedback : <FeedbackCards cardsData={cardsData} />}
             <div className={styles["page__buttons"]}>
                 <Button
-                    className={`${styles["conf-button"]} ${styles[isNoCards ? "no-feedback" : ""]}`}
+                    className={`${styles["conf-button"]}`}
                     onClick={() => setIsModalOpen(true)}
                     data-test-id="write-review"
                 >
