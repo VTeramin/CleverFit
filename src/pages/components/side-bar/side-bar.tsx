@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toggleIsAuthorized } from '@redux/userDataSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useWindowSize } from '@uidotdev/usehooks';
+import { ROUTE } from '@route/routes';
 
 type props = {
     innerLayout: React.ReactElement
@@ -35,7 +36,7 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
     function handleExit() {
         localStorage.clear();
         dispatch(toggleIsAuthorized(false));
-        navigate("/auth");
+        navigate(ROUTE.AUTH);
     }
 
     return (
@@ -64,7 +65,7 @@ export const SideBar: React.FC<props> = ({ innerLayout }) => {
             </Sider>
             <Layout className={styles["page-layout"]}>
                 <Breadcrumb className={styles["page-layout__breadcrumbs"]}>
-                    <Breadcrumb.Item onClick={() => navigate("/main")}>Главная</Breadcrumb.Item>
+                    <Breadcrumb.Item onClick={() => navigate(ROUTE.MAIN)}>Главная</Breadcrumb.Item>
                     {location.pathname === "/feedbacks" && <Breadcrumb.Item>Отзывы пользователей</Breadcrumb.Item>}
                 </Breadcrumb>
                 {innerLayout}

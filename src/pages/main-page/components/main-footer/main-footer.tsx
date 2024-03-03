@@ -7,6 +7,7 @@ import { AndroidFilled, AppleFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { toggleIsAuthorized } from '@redux/userDataSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { ROUTE } from '@route/routes';
 
 export const MainFooter: React.FC = () => {
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ export const MainFooter: React.FC = () => {
                 className={styles["footer__reviews"]}
                 onClick={() => {
                     if(localStorage.getItem("token") === "") dispatch(toggleIsAuthorized(false));
-                    navigate("/feedbacks");
+                    navigate(ROUTE.FEEDBACKS);
                 }}
                 data-test-id="see-reviews"
             >Смотреть отзывы</Button>

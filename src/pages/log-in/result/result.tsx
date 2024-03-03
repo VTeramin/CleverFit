@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { changePassword, checkEmail, register } from '../../../requests';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectLogin } from '@redux/loginSlice';
+import { ROUTE } from '@route/routes';
 
 type resultData = {
     [key: string]: {
@@ -32,7 +33,7 @@ export const Result: React.FC = () => {
             subtitle: "Что-то пошло не так. Попробуйте еще раз",
             button: <Button
                 className={`${styles["result-modal__button"]}`}
-                onClick={() => navigate("/auth")}
+                onClick={() => navigate(ROUTE.AUTH)}
                 data-test-id="login-retry-button"
             >Повторить</Button>
         },
@@ -44,7 +45,7 @@ export const Result: React.FC = () => {
             subtitle: "Такой e-mail уже записан в системе. Попробуйте\u000Aзарегистрироваться по другому e\u2011mail.",
             button: <Button
                 className={styles["result-modal__button"]}
-                onClick={() => navigate("/auth/registration")}
+                onClick={() => navigate(ROUTE.REGISTRATION)}
                 data-test-id="registration-back-button"
             >Назад к регистрации</Button>
         },
@@ -57,7 +58,7 @@ export const Result: React.FC = () => {
             button: <Button
                 className={styles["result-modal__button"]}
                 onClick={() => {
-                    navigate("/auth/registration");
+                    navigate(ROUTE.REGISTRATION);
                     register(email, password).then(navigate);
                 }}
                 data-test-id="registration-retry-button"
@@ -71,7 +72,7 @@ export const Result: React.FC = () => {
             subtitle: "Регистрация прошла успешно. Зайдите\u000Aв приложение, используя свои e\u2011mail и пароль.",
             button: <Button
                 className={styles["result-modal__button"]}
-                onClick={() => navigate("/main")}
+                onClick={() => navigate(ROUTE.MAIN)}
                 data-test-id="registration-enter-button"
             >Войти</Button>
         },
@@ -83,7 +84,7 @@ export const Result: React.FC = () => {
             subtitle: "Мы не нашли в базе вашего e-mail. Попробуйте\u000Aвойти с другим e-mail.",
             button: <Button
                 className={`${styles["result-modal__button"]} ${styles["medium"]} ${styles["margin"]}`}
-                onClick={() => navigate("/auth")}
+                onClick={() => navigate(ROUTE.AUTH)}
                 data-test-id="check-retry-button"
             >Попробовать снова</Button>
         },
@@ -95,7 +96,7 @@ export const Result: React.FC = () => {
             subtitle: "Теперь можно войти в аккаунт, используя\u000Aсвой логин и новый пароль",
             button: <Button
                 className={`${styles["result-modal__button"]} ${styles["margin-shrink"]} ${styles["margin"]}`}
-                onClick={() => navigate("/auth")}
+                onClick={() => navigate(ROUTE.AUTH)}
                 data-test-id="change-entry-button"
             >Вход</Button>
         },
@@ -108,7 +109,7 @@ export const Result: React.FC = () => {
             button: <Button
                 className={`${styles["result-modal__button"]} ${styles["margin-shrink"]} ${styles["margin"]}`}
                 onClick={() => {
-                    navigate("/auth/change-password");
+                    navigate(ROUTE.CHANGE_PASSWORD);
                     changePassword(email, password2).then(navigate);
                 }}
                 data-test-id="change-retry-button"
@@ -121,7 +122,7 @@ export const Result: React.FC = () => {
             button: <Button
                 className={`${styles["result-modal__button"]} ${styles["margin-shrink"]} ${styles["margin"]} ${styles["small"]}`}
                 onClick={() => {
-                    navigate("/auth");
+                    navigate(ROUTE.AUTH);
                     checkEmail(email).then(navigate);
                 }}
                 data-test-id="check-back-button"

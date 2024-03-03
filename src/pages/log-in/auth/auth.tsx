@@ -8,6 +8,7 @@ import { checkEmail, googleAuth, login, register } from '../../../requests';
 import { useNavigate } from 'react-router-dom';
 import { changeLoginData, selectLogin } from '@redux/loginSlice';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { ROUTE } from '@route/routes';
 
 type props = {
     isRegistration: boolean
@@ -90,7 +91,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                         <Button
                             type="text"
                             onClick={() => {
-                                navigate("/auth");
+                                navigate(ROUTE.AUTH);
                                 setIsReg(false);
                             }}
                             className={`${styles["text-button"]} ${styles[isReg ? "" : "active"]}`}
@@ -100,7 +101,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                         <Button
                             type="text"
                             onClick={() => {
-                                navigate("/auth/registration");
+                                navigate(ROUTE.REGISTRATION);
                                 setIsReg(true);
                             }}
                             className={`${styles["text-button"]} ${styles[isReg ? "active" : ""]}`}

@@ -3,6 +3,7 @@ import 'antd/dist/antd.css';
 import styles from './feedback-result.module.css';
 import { Button, Modal, Result } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { ROUTE } from '@route/routes';
 
 type props = {
     resultType: "success" | "error" | "noToken",
@@ -60,7 +61,7 @@ export const FeedbackResult: React.FC<props> = ({ resultType, setResultType, set
                 <Button
                     key="Назад"
                     className={`${styles["conf-button"]}`}
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate(ROUTE.HOME)}
                 >
                     Назад
                 </Button>

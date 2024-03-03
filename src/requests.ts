@@ -2,6 +2,7 @@ import { store } from '@redux/configure-store';
 import { changeFeedbackData } from '@redux/feedbackSlice';
 import { toggleLoader } from '@redux/loaderSlice';
 import { changeSessionToken, toggleIsAuthorized } from '@redux/userDataSlice';
+import { ROUTE } from '@route/routes';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 const API = "https://marathon-api.clevertec.ru";
@@ -18,7 +19,7 @@ export async function login(email: string, password: string) {
             if (store.getState().login.isRemember) localStorage.setItem("token", token);
             store.dispatch(changeSessionToken(token));
             store.dispatch(toggleIsAuthorized(true));
-            return "/main";
+            return ROUTE.MAIN;
         })
         .catch(() => "/result/error-login")
         .finally(() => store.dispatch(toggleLoader(false)));
@@ -49,7 +50,7 @@ export async function checkEmail(email: string) {
         url: `${API}/auth/check-email`,
         data: { email }
     })
-        .then(() => "/auth/confirm-email")
+        .then(() => ROUTE.CONFIRM_EMAIL)
         .catch(error => {
             let path = "/result/error-check-email"
             if (error.response.status === 404 && error.response.data.message == "Email не найден") {
@@ -67,7 +68,7 @@ export async function confirmEmail(email: string, code: string) {
         url: `${API}/auth/confirm-email`,
         data: { email, code }
     })
-        .then(() => "/auth/change-password")
+        .then(() => ROUTE.CHANGE_PASSWORD)
         .catch(() => "error")
         .finally(() => store.dispatch(toggleLoader(false)));
 }

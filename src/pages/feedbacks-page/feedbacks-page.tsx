@@ -9,6 +9,7 @@ import { getFeedbacks } from '../../requests';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectFeedback } from '@redux/feedbackSlice';
+import { ROUTE } from '@route/routes';
 
 export const FeedbacksPage: React.FC = () => {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ export const FeedbacksPage: React.FC = () => {
 
     useEffect(() => {
         getFeedbacks().then(response => {
-            if (response === "redirect") navigate("/auth");
+            if (response === "redirect") navigate(ROUTE.AUTH);
             if (response === "no token" || response === "error") setResultType("noToken");
         });
     }, [navigate]);
