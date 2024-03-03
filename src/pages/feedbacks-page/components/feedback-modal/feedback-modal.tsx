@@ -45,7 +45,6 @@ export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, se
             centered={true}
             width={isFullWidth ? 539 : 328}
             onCancel={() => setIsModalOpen(false)}
-            maskClosable={false}
             maskStyle={{ backdropFilter: "blur(6px)", background: "rgba(121, 156, 212, 0.5)" }}
             className={styles["modal"]}
             footer={<Button
