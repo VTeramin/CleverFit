@@ -1,5 +1,9 @@
 .confirm-modal {
     padding: 64px 32px 42px;
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
 }
 
 @media (max-width: 833px) {
@@ -23,28 +27,24 @@
 }
 
 .confirm-modal__title {
-    font-family: var(--font-family);
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 130%;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-large);
+    line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-title-85);
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .confirm-modal__subtitle {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
+    line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-secondary-45);
     margin-bottom: 24px;
 }
 
-.confirm-modal__verif-input {
+.verif-input {
     margin-bottom: 24px;
-    padding: 0px;
+    padding: 0;
     width: max-content;
     height: max-content;
     display: flex;
@@ -52,21 +52,18 @@
 }
 
 @media (max-width: 833px) {
-    .confirm-modal__verif-input {
+    .verif-input {
         gap: 8px;
     }
 }
 
 .verif-input__char {
-    border: 1px solid var(--character-light-border);
-    border-radius: 2px;
+    border: var(--button-border-light);
+    border-radius: var(--border-radius);
     width: 40px;
     height: 40px;
-    padding: auto;
 
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
+    font-size: var(--font-size);
     line-height: 40px;
     text-align: center;
     color: var(--character-light-title-85);
@@ -77,14 +74,15 @@
 }
 
 .verif-input__char.valid-error {
-    border: 1px solid var(--character-light-error);
+    border: var(--button-border-error);
+}
+
+.verif-input__char--selected.valid-error {
+    outline: var(--button-border-error);
 }
 
 .confirm-modal__desc {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
+    line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-secondary-45);
 }

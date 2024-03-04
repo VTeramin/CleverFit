@@ -2,24 +2,30 @@ import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { createReduxHistoryContext } from "redux-first-history";
 import { createBrowserHistory } from "history";
-import formDataReducer from "./formDataSlice";
+import loginReducer from "./loginSlice";
 import loaderReducer from "./loaderSlice";
-import userDataReducer from "./userData";
+import userDataReducer from "./userDataSlice";
+import feedbackReducer from "./feedbackSlice";
+import { thunk } from "redux-thunk";
 
 const {
     createReduxHistory,
     routerMiddleware,
-    routerReducer
+    routerReducer,
 } = createReduxHistoryContext({ history: createBrowserHistory() });
 
 export const store = configureStore({
     reducer: combineReducers({
-        form: formDataReducer,
+        login: loginReducer,
         loader: loaderReducer,
-        user: userDataReducer,
+        userData: userDataReducer,
+        feedback: feedbackReducer,
         router: routerReducer
     }),
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware).concat(thunk),
 });
 
 export const history = createReduxHistory(store);
+export type RootState = ReturnType<typeof store.getState>;
+export type GetState = typeof store.getState;
+export type AppDispatch = typeof store.dispatch;

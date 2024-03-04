@@ -1,196 +1,195 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
-import "./auth.css"
+import '../modal.css';
+import styles from './auth.module.css';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { GooglePlusOutlined, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
-import { checkEmail, login, register } from '../../../requests';
+import { checkEmail, googleAuth, login, register } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
-import { store } from '@redux/configure-store';
-import { changeFormData } from '@redux/formDataSlice';
+import { changeLoginData, selectLogin } from '@redux/loginSlice';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { ROUTE } from '@route/routes';
+import { validPassword } from '@utils/valid-password';
+import { validEmail } from '@utils/valid-email';
+import { checkDisabledAuth, checkValidAuth, validAuth } from '@utils/check-valid-status';
 
-interface props {
+type props = {
     isRegistration: boolean
 }
 
 export const Auth: React.FC<props> = ({ isRegistration }) => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const formData = useAppSelector(selectLogin);
 
-    const [isReg, setIsReg] = useState(isRegistration);
-
-    const [formData, setFormData] = useState(() => store.getState().form);
-    useEffect(() => {
-        store.dispatch(changeFormData(formData));
-    }, [formData]);
-
-    const [isDisabled, setIsDisabled] = useState(true);
-    useEffect(() => {
-        isReg ? setIsDisabled(!Object.values(formData).every(el => el))
-            : setIsDisabled(![formData.email, formData.password].every(el => el))
-    }, [formData, isReg]);
-
-    const [validStatus, setValidStatus] = useState({
+    const [isValid, setIsValid] = useState({
         email: true,
         password: true,
-        password2: true,
-        passwordHelp: true,
-        password2Help: true
+        password2: true
     });
+    const [validStatus, setValidStatus] = useState<validAuth>({
+        email: "success",
+        password: "success",
+        password2: "success",
+        passwordHelp: "normal",
+        password2Help: "normal"
+    });
+    const [isDisabled, setIsDisabled] = useState(true);
     useEffect(() => {
-        setValidStatus(() => {
-            if (isReg) {
-                return {
-                    email: (!formData.isEmailValid && formData.email !== "") || (formData.isPassword2Valid && !formData.email),
-                    password: (!formData.isPasswordValid && formData.password !== "") || (formData.isEmailValid && !formData.password),
-                    password2: (!formData.isPassword2Valid && formData.password2 !== "") || (formData.isPasswordValid && !formData.isPassword2Valid) || (formData.isEmailValid && !formData.password2),
-                    passwordHelp: (!formData.isPasswordValid && formData.password !== ""),
-                    password2Help: (!formData.isPassword2Valid && formData.password2 !== "")
-                }
-            } else {
-                return {
-                    email: (!formData.isEmailValid && formData.email !== "") || (formData.isPasswordValid && formData.password !== "" && formData.email === ""),
-                    password: !formData.isPasswordValid && formData.password !== "",
-                    password2: true,
-                    passwordHelp: true,
-                    password2Help: true
-                }
-            }
-        })
-    }, [formData, isReg])
+        setValidStatus(checkValidAuth(isRegistration, isValid, formData));
+        setIsDisabled(checkDisabledAuth(isRegistration, isValid, formData));
+    }, [isRegistration, isValid, formData]);
 
-    function validEmail(email: string): boolean {
-        const pattern = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
-        return pattern.test(email);
+    function handleEmailChange(event: { target: HTMLInputElement }) {
+        dispatch(changeLoginData({ email: event.target.value }));
+        setIsValid(prev => ({ ...prev, email: validEmail(event.target.value) }));
     }
-    function validPassword(password: string): boolean {
-        const pattern = /^(?=.*[A-ZА-ЯЁ])(?=.*\d)[а-яА-ЯёЁa-zA-Z\d\W]{8,}$/;
-        return pattern.test(password);
+
+    function handlePasswordChange(event: { target: HTMLInputElement }) {
+        dispatch(changeLoginData({ password: event.target.value }));
+        setIsValid(prev => ({
+            ...prev,
+            password: validPassword(event.target.value),
+            pasword2: formData.password2 === event.target.value
+        }));
+    }
+
+    function handlePassword2Change(event: { target: HTMLInputElement }) {
+        dispatch(changeLoginData({ password2: event.target.value }));
+        setIsValid(prev => ({ ...prev, pasword2: formData.password === event.target.value }))
+    }
+
+    function handleCheckboxChange() {
+        dispatch(changeLoginData({ isRemember: !formData.isRemember }));
+    }
+
+    function handleForgetClick() {
+        if (isValid.email && formData.email !== "") dispatch(checkEmail()).then(navigate);
+    }
+
+    function handleLoginButton() {
+        if (isRegistration) {
+            dispatch(register()).then(navigate);
+        } else {
+            if (isValid.email && isValid.password) dispatch(login()).then(navigate);
+        }
+    }
+
+    const eyeRender = (visible: boolean) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />);
+
+    const help = {
+        password: isRegistration && <p className={styles[validStatus.passwordHelp]}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>,
+        password2: validStatus.password2Help === "error" && <p className={styles[validStatus.password2Help]}>Пароли не совпадают</p>
     }
 
     return (
         <div className="modal-wrapper">
-            <div className="auth-modal modal">
-                <div className="auth-modal__logo"></div>
+            <div className={`${styles["auth-modal"]} modal`}>
+                <div className={styles["auth-modal__logo"]}></div>
                 <Form
                     name="normal_login"
-                    className={`auth-modal__login-form ${isReg ? "registration" : ""}`}
-                    initialValues={{ remember: true }}
+                    className={`${styles["auth-modal__login-form"]} ${isRegistration && styles["registration"]}`}
                     validateMessages={{ required: "" }}
                 >
-                    <Form.Item className="login-form__form-select-buttons" style={{ marginBottom: `${isReg ? "32px" : "24px"}` }}>
+                    <Form.Item className={styles["login-form__form-select-buttons"]}>
                         <Button
                             type="text"
-                            onClick={() => {
-                                navigate("/auth");
-                                setIsReg(false);
-                            }}
-                            className={`text-button ${!isReg && "active"}`}
+                            onClick={() => navigate(ROUTE.AUTH)}
+                            className={`${styles["text-button"]} ${!isRegistration && styles["active"]}`}
                         >
                             Вход
                         </Button>
                         <Button
                             type="text"
-                            onClick={() => {
-                                navigate("/auth/registration");
-                                setIsReg(true);
-                            }}
-                            className={`text-button ${isReg && "active"}`}
+                            onClick={() => navigate(ROUTE.REGISTRATION)}
+                            className={`${styles["text-button"]} ${isRegistration && styles["active"]}`}
                         >
                             Регистрация
                         </Button>
                     </Form.Item>
-                    <Form.Item name="email" validateStatus={!validStatus.email ? "success" : "error"}>
+                    <Form.Item name="email" validateStatus={validStatus.email}>
                         <Input
-                            className="login-form__input"
+                            className={styles["login-form__input"]}
                             addonBefore="e-mail:"
                             type="email"
                             value={formData.email}
-                            onChange={(e) => setFormData(prev => ({
-                                ...prev,
-                                email: e.target.value,
-                                isEmailValid: validEmail(e.target.value)
-                            }))}
-                            data-test-id={isReg ? "registration-email" : "login-email"}
+                            onChange={handleEmailChange}
+                            data-test-id={isRegistration ? "registration-email" : "login-email"}
                         />
                     </Form.Item>
                     <Form.Item
                         name="password"
-                        validateStatus={!validStatus.password ? "success" : "error"}
-                        help={isReg && <p className={!validStatus.passwordHelp ? "normal" : "error"}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>}
+                        validateStatus={validStatus.password}
+                        help={help.password}
                     >
                         <Input.Password
-                            className="login-form__input"
-                            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                            className={styles["login-form__input"]}
+                            iconRender={eyeRender}
                             type="password"
                             placeholder="Пароль"
                             value={formData.password}
-                            onChange={(e) => setFormData(prev => ({
-                                ...prev,
-                                password: e.target.value,
-                                isPasswordValid: validPassword(e.target.value),
-                                isPassword2Valid: formData.password2 === e.target.value
-                            }))}
-                            data-test-id={isReg ? "registration-password" : "login-password"}
+                            onChange={handlePasswordChange}
+                            data-test-id={isRegistration ? "registration-password" : "login-password"}
                         />
                     </Form.Item>
-                    {isReg && <Form.Item
-                        name="password-repeat"
-                        validateStatus={!validStatus.password2 ? "success" : "error"}
-                        help={validStatus.password2Help && <p className={!validStatus.password2Help ? "normal" : "error"}>Пароли не совпадают</p>}
-                    >
-                        <Input.Password
-                            className="login-form__input"
-                            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                            type="password"
-                            placeholder="Повторите пароль"
-                            value={formData.password2}
-                            onChange={(e) => setFormData(prev => ({
-                                ...prev,
-                                password2: e.target.value,
-                                isPassword2Valid: formData.password === e.target.value
-                            }))}
-                            data-test-id="registration-confirm-password"
-                        />
-                    </Form.Item>}
-                    {!isReg && <Form.Item className="login-form__remember-group">
-                        <Form.Item className="remember-group__checkbox" name="remember" valuePropName="checked" noStyle>
-                            <Checkbox
-                                className="checkbox__label"
-                                value={formData.isRemember}
-                                onClick={() => setFormData(prev => ({ ...prev, isRemember: !prev.isRemember }))}
-                                data-test-id="login-remember"
-                            >
-                                Запомнить меня
-                            </Checkbox>
-                        </Form.Item>
-                        <Button
-                            className="remember-group__link text-button"
-                            type="text"
-                            htmlType="button"
-                            onClick={() => formData.isEmailValid ? checkEmail(formData.email).then(navigate) : ""}
-                            data-test-id="login-forgot-button"
+                    {isRegistration &&
+                        <Form.Item
+                            name="password-repeat"
+                            validateStatus={validStatus.password2}
+                            help={help.password2}
                         >
-                            Забыли пароль?
-                        </Button>
-                    </Form.Item>}
+                            <Input.Password
+                                className={styles["login-form__input"]}
+                                iconRender={eyeRender}
+                                type="password"
+                                placeholder="Повторите пароль"
+                                value={formData.password2}
+                                onChange={handlePassword2Change}
+                                data-test-id="registration-confirm-password"
+                            />
+                        </Form.Item>}
+                    {!isRegistration &&
+                        <Form.Item className={styles["login-form__remember-group"]}>
+                            <Form.Item className={styles["remember-group__checkbox"]} name="remember" valuePropName="checked" noStyle>
+                                <Checkbox
+                                    className={styles["checkbox__label"]}
+                                    checked={formData.isRemember}
+                                    onChange={handleCheckboxChange}
+                                    data-test-id="login-remember"
+                                >
+                                    Запомнить меня
+                                </Checkbox>
+                            </Form.Item>
+                            <Button
+                                className={styles["remember-group__link"]}
+                                type="text"
+                                htmlType="button"
+                                onClick={handleForgetClick}
+                                data-test-id="login-forgot-button"
+                            >
+                                Забыли пароль?
+                            </Button>
+                        </Form.Item>}
                     <Form.Item>
                         <Button
-                            className="login-form__button conf-button"
+                            className={`${styles["login-form__button"]} ${styles["conf-button"]}`}
                             type="primary"
                             htmlType="submit"
                             disabled={isDisabled}
-                            onClick={
-                                isReg ? () => register(formData.email, formData.password).then(navigate)
-                                    : () => {
-                                        if(formData.isEmailValid && formData.isPasswordValid) login(formData.email, formData.password).then(navigate);
-                                    }}
-                            data-test-id={isReg ? "registration-submit-button" : "login-submit-button"}
+                            onClick={handleLoginButton}
+                            data-test-id={isRegistration ? "registration-submit-button" : "login-submit-button"}
                         >
                             Войти
                         </Button>
                     </Form.Item>
                     <Form.Item>
-                        <Button className="login-form__button" type="ghost" htmlType="button">
-                            <GooglePlusOutlined className="login-form__button-icon" />{isReg ? "Регистрация" : "Войти"} через Google
+                        <Button
+                            className={styles["login-form__button"]}
+                            type="ghost"
+                            htmlType="button"
+                            onClick={() => dispatch(googleAuth())}
+                        >
+                            <GooglePlusOutlined className={styles["login-form__button-icon"]} />{isRegistration ? "Регистрация" : "Войти"} через Google
                         </Button>
                     </Form.Item>
                 </Form>

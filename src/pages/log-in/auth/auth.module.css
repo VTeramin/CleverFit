@@ -1,49 +1,7 @@
-.modal-wrapper {
-    min-height: 100vh;
-    height: max-content;
-    background-image: url(../../../assets/img/log-in-bg-light.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-wrapper::before {
-    height: 100vh;
-    width: 100vw;
-    content: "";
-    display: block;
-    backdrop-filter: blur(6px);
-    background: rgba(121, 156, 212, 0.5);
-    position: absolute;
-}
-
-.modal {
-    width: 539px;
-    height: fit-content;
-    border-radius: 2px;
-    padding: 64px 32px;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
-    background: var(--character-light-primary-inverse);
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-@media (max-width: 833px) {
-    .modal {
-        width: 328px;
-        padding: 32px 16px 12px;
-    }
-}
-
 .auth-modal__logo {
     width: 309px;
     height: 79px;
-    background-image: url(../../../assets/logo/logo.svg);
+    background-image: var(--logo);
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: contain;
@@ -63,6 +21,10 @@
     width: 368px;
     height: 380px;
     margin-bottom: 110px;
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
 }
 
 .auth-modal__login-form.registration {
@@ -77,28 +39,36 @@
     }
 
     .auth-modal__login-form.registration {
-        margin-bottom: 0px;
+        margin-bottom: 0;
     }
 }
 
 .auth-modal__login-form * {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .login-form__form-select-buttons {
     width: 100%;
-    border-bottom: 1px solid var(--character-light-dividers);
-    margin-bottom: 23px;
+    border-bottom: var(--button-border-auth);
+    margin-bottom: 24px;
+}
+
+.registration .login-form__form-select-buttons {
+    margin-bottom: 32px;
+}
+
+@media (max-width: 833px) {
+    .registration .login-form__form-select-buttons {
+        margin-bottom: 24px;
+    }
 }
 
 .text-button {
     width: 50%;
     height: 46px;
 
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 130%;
+    font-size: var(--font-size-larger);
+    line-height: var(--line-height);
     color: var(--character-light-title-85);
 }
 
@@ -107,27 +77,24 @@
 }
 
 .text-button.active {
-    border-bottom: 2px solid var(--primary-light-6);
+    border-bottom: var(--button-border-auth-active);
     color: var(--primary-light-6);
 }
 
 @media (max-width: 833px) {
     .text-button {
-        font-size: 14px;
+        font-size: var(--font-size);
     }
 }
 
 .login-form__input {
     width: 100%;
     height: 40px;
-    border: 1px solid var(--character-light-border);
-    border-radius: 2px;
+    border: var(--button-border-light);
+    border-radius: var(--border-radius);
     margin-bottom: 32px;
 
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
+    line-height: var(--line-height);
     color: var(--character-light-title-85);
 }
 
@@ -137,30 +104,35 @@
 }
 
 .login-form__input [class*="addon"] {
-    border-right: 1px solid var(--character-light-border);
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
+    border-right: var(--button-border-light);
+    line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-title-85);
     width: 71px;
 }
 
 .login-form__input[class*="status-error"] {
-    border: 1px solid var(--character-light-error);
+    border: var(--button-border-error);
 }
 
-.auth-modal__login-form.registration .login-form__input[class*="input-password"] {
+.login-form__input[class*="input-password"] {
     margin-bottom: 46px;
 }
 
+@media (max-width: 833px) {
+    .login-form__input[class*="input-password"] {
+        margin-bottom: 38px;
+    }
+
+    .registration .login-form__input[class*="input-password"] {
+        margin-bottom: 44px;
+    }
+}
+
 .auth-modal [class*="item-explain"] {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 130%;
-    margin-bottom: 0px;
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
+    margin-bottom: 0;
     transform: translateY(-22px);
     position: absolute;
 }
@@ -179,17 +151,17 @@
 
 .login-form__remember-group [class$="input-content"] {
     width: 100%;
-    margin-top: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin-top: 2px;
+    margin-bottom: 6px;
 }
 
 @media (max-width: 833px) {
     .login-form__remember-group [class$="input-content"] {
         margin-top: 8px;
-        margin-bottom: 10px;
+        margin-bottom: 4px;
     }
 }
 
@@ -207,22 +179,17 @@
 }
 
 .checkbox__label {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
-    color: rgba(0, 0, 0, 0.85);
+    line-height: var(--line-height);
+    color: var(--character-dark-close);
     text-wrap: nowrap;
 }
 
 .remember-group__link {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 16px;
+    font-size: var(--font-size-larger);
     line-height: 130%;
     text-align: center;
     color: var(--primary-light-6);
-    padding: 0px;
+    padding: 0;
     text-align: end;
 }
 
@@ -243,41 +210,45 @@
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 16px;
-    line-height: 130%;
+    line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-title-85);
 }
 
+.login-form__button-icon {
+    font-size: var(--font-size);
+    margin-right: 2px;
+}
+
 @media (max-width: 833px) {
     .login-form__button {
-        font-size: 14px;
+        font-size: var(--font-size);
+    }
+
+    .registration .login-form__button {
+        margin-bottom: 18px;
     }
 
     span.login-form__button-icon {
         display: none;
+        margin-right: 0;
+    }
+
+    .auth-modal .login-form__button span {
+        margin-left: 0;
     }
 }
 
 .conf-button {
-    border: 1px solid var(--primary-light-6);
+    border: var(--button-border);
     background: var(--primary-light-6);
     color: var(--character-light-primary-inverse);
+    margin-top: 16px;
 }
 
 @media (max-width: 833px) {
-    .login-form__button {
-        font-size: 14px;
+    .registration .conf-button {
+        margin-top: 12px;
+        margin-bottom: 16px;
     }
-
-    span.login-form__button-icon {
-        display: none;
-    }
-
-    .login-form__button[class*="ant-btn"] span {
-        margin-left: 0px;
-    }
-}
-
-.auth-modal__login-form.registration .conf-button {
-    margin-top: 16px;
 }

@@ -1,0 +1,96 @@
+.result [class*="modal-body"] {
+    width: 100%;
+    height: max-content;
+    padding: 64px 85.5px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    background: var(--character-light-primary-inverse);
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+}
+
+@media (max-width: 800px) {
+    .result [class*="modal-body"] {
+        padding: 32px 16px;
+    }
+}
+
+.result [class*="confirm-body"]>[class*="anticon"] {
+    display: none;
+}
+
+.result [class*="confirm-content"] {
+    margin-top: 0;
+}
+
+.result [class*="ant-result"] {
+    padding: 0;
+}
+
+@media (max-width: 800px) {
+    [class*="ant-modal-body"]>.no-token[class*="ant-result"] {
+        padding: 32px 16px 24px;
+    }
+}
+
+.result [class*="ant-result-icon"] {
+    padding: 4px;
+}
+
+.result [class*="result-title"] {
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-large);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.result [class*="result-subtitle"] {
+    line-height: var(--line-height);
+    color: var(--character-light-secondary-45);
+}
+
+@media (max-width: 800px) {
+    .no-token [class*="result-subtitle"] {
+        padding: 0 50px;
+    }
+}
+
+.conf-button {
+    width: var(--button-width);
+    height: var(--button-height);
+    border: var(--button-border);
+    border-radius: var(--border-radius);
+    padding: var(--button-padding);
+    box-shadow: var(--box-shadow-button);
+    background: var(--primary-light-6);
+
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--character-light-primary-inverse);
+}
+
+.no-token .conf-button {
+    width: var(--button-width-small);
+}
+
+.conf-button-white {
+    border: var(--button-border-light);
+    background: var(--character-light-primary-inverse);
+    color: var(--character-light-title-85);
+}
+
+.result [class*="result-success"] [class*="ant-btn"] {
+    width: 100%;
+}
+
+.result [class*="result-error"] [class*="ant-btn"] {
+    width: var(--button-width-larger);
+}
+
+@media (max-width: 800px) {
+    .result [class*="result-error"] [class*="ant-btn"] {
+        width: var(--button-width);
+    }
+}

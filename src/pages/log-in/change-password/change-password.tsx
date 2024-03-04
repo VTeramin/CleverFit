@@ -1,101 +1,93 @@
-import React, { useEffect, useState } from 'react';
-import "./change-password.css";
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
+import '../modal.css';
+import styles from './change-password.module.css';
 import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { changePassword } from '../../../requests';
+import { changePassword } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
-import { store } from '@redux/configure-store';
-import { changeFormData } from '@redux/formDataSlice';
+import { changePasswords } from '@redux/loginSlice';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { checkDisabledChangePassword, checkValidChangePassword, validChange } from '@utils/check-valid-status';
 
 export const ChangePassword: React.FC = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const [passwords, setPasswords] = useState({
         password: "",
-        confirmPassword: "",
-        isPassValid: false,
-        isConfPassValid: false
+        password2: ""
     });
+
+    const [validStatus, setValidStatus] = useState<validChange>({
+        password: "success",
+        password2: "success"
+    });
+
     useEffect(() => {
-        store.dispatch(changeFormData({
-            password: passwords.password,
-            password2: passwords.confirmPassword
+        dispatch(changePasswords(passwords));
+        setValidStatus(prev => checkValidChangePassword(passwords, prev));
+    }, [dispatch, passwords]);
+
+    function handlePassword(event: ChangeEvent<HTMLInputElement>) {
+        setPasswords(prev => ({
+            ...prev,
+            [event.target.name]: event.target.value
         }));
-    }, [passwords]);
-
-    const [validStatus, setValidStatus] = useState({
-        password: true,
-        confirmPassword: true
-    });
-    useEffect(() => {
-        setValidStatus(() => {
-                return {
-                    password: passwords.isPassValid || passwords.password === "",
-                    confirmPassword: passwords.isConfPassValid || (!passwords.isPassValid && passwords.confirmPassword === "")
-                }
-            })
-    }, [passwords])
-
-    function validPassword(password: string): boolean {
-        const pattern = /^(?=.*[A-ZА-ЯЁ])(?=.*\d)[а-яА-ЯёЁa-zA-Z\d\W]{8,}$/;
-        return pattern.test(password);
     }
+
+    function handleSubmit() {
+        dispatch(changePassword()).then(navigate);
+    }
+
+    const eyeIcon = (visible: boolean) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />);
 
     return (
         <div className="modal-wrapper">
-            <div className="change-modal modal">
-                <p className="change-modal__title">Восстановление аккаунта</p>
+            <div className={`${styles["change-modal"]} modal`}>
+                <p className={styles["change-modal__title"]}>Восстановление аккаунта</p>
                 <Form
                     name="normal_login"
-                    className="change-modal__form"
+                    className={styles["change-modal__form"]}
                     initialValues={{ remember: true }}
                 >
                     <Form.Item
-                        name="password"
                         help="Пароль не менее 8 символов, с заглавной буквой и цифрой"
-                        validateStatus={validStatus.password ? "success" : "error"}
+                        validateStatus={validStatus.password}
                     >
                         <Input.Password
-                            className="change-modal__input"
-                            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                            className={styles["change-modal__input"]}
+                            iconRender={eyeIcon}
                             type="password"
+                            name="password"
                             placeholder="Новый пароль"
                             value={passwords.password}
-                            onChange={event => setPasswords(prev => ({
-                                ...prev,
-                                password: event.target.value,
-                                isPassValid: validPassword(event.target.value)
-                            }))}
+                            onChange={handlePassword}
                             data-test-id="change-password"
                         />
                     </Form.Item>
                     <Form.Item
-                        name="password-repeat"
-                        help={!validStatus.confirmPassword && "Пароли не совпадают"}
-                        validateStatus={validStatus.confirmPassword ? "success" : "error"}
+                        help={validStatus.password2 === "error" && "Пароли не совпадают"}
+                        validateStatus={validStatus.password2}
                     >
                         <Input.Password
-                            className="change-modal__input"
-                            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                            className={styles["change-modal__input"]}
+                            iconRender={eyeIcon}
                             type="password"
+                            name="password2"
                             placeholder="Повторите пароль"
-                            value={passwords.confirmPassword}
-                            onChange={event => setPasswords(prev => ({
-                                ...prev,
-                                confirmPassword: event.target.value,
-                                isConfPassValid: passwords.password === event.target.value
-                            }))}
+                            value={passwords.password2}
+                            onChange={handlePassword}
                             data-test-id="change-confirm-password"
                         />
                     </Form.Item>
                     <Form.Item>
                         <Button
-                            className="change-modal__button conf-button"
+                            className={styles["change-modal__button"]}
                             type="primary"
                             htmlType="submit"
-                            disabled={!Object.values(validStatus).every(el => el === true) || passwords.password === "" || passwords.confirmPassword === ""}
-                            onClick={() => { changePassword(passwords.password, passwords.confirmPassword).then(navigate) }}
+                            disabled={checkDisabledChangePassword(passwords, validStatus)}
+                            onClick={handleSubmit}
                             data-test-id="change-submit-button"
                         >
                             Сохранить

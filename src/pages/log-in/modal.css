@@ -1,0 +1,41 @@
+.modal-wrapper {
+    min-height: 100vh;
+    height: max-content;
+    background-image: var(--background-img-login);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-wrapper:before {
+    height: 100vh;
+    width: 100vw;
+    content: "";
+    display: block;
+    backdrop-filter: var(--background-blur-filter);
+    background: var(--background-blur-color);
+    position: absolute;
+}
+
+.modal {
+    width: 539px;
+    height: fit-content;
+    border-radius: var(--border-radius);
+    padding: 64px 32px;
+    box-shadow: var(--box-shadow);
+    background: var(--character-light-primary-inverse);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 833px) {
+    .modal {
+        width: 328px;
+        padding: 32px 16px 12px;
+    }
+}
