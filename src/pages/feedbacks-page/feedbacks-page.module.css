@@ -94,7 +94,7 @@
     }
 }
 
-.firstFeedback {
+.first-feedback {
     width: 100%;
     height: 245px;
     padding: 56px 0;
@@ -104,7 +104,7 @@
 }
 
 @media (max-width: 800px) {
-    .firstFeedback {
+    .first-feedback {
         height: 314px;
         padding: 48px 32px;
     }
@@ -117,7 +117,7 @@
     }
 }
 
-.firstFeedback__title {
+.first-feedback__title {
     font-family: var(--font-family);
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-large);
@@ -127,7 +127,7 @@
     margin-bottom: 48px;
 }
 
-.firstFeedback__subtitle {
+.first-feedback__subtitle {
     font-family: var(--font-family);
     font-weight: var(--font-weight);
     font-size: var(--font-size);

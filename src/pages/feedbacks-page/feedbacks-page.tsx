@@ -29,9 +29,9 @@ export const FeedbacksPage: React.FC = () => {
     }, [dispatch, navigate]);
 
     const firstFeedback = (
-        <div className={styles["firstFeedback"]}>
-            <h2 className={styles["firstFeedback__title"]}>Оставьте свой отзыв первым</h2>
-            <p className={styles["firstFeedback__subtitle"]}>Вы можете быть первым, кто оставит отзыв об этом фитнесс приложении.<br />Поделитесь своим мнением и опытом с другими пользователями,<br />и помогите им сделать правильный выбор.</p>
+        <div className={styles["first-feedback"]}>
+            <h2 className={styles["first-feedback__title"]}>Оставьте свой отзыв первым</h2>
+            <p className={styles["first-feedback__subtitle"]}>Вы можете быть первым, кто оставит отзыв об этом фитнесс приложении.<br />Поделитесь своим мнением и опытом с другими пользователями,<br />и помогите им сделать правильный выбор.</p>
         </div>
     );
 

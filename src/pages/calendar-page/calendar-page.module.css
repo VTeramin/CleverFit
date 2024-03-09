@@ -1,0 +1,106 @@
+.page {
+    max-height: calc(100vh - 50px - 35px - 48px);
+    overflow-y: scroll;
+    padding: 8px 24px;
+    background: var(--primary-light-1);
+    margin-bottom: 48px;
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+}
+
+.page::-webkit-scrollbar {
+    display: none;
+}
+
+.calendar {
+    background: var(--primary-light-1);
+}
+
+.calendar [class*="picker-body"] {
+    background: var(--primary-light-1);
+}
+
+.page .calendar [class*="select-selector"] {
+    border: var(--button-border-light);
+    border-radius: var(--border-radius);
+    padding: 0;
+    box-shadow: var(--box-shadow-button);
+    background: var(--character-light-primary-inverse);
+    color: var(--character-light-title-85);
+    text-align: center;
+    vertical-align: middle;
+}
+
+.page .calendar [class*="select-selector"],
+.page .calendar [class*="select-selector"] [class*="select-selection-item"] {
+    height: var(--calendar-input-height);
+    line-height: var(--calendar-input-height);
+}
+
+.calendar [class*="year-select"] [class*="select-selector"] {
+    width: 77px;
+}
+
+.calendar [class*="month-select"] [class*="select-selector"] {
+    width: 68px;
+}
+
+.page .calendar [class*="select-arrow"] svg {
+    width: 10px;
+    height: 11px;
+    fill: var(--character-light-title-85);
+}
+
+.calendar [class*="radio-button-wrapper"] {
+    height: var(--calendar-input-height);
+    padding: 0 15px;
+    color: var(--character-light-title-85);
+}
+
+.calendar [class*="radio-button-wrapper"] * {
+    display: block;
+    line-height: var(--calendar-input-height);
+}
+
+.calendar [class*="calendar-mode-switch"]:first-child {
+    border-right: 0;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.calendar [class*="calendar-mode-switch"]:last-child {
+    border-left: 0;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.page .calendar [class*="calendar-mode-switch"] [class*="radio-button-wrapper-checked"] {
+    border: var(--button-border);
+    color: var(--primary-light-6);
+}
+
+.page .calendar [class*="picker-body"] {
+    padding: 0;
+}
+
+.page .calendar [class*="picker-content"] th {
+    color: var(--character-light-secondary-45);
+}
+
+.page .calendar [class*="picker-content"] tr {
+    background: transparent;
+}
+
+.page .calendar [class*="cell-inner"] {
+    max-height: 143px;
+    box-shadow: var(--box-shadow-exit);
+    background: var(--character-light-primary-inverse);
+}
+
+.page .calendar [class*="cell-selected"] [class*="cell-inner"] {
+    background: var(--character-light-background);
+}
+
+.page .calendar [class*="picker-content"] [class*="cell-selected"] [class*="cell-inner"] [class*="date-value"] {
+    color: var(--character-light-title-85);
+}

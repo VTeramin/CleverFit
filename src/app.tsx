@@ -9,6 +9,7 @@ import { MainPage, Auth, Result, ConfirmEmail, ChangePassword, FeedbacksPage } f
 import { PrivateRoutes } from './route/PrivateRoutes';
 import { AuthRoutes } from './route/AuthRoutes';
 import { PushRoutes } from './route/PushRoutes';
+import { CalendarPage } from '@pages/calendar-page';
 
 export const App: React.FC = () => {
     return (
@@ -27,6 +28,7 @@ export const App: React.FC = () => {
                     <Route element={<PrivateRoutes />}>
                         <Route path={ROUTE.MAIN} element={<MainPage />} />
                         <Route path={ROUTE.FEEDBACKS} element={<FeedbacksPage />} />
+                        <Route path={ROUTE.CALENDAR} element={<CalendarPage />} />
                     </Route>
                     <Route element={<PushRoutes />}>
                         <Route path={ROUTE.RESULT} element={<Result />} />

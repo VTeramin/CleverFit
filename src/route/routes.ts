@@ -6,6 +6,7 @@ export enum ROUTE {
     CONFIRM_EMAIL = "/auth/confirm-email",
     MAIN = "/main",
     FEEDBACKS = "/feedbacks",
+    CALENDAR = "/calendar",
     RESULT = "/result/:result",
     SUCCESS="/result/success",
     SUCCESS_CHANGE_PASSWORD="/result/success-change-password",
