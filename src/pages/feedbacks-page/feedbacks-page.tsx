@@ -4,7 +4,7 @@ import styles from './feedbacks-page.module.css';
 import { Button, Layout } from 'antd';
 import { FeedbackCards } from './components/feeback-cards/feedback-cards';
 import { FeedbackModal } from './components/feedback-modal/feedback-modal';
-import { FeedbackResult } from './components/feedback-result/feedback-result';
+import { ResultModal } from '../components/result-modal/result-modal';
 import { getFeedbacks, status } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
@@ -24,7 +24,7 @@ export const FeedbacksPage: React.FC = () => {
     useEffect(() => {
         dispatch(getFeedbacks()).then(response => {
             if (response === status.redirect) navigate(ROUTE.AUTH);
-            if (response === status.noToken || response === status.error) setResultType(status.noToken);
+            if (response === status.noToken || response === status.errorFeedback) setResultType(status.noToken);
         });
     }, [dispatch, navigate]);
 
@@ -60,7 +60,7 @@ export const FeedbacksPage: React.FC = () => {
                 setIsModalOpen={setIsModalOpen}
                 setResultType={setResultType}
             />
-            {resultType !== status.empty && <FeedbackResult
+            {resultType !== status.empty && <ResultModal
                 resultType={resultType}
                 setResultType={setResultType}
                 setIsModalOpen={setIsModalOpen}

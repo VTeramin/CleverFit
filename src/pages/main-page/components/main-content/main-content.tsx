@@ -1,20 +1,35 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import 'antd/dist/antd.css';
 import styles from './main-content.module.css';
-import { Layout } from 'antd';
+import { Button, Layout } from 'antd';
 
 const { Content } = Layout;
 import { HeartTwoTone, CalendarTwoTone, IdcardTwoTone } from '@ant-design/icons';
+import { ROUTE } from '@route/routes';
+import { useNavigate } from 'react-router-dom';
 
 export const MainContent: React.FC = () => {
+    const navigate = useNavigate();
+
+    function handleBlockClick(event: MouseEvent<HTMLButtonElement>) {
+        const text = event.currentTarget.textContent || "";
+        const paths: { [name: string]: string } = {
+            "Календарь": ROUTE.CALENDAR
+        };
+        navigate(paths[text]);
+    }
+
     const navBlocks = [HeartTwoTone, CalendarTwoTone, IdcardTwoTone].map((icon, index) => {
         return (
             <div key={index + 1} className={`${styles["nav__block"]} ${styles["box"]}`}>
                 <p className={styles["block__title"]}>{["Расписать тренировки", "Назначить календарь", "Заполнить профиль"][index]}</p>
-                <div className={styles["block__content"]}>
+                <Button
+                    className={styles["block__content"]}
+                    onClick={handleBlockClick}
+                >
                     {React.createElement(icon, { className: styles["block__icon"], twoToneColor: "var(--primary-light-6)" })}
                     <p className={styles["block__subtitle"]}>{["Тренировки", "Календарь", "Профиль"][index]}</p>
-                </div>
+                </Button>
             </div>
         )
     });

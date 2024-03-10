@@ -9,6 +9,7 @@ import { toggleIsAuthorized } from '@redux/userDataSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { ROUTE } from '@route/routes';
+import { MenuInfo } from 'rc-menu/lib/interface';
 
 type props = {
     collapsed: boolean
@@ -24,6 +25,12 @@ export const SideBar: React.FC<props> = ({ collapsed }) => {
         localStorage.clear();
         dispatch(toggleIsAuthorized(false));
         navigate(ROUTE.AUTH);
+    }
+
+    function handleMenuClick(item: MenuInfo) {
+        const index = Number(item.key);
+        const paths = [ROUTE.CALENDAR];
+        navigate(paths[index]);
     }
 
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
@@ -53,6 +60,7 @@ export const SideBar: React.FC<props> = ({ collapsed }) => {
                 mode="inline"
                 defaultSelectedKeys={['4']}
                 className={styles["sider__menu"]}
+                onClick={(item) => handleMenuClick(item)}
                 items={menuItems}
             />
             <div className={styles["sider__exit"]} onClick={handleExit}>

@@ -9,10 +9,12 @@ const API = "https://marathon-api.clevertec.ru";
 
 export enum status {
     empty = "",
-    error = "error",
     redirect = "redirect",
-    success = "success",
-    noToken = "noToken"
+    noToken = "noToken",
+    error = "error",
+    errorFeedback = "errorFeedback",
+    successFeedback = "successFeedback",
+    errorTrainingList = "errorTrainingList"
 }
 
 export const login = () => async (dispatch: AppDispatch, getState: GetState) => {
@@ -97,7 +99,7 @@ export const getFeedbacks = () => async (dispatch: AppDispatch, getState: GetSta
                 dispatch(toggleIsAuthorized(false));
                 return status.redirect;
             }
-            return status.error;
+            return status.errorFeedback;
         }).finally(() => dispatch(toggleLoader(false)));
 }
 
@@ -118,13 +120,41 @@ export const sendFeedback = (message: string, rating: number) => async (dispatch
                 createdAt: new Date(Date.now()).toISOString(),
                 message: message
             }))
-            return status.success;
+            return status.successFeedback;
         })
-        .catch(() => status.error)
+        .catch(() => status.errorFeedback)
         .finally(() => dispatch(toggleLoader(false)));
 }
 
 export const googleAuth = () => async (dispatch: AppDispatch) => {
     dispatch(toggleLoader(true));
     window.location.href = `${API}/auth/google`;
+}
+
+export const getTraining = () => async (dispatch: AppDispatch, getState: GetState) => {
+    dispatch(toggleLoader(true));
+    const { sessionToken } = getState().userData;
+
+    return axios.get(`${API}/training`, {
+        headers: {
+            "Authorization": `Bearer ${sessionToken}`
+        }
+    })
+        .then((response) => response.data)
+        .catch(() => status.noToken)
+        .finally(() => dispatch(toggleLoader(false)));
+}
+
+export const getTrainingList = () => async (dispatch: AppDispatch, getState: GetState) => {
+    dispatch(toggleLoader(true));
+    const { sessionToken } = getState().userData;
+
+    return axios.get(`${API}/catalogs/training-list`, {
+        headers: {
+            "Authorization": `Bearer ${sessionToken}`
+        }
+    })
+        .then((response) => response.data)
+        .catch(() => status.errorTrainingList)
+        .finally(() => dispatch(toggleLoader(false)));
 }

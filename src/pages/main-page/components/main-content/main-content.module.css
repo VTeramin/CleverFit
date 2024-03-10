@@ -130,6 +130,7 @@
     justify-content: center;
     align-items: center;
     box-shadow: var(--box-shadow-exit);
+    border: none;
 }
 
 .block__icon {
