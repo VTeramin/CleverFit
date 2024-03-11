@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '@route/routes';
 import { status } from '@utils/requests';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { getResultModalWidth } from '@utils/getResultModalWidth';
+import { getResultModalWidth } from '@utils/get-result-modal-width';
 
 type props = {
     resultType: status,

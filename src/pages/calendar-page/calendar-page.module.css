@@ -16,6 +16,7 @@
 
 .calendar {
     background: var(--primary-light-1);
+    z-index: 1;
 }
 
 .calendar [class*="picker-body"] {

@@ -1,10 +1,10 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import styles from './result-calendar.module.css';
+import styles from './calendar-result.module.css';
 import { Button, Modal, Result } from 'antd';
 import { getTrainingList, status } from '@utils/requests';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { getResultModalWidth } from '@utils/getResultModalWidth';
+import { getResultModalWidth } from '@utils/get-result-modal-width';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 
@@ -14,7 +14,7 @@ type props = {
     setTrainingList: React.Dispatch<React.SetStateAction<never[]>>
 }
 
-export const ResultCalendar: React.FC<props> = ({ resultType, setResultType, setTrainingList }) => {
+export const CalendarResult: React.FC<props> = ({ resultType, setResultType, setTrainingList }) => {
     const dispatch = useAppDispatch();
     const width = useWindowSize().width || 0;
     const resultWidth = width > 800 ? getResultModalWidth(resultType) : 328;
