@@ -1,4 +1,5 @@
 export function getCalendarModalCoords(width: number) {
+    if (!document.getElementsByClassName("ant-picker-cell-selected")[0]) return { x: 0, y: 0 };
     const calendarMargin = 4;
     const modalWidth = 264;
     const cellSelected = document.getElementsByClassName("ant-picker-cell-selected")[0];

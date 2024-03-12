@@ -24,6 +24,7 @@
     padding-right: 46px;
     position: relative;
     transition-duration: 0.2s;
+    cursor: pointer;
 }
 
 .logo {

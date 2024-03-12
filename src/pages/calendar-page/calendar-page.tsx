@@ -10,8 +10,7 @@ import { getTraining, getTrainingList, status } from '@utils/requests';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { CalendarResult } from './calendar-result/calendar-result';
 import { CalendarModal } from './calendar-modal/calendar-modal';
-import { useWindowSize } from '@uidotdev/usehooks';
-import { getCalendarModalCoords } from '@utils/get-calendar-modal-coords';
+import { useMeasure } from '@uidotdev/usehooks';
 
 moment.updateLocale("ru", {
     week: { dow: 1 },
@@ -24,9 +23,10 @@ export const CalendarPage: React.FC = () => {
     const [resultType, setResultType] = useState(status.empty);
     const [training, setTraining] = useState([]);
     const [trainingList, setTrainingList] = useState([]);
-    const [date, setDate] = useState<Date>();
-    const [modalCoord, setModalCoord] = useState({ x: 0, y: 0 })
-    const width = useWindowSize().width || 0;
+    const [date, setDate] = useState(moment());
+    const [isModal, setIsModal] = useState(false);
+    const [ref, { width }] = useMeasure();
+    const pageWidth = width;
 
     useEffect(() => {
         dispatch(getTraining()).then(resp => {
@@ -34,42 +34,39 @@ export const CalendarPage: React.FC = () => {
                 setResultType(resp)
             } else {
                 setTraining(resp)
-                return resp;
+                return dispatch(getTrainingList());
             }
         }).then(resp => {
-            if (resp) dispatch(getTrainingList()).then(resp => {
-                resp === status.errorTrainingList ? setResultType(resp) : setTrainingList(resp);
-            });
+            resp === status.errorTrainingList ? setResultType(resp) : setTrainingList(resp);
         });
     }, [dispatch]);
 
-    useEffect(() => {
-        setModalCoord(getCalendarModalCoords(width));
-    }, [date, width]);
-
     function handleDateSelect(target: moment.Moment) {
-
-        setDate(undefined);
-        setDate(target.toDate());
+        setIsModal(false);
+        setDate(target);
+        setIsModal(true);
     }
 
-    function handlePanelChange() {
-        setDate(undefined);
+    function isDateDisabled(currentDate: moment.Moment) {
+        return currentDate.toDate().getMonth() !== date.toDate().getMonth();
     }
 
     return (
-        <Layout className={styles["page"]}>
+        <Layout className={styles["page"]} ref={ref}>
             <ConfigProvider locale={locale}>
                 <Calendar
                     className={styles["calendar"]}
-                    onSelect={(target) => handleDateSelect(target)}
-                    onPanelChange={() => handlePanelChange()}
+                    value={date}
+                    disabledDate={isDateDisabled}
+                    onSelect={handleDateSelect}
+                    onPanelChange={() => setIsModal(false)}
                 />
             </ConfigProvider>
-            {date && <CalendarModal
-                date={date}
-                setDate={setDate}
-                modalCoord={modalCoord}
+            {isModal && date && <CalendarModal
+                date={date.toDate()}
+                setIsModal={setIsModal}
+                pageWidth={pageWidth || 0}
+                trainingList={trainingList}
             />}
             {resultType === status.noToken
                 ? <ResultModal

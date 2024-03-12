@@ -1,4 +1,4 @@
-export function dateToString(date: Date) {
+export function getDayFromDate(date: Date) {
     function addZeroIfOneDig(number: number) {
         return number < 10 ? "0" + number : number;
     }

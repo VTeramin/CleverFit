@@ -16,11 +16,11 @@
 
 .calendar {
     background: var(--primary-light-1);
-    z-index: 1;
 }
 
 .calendar [class*="picker-body"] {
     background: var(--primary-light-1);
+    z-index: 1;
 }
 
 .page .calendar [class*="select-selector"] {
@@ -78,6 +78,10 @@
 .page .calendar [class*="calendar-mode-switch"] [class*="radio-button-wrapper-checked"] {
     border: var(--button-border);
     color: var(--primary-light-6);
+}
+
+.page .calendar [class*="picker-panel"] {
+    z-index: 1;
 }
 
 .page .calendar [class*="picker-body"] {

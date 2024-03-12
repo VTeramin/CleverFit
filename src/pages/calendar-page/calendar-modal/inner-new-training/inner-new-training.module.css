@@ -1,0 +1,92 @@
+.modal__header {
+    padding-top: 12px;
+}
+
+.modal__input {
+    width: calc(100% - 14px);
+}
+
+.modal__input [class*="selection-placeholder"] {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.modal__input [class*="select-arrow"] {
+    color: var(--character-light-secondary-45);
+}
+
+.modal__dropdown [class*="select-item-option"] {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.modal__divider {
+    margin: 12px 0;
+}
+
+.modal__body {
+    max-height: 200px;
+    overflow-y: scroll;
+    padding: 4px 4px 4px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal__body::-webkit-scrollbar {
+    width: 8px;
+    position: absolute;
+}
+
+.modal__body::-webkit-scrollbar-track {
+    background: transparent;
+
+}
+
+.modal__body::-webkit-scrollbar-thumb {
+    border-right: 4px var(--character-light-primary-inverse) solid;
+    background: var(--character-light-disable-25);
+    border-radius: 20px 35px 35px 20px;
+}
+
+.modal__empty img {
+    width: var(--icon-large);
+    height: var(--icon-large);
+}
+
+.modal__empty [class*="empty-image"] {
+    height: 64px;
+    margin: 0;
+    padding: 16px 0;
+}
+
+.body__trainings {
+    height: 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.trainings__name {
+    line-height: var(--line-height);
+    color: var(--character-light-secondary-45);
+}
+
+.trainings__edit svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    fill: var(--primary-light-6);
+}
+
+.modal__buttons {
+    padding-bottom: 12px;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+}

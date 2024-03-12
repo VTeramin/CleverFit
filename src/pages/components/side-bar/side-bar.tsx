@@ -21,6 +21,10 @@ export const SideBar: React.FC<props> = ({ collapsed }) => {
     const width = useWindowSize().width || 0;
     const isFullWidth = width > 800;
 
+    function handleLogoClick() {
+        navigate(ROUTE.MAIN);
+    }
+
     function handleExit() {
         localStorage.clear();
         dispatch(toggleIsAuthorized(false));
@@ -54,7 +58,10 @@ export const SideBar: React.FC<props> = ({ collapsed }) => {
             theme="light"
             className={styles["sider"]}
         >
-            <div className={`${styles["sider__logo"]} ${styles[collapsed ? "logo-collapsed" : "logo"]}`} />
+            <div
+            className={`${styles["sider__logo"]} ${styles[collapsed ? "logo-collapsed" : "logo"]}`}
+            onClick={handleLogoClick}
+            />
             <Menu
                 theme="light"
                 mode="inline"
