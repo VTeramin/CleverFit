@@ -63,7 +63,18 @@
 
 .card__person span {
     background: var(--character-light-background);
+}
+
+.person__img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 12px;
+}
+
+.person__img img {
+    width: 42px;
+    height: 42px;
 }
 
 .person__img path {
