@@ -82,6 +82,7 @@
     width: var(--icon-size);
     height: var(--icon-size);
     fill: var(--primary-light-6);
+    cursor: pointer;
 }
 
 .modal__buttons {

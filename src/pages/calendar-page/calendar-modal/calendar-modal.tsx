@@ -6,19 +6,21 @@ import { getCalendarModalCoords } from '@utils/get-calendar-modal-coords';
 import { InnerEmpty } from './inner-empty/inner-empty';
 import { calendarModalType } from '@constants/enums';
 import { InnerNewTraining } from './inner-new-training/inner-new-training';
+import { status } from '@utils/requests';
 
 type props = {
     date: Date,
     setIsModal: React.Dispatch<React.SetStateAction<boolean>>,
     pageWidth: number,
-    trainingList: { "name": "string", "key": "string" }[]
+    trainingList: { "name": "string", "key": "string" }[],
+    setResultType: React.Dispatch<React.SetStateAction<status>>
 }
 
 type modalInner = {
     [type: string]: React.ReactElement
 }
 
-export const CalendarModal: React.FC<props> = ({ date, setIsModal, pageWidth, trainingList }) => {
+export const CalendarModal: React.FC<props> = ({ date, setIsModal, pageWidth, trainingList, setResultType }) => {
     const width = useWindowSize().width || 0;
     const [modalCoord, setModalCoord] = useState(getCalendarModalCoords(width));
     useEffect(() => {
@@ -41,6 +43,7 @@ export const CalendarModal: React.FC<props> = ({ date, setIsModal, pageWidth, tr
             date={date}
             trainingList={trainingList}
             setModalType={setModalType}
+            setResultType={setResultType}
         />
     };
 

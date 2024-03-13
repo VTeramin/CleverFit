@@ -1,8 +1,10 @@
 import { FieldData } from 'rc-field-form/lib/interface';
 
-export function getTrainingNames(form: FieldData[]) {
-    return form.map(el => {
-        const fieldName = el.name[0].split(" ")[1];
-        if(fieldName === "training-name") return el.value;
-    }).filter(el => el !== undefined);
+type formFields = {
+    [key: string]: FieldData[]
+}
+
+export function getTrainingNames(form: formFields) {
+    const keys = Object.keys(form);
+    return keys.map(key => form[key][0].value);
 }

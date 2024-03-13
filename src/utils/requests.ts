@@ -1,3 +1,4 @@
+import { exercise } from '@constants/types';
 import { AppDispatch, GetState } from '@redux/configure-store';
 import { addNewFeedback, changeFeedbackData } from '@redux/feedbackSlice';
 import { toggleLoader } from '@redux/loaderSlice';
@@ -12,9 +13,11 @@ export enum status {
     redirect = "redirect",
     noToken = "noToken",
     error = "error",
+    success = "success",
     errorFeedback = "errorFeedback",
     successFeedback = "successFeedback",
-    errorTrainingList = "errorTrainingList"
+    errorTrainingList = "errorTrainingList",
+    errorSaveTraining = "errorSaveTraining"
 }
 
 export const login = () => async (dispatch: AppDispatch, getState: GetState) => {
@@ -156,5 +159,19 @@ export const getTrainingList = () => async (dispatch: AppDispatch, getState: Get
     })
         .then((response) => response.data)
         .catch(() => status.errorTrainingList)
+        .finally(() => dispatch(toggleLoader(false)));
+}
+
+export const saveTraining = (name: string, date: Date, exercises: exercise[]) => async (dispatch: AppDispatch, getState: GetState) => {
+    dispatch(toggleLoader(true));
+    const { sessionToken } = getState().userData;
+
+    return axios.post(`${API}/training`, { name, date, exercises }, {
+        headers: {
+            "Authorization": `Bearer ${sessionToken}`
+        }
+    })
+        .then(() => status.success)
+        .catch(() => status.errorSaveTraining)
         .finally(() => dispatch(toggleLoader(false)));
 }

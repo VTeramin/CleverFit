@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '@route/routes';
 import { status } from '@utils/requests';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { getResultModalWidth } from '@utils/get-result-modal-width';
 
 type props = {
     resultType: status,
@@ -17,7 +16,7 @@ type props = {
 export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsModalOpen }) => {
     const navigate = useNavigate();
     const width = useWindowSize().width || 0;
-    const resultWidth = width > 800 ? getResultModalWidth(resultType) : 328;
+    const resultWidth = width > 800 ? 539 : 328;
 
     function handleWriteReview() {
         if (setIsModalOpen) setIsModalOpen(true);

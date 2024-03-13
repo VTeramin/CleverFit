@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import styles from './calendar-page.module.css';
-import { Calendar, ConfigProvider, Layout } from 'antd';
+import { Badge, Calendar, ConfigProvider, Layout } from 'antd';
 import locale from 'antd/es/locale/ru_RU';
 import 'moment/locale/ru';
 import moment from 'moment';
@@ -18,10 +18,43 @@ moment.updateLocale("ru", {
     monthsShort: ["Янв", "Февр", "Март", "Апр", "Май", "Июнь", "Июль", "Авг", "Сент", "Окт", "Нояб", "Дек"],
 });
 
+type training = {
+    _id: string,
+    name: string,
+    date: Date,
+    isImplementation: boolean,
+    userId: string,
+    parameters: {
+        repeat: boolean,
+        period: number,
+        jointTraining: boolean,
+        participants: string[]
+    },
+    exercises: [
+        {
+            _id: string,
+            name: string,
+            replays: number,
+            weight: number,
+            approaches: number,
+            isImplementation: boolean
+        }
+    ]
+}
+
+enum badgeColors {
+    "Ноги" = "volcano",
+    "Силовая" = "yellow",
+    "Руки" = "cyan",
+    "Грудь" = "green",
+    "Спина" = "orange",
+    "Кардио" = "pink"
+}
+
 export const CalendarPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const [resultType, setResultType] = useState(status.empty);
-    const [training, setTraining] = useState([]);
+    const [training, setTraining] = useState<training[]>([]);
     const [trainingList, setTrainingList] = useState([]);
     const [date, setDate] = useState(moment());
     const [isModal, setIsModal] = useState(false);
@@ -31,9 +64,9 @@ export const CalendarPage: React.FC = () => {
     useEffect(() => {
         dispatch(getTraining()).then(resp => {
             if (resp === status.noToken) {
-                setResultType(resp)
+                setResultType(resp);
             } else {
-                setTraining(resp)
+                setTraining(resp);
                 return dispatch(getTrainingList());
             }
         }).then(resp => {
@@ -51,6 +84,24 @@ export const CalendarPage: React.FC = () => {
         return currentDate.toDate().getMonth() !== date.toDate().getMonth();
     }
 
+    function dateCellRender(moment: moment.Moment) {
+        const listData = training.filter(el => {
+            const elDate = String(new Date(el.date)).substring(0, 10);
+            const cellDate = String(moment.toDate()).substring(0, 10);
+            return elDate === cellDate;
+        }).map(el => el.name);
+
+        return (
+            <ul className={styles["trainings-list"]}>
+                {listData.map((name: string, ind) => (
+                    <li key={ind}>
+                        <Badge text={name} color={badgeColors[name as keyof typeof badgeColors]} />
+                    </li>
+                ))}
+            </ul>
+        );
+    }
+
     return (
         <Layout className={styles["page"]} ref={ref}>
             <ConfigProvider locale={locale}>
@@ -60,6 +111,7 @@ export const CalendarPage: React.FC = () => {
                     disabledDate={isDateDisabled}
                     onSelect={handleDateSelect}
                     onPanelChange={() => setIsModal(false)}
+                    dateCellRender={dateCellRender}
                 />
             </ConfigProvider>
             {isModal && date && <CalendarModal
@@ -67,6 +119,7 @@ export const CalendarPage: React.FC = () => {
                 setIsModal={setIsModal}
                 pageWidth={pageWidth || 0}
                 trainingList={trainingList}
+                setResultType={setResultType}
             />}
             {resultType === status.noToken
                 ? <ResultModal
@@ -77,6 +130,7 @@ export const CalendarPage: React.FC = () => {
                     resultType={resultType}
                     setResultType={setResultType}
                     setTrainingList={setTrainingList}
+                    setIsModal={setIsModal}
                 />}
         </Layout>
     );

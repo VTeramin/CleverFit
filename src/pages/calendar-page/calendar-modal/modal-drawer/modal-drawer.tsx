@@ -6,57 +6,69 @@ import { Button, Drawer, Form, Input } from 'antd';
 import { getDayFromDate } from '@utils/get-day-from-date';
 import { FieldData } from 'rc-field-form/lib/interface';
 import { getTrainingNames } from '@utils/get-trainings-names';
+import { exercise, formFields } from '@constants/types';
+import { convertFormDataToExercises } from '@utils/convert-form-data-to-exercies';
 
 type props = {
     date: Date,
     isDrawer: boolean,
     setIsDrawer: React.Dispatch<React.SetStateAction<boolean>>,
     selectedValue: string
-    setTrainingNames: React.Dispatch<React.SetStateAction<string[]>>
+    setTrainingNames: React.Dispatch<React.SetStateAction<string[]>>,
+    setExercises: React.Dispatch<React.SetStateAction<exercise[]>>
 }
 
-export const ModalDrawer: React.FC<props> = ({ date, isDrawer, setIsDrawer, selectedValue, setTrainingNames }) => {
-    const [formFields, setFormFields] = useState<FieldData[]>([]);
+export const ModalDrawer: React.FC<props> = ({ date, isDrawer, setIsDrawer, selectedValue, setTrainingNames, setExercises }) => {
+    const [formFields, setFormFields] = useState<formFields>({});
     const [trainingFormArr, setTrainingFormArr] = useState([0]);
-    const trainings = trainingFormArr.map((_, ind) => (
-        <div key={ind}>
-            <Form.Item name={`${ind} training-name`} required>
-                <Input placeholder="Упражнение" className={styles["drawer__training-name-input"]} />
-            </Form.Item>
-            <div className={styles["drawer__inputs-wrapper"]}>
-                <Form.Item name={`${ind} training-number`} label="Подходы">
-                    <Input addonBefore="+" type="number" placeholder="1"></Input>
-                </Form.Item>
-                <Form.Item name={`${ind} training-weight`} label="Вес, кг">
-                    <Input type="number" placeholder="0"></Input>
-                </Form.Item>
-                <p className={styles["drawer__x"]}>X</p>
-                <Form.Item name={`${ind} training-repeats`} label="Количество">
-                    <Input type="number" placeholder="3"></Input>
-                </Form.Item>
-            </div>
-        </div>
-    ));
 
     function addTrainingForm() {
         setTrainingFormArr(prev => [...prev, prev.length])
     }
 
-    function handleFormChange(allFields: FieldData[]) {
-        setFormFields(allFields.map(el => ({ name: el.name, value: el.value })));
+    function handleFormChange(allFields: FieldData[], ind: number) {
+        if (allFields[0].value !== undefined) setFormFields(prev => ({ ...prev, [ind]: allFields }));
     }
 
     function handleCloseDrawer() {
+        const keys = Object.keys(formFields);
+        setTrainingFormArr(prev => prev.map(el => keys.includes(el.toString()) ? el : -1));
         setTrainingNames(getTrainingNames(formFields));
+        setExercises(convertFormDataToExercises(formFields));
         setIsDrawer(false);
     }
+
+    const trainings = trainingFormArr.filter(el => el !== -1).map(ind => (
+        <Form
+            key={ind}
+            fields={formFields[ind]}
+            onFieldsChange={(_, allFields) => handleFormChange(allFields, ind)}
+        >
+            <Form.Item name="name" required>
+                <Input placeholder="Упражнение" className={styles["drawer__training-name-input"]} />
+            </Form.Item>
+            <div className={styles["drawer__inputs-wrapper"]}>
+                <Form.Item name="replays" label="Подходы">
+                    <Input addonBefore="+" type="number" placeholder="1"></Input>
+                </Form.Item>
+                <Form.Item name="weight" label="Вес, кг">
+                    <Input type="number" placeholder="0"></Input>
+                </Form.Item>
+                <p className={styles["drawer__x"]}>X</p>
+                <Form.Item name="approaches" label="Количество">
+                    <Input type="number" placeholder="3"></Input>
+                </Form.Item>
+            </div>
+        </Form>
+    ));
 
     return (
         <Drawer
             open={isDrawer}
             width={408}
             headerStyle={{ display: "none" }}
-            mask={false}
+            maskStyle={{ background: "transparent" }}
+            onClose={handleCloseDrawer}
             className={styles["drawer"]}
         >
             <p className={styles["drawer__title"]}>
@@ -68,21 +80,15 @@ export const ModalDrawer: React.FC<props> = ({ date, isDrawer, setIsDrawer, sele
                 </ul>
                 <p>{getDayFromDate(date)}</p>
             </div>
-            <Form
-                fields={formFields}
-                onFieldsChange={(_, allFields) => handleFormChange(allFields)}
-                className={styles["drawer__form"]}
-            >
+            <div className={styles["drawer__form"]}>
                 {trainings}
-                <Form.Item>
-                    <Button
-                        className={styles["drawer__button"]}
-                        onClick={addTrainingForm}
-                    >
-                        <PlusOutlined />Добавить ещё
-                    </Button>
-                </Form.Item>
-            </Form>
+                <Button
+                    className={styles["drawer__button"]}
+                    onClick={addTrainingForm}
+                >
+                    <PlusOutlined />Добавить ещё
+                </Button>
+            </div>
             <CloseOutlined
                 onClick={handleCloseDrawer}
                 className={styles["drawer__close"]}
