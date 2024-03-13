@@ -2,6 +2,7 @@ import { exercise } from '@constants/types';
 import { AppDispatch, GetState } from '@redux/configure-store';
 import { addNewFeedback, changeFeedbackData } from '@redux/feedbackSlice';
 import { toggleLoader } from '@redux/loaderSlice';
+import { addTraining } from '@redux/trainingSlice';
 import { changeSessionToken, toggleIsAuthorized } from '@redux/userDataSlice';
 import { ROUTE } from '@route/routes';
 import axios from 'axios';
@@ -171,7 +172,10 @@ export const saveTraining = (name: string, date: Date, exercises: exercise[]) =>
             "Authorization": `Bearer ${sessionToken}`
         }
     })
-        .then(() => status.success)
+        .then((resp) => {
+            dispatch(addTraining(resp.data));
+            return status.success;
+        })
         .catch(() => status.errorSaveTraining)
         .finally(() => dispatch(toggleLoader(false)));
 }

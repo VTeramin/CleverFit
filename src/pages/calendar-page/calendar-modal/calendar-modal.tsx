@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import styles from './calendar-modal.module.css';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { getCalendarModalCoords } from '@utils/get-calendar-modal-coords';
-import { InnerEmpty } from './inner-empty/inner-empty';
+import { InnerDefault } from './inner-default/inner-default';
 import { calendarModalType } from '@constants/enums';
 import { InnerNewTraining } from './inner-new-training/inner-new-training';
 import { status } from '@utils/requests';
@@ -29,13 +29,14 @@ export const CalendarModal: React.FC<props> = ({ date, setIsModal, pageWidth, tr
         setModalCoord(coordinates);
     }, [date, width, pageWidth, setIsModal]);
 
-    const [modalType, setModalType] = useState(calendarModalType.empty);
+    const [modalType, setModalType] = useState(calendarModalType.default);
     useEffect(() => {
-        setModalType(calendarModalType.empty);
+        setModalType(calendarModalType.default);
     }, [date]);
     const modalInner: modalInner = {
-        [calendarModalType.empty]: <InnerEmpty
+        [calendarModalType.default]: <InnerDefault
             date={date}
+            trainingList={trainingList}
             setIsModal={setIsModal}
             setModalType={setModalType}
         />,

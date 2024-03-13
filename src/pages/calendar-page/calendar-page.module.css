@@ -108,27 +108,6 @@
     line-height: var(--line-height);
 }
 
-.trainings-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.trainings-list [class*="badge-not-a-wrapper"],
-.trainings-list li {
-    height: 16px;
-    display: flex;
-    align-items: center;
-}
-
-.trainings-list [class*="badge-status-text"] {
-    display: inline-block;
-    height: 16px;
-    align-self: start;
-    font-size: var(--font-size-smaller);
-    line-height: var(--line-height);
-    color: var(--character-light-title-85);
-}
-
 .page .calendar [class*="cell-selected"] [class*="cell-inner"] {
     background: var(--character-light-background);
 }

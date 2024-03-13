@@ -6,9 +6,11 @@ import { Button, Divider, Empty, Select } from 'antd';
 import { calendarModalType } from '@constants/enums';
 import emptyIcon from '../../../../assets/icon/empty.svg';
 import { ModalDrawer } from '../modal-drawer/modal-drawer';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { saveTraining, status } from '@utils/requests';
 import { exercise } from '@constants/types';
+import { selectTraining } from '@redux/trainingSlice';
+import { filterTrainingByDay } from '@utils/filter-training-by-day';
 
 type trainingListEl = {
     "name": "string",
@@ -24,8 +26,12 @@ type props = {
 
 export const InnerNewTraining: React.FC<props> = ({ date, trainingList, setModalType, setResultType }) => {
     const dispatch = useAppDispatch();
+
     const [selectedValue, setSelectedValue] = useState(null);
-    const selectOptions = trainingList.map((el: trainingListEl) => ({ value: el.name }));
+    const training = useAppSelector(selectTraining);
+    const trainingOnSelDate = filterTrainingByDay(training, date);
+    const selectOptions = trainingList.map((el: trainingListEl) => ({ value: el.name })).filter(el => !trainingOnSelDate.includes(el.value));
+
     const [isDrawer, setIsDrawer] = useState(false);
     const [trainingsNames, setTrainingNames] = useState<string[]>([]);
     const [exercises, setExercises] = useState<exercise[]>([]);
@@ -37,7 +43,7 @@ export const InnerNewTraining: React.FC<props> = ({ date, trainingList, setModal
     function handleSaveTraining() {
         if(selectedValue !== null) {
             dispatch(saveTraining(selectedValue, date, exercises)).then(resp => {
-                if(resp === status.success) setModalType(calendarModalType.empty);
+                if(resp === status.success) setModalType(calendarModalType.default);
                 if(resp === status.errorSaveTraining) setResultType(status.errorSaveTraining);
             })
         }
@@ -56,7 +62,7 @@ export const InnerNewTraining: React.FC<props> = ({ date, trainingList, setModal
     return (
         <>
             <div className={styles["modal__header"]}>
-                <ArrowLeftOutlined onClick={() => setModalType(calendarModalType.empty)} />
+                <ArrowLeftOutlined onClick={() => setModalType(calendarModalType.default)} />
                 <Select
                     placeholder="Выбор типа тренировки"
                     value={selectedValue}

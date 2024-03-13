@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import styles from './calendar-page.module.css';
-import { Badge, Calendar, ConfigProvider, Layout } from 'antd';
+import { Calendar, ConfigProvider, Layout } from 'antd';
 import locale from 'antd/es/locale/ru_RU';
 import 'moment/locale/ru';
 import moment from 'moment';
 import { ResultModal } from '@pages/components/result-modal/result-modal';
 import { getTraining, getTrainingList, status } from '@utils/requests';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarResult } from './calendar-result/calendar-result';
 import { CalendarModal } from './calendar-modal/calendar-modal';
 import { useMeasure } from '@uidotdev/usehooks';
+import { CalendarTrainingList } from './calendar-training-list/calendar-training-list';
+import { filterTrainingByDay } from '@utils/filter-training-by-day';
+import { changeTrainingData, selectTraining } from '@redux/trainingSlice';
 
 moment.updateLocale("ru", {
     week: { dow: 1 },
@@ -18,43 +21,10 @@ moment.updateLocale("ru", {
     monthsShort: ["Янв", "Февр", "Март", "Апр", "Май", "Июнь", "Июль", "Авг", "Сент", "Окт", "Нояб", "Дек"],
 });
 
-type training = {
-    _id: string,
-    name: string,
-    date: Date,
-    isImplementation: boolean,
-    userId: string,
-    parameters: {
-        repeat: boolean,
-        period: number,
-        jointTraining: boolean,
-        participants: string[]
-    },
-    exercises: [
-        {
-            _id: string,
-            name: string,
-            replays: number,
-            weight: number,
-            approaches: number,
-            isImplementation: boolean
-        }
-    ]
-}
-
-enum badgeColors {
-    "Ноги" = "volcano",
-    "Силовая" = "yellow",
-    "Руки" = "cyan",
-    "Грудь" = "green",
-    "Спина" = "orange",
-    "Кардио" = "pink"
-}
-
 export const CalendarPage: React.FC = () => {
     const dispatch = useAppDispatch();
+    const training = useAppSelector(selectTraining);
     const [resultType, setResultType] = useState(status.empty);
-    const [training, setTraining] = useState<training[]>([]);
     const [trainingList, setTrainingList] = useState([]);
     const [date, setDate] = useState(moment());
     const [isModal, setIsModal] = useState(false);
@@ -66,16 +36,20 @@ export const CalendarPage: React.FC = () => {
             if (resp === status.noToken) {
                 setResultType(resp);
             } else {
-                setTraining(resp);
+                dispatch(changeTrainingData(resp));
                 return dispatch(getTrainingList());
             }
         }).then(resp => {
-            resp === status.errorTrainingList ? setResultType(resp) : setTrainingList(resp);
+            if (resp === status.errorTrainingList) {
+                dispatch(changeTrainingData([]));
+                setResultType(resp);
+            } else {
+                setTrainingList(resp);
+            }
         });
     }, [dispatch]);
 
     function handleDateSelect(target: moment.Moment) {
-        setIsModal(false);
         setDate(target);
         setIsModal(true);
     }
@@ -85,21 +59,8 @@ export const CalendarPage: React.FC = () => {
     }
 
     function dateCellRender(moment: moment.Moment) {
-        const listData = training.filter(el => {
-            const elDate = String(new Date(el.date)).substring(0, 10);
-            const cellDate = String(moment.toDate()).substring(0, 10);
-            return elDate === cellDate;
-        }).map(el => el.name);
-
-        return (
-            <ul className={styles["trainings-list"]}>
-                {listData.map((name: string, ind) => (
-                    <li key={ind}>
-                        <Badge text={name} color={badgeColors[name as keyof typeof badgeColors]} />
-                    </li>
-                ))}
-            </ul>
-        );
+        const listData = filterTrainingByDay(training, moment.toDate());
+        return <CalendarTrainingList listData={listData} />
     }
 
     return (
@@ -135,5 +96,3 @@ export const CalendarPage: React.FC = () => {
         </Layout>
     );
 };
-
-

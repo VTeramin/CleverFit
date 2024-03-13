@@ -1,12 +1,16 @@
+.modal__header {
+    padding: 16px 12px;
+}
+
 .modal__title {
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height);
     color: var(--character-light-title-85);
     margin-bottom: 4px;
-    padding-top: 16px;
 }
 
 .modal__subtitle {
+    height: 18px;
     line-height: var(--line-height);
     color: var(--character-light-secondary-45);
     margin-bottom: 0;
@@ -22,9 +26,42 @@
 }
 
 .modal__empty [class*="empty-image"] {
-    height: 64px;
+    height: var(--icon-large);
     margin: 0;
-    padding: 16px 0;
+    padding: 0;
+}
+
+.modal__list-wrapper {
+    min-height: 52px;
+}
+
+.modal__list-wrapper li {
+    height: 22px;
+    padding: 1px 12px;
+}
+
+.modal__list-wrapper [class*="anticon-edit"] svg {
+    fill: var(--primary-light-6);
+}
+
+.modal__list-wrapper li [class*="badge-status-text"] {
+    font-size: var(--font-size);
+}
+
+.modal__list-wrapper [class*="badge-status-text"],
+.modal__list-wrapper [class*="badge-not-a-wrapper"] {
+    height: 18px;
+}
+
+.modal__list-wrapper li:hover {
+    background: var(--character-light-background);
+    cursor: pointer;
+}
+
+.modal__list-wrapper ul {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .modal__divider {
