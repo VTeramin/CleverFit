@@ -29,14 +29,12 @@ export const InnerDefault: React.FC<props> = ({ date }) => {
     }, [training, date]);
 
     function handleAddTraining() {
-        dispatch(toggleIsEdit(false));
-        dispatch(changeModalType(calendarModalType.newTraining));
+        if (date >= new Date(Date.now())) {
+            dispatch(toggleIsEdit(false));
+            dispatch(changeModalType(calendarModalType.newTraining));
+        }
     }
-
-    function handleEdit() {
-        dispatch(toggleIsEdit(true));
-        dispatch(changeModalType(calendarModalType.newTraining));
-    }
+    const isAddTrainingDisabled = trainingOnSelDate.length === trainingList.length;
 
     return (
         <>
@@ -52,14 +50,14 @@ export const InnerDefault: React.FC<props> = ({ date }) => {
                         className={styles["modal__empty"]}
                     ></Empty>
                     : <div className={styles["modal__list-wrapper"]}>
-                        <CalendarTrainingList listData={trainingOnSelDate} edit={handleEdit} />
+                        <CalendarTrainingList listData={trainingOnSelDate} edit={true} />
                     </div>}
             </div>
             <Divider className={styles["modal__divider"]} />
             <div className={styles["modal__button-wrapper"]}>
                 <Button
                     onClick={handleAddTraining}
-                    disabled={trainingOnSelDate.length === trainingList.length}
+                    disabled={isAddTrainingDisabled}
                     className={styles["modal__button"]}
                 >{isNoTrainings ? "Создать тренировку" : "Добавить тренировку"}</Button>
             </div>

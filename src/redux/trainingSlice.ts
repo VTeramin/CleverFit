@@ -14,10 +14,15 @@ export const trainingSlice = createSlice({
         },
         addTraining: (state, action: PayloadAction<training>) => {
             state.push(action.payload);
+        },
+        changeTraining: (state, action: PayloadAction<training>) => {
+            const trainingId = action.payload._id;
+            const index = state.findIndex((el: training) => el._id === trainingId);
+            state[index] = action.payload;
         }
     }
 });
 
-export const { changeTrainingData, addTraining } = trainingSlice.actions;
+export const { changeTrainingData, addTraining, changeTraining } = trainingSlice.actions;
 export const selectTraining = (state: RootState) => state.training;
 export default trainingSlice.reducer;

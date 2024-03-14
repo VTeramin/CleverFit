@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import styles from './modal-drawer.module.css';
-import { CloseOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Drawer, Form, Input } from 'antd';
+import { CloseOutlined, EditOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Drawer, Form, Input } from 'antd';
 import { getDayFromDate } from '@utils/get-day-from-date';
 import { CalendarTrainingList } from '@pages/calendar-page/calendar-training-list/calendar-training-list';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeExerciseFormFields, selectCalendarModalData, toggleIsDrawer } from '@redux/calendarModalSlice';
 import { drawerFormFields } from '@constants/types';
 import { sortEmptyDrawerForm } from '@utils/sort-empty-drawer-form';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 type props = {
     date: Date
@@ -18,6 +19,33 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
     const dispatch = useAppDispatch();
     const { isEdit, isDrawer, selectedTraining, exerciseFormFields } = useAppSelector(selectCalendarModalData);
     const listData = selectedTraining !== null ? [selectedTraining] : [];
+    const [checkboxList, setCheckboxList] = useState<{ [key: number]: boolean }>({});
+    const [isDeleteDisabled, setIsDeleteDisabled] = useState(true);
+
+    useEffect(() => {
+        setIsDeleteDisabled(!Object.values(checkboxList).some(el => el === true));
+    }, [checkboxList]);
+
+    function handleCheckboxChange(event: CheckboxChangeEvent, key: number) {
+        setCheckboxList(prev => ({
+            ...prev,
+            [key]: event.target.checked
+        }));
+    }
+
+    function handleRemove(remove: (index: number | number[]) => void) {
+        const checkboxKeys = Object.keys(checkboxList).map(key => Number(key));
+        const checkboxTrueList = checkboxKeys.filter(key => checkboxList[key] === true);
+        setCheckboxList(prev => {
+            const newList = {...prev};
+            checkboxTrueList.forEach(key => {
+                delete newList[key];
+            });
+            return newList;
+        });
+        remove(checkboxTrueList);
+        console.log(checkboxList)
+    }
 
     const initialFormValues = {
         exercises: Object.values(exerciseFormFields).length === 0
@@ -63,17 +91,24 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
             <div className={styles["drawer__form"]}>
                 <Form
                     onFinish={onFinish}
-                    className="form"
                     initialValues={initialFormValues}
                 >
                     <Form.List name="exercises">
-                        {(fields, { add }) => {
+                        {(fields, { add, remove }) => {
                             return (
                                 <>
                                     {fields.map(({ name, key }) => (
                                         <div key={key}>
                                             <Form.Item name={[name, "name"]} required>
-                                                <Input placeholder="Упражнение" className={styles["drawer__training-name-input"]} />
+                                                <Input
+                                                    placeholder="Упражнение"
+                                                    addonAfter={isEdit && <Checkbox
+                                                        checked={checkboxList[name]}
+                                                        onChange={(event) => handleCheckboxChange(event, name)}
+                                                        name={"checkbox"}
+                                                    />}
+                                                    className={styles["drawer__training-name-input"]}
+                                                />
                                             </Form.Item>
                                             <div className={styles["drawer__inputs-wrapper"]}>
                                                 <Form.Item name={[name, "replays"]} label="Подходы">
@@ -89,27 +124,41 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                                             </div>
                                         </div>
                                     ))}
-                                    <Form.Item>
-                                        <Button
-                                            className={styles["drawer__button"]}
-                                            onClick={() => add()}
-                                            icon={<PlusOutlined />}
-                                        >
-                                            Добавить ещё
-                                        </Button>
-                                    </Form.Item>
+                                    <div className={`${styles["drawer__button-wrapper"]} ${isEdit && styles["edit"]}`}>
+                                        <Form.Item>
+                                            <Button
+                                                className={styles["drawer__button"]}
+                                                onClick={() => add()}
+                                                type="text"
+                                                icon={<PlusOutlined />}
+                                            >
+                                                Добавить ещё
+                                            </Button>
+                                        </Form.Item>
+                                        <Form.Item>
+                                            <Button
+                                                className={styles["drawer__button"]}
+                                                onClick={() => handleRemove(remove)}
+                                                type="text"
+                                                icon={<MinusOutlined />}
+                                                disabled={isDeleteDisabled}
+                                            >
+                                                Удалить
+                                            </Button>
+                                        </Form.Item>
+                                    </div>
                                 </>
                             )
                         }}
                     </Form.List>
-                        <Button
-                            htmlType="submit"
-                            type="text"
-                            className={styles["drawer__close"]}
-                            id="drawer__close"
-                        >
-                            <CloseOutlined />
-                        </Button>
+                    <Button
+                        htmlType="submit"
+                        type="text"
+                        className={styles["drawer__close"]}
+                        id="drawer__close"
+                    >
+                        <CloseOutlined />
+                    </Button>
                 </Form>
             </div>
         </Drawer>

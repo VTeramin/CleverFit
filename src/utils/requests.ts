@@ -4,11 +4,12 @@ import { AppDispatch, GetState } from '@redux/configure-store';
 import { addNewFeedback, changeFeedbackData } from '@redux/feedbackSlice';
 import { toggleLoader } from '@redux/loaderSlice';
 import { changeTrainingListData } from '@redux/trainingListSlice';
-import { addTraining, changeTrainingData } from '@redux/trainingSlice';
+import { addTraining, changeTraining, changeTrainingData } from '@redux/trainingSlice';
 import { changeSessionToken, toggleIsAuthorized } from '@redux/userDataSlice';
 import { ROUTE } from '@route/routes';
 import axios from 'axios';
 import { convertFormDataToExercises } from './convert-form-data-to-exercies';
+import { getTrainingId } from './get-training-id';
 axios.defaults.withCredentials = true;
 const API = "https://marathon-api.clevertec.ru";
 
@@ -183,6 +184,29 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
     })
         .then((response) => {
             dispatch(addTraining(response.data));
+            dispatch(changeModalType(calendarModalType.default));
+        })
+        .catch(() => dispatch(changeResultType(status.errorSaveTraining)))
+        .finally(() => dispatch(toggleLoader(false)));
+}
+
+export const editTrainingRequest = (date: Date) => async (dispatch: AppDispatch, getState: GetState) => {
+    dispatch(toggleLoader(true));
+    const { sessionToken } = getState().userData;
+    const { selectedTraining, exerciseFormFields } = getState().calendarModal;
+    const exercises = convertFormDataToExercises(exerciseFormFields);
+    const training = getState().training;
+    const trainingId = getTrainingId(training, date, selectedTraining);
+    const name = selectedTraining;
+
+    return axios.put(`${API}/training/${trainingId}`, { name, date, exercises }, {
+            headers: {
+                "Authorization": `Bearer ${sessionToken}`
+            }
+        })
+        .then((response) => {
+            const trainingData = response.data;
+            dispatch(changeTraining(trainingData));
             dispatch(changeModalType(calendarModalType.default));
         })
         .catch(() => dispatch(changeResultType(status.errorSaveTraining)))

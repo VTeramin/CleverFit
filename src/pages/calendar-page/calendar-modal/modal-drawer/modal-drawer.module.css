@@ -102,6 +102,11 @@
     margin-bottom: 8px;
 }
 
+.drawer__form [class*="ant-checkbox-inner"] {
+    border-radius: 2px;
+    border: 1px solid var(--character-light-border);
+}
+
 .drawer__inputs-wrapper {
     margin-bottom: 24px;
 }
@@ -160,16 +165,37 @@
     color: var(--character-light-disable-25);
 }
 
-.drawer__button {
+.drawer__button-wrapper {
     border-radius: 0 0 6px 6px;
     border: none;
     width: 100%;
     height: var(--button-height);
-    padding: 0px 12px;
     background: var(--character-light-dividers);
-    line-height: var(--line-height);
-    text-align: left;
+    display: flex;
+    flex-direction: row;
+}
+
+.drawer__button-wrapper>[class*="form-item"] {
+    width: 100%;
+    height: 100%;
     color: var(--primary-light-6);
+}
+
+.drawer__button {
+    width: 100%;
+    padding: 0px 12px;
+    height: var(--button-height);
+    line-height: var(--line-height);
+    color: inherit;
+    text-align: left;
+}
+
+.edit .drawer__button {
+    text-align: center;
+}
+
+.drawer__button-wrapper>[class*="form-item"]:nth-child(2) {
+    color: var(--character-light-title-85);
 }
 
 .drawer__close {

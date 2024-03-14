@@ -15,6 +15,7 @@ type calendarModal = {
         y: number
     },
     selectedTraining: string | null,
+    editTraining: string | null,
     exerciseFormFields: drawerFormFields
 }
 
@@ -29,6 +30,7 @@ const initialState: calendarModal = {
         y: 0
     },
     selectedTraining: null,
+    editTraining: null,
     exerciseFormFields: {}
 };
 
@@ -49,16 +51,23 @@ export const calendarModalSlice = createSlice({
             state.resultType = action.payload;
         },
         changeModalType: (state, action: PayloadAction<calendarModalType>) => {
-            state.selectedTraining = null;
-            Object.keys(state.exerciseFormFields).forEach(key => delete state.exerciseFormFields[key]);
+            if(action.payload === calendarModalType.default) {
+                state.selectedTraining = null;
+                state.editTraining = null;
+                Object.keys(state.exerciseFormFields).forEach(key => delete state.exerciseFormFields[key]);
+            }
             state.modalType = action.payload;
         },
         changeModalCoord: (state, action: PayloadAction<{ x: number, y: number }>) => {
+            if(action.payload.x === 0 && action.payload.y === 0) state.isModal = false
             state.modalCoord.x = action.payload.x;
             state.modalCoord.y = action.payload.y;
         },
         changeSelectedTraining: (state, action: PayloadAction<string | null>) => {
             state.selectedTraining = action.payload;
+        },
+        changeEditTraining: (state, action: PayloadAction<string | null>) => {
+            state.editTraining = action.payload;
         },
         changeExerciseFormFields: (state, action: PayloadAction<drawerFormFields>) => {
             Object.keys(state.exerciseFormFields).forEach(key => delete state.exerciseFormFields[key]);
@@ -75,6 +84,7 @@ export const {
     changeModalType,
     changeModalCoord,
     changeSelectedTraining,
+    changeEditTraining,
     changeExerciseFormFields
 } = calendarModalSlice.actions;
 export const selectCalendarModalData = (state: RootState) => state.calendarModal;
