@@ -1,10 +1,10 @@
-import { formFields } from "@constants/types";
+import { drawerFormFields } from "@constants/types";
 
-export function convertFormDataToExercises(formFields: formFields) {
+export function convertFormDataToExercises(formFields: drawerFormFields) {
     return Object.values(formFields).map(el => ({
-        name: el[0].value,
-        replays: el[1].value || 1,
-        weight: el[2].value || 0,
-        approaches: el[3].value || 1
+        name: el.name,
+        replays: el.replays || 1,
+        weight: el.weight || 0,
+        approaches: el.approaches || 1
     }))
 }

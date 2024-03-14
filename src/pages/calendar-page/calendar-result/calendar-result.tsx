@@ -5,30 +5,30 @@ import { Button, Modal, Result } from 'antd';
 import { getTrainingList, status } from '@utils/requests';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { CloseCircleOutlined } from '@ant-design/icons';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { changeResultType, selectCalendarModalData, toggleIsModal } from '@redux/calendarModalSlice';
 
-type props = {
-    resultType: status,
-    setResultType: React.Dispatch<React.SetStateAction<status>>,
-    setTrainingList: React.Dispatch<React.SetStateAction<never[]>>,
-    setIsModal: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-export const CalendarResult: React.FC<props> = ({ resultType, setResultType, setTrainingList, setIsModal }) => {
+export const CalendarResult: React.FC = () => {
     const dispatch = useAppDispatch();
+    const { resultType } = useAppSelector(selectCalendarModalData);
     const width = useWindowSize().width || 0;
 
     function handleUpdate() {
-        setResultType(status.empty);
+        dispatch(changeResultType(status.empty));
         dispatch(getTrainingList()).then(resp => {
-            resp = status.errorTrainingList
-            resp === status.errorTrainingList ? setResultType(resp) : setTrainingList(resp);
+            if (resp === status.errorTrainingList) {
+                dispatch(changeResultType(status.errorTrainingList));
+            }
         });
     }
 
     function handleClose() {
-        setResultType(status.empty);
-        setIsModal(false);
+        dispatch(changeResultType(status.empty));
+    }
+
+    function handleCloseAll() {
+        dispatch(changeResultType(status.empty));
+        dispatch(toggleIsModal(false));
     }
 
     const result: { [name: string]: JSX.Element } = {
@@ -42,7 +42,7 @@ export const CalendarResult: React.FC<props> = ({ resultType, setResultType, set
                 width={width > 800 ? 384 : 539}
                 className={styles["result"]}
                 open={resultType !== status.empty}
-                onCancel={() => setResultType(status.empty)}
+                onCancel={handleClose}
                 maskClosable={false}
                 closable={true}
                 footer={null}
@@ -73,7 +73,7 @@ export const CalendarResult: React.FC<props> = ({ resultType, setResultType, set
                 width={width > 800 ? 416 : 328}
                 className={`${styles["result"]} ${styles["result-error-save"]}`}
                 open={resultType !== status.empty}
-                onCancel={() => setResultType(status.empty)}
+                onCancel={handleClose}
                 maskClosable={false}
                 closable={false}
                 footer={null}
@@ -87,7 +87,7 @@ export const CalendarResult: React.FC<props> = ({ resultType, setResultType, set
                         <Button
                             key="Закрыть"
                             className={`${styles["conf-button"]}`}
-                            onClick={handleClose}
+                            onClick={handleCloseAll}
                         >
                             Закрыть
                         </Button>

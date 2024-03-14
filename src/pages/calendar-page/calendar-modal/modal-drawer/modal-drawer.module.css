@@ -55,12 +55,10 @@
     list-style-type: none;
 }
 
-.drawer__training-type li::before {
-    content: "•";
-    color: black;
-    display: inline-block;
-    font-size: 18px;
-    margin-right: 6px;
+.drawer__training-type-wrapper li [class*="badge-status-text"] {
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height);
+    color: var(--character-light-secondary-45);
 }
 
 .drawer__form {
@@ -175,7 +173,20 @@
 }
 
 .drawer__close {
+    display: block;
+    height: max-content;
+    padding: 0;
     position: absolute;
+    text-align: start;
     top: 30px;
     right: 32px;
+}
+
+.drawer__close,
+.drawer__close * {
+    line-height: 100%;
+}
+
+.drawer__close svg {
+    fill: var(--character-light-secondary-45);
 }

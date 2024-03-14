@@ -35,7 +35,7 @@
     min-height: 52px;
 }
 
-.modal__list-wrapper li {
+.modal__body .modal__list-wrapper li {
     height: 22px;
     padding: 1px 12px;
 }

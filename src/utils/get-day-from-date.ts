@@ -4,7 +4,7 @@ export function getDayFromDate(date: Date) {
     }
 
     const day = addZeroIfOneDig(date.getDate());
-    const month = addZeroIfOneDig(date.getMonth());
+    const month = addZeroIfOneDig(date.getMonth() + 1);
     const year = date.getFullYear();
 
     return `${day}.${month}.${year}`

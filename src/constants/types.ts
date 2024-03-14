@@ -1,5 +1,3 @@
-import { FieldData } from 'rc-field-form/lib/interface';
-
 export type exercise = {
     _id?: string,
     name: string,
@@ -9,8 +7,13 @@ export type exercise = {
     isImplementation?: boolean
 }
 
-export type formFields = {
-    [key: string]: FieldData[]
+export type drawerFormFields = {
+    [key: string]: {
+        name: string | undefined,
+        replays: number | undefined,
+        weight: number | undefined,
+        approaches: number | undefined
+    }
 }
 
 export type training = {

@@ -13,7 +13,9 @@ import { CalendarModal } from './calendar-modal/calendar-modal';
 import { useMeasure } from '@uidotdev/usehooks';
 import { CalendarTrainingList } from './calendar-training-list/calendar-training-list';
 import { filterTrainingByDay } from '@utils/filter-training-by-day';
-import { changeTrainingData, selectTraining } from '@redux/trainingSlice';
+import { selectTraining } from '@redux/trainingSlice';
+import { changeModalType, changeResultType, selectCalendarModalData, toggleIsModal } from '@redux/calendarModalSlice';
+import { calendarModalType } from '@constants/enums';
 
 moment.updateLocale("ru", {
     week: { dow: 1 },
@@ -24,34 +26,36 @@ moment.updateLocale("ru", {
 export const CalendarPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const training = useAppSelector(selectTraining);
-    const [resultType, setResultType] = useState(status.empty);
-    const [trainingList, setTrainingList] = useState([]);
+    const { isModal, resultType } = useAppSelector(selectCalendarModalData);
+
+    const [resultTypeCalendar, setResultTypeCalendar] = useState(resultType);
+    useEffect(() => {
+        dispatch(changeResultType(resultTypeCalendar));
+    }, [resultTypeCalendar, dispatch]);
+
     const [date, setDate] = useState(moment());
-    const [isModal, setIsModal] = useState(false);
     const [ref, { width }] = useMeasure();
     const pageWidth = width;
 
     useEffect(() => {
         dispatch(getTraining()).then(resp => {
             if (resp === status.noToken) {
-                setResultType(resp);
+                dispatch(changeResultType(status.noToken));
             } else {
-                dispatch(changeTrainingData(resp));
                 return dispatch(getTrainingList());
             }
         }).then(resp => {
             if (resp === status.errorTrainingList) {
-                dispatch(changeTrainingData([]));
-                setResultType(resp);
-            } else {
-                setTrainingList(resp);
+                dispatch(changeResultType(status.errorTrainingList));
             }
         });
+        dispatch(toggleIsModal(false));
     }, [dispatch]);
 
     function handleDateSelect(target: moment.Moment) {
+        dispatch(changeModalType(calendarModalType.default));
         setDate(target);
-        setIsModal(true);
+        dispatch(toggleIsModal(true));
     }
 
     function isDateDisabled(currentDate: moment.Moment) {
@@ -71,28 +75,20 @@ export const CalendarPage: React.FC = () => {
                     value={date}
                     disabledDate={isDateDisabled}
                     onSelect={handleDateSelect}
-                    onPanelChange={() => setIsModal(false)}
+                    onPanelChange={() => dispatch(toggleIsModal(false))}
                     dateCellRender={dateCellRender}
                 />
             </ConfigProvider>
-            {isModal && date && <CalendarModal
+            {isModal && <CalendarModal
                 date={date.toDate()}
-                setIsModal={setIsModal}
                 pageWidth={pageWidth || 0}
-                trainingList={trainingList}
-                setResultType={setResultType}
             />}
             {resultType === status.noToken
                 ? <ResultModal
                     resultType={resultType}
-                    setResultType={setResultType}
+                    setResultType={setResultTypeCalendar}
                 />
-                : <CalendarResult
-                    resultType={resultType}
-                    setResultType={setResultType}
-                    setTrainingList={setTrainingList}
-                    setIsModal={setIsModal}
-                />}
+                : <CalendarResult />}
         </Layout>
     );
 };

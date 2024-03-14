@@ -1,11 +1,14 @@
-import { exercise } from '@constants/types';
+import { calendarModalType } from '@constants/enums';
+import { changeModalType, changeResultType } from '@redux/calendarModalSlice';
 import { AppDispatch, GetState } from '@redux/configure-store';
 import { addNewFeedback, changeFeedbackData } from '@redux/feedbackSlice';
 import { toggleLoader } from '@redux/loaderSlice';
-import { addTraining } from '@redux/trainingSlice';
+import { changeTrainingListData } from '@redux/trainingListSlice';
+import { addTraining, changeTrainingData } from '@redux/trainingSlice';
 import { changeSessionToken, toggleIsAuthorized } from '@redux/userDataSlice';
 import { ROUTE } from '@route/routes';
 import axios from 'axios';
+import { convertFormDataToExercises } from './convert-form-data-to-exercies';
 axios.defaults.withCredentials = true;
 const API = "https://marathon-api.clevertec.ru";
 
@@ -144,7 +147,7 @@ export const getTraining = () => async (dispatch: AppDispatch, getState: GetStat
             "Authorization": `Bearer ${sessionToken}`
         }
     })
-        .then((response) => response.data)
+        .then((response) => dispatch(changeTrainingData(response.data)))
         .catch(() => status.noToken)
         .finally(() => dispatch(toggleLoader(false)));
 }
@@ -158,24 +161,30 @@ export const getTrainingList = () => async (dispatch: AppDispatch, getState: Get
             "Authorization": `Bearer ${sessionToken}`
         }
     })
-        .then((response) => response.data)
-        .catch(() => status.errorTrainingList)
+        .then((response) => dispatch(changeTrainingListData(response.data)))
+        .catch(() => {
+            dispatch(changeTrainingData([]));
+            return status.errorTrainingList;
+        })
         .finally(() => dispatch(toggleLoader(false)));
 }
 
-export const saveTraining = (name: string, date: Date, exercises: exercise[]) => async (dispatch: AppDispatch, getState: GetState) => {
+export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
     const { sessionToken } = getState().userData;
+    const { selectedTraining, exerciseFormFields } = getState().calendarModal;
+    const name = selectedTraining;
+    const exercises = convertFormDataToExercises(exerciseFormFields);
 
     return axios.post(`${API}/training`, { name, date, exercises }, {
         headers: {
             "Authorization": `Bearer ${sessionToken}`
         }
     })
-        .then((resp) => {
-            dispatch(addTraining(resp.data));
-            return status.success;
+        .then((response) => {
+            dispatch(addTraining(response.data));
+            dispatch(changeModalType(calendarModalType.default));
         })
-        .catch(() => status.errorSaveTraining)
+        .catch(() => dispatch(changeResultType(status.errorSaveTraining)))
         .finally(() => dispatch(toggleLoader(false)));
 }
