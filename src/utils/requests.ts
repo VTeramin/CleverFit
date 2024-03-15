@@ -10,6 +10,7 @@ import { ROUTE } from '@route/routes';
 import axios from 'axios';
 import { convertFormDataToExercises } from './convert-form-data-to-exercies';
 import { getTrainingId } from './get-training-id';
+import { training } from '@constants/types';
 axios.defaults.withCredentials = true;
 const API = "https://marathon-api.clevertec.ru";
 
@@ -198,12 +199,31 @@ export const editTrainingRequest = (date: Date) => async (dispatch: AppDispatch,
     const training = getState().training;
     const trainingId = getTrainingId(training, date, selectedTraining);
     const name = selectedTraining;
+    const isImplementation = date <= new Date(Date.now());
 
-    return axios.put(`${API}/training/${trainingId}`, { name, date, exercises }, {
+    if (exercises.length === 0) {
+        return axios.delete(`${API}/training/${trainingId}`, {
             headers: {
                 "Authorization": `Bearer ${sessionToken}`
             }
         })
+            .then()
+            .catch((error) => {
+                if (error.response.status === 404) {
+                    dispatch(changeTraining({ _id: trainingId } as training));
+                    dispatch(changeModalType(calendarModalType.default));
+                } else {
+                    dispatch(changeResultType(status.errorSaveTraining));
+                }
+            })
+            .finally(() => dispatch(toggleLoader(false)));
+    }
+
+    return axios.put(`${API}/training/${trainingId}`, { name, date, exercises, isImplementation }, {
+        headers: {
+            "Authorization": `Bearer ${sessionToken}`
+        }
+    })
         .then((response) => {
             const trainingData = response.data;
             dispatch(changeTraining(trainingData));

@@ -50,7 +50,7 @@ export const InnerDefault: React.FC<props> = ({ date }) => {
                         className={styles["modal__empty"]}
                     ></Empty>
                     : <div className={styles["modal__list-wrapper"]}>
-                        <CalendarTrainingList listData={trainingOnSelDate} edit={true} />
+                        <CalendarTrainingList date={date} listData={trainingOnSelDate} edit={true} />
                     </div>}
             </div>
             <Divider className={styles["modal__divider"]} />

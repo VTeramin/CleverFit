@@ -64,7 +64,7 @@ export const CalendarPage: React.FC = () => {
 
     function dateCellRender(moment: moment.Moment) {
         const listData = filterTrainingByDay(training, moment.toDate());
-        return <CalendarTrainingList listData={listData} />
+        return <CalendarTrainingList date={moment.toDate()} listData={listData} />
     }
 
     return (

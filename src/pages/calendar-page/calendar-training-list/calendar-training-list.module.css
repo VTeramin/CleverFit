@@ -24,3 +24,11 @@
     line-height: var(--line-height);
     color: var(--character-light-title-85);
 }
+
+.done [class*="badge-status-text"] {
+    color: var(--character-light-disable-25);
+}
+
+.done [class*="anticon-edit"] svg {
+    fill: var(--character-light-disable-25);
+}

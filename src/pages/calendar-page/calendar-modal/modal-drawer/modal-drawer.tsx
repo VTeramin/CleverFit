@@ -10,6 +10,9 @@ import { changeExerciseFormFields, selectCalendarModalData, toggleIsDrawer } fro
 import { drawerFormFields } from '@constants/types';
 import { sortEmptyDrawerForm } from '@utils/sort-empty-drawer-form';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { filterTrainingByName } from '@utils/filter-training-by-name';
+import { selectTraining } from '@redux/trainingSlice';
+import { calendarModalType } from '@constants/enums';
 
 type props = {
     date: Date
@@ -17,10 +20,18 @@ type props = {
 
 export const ModalDrawer: React.FC<props> = ({ date }) => {
     const dispatch = useAppDispatch();
-    const { isEdit, isDrawer, selectedTraining, exerciseFormFields } = useAppSelector(selectCalendarModalData);
+    const training = useAppSelector(selectTraining);
+    const { isEdit, isDrawer, selectedTraining, exerciseFormFields, modalType } = useAppSelector(selectCalendarModalData);
     const listData = selectedTraining !== null ? [selectedTraining] : [];
     const [checkboxList, setCheckboxList] = useState<{ [key: number]: boolean }>({});
     const [isDeleteDisabled, setIsDeleteDisabled] = useState(true);
+    const isView = modalType === calendarModalType.default;
+    const cellDate = String(date).substring(0, 10);
+
+    useEffect(() => {
+        const formData = filterTrainingByName(training, cellDate, selectedTraining as string);
+        dispatch(changeExerciseFormFields(formData));
+    }, [dispatch, isEdit, selectedTraining, training, cellDate]);
 
     useEffect(() => {
         setIsDeleteDisabled(!Object.values(checkboxList).some(el => el === true));
@@ -44,7 +55,6 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
             return newList;
         });
         remove(checkboxTrueList);
-        console.log(checkboxList)
     }
 
     const initialFormValues = {
@@ -82,6 +92,8 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
             <p className={styles["drawer__title"]}>
                 {isEdit
                     ? <><EditOutlined className={styles["drawer__title-icon"]} />Редактирование</>
+                    : isView
+                    ? <>Просмотр упражнений</>
                     : <><PlusOutlined className={styles["drawer__title-icon"]} />Добавление упражнений</>}
             </p>
             <div className={styles["drawer__training-type-wrapper"]}>
@@ -107,24 +119,25 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                                                         onChange={(event) => handleCheckboxChange(event, name)}
                                                         name={"checkbox"}
                                                     />}
+                                                    disabled={isView}
                                                     className={styles["drawer__training-name-input"]}
                                                 />
                                             </Form.Item>
                                             <div className={styles["drawer__inputs-wrapper"]}>
                                                 <Form.Item name={[name, "replays"]} label="Подходы">
-                                                    <Input addonBefore="+" type="number" placeholder="1"></Input>
+                                                    <Input addonBefore="+" type="number" placeholder="1" disabled={isView}></Input>
                                                 </Form.Item>
                                                 <Form.Item name={[name, "weight"]} label="Вес, кг">
-                                                    <Input type="number" placeholder="0"></Input>
+                                                    <Input type="number" placeholder="0" disabled={isView}></Input>
                                                 </Form.Item>
                                                 <p className={styles["drawer__x"]}>X</p>
                                                 <Form.Item name={[name, "approaches"]} label="Количество">
-                                                    <Input type="number" placeholder="3"></Input>
+                                                    <Input type="number" placeholder="3" disabled={isView}></Input>
                                                 </Form.Item>
                                             </div>
                                         </div>
                                     ))}
-                                    <div className={`${styles["drawer__button-wrapper"]} ${isEdit && styles["edit"]}`}>
+                                    {!isView && <div className={`${styles["drawer__button-wrapper"]} ${isEdit && styles["edit"]}`}>
                                         <Form.Item>
                                             <Button
                                                 className={styles["drawer__button"]}
@@ -135,7 +148,7 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                                                 Добавить ещё
                                             </Button>
                                         </Form.Item>
-                                        <Form.Item>
+                                        {isEdit && <Form.Item>
                                             <Button
                                                 className={styles["drawer__button"]}
                                                 onClick={() => handleRemove(remove)}
@@ -145,8 +158,8 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                                             >
                                                 Удалить
                                             </Button>
-                                        </Form.Item>
-                                    </div>
+                                        </Form.Item>}
+                                    </div>}
                                 </>
                             )
                         }}

@@ -12,7 +12,8 @@ export type drawerFormFields = {
         name: string | undefined,
         replays: number | undefined,
         weight: number | undefined,
-        approaches: number | undefined
+        approaches: number | undefined,
+        isImplementation?: boolean
     }
 }
 

@@ -8,6 +8,7 @@ import { calendarModalType } from '@constants/enums';
 import { InnerNewTraining } from './inner-new-training/inner-new-training';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeModalCoord, selectCalendarModalData } from '@redux/calendarModalSlice';
+import { ModalDrawer } from './modal-drawer/modal-drawer';
 
 type props = {
     date: Date,
@@ -20,9 +21,9 @@ type modalInner = {
 
 export const CalendarModal: React.FC<props> = ({ date, pageWidth }) => {
     const dispatch = useAppDispatch();
-    const { modalType } = useAppSelector(selectCalendarModalData);
+    const { modalType, modalCoord, selectedTraining } = useAppSelector(selectCalendarModalData);
+    const isSmthSelected = selectedTraining !== null;
     const width = useWindowSize().width || 0;
-    const { modalCoord } = useAppSelector(selectCalendarModalData);
     useEffect(() => {
         const coordinates = getCalendarModalCoords(width);
         dispatch(changeModalCoord(coordinates));
@@ -40,6 +41,9 @@ export const CalendarModal: React.FC<props> = ({ date, pageWidth }) => {
     return (
         <div className={styles["modal"]} style={{ left: `${modalCoord.x}px`, top: `${modalCoord.y}px` }}>
             {modalInner[modalType]}
+            {isSmthSelected && <ModalDrawer
+                date={date}
+            />}
         </div>
     );
 };

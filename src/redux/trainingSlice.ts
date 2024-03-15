@@ -18,7 +18,11 @@ export const trainingSlice = createSlice({
         changeTraining: (state, action: PayloadAction<training>) => {
             const trainingId = action.payload._id;
             const index = state.findIndex((el: training) => el._id === trainingId);
-            state[index] = action.payload;
+            if (Object.keys(action.payload).length === 1) {
+                state.splice(index, 1);
+            } else {
+                state[index] = action.payload;
+            }
         }
     }
 });

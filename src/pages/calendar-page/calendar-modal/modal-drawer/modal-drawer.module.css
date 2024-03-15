@@ -98,6 +98,11 @@
     line-height: var(--line-height);
 }
 
+.drawer [class*="ant-input-disabled"] {
+    background: none;
+    color: inherit;
+}
+
 .drawer .drawer__training-name-input {
     margin-bottom: 8px;
 }
