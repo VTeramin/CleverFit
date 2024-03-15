@@ -58,10 +58,6 @@ export const CalendarPage: React.FC = () => {
         dispatch(toggleIsModal(true));
     }
 
-    function isDateDisabled(currentDate: moment.Moment) {
-        return currentDate.toDate().getMonth() !== date.toDate().getMonth();
-    }
-
     function dateCellRender(moment: moment.Moment) {
         const listData = filterTrainingByDay(training, moment.toDate());
         return <CalendarTrainingList date={moment.toDate()} listData={listData} />
@@ -73,7 +69,6 @@ export const CalendarPage: React.FC = () => {
                 <Calendar
                     className={styles["calendar"]}
                     value={date}
-                    disabledDate={isDateDisabled}
                     onSelect={handleDateSelect}
                     onPanelChange={() => dispatch(toggleIsModal(false))}
                     dateCellRender={dateCellRender}

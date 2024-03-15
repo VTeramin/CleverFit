@@ -19,12 +19,12 @@ export const CalendarTrainingList: React.FC<props> = ({ date, listData, edit }) 
     const dispatch = useAppDispatch();
     const training = useAppSelector(selectTraining);
 
-
     function handleEdit(name: string) {
         dispatch(changeSelectedTraining(name));
         if (checkIsTrainingDone(name, training, date)) {
             dispatch(toggleIsDrawer(true));
             dispatch(toggleIsEdit(false));
+
         } else {
             dispatch(toggleIsEdit(true));
             dispatch(changeEditTraining(name));

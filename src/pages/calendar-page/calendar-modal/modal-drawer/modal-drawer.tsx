@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'antd/dist/antd.css';
 import styles from './modal-drawer.module.css';
 import { CloseOutlined, EditOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Drawer, Form, Input } from 'antd';
+import { Button, Checkbox, Drawer, Form, FormInstance, Input } from 'antd';
 import { getDayFromDate } from '@utils/get-day-from-date';
 import { CalendarTrainingList } from '@pages/calendar-page/calendar-training-list/calendar-training-list';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
@@ -27,6 +27,23 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
     const [isDeleteDisabled, setIsDeleteDisabled] = useState(true);
     const isView = modalType === calendarModalType.default;
     const cellDate = String(date).substring(0, 10);
+    const form = useRef<FormInstance<{ exercises: drawerFormFields }>>(null);
+    const initialFormValues = {
+        exercises: Object.values(exerciseFormFields).length === 0
+            ? [{
+                name: undefined,
+                replays: undefined,
+                weight: undefined,
+                approaches: undefined
+            }]
+            : Object.values(exerciseFormFields)
+    };
+
+    useEffect(() => {
+        if (form.current) {
+            form.current.resetFields()
+        }
+    }, [exerciseFormFields]);
 
     useEffect(() => {
         const formData = filterTrainingByName(training, cellDate, selectedTraining as string);
@@ -48,24 +65,13 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
         const checkboxKeys = Object.keys(checkboxList).map(key => Number(key));
         const checkboxTrueList = checkboxKeys.filter(key => checkboxList[key] === true);
         setCheckboxList(prev => {
-            const newList = {...prev};
+            const newList = { ...prev };
             checkboxTrueList.forEach(key => {
                 delete newList[key];
             });
             return newList;
         });
         remove(checkboxTrueList);
-    }
-
-    const initialFormValues = {
-        exercises: Object.values(exerciseFormFields).length === 0
-            ? [{
-                name: undefined,
-                replays: undefined,
-                weight: undefined,
-                approaches: undefined
-            }]
-            : Object.values(exerciseFormFields)
     }
 
     function handleDrawerClose() {
@@ -93,8 +99,8 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                 {isEdit
                     ? <><EditOutlined className={styles["drawer__title-icon"]} />Редактирование</>
                     : isView
-                    ? <>Просмотр упражнений</>
-                    : <><PlusOutlined className={styles["drawer__title-icon"]} />Добавление упражнений</>}
+                        ? <>Просмотр упражнений</>
+                        : <><PlusOutlined className={styles["drawer__title-icon"]} />Добавление упражнений</>}
             </p>
             <div className={styles["drawer__training-type-wrapper"]}>
                 <CalendarTrainingList listData={listData} />
@@ -102,6 +108,7 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
             </div>
             <div className={styles["drawer__form"]}>
                 <Form
+                    ref={form}
                     onFinish={onFinish}
                     initialValues={initialFormValues}
                 >
