@@ -93,8 +93,6 @@
     height: 24px;
     padding: 1px 0 1px 8px;
     margin: 0;
-    border: var(--button-border-light);
-    border-radius: var(--border-radius);
     line-height: var(--line-height);
 }
 
@@ -130,10 +128,6 @@
     text-align: left;
 }
 
-.drawer [class*="label"] label::after {
-    content: "";
-}
-
 .drawer__inputs-wrapper [class*="group-addon"] {
     padding: 0 13px;
 }
@@ -148,7 +142,8 @@
     min-height: 0;
 }
 
-.drawer__inputs-wrapper>[class*="ant-form-item"] {
+.drawer__inputs-wrapper>[class*="ant-form-item"],
+.drawer__inputs-wrapper [class*="ant-input-number-in-form-item"] {
     width: 89px;
 }
 

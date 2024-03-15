@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import 'antd/dist/antd.css';
 import styles from './modal-drawer.module.css';
 import { CloseOutlined, EditOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Drawer, Form, FormInstance, Input } from 'antd';
+import { Button, Checkbox, Drawer, Form, FormInstance, Input, InputNumber } from 'antd';
 import { getDayFromDate } from '@utils/get-day-from-date';
 import { CalendarTrainingList } from '@pages/calendar-page/calendar-training-list/calendar-training-list';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
@@ -132,14 +132,27 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                                             </Form.Item>
                                             <div className={styles["drawer__inputs-wrapper"]}>
                                                 <Form.Item name={[name, "replays"]} label="Подходы">
-                                                    <Input addonBefore="+" type="number" placeholder="1" disabled={isView}></Input>
+                                                    <InputNumber
+                                                        addonBefore="+"
+                                                        placeholder="1"
+                                                        min={1}
+                                                        disabled={isView}
+                                                    ></InputNumber>
                                                 </Form.Item>
                                                 <Form.Item name={[name, "weight"]} label="Вес, кг">
-                                                    <Input type="number" placeholder="0" disabled={isView}></Input>
+                                                    <InputNumber
+                                                        placeholder="0"
+                                                        min={0}
+                                                        disabled={isView}
+                                                    ></InputNumber>
                                                 </Form.Item>
                                                 <p className={styles["drawer__x"]}>X</p>
                                                 <Form.Item name={[name, "approaches"]} label="Количество">
-                                                    <Input type="number" placeholder="3" disabled={isView}></Input>
+                                                    <InputNumber
+                                                        placeholder="3"
+                                                        min={1}
+                                                        disabled={isView}
+                                                    ></InputNumber>
                                                 </Form.Item>
                                             </div>
                                         </div>
