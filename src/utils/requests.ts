@@ -4,12 +4,13 @@ import { AppDispatch, GetState } from '@redux/configure-store';
 import { addNewFeedback, changeFeedbackData } from '@redux/feedbackSlice';
 import { toggleLoader } from '@redux/loaderSlice';
 import { changeTrainingListData } from '@redux/trainingListSlice';
-import { addTraining, changeTrainingData, setIsImplementation } from '@redux/trainingSlice';
+import { changeTrainingData } from '@redux/trainingSlice';
 import { changeSessionToken, toggleIsAuthorized } from '@redux/userDataSlice';
 import { ROUTE } from '@route/routes';
 import axios from 'axios';
-import { convertFormDataToExercises } from './convert-form-data-to-exercies';
-import { getTrainingId } from './get-training-id';
+import { convertFormDataToExercises } from './calendar-utils/convert-form-data-to-exercies';
+import { getTrainingId } from './calendar-utils/get-training-id';
+import { training } from '@constants/types';
 
 axios.defaults.withCredentials = true;
 const API = "https://marathon-api.clevertec.ru";
@@ -149,7 +150,7 @@ export const getTraining = () => async (dispatch: AppDispatch, getState: GetStat
             "Authorization": `Bearer ${sessionToken}`
         }
     })
-        .then((response) => dispatch(changeTrainingData(response.data)))
+        .then((response) => dispatch(changeTrainingData(response.data.map((el: training) => Object.keys(el).includes("id") ? { ...el, id: el.id } : el))))
         .catch(() => status.noToken)
         .finally(() => dispatch(toggleLoader(false)));
 };
@@ -174,61 +175,26 @@ export const getTrainingList = () => async (dispatch: AppDispatch, getState: Get
 export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
     const { sessionToken } = getState().userData;
-    const { selectedTraining, exerciseFormFields } = getState().calendarModal;
-    const name = selectedTraining;
-    const exercises = convertFormDataToExercises(exerciseFormFields);
-
-    return axios.post(`${API}/training`, { name, date, exercises }, {
-        headers: {
-            "Authorization": `Bearer ${sessionToken}`
-        }
-    })
-        .then((response) => {
-            dispatch(addTraining(response.data));
-            dispatch(changeModalType(calendarModalType.default));
-        })
-        .catch(() => dispatch(changeResultType(status.errorSaveTraining)))
-        .finally(() => dispatch(toggleLoader(false)));
-};
-
-export const editTrainingRequest = (date: Date) => async (dispatch: AppDispatch, getState: GetState) => {
-    dispatch(toggleLoader(true));
-    const { sessionToken } = getState().userData;
-    const { selectedTraining, exerciseFormFields } = getState().calendarModal;
+    const { selectedTraining, exerciseFormFields, isEdit } = getState().calendarModal;
     const exercises = convertFormDataToExercises(exerciseFormFields);
     const training = getState().training;
     const trainingId = getTrainingId(training, date, selectedTraining);
-    const name = selectedTraining;
+    const name = selectedTraining as string;
     const isImplementation = date <= new Date(Date.now());
 
-    if (exercises.length === 0) {
-        return axios.delete(`${API}/training/${trainingId}`, {
+    const action = isEdit
+        ? axios.put(`${API}/training/${trainingId}`, { name, date, exercises, isImplementation }, {
             headers: {
                 "Authorization": `Bearer ${sessionToken}`
             }
         })
-            .then()
-            .catch((error) => {
-                if (error.response.status === 404) {
-                    dispatch(changeModalType(calendarModalType.default));
-                } else {
-                    dispatch(changeResultType(status.errorSaveTraining));
-                }
-            })
-            .finally(() => dispatch(toggleLoader(false)));
-    }
+        : axios.post(`${API}/training`, { name, date, exercises }, {
+            headers: {
+                "Authorization": `Bearer ${sessionToken}`
+            }
+        });
 
-    dispatch(setIsImplementation(trainingId as string));
-
-    return axios.put(`${API}/training/${trainingId}`, { name, date, exercises, isImplementation }, {
-        headers: {
-            "Authorization": `Bearer ${sessionToken}`
-        }
-    })
-        .then((response) => {
-            dispatch(changeTrainingData(response.data));
-            dispatch(changeModalType(calendarModalType.default));
-        })
+    return action.then(() => dispatch(changeModalType(calendarModalType.default)))
         .catch(() => dispatch(changeResultType(status.errorSaveTraining)))
         .finally(() => dispatch(toggleLoader(false)));
 };

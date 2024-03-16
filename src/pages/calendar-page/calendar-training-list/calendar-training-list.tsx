@@ -7,10 +7,10 @@ import { EditOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeEditTraining, changeModalType, changeSelectedTraining, toggleIsEdit } from '@redux/calendarModalSlice';
 import { selectTraining } from '@redux/trainingSlice';
-import { checkIsTrainingDone } from '@utils/check-is-training-done';
+import { checkIsTrainingDone } from '@utils/calendar-utils/check-is-training-done';
 
 type props = {
-    date?: Date,
+    date: Date,
     listData: string[],
     edit?: boolean
 }
@@ -28,7 +28,7 @@ export const CalendarTrainingList: React.FC<props> = ({ date, listData, edit }) 
 
     return (
         <ul className={styles["trainings-list"]}>
-            {listData.map((name: string, ind) => (
+            {listData.map((name, ind) => (
                 <li key={ind} className={checkIsTrainingDone(name, training, date) ? styles["done"] : ""}>
                     <Badge text={name} color={badgeColors[name as keyof typeof badgeColors]} />
                     {edit && <EditOutlined

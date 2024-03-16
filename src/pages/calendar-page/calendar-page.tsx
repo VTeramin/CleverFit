@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarModal } from './calendar-modal/calendar-modal';
 import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
 import { CalendarTrainingList } from './calendar-training-list/calendar-training-list';
-import { filterTrainingByDay } from '@utils/filter-training-by-day';
+import { filterTrainingByDay } from '@utils/calendar-utils/filter-training-by-day';
 import { selectTraining } from '@redux/trainingSlice';
 import { changeModalType, changeResultType, selectCalendarModalData, toggleIsModal } from '@redux/calendarModalSlice';
 import { calendarModalType } from '@constants/enums';

@@ -27,6 +27,7 @@ export const Page: React.FC<props> = ({ innerLayout }) => {
     const [collapsed, setCollapsed] = useState(false);
     const isMain = pathname === "/main";
     const isFeedbacks = pathname === "/feedbacks";
+    const isCalendar = pathname === "/calendar";
     const { resultType } = useAppSelector(selectCalendarModalData);
     const [resultTypeCalendar, setResultTypeCalendar] = useState(resultType);
     useEffect(() => {
@@ -50,7 +51,7 @@ export const Page: React.FC<props> = ({ innerLayout }) => {
                 {!isFeedbacks && <Header className={styles["header"]}>
                     {isMain && <h1 className={styles["header__title"]}>Приветствуем тебя в&nbsp;CleverFit — приложении,<br />которое поможет тебе добиться своей мечты!</h1>}
                     <div className={styles["header__settings"]}>
-                        {<SettingOutlined className={styles["settings__icon"]} />}
+                        {<SettingOutlined className={`${styles["settings__icon"]} ${isCalendar && styles["settings__icon-no-wrap"]}`} />}
                         <p className={styles["settings__line"]}>Настройки</p>
                     </div>
                 </Header>}

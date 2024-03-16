@@ -5,7 +5,7 @@ import { Button, Divider, Empty } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { getDayFromDate } from '@utils/get-day-from-date';
 import emptyIcon from '../../../../assets/icon/empty.svg';
-import { filterTrainingByDay } from '@utils/filter-training-by-day';
+import { filterTrainingByDay } from '@utils/calendar-utils/filter-training-by-day';
 import { CalendarTrainingList } from '@pages/calendar-page/calendar-training-list/calendar-training-list';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectTraining } from '@redux/trainingSlice';

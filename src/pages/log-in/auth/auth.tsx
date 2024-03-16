@@ -9,9 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { changeLoginData, selectLogin } from '@redux/loginSlice';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { ROUTE } from '@route/routes';
-import { validPassword } from '@utils/valid-password';
-import { validEmail } from '@utils/valid-email';
-import { checkDisabledAuth, checkValidAuth, validAuth } from '@utils/check-valid-status';
+import { validPassword } from '@utils/auth-utils/valid-password';
+import { validEmail } from '@utils/auth-utils/valid-email';
+import { checkDisabledAuth, checkValidAuth, validAuth } from '@utils/auth-utils/check-valid-status';
 
 type props = {
     isRegistration: boolean

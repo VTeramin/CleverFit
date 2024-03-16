@@ -8,9 +8,9 @@ import { CalendarTrainingList } from '@pages/calendar-page/calendar-training-lis
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeExerciseFormFields, selectCalendarModalData, toggleIsDrawer } from '@redux/calendarModalSlice';
 import { drawerFormFields } from '@constants/types';
-import { sortEmptyDrawerForm } from '@utils/sort-empty-drawer-form';
+import { sortEmptyDrawerForm } from '@utils/calendar-utils/sort-empty-drawer-form';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { filterTrainingByName } from '@utils/filter-training-by-name';
+import { filterTrainingByName } from '@utils/calendar-utils/filter-training-by-name';
 import { selectTraining } from '@redux/trainingSlice';
 import { useWindowSize } from '@uidotdev/usehooks';
 
@@ -103,7 +103,7 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                     : <><PlusOutlined className={styles["drawer__title-icon"]} />Добавление упражнений</>}
             </p>
             <div className={styles["drawer__training-type-wrapper"]}>
-                <CalendarTrainingList listData={listData} />
+                <CalendarTrainingList listData={listData} date={date} />
                 <p>{getDayFromDate(date)}</p>
             </div>
             <div className={styles["drawer__form"]}>
@@ -132,7 +132,7 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                                                 />
                                             </Form.Item>
                                             <div className={styles["drawer__inputs-wrapper"]}>
-                                                <Form.Item name={[name, "replays"]} label="Подходы">
+                                                <Form.Item name={[name, "replays"]} label="Подходы" colon={false}>
                                                     <InputNumber
                                                         addonBefore="+"
                                                         placeholder="1"
@@ -140,7 +140,7 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                                                         data-test-id={`modal-drawer-right-input-approach${name}`}
                                                     ></InputNumber>
                                                 </Form.Item>
-                                                <Form.Item name={[name, "weight"]} label="Вес, кг">
+                                                <Form.Item name={[name, "weight"]} label="Вес, кг" colon={false}>
                                                     <InputNumber
                                                         placeholder="0"
                                                         min={0}
@@ -148,7 +148,7 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                                                     ></InputNumber>
                                                 </Form.Item>
                                                 <p className={styles["drawer__x"]}>X</p>
-                                                <Form.Item name={[name, "approaches"]} label="Количество">
+                                                <Form.Item name={[name, "approaches"]} label="Количество" colon={false}>
                                                     <InputNumber
                                                         placeholder="3"
                                                         min={1}

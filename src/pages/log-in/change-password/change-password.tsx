@@ -8,7 +8,7 @@ import { changePassword } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
 import { changePasswords } from '@redux/loginSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { checkDisabledChangePassword, checkValidChangePassword, validChange } from '@utils/check-valid-status';
+import { checkDisabledChangePassword, checkValidChangePassword, validChange } from '@utils/auth-utils/check-valid-status';
 
 export const ChangePassword: React.FC = () => {
     const navigate = useNavigate();

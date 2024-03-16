@@ -19,6 +19,7 @@ export type drawerFormFields = {
 
 export type training = {
     _id?: string,
+    id?: string,
     name: string,
     date: Date,
     isImplementation?: boolean,

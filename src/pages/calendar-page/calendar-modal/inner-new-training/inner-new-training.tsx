@@ -6,23 +6,19 @@ import { Button, Divider, Empty, Select } from 'antd';
 import { calendarModalType } from '@constants/enums';
 import emptyIcon from '../../../../assets/icon/empty.svg';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { editTrainingRequest, getTraining, getTrainingList, saveTraining, status } from '@utils/requests';
+import { getTraining, saveTraining } from '@utils/requests';
 import { selectTraining } from '@redux/trainingSlice';
-import { filterTrainingByDay } from '@utils/filter-training-by-day';
+import { filterTrainingByDay } from '@utils/calendar-utils/filter-training-by-day';
 import { selectTrainingList } from '@redux/trainingListSlice';
-import { changeEditTraining, changeModalType, changeResultType, changeSelectedTraining, selectCalendarModalData, toggleIsDrawer, toggleIsEdit } from '@redux/calendarModalSlice';
-import { getTrainingNames } from '@utils/get-trainings-names';
-import { getTrainingSelectOptions } from '@utils/get-training-select-options';
-import { useNavigate } from 'react-router-dom';
-import { ROUTE } from '@route/routes';
-
+import { changeEditTraining, changeModalType, changeSelectedTraining, selectCalendarModalData, toggleIsDrawer, toggleIsEdit } from '@redux/calendarModalSlice';
+import { getTrainingNames } from '@utils/calendar-utils/get-trainings-names';
+import { getTrainingSelectOptions } from '@utils/calendar-utils/get-training-select-options';
 type props = {
     date: Date
 }
 
 export const InnerNewTraining: React.FC<props> = ({ date }) => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const training = useAppSelector(selectTraining);
     const trainingList = useAppSelector(selectTrainingList);
     const { selectedTraining, editTraining, exerciseFormFields, isEdit } = useAppSelector(selectCalendarModalData);
@@ -47,16 +43,7 @@ export const InnerNewTraining: React.FC<props> = ({ date }) => {
     }
 
     function handleSaveTraining() {
-        dispatch(isEdit ? editTrainingRequest(date) : saveTraining(date))
-            .then(() => dispatch(getTraining()))
-            .then(resp => {
-                if (resp === status.noToken) {
-                    navigate(ROUTE.MAIN);
-                    dispatch(changeResultType(status.noToken));
-                } else {
-                    return dispatch(getTrainingList());
-                }
-            });
+        dispatch(saveTraining(date)).then(() => dispatch(getTraining()));
     }
 
     const trainings = isNoExercise

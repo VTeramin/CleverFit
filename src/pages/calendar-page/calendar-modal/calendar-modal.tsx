@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import 'antd/dist/antd.css';
 import styles from './calendar-modal.module.css';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { getCalendarModalCoords } from '@utils/get-calendar-modal-coords';
+import { getCalendarModalCoords } from '@utils/calendar-utils/get-calendar-modal-coords';
 import { InnerDefault } from './inner-default/inner-default';
 import { calendarModalType } from '@constants/enums';
 import { InnerNewTraining } from './inner-new-training/inner-new-training';
