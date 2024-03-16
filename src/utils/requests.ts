@@ -4,13 +4,13 @@ import { AppDispatch, GetState } from '@redux/configure-store';
 import { addNewFeedback, changeFeedbackData } from '@redux/feedbackSlice';
 import { toggleLoader } from '@redux/loaderSlice';
 import { changeTrainingListData } from '@redux/trainingListSlice';
-import { addTraining, changeTraining, changeTrainingData } from '@redux/trainingSlice';
+import { addTraining, changeTrainingData, setIsImplementation } from '@redux/trainingSlice';
 import { changeSessionToken, toggleIsAuthorized } from '@redux/userDataSlice';
 import { ROUTE } from '@route/routes';
 import axios from 'axios';
 import { convertFormDataToExercises } from './convert-form-data-to-exercies';
 import { getTrainingId } from './get-training-id';
-import { training } from '@constants/types';
+
 axios.defaults.withCredentials = true;
 const API = "https://marathon-api.clevertec.ru";
 
@@ -40,7 +40,7 @@ export const login = () => async (dispatch: AppDispatch, getState: GetState) => 
         })
         .catch(() => ROUTE.ERROR_LOGIN)
         .finally(() => dispatch(toggleLoader(false)));
-}
+};
 
 export const register = () => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
@@ -50,7 +50,7 @@ export const register = () => async (dispatch: AppDispatch, getState: GetState) 
         .then(() => ROUTE.SUCCESS)
         .catch(error => error.response.status === 409 ? ROUTE.ERROR_USER_EXIST : ROUTE.ERROR)
         .finally(() => dispatch(toggleLoader(false)));
-}
+};
 
 export const checkEmail = () => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
@@ -65,7 +65,7 @@ export const checkEmail = () => async (dispatch: AppDispatch, getState: GetState
             return ROUTE.ERROR_CHECK_EMAIL;
         })
         .finally(() => dispatch(toggleLoader(false)));
-}
+};
 
 export const confirmEmail = (code: string) => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
@@ -75,7 +75,7 @@ export const confirmEmail = (code: string) => async (dispatch: AppDispatch, getS
         .then(() => ROUTE.CHANGE_PASSWORD)
         .catch(() => status.error)
         .finally(() => dispatch(toggleLoader(false)));
-}
+};
 
 export const changePassword = () => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
@@ -89,7 +89,7 @@ export const changePassword = () => async (dispatch: AppDispatch, getState: GetS
         .then(() => ROUTE.SUCCESS_CHANGE_PASSWORD)
         .catch(() => ROUTE.ERROR_CHANGE_PASSWORD)
         .finally(() => dispatch(toggleLoader(false)));
-}
+};
 
 export const getFeedbacks = () => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
@@ -110,7 +110,7 @@ export const getFeedbacks = () => async (dispatch: AppDispatch, getState: GetSta
             }
             return status.errorFeedback;
         }).finally(() => dispatch(toggleLoader(false)));
-}
+};
 
 export const sendFeedback = (message: string, rating: number) => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
@@ -133,12 +133,12 @@ export const sendFeedback = (message: string, rating: number) => async (dispatch
         })
         .catch(() => status.errorFeedback)
         .finally(() => dispatch(toggleLoader(false)));
-}
+};
 
 export const googleAuth = () => async (dispatch: AppDispatch) => {
     dispatch(toggleLoader(true));
     window.location.href = `${API}/auth/google`;
-}
+};
 
 export const getTraining = () => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
@@ -152,7 +152,7 @@ export const getTraining = () => async (dispatch: AppDispatch, getState: GetStat
         .then((response) => dispatch(changeTrainingData(response.data)))
         .catch(() => status.noToken)
         .finally(() => dispatch(toggleLoader(false)));
-}
+};
 
 export const getTrainingList = () => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
@@ -166,10 +166,10 @@ export const getTrainingList = () => async (dispatch: AppDispatch, getState: Get
         .then((response) => dispatch(changeTrainingListData(response.data)))
         .catch(() => {
             dispatch(changeTrainingData([]));
-            return status.errorTrainingList;
+            dispatch(changeResultType(status.errorTrainingList));
         })
         .finally(() => dispatch(toggleLoader(false)));
-}
+};
 
 export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
@@ -189,7 +189,7 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
         })
         .catch(() => dispatch(changeResultType(status.errorSaveTraining)))
         .finally(() => dispatch(toggleLoader(false)));
-}
+};
 
 export const editTrainingRequest = (date: Date) => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
@@ -210,7 +210,6 @@ export const editTrainingRequest = (date: Date) => async (dispatch: AppDispatch,
             .then()
             .catch((error) => {
                 if (error.response.status === 404) {
-                    dispatch(changeTraining({ _id: trainingId } as training));
                     dispatch(changeModalType(calendarModalType.default));
                 } else {
                     dispatch(changeResultType(status.errorSaveTraining));
@@ -219,16 +218,17 @@ export const editTrainingRequest = (date: Date) => async (dispatch: AppDispatch,
             .finally(() => dispatch(toggleLoader(false)));
     }
 
+    dispatch(setIsImplementation(trainingId as string));
+
     return axios.put(`${API}/training/${trainingId}`, { name, date, exercises, isImplementation }, {
         headers: {
             "Authorization": `Bearer ${sessionToken}`
         }
     })
         .then((response) => {
-            const trainingData = response.data;
-            dispatch(changeTraining(trainingData));
+            dispatch(changeTrainingData(response.data));
             dispatch(changeModalType(calendarModalType.default));
         })
         .catch(() => dispatch(changeResultType(status.errorSaveTraining)))
         .finally(() => dispatch(toggleLoader(false)));
-}
+};

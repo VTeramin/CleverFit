@@ -15,18 +15,14 @@ export const trainingSlice = createSlice({
         addTraining: (state, action: PayloadAction<training>) => {
             state.push(action.payload);
         },
-        changeTraining: (state, action: PayloadAction<training>) => {
-            const trainingId = action.payload._id;
-            const index = state.findIndex((el: training) => el._id === trainingId);
-            if (Object.keys(action.payload).length === 1) {
-                state.splice(index, 1);
-            } else {
-                state[index] = action.payload;
-            }
+        setIsImplementation: (state, action: PayloadAction<string>) => {
+            state.forEach(el => {
+                if(el._id === action.payload) el.isImplementation = true;
+            })
         }
     }
 });
 
-export const { changeTrainingData, addTraining, changeTraining } = trainingSlice.actions;
+export const { changeTrainingData, addTraining, setIsImplementation } = trainingSlice.actions;
 export const selectTraining = (state: RootState) => state.training;
 export default trainingSlice.reducer;

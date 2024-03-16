@@ -26,6 +26,7 @@ export const MainContent: React.FC = () => {
                 <Button
                     className={styles["block__content"]}
                     onClick={handleBlockClick}
+                    data-test-id={["", "menu-button-calendar", ""][index]}
                 >
                     {React.createElement(icon, { className: styles["block__icon"], twoToneColor: "var(--primary-light-6)" })}
                     <p className={styles["block__subtitle"]}>{["Тренировки", "Календарь", "Профиль"][index]}</p>

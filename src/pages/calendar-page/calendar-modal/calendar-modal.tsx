@@ -38,7 +38,10 @@ export const CalendarModal: React.FC<props> = ({ date, pageWidth }) => {
     };
 
     return (
-        <div className={styles["modal"]} style={{ left: `${modalCoord.x}px`, top: `${modalCoord.y}px` }}>
+        <div
+            className={styles["modal"]}
+            style={{ left: `${modalCoord.x}px`, top: `${modalCoord.y}px` }}
+        >
             {modalInner[modalType]}
             <ModalDrawer
                 date={date}

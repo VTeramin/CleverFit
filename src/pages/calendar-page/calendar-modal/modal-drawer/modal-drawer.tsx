@@ -12,7 +12,6 @@ import { sortEmptyDrawerForm } from '@utils/sort-empty-drawer-form';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { filterTrainingByName } from '@utils/filter-training-by-name';
 import { selectTraining } from '@redux/trainingSlice';
-import { calendarModalType } from '@constants/enums';
 import { useWindowSize } from '@uidotdev/usehooks';
 
 type props = {
@@ -24,11 +23,10 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
     const training = useAppSelector(selectTraining);
     const browserWidth = useWindowSize().width || 0;
     const isMobile = browserWidth <= 800;
-    const { isEdit, isDrawer, selectedTraining, exerciseFormFields, modalType } = useAppSelector(selectCalendarModalData);
+    const { isEdit, isDrawer, selectedTraining, exerciseFormFields } = useAppSelector(selectCalendarModalData);
     const listData = selectedTraining !== null ? [selectedTraining] : [];
     const [checkboxList, setCheckboxList] = useState<{ [key: number]: boolean }>({});
     const [isDeleteDisabled, setIsDeleteDisabled] = useState(true);
-    const isView = modalType === calendarModalType.default;
     const cellDate = String(date).substring(0, 10);
     const form = useRef<FormInstance<{ exercises: drawerFormFields }>>(null);
     const initialFormValues = {
@@ -97,13 +95,12 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
             placement={isMobile ? "bottom" : "right"}
             height={555}
             className={styles["drawer"]}
+            data-test-id="modal-drawer-right"
         >
             <p className={styles["drawer__title"]}>
                 {isEdit
                     ? <><EditOutlined className={styles["drawer__title-icon"]} />Редактирование</>
-                    : isView
-                        ? <>Просмотр упражнений</>
-                        : <><PlusOutlined className={styles["drawer__title-icon"]} />Добавление упражнений</>}
+                    : <><PlusOutlined className={styles["drawer__title-icon"]} />Добавление упражнений</>}
             </p>
             <div className={styles["drawer__training-type-wrapper"]}>
                 <CalendarTrainingList listData={listData} />
@@ -128,9 +125,10 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                                                         checked={checkboxList[name]}
                                                         onChange={(event) => handleCheckboxChange(event, name)}
                                                         name={"checkbox"}
+                                                        data-test-id={`modal-drawer-right-checkbox-exercise${name}`}
                                                     />}
-                                                    disabled={isView}
                                                     className={styles["drawer__training-name-input"]}
+                                                    data-test-id={`modal-drawer-right-input-exercise${name}`}
                                                 />
                                             </Form.Item>
                                             <div className={styles["drawer__inputs-wrapper"]}>
@@ -139,14 +137,14 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                                                         addonBefore="+"
                                                         placeholder="1"
                                                         min={1}
-                                                        disabled={isView}
+                                                        data-test-id={`modal-drawer-right-input-approach${name}`}
                                                     ></InputNumber>
                                                 </Form.Item>
                                                 <Form.Item name={[name, "weight"]} label="Вес, кг">
                                                     <InputNumber
                                                         placeholder="0"
                                                         min={0}
-                                                        disabled={isView}
+                                                        data-test-id={`modal-drawer-right-input-weight${name}`}
                                                     ></InputNumber>
                                                 </Form.Item>
                                                 <p className={styles["drawer__x"]}>X</p>
@@ -154,13 +152,13 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                                                     <InputNumber
                                                         placeholder="3"
                                                         min={1}
-                                                        disabled={isView}
+                                                        data-test-id={`modal-drawer-right-input-quantity${name}`}
                                                     ></InputNumber>
                                                 </Form.Item>
                                             </div>
                                         </div>
                                     ))}
-                                    {!isView && <div className={`${styles["drawer__button-wrapper"]} ${isEdit && styles["edit"]}`}>
+                                    {<div className={`${styles["drawer__button-wrapper"]} ${isEdit && styles["edit"]}`}>
                                         <Form.Item>
                                             <Button
                                                 className={styles["drawer__button"]}
@@ -192,6 +190,7 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                         type="text"
                         className={styles["drawer__close"]}
                         id="drawer__close"
+                        data-test-id="modal-drawer-right-button-close"
                     >
                         <CloseOutlined />
                     </Button>

@@ -6,13 +6,15 @@ import { Button, Divider, Empty, Select } from 'antd';
 import { calendarModalType } from '@constants/enums';
 import emptyIcon from '../../../../assets/icon/empty.svg';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { editTrainingRequest, saveTraining } from '@utils/requests';
+import { editTrainingRequest, getTraining, getTrainingList, saveTraining, status } from '@utils/requests';
 import { selectTraining } from '@redux/trainingSlice';
 import { filterTrainingByDay } from '@utils/filter-training-by-day';
 import { selectTrainingList } from '@redux/trainingListSlice';
-import { changeEditTraining, changeModalType, changeSelectedTraining, selectCalendarModalData, toggleIsDrawer, toggleIsEdit } from '@redux/calendarModalSlice';
+import { changeEditTraining, changeModalType, changeResultType, changeSelectedTraining, selectCalendarModalData, toggleIsDrawer, toggleIsEdit } from '@redux/calendarModalSlice';
 import { getTrainingNames } from '@utils/get-trainings-names';
 import { getTrainingSelectOptions } from '@utils/get-training-select-options';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE } from '@route/routes';
 
 type props = {
     date: Date
@@ -20,17 +22,18 @@ type props = {
 
 export const InnerNewTraining: React.FC<props> = ({ date }) => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const training = useAppSelector(selectTraining);
     const trainingList = useAppSelector(selectTrainingList);
     const { selectedTraining, editTraining, exerciseFormFields, isEdit } = useAppSelector(selectCalendarModalData);
     const trainingOnSelDate = filterTrainingByDay(training, date);
     const exerciseNames = getTrainingNames(exerciseFormFields);
     const isNoExercise = exerciseNames.length === 0;
-    const selectOptions = getTrainingSelectOptions(training, trainingOnSelDate, trainingList, date);
+    const selectOptions = getTrainingSelectOptions(training, trainingOnSelDate, trainingList, date, isEdit);
     const isSaveDisabled = !isEdit && exerciseNames.length === 0;
 
     function handleSelect(value: string) {
-        if(trainingOnSelDate.includes(value)) {
+        if (trainingOnSelDate.includes(value)) {
             dispatch(toggleIsEdit(true));
             dispatch(changeEditTraining(value));
         } else {
@@ -44,7 +47,16 @@ export const InnerNewTraining: React.FC<props> = ({ date }) => {
     }
 
     function handleSaveTraining() {
-        dispatch(isEdit ? editTrainingRequest(date) : saveTraining(date));
+        dispatch(isEdit ? editTrainingRequest(date) : saveTraining(date))
+            .then(() => dispatch(getTraining()))
+            .then(resp => {
+                if (resp === status.noToken) {
+                    navigate(ROUTE.MAIN);
+                    dispatch(changeResultType(status.noToken));
+                } else {
+                    return dispatch(getTrainingList());
+                }
+            });
     }
 
     const trainings = isNoExercise
@@ -55,14 +67,18 @@ export const InnerNewTraining: React.FC<props> = ({ date }) => {
                 <EditOutlined
                     className={styles["trainings__edit"]}
                     onClick={handleAddTraining}
+                    data-test-id={`modal-update-training-edit-button${ind}`}
                 />
             </div>
         ));
 
     return (
-        <>
+        <div data-test-id="modal-create-exercise">
             <div className={styles["modal__header"]}>
-                <ArrowLeftOutlined onClick={() => dispatch(changeModalType(calendarModalType.default))} />
+                <ArrowLeftOutlined
+                    onClick={() => dispatch(changeModalType(calendarModalType.default))}
+                    data-test-id="modal-exercise-training-button-close"
+                />
                 <Select
                     placeholder="Выбор типа тренировки"
                     value={selectedTraining}
@@ -72,6 +88,7 @@ export const InnerNewTraining: React.FC<props> = ({ date }) => {
                     bordered={false}
                     className={styles["modal__input"]}
                     popupClassName={styles["modal__dropdown"]}
+                    data-test-id="modal-create-exercise-select"
                 />
             </div>
             <Divider className={styles["modal__divider"]} />
@@ -80,13 +97,16 @@ export const InnerNewTraining: React.FC<props> = ({ date }) => {
             </div>
             <Divider className={styles["modal__divider"]} />
             <div className={styles["modal__buttons"]}>
-                <Button onClick={handleAddTraining}>Добавить упражнения</Button>
+                <Button
+                    onClick={handleAddTraining}
+                    disabled={selectedTraining === null}
+                >Добавить упражнения</Button>
                 <Button
                     type="text"
                     disabled={isSaveDisabled}
                     onClick={handleSaveTraining}
                 >{date < new Date(Date.now()) ? "Сохранить изменения" : "Сохранить"}</Button>
             </div>
-        </>
+        </div>
     );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { HistoryRouter } from 'redux-first-history/rr6'
 import { history, store } from '@redux/configure-store';
-import { Loader } from '@pages/components/loader/loader';
+import { Loader } from '@components/loader/loader';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ROUTE } from './route/routes';
 import { MainPage, Auth, Result, ConfirmEmail, ChangePassword, FeedbacksPage } from './pages';

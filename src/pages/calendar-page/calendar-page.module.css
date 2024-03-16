@@ -246,7 +246,7 @@
         text-align: center;
     }
 
-    .page .calendar [class*="cell-today"] [class*="date-today"]::before {
+    .page .calendar [class*="cell-today"] [class*="date-today"]:before {
         border: none;
     }
 
@@ -255,7 +255,7 @@
         width: 37px;
     }
 
-    .page .calendar .no-empty::before {
+    .page .calendar .no-empty:before {
         content: "";
         display: block;
         width: 49px;

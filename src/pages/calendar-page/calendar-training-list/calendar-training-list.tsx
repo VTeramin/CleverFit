@@ -5,7 +5,7 @@ import { Badge } from 'antd';
 import { badgeColors, calendarModalType } from '@constants/enums';
 import { EditOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { changeEditTraining, changeModalType, changeSelectedTraining, toggleIsDrawer, toggleIsEdit } from '@redux/calendarModalSlice';
+import { changeEditTraining, changeModalType, changeSelectedTraining, toggleIsEdit } from '@redux/calendarModalSlice';
 import { selectTraining } from '@redux/trainingSlice';
 import { checkIsTrainingDone } from '@utils/check-is-training-done';
 
@@ -21,15 +21,9 @@ export const CalendarTrainingList: React.FC<props> = ({ date, listData, edit }) 
 
     function handleEdit(name: string) {
         dispatch(changeSelectedTraining(name));
-        if (checkIsTrainingDone(name, training, date)) {
-            dispatch(toggleIsDrawer(true));
-            dispatch(toggleIsEdit(false));
-
-        } else {
-            dispatch(toggleIsEdit(true));
-            dispatch(changeEditTraining(name));
-            dispatch(changeModalType(calendarModalType.newTraining));
-        }
+        dispatch(toggleIsEdit(true));
+        dispatch(changeEditTraining(name));
+        dispatch(changeModalType(calendarModalType.newTraining));
     }
 
     return (
@@ -39,6 +33,10 @@ export const CalendarTrainingList: React.FC<props> = ({ date, listData, edit }) 
                     <Badge text={name} color={badgeColors[name as keyof typeof badgeColors]} />
                     {edit && <EditOutlined
                         onClick={() => handleEdit(name)}
+                        type="text"
+                        data-test-id={`modal-update-training-edit-button${ind}`}
+                        disabled={checkIsTrainingDone(name, training, date)}
+                        style={{pointerEvents: checkIsTrainingDone(name, training, date) ? "none" : "auto"}}
                     />}
                 </li>
             ))}

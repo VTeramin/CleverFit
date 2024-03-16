@@ -4,7 +4,7 @@ import styles from './calendar-result.module.css';
 import { Button, Modal, Result } from 'antd';
 import { getTrainingList, status } from '@utils/requests';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeResultType, selectCalendarModalData, toggleIsModal } from '@redux/calendarModalSlice';
 
@@ -15,11 +15,7 @@ export const CalendarResult: React.FC = () => {
 
     function handleUpdate() {
         dispatch(changeResultType(status.empty));
-        dispatch(getTrainingList()).then(resp => {
-            if (resp === status.errorTrainingList) {
-                dispatch(changeResultType(status.errorTrainingList));
-            }
-        });
+        dispatch(getTrainingList());
     }
 
     function handleClose() {
@@ -45,18 +41,20 @@ export const CalendarResult: React.FC = () => {
                 onCancel={handleClose}
                 maskClosable={false}
                 closable={true}
+                closeIcon={<CloseOutlined data-test-id="modal-error-user-training-button-close"/>}
                 footer={null}
             >
                 <Result
                     icon={<CloseCircleOutlined style={{ color: "var(--primary-light-6)" }} />}
-                    title="При открытии данных произошла ошибка"
-                    subTitle="Попробуйте еще раз."
+                    title={<p data-test-id="modal-error-user-training-title">При открытии данных произошла ошибка</p>}
+                    subTitle={<p data-test-id="modal-error-user-training-subtitle">Попробуйте еще раз.</p>}
                     className={styles["error-trining-list"]}
                     extra={[
                         <Button
                             key="Обновить"
                             className={`${styles["conf-button"]}`}
                             onClick={handleUpdate}
+                            data-test-id="modal-error-user-training-button"
                         >
                             Обновить
                         </Button>
@@ -80,14 +78,15 @@ export const CalendarResult: React.FC = () => {
             >
                 <Result
                     icon={<CloseCircleOutlined style={{ color: "var(--character-light-error)" }} />}
-                    title="При сохранении данных произошла ошибка"
-                    subTitle="Придётся попробовать ещё раз"
+                    title={<p data-test-id="modal-error-user-training-title">При сохранении данных произошла ошибка</p>}
+                    subTitle={<p data-test-id="modal-error-user-training-subtitle">Придётся попробовать ещё раз</p>}
                     className={styles["error-trining-list"]}
                     extra={[
                         <Button
                             key="Закрыть"
                             className={`${styles["conf-button"]}`}
                             onClick={handleCloseAll}
+                            data-test-id="modal-error-user-training-button"
                         >
                             Закрыть
                         </Button>
