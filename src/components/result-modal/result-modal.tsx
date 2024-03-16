@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '@route/routes';
 import { status } from '@utils/requests';
 import { useWindowSize } from '@uidotdev/usehooks';
+import { changeResultType } from '@redux/calendarModalSlice';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 
 type props = {
     resultType: status,
@@ -15,6 +17,7 @@ type props = {
 
 export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsModalOpen }) => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const width = useWindowSize().width || 0;
     const resultWidth = width > 800 ? 539 : 328;
 
@@ -62,13 +65,16 @@ export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsM
         [status.noToken]: <Result
             status="500"
             title="Что-то пошло не так"
-            subTitle="Произошла ошибка, попробуйте еще раз."
+            subTitle="Произошла ошибка, попробуйте ещё раз."
             className={styles["no-token"]}
             extra={[
                 <Button
                     key="Назад"
                     className={`${styles["conf-button"]}`}
-                    onClick={() => navigate(ROUTE.HOME)}
+                    onClick={() => {
+                        navigate(ROUTE.HOME);
+                        dispatch(changeResultType(status.empty));
+                    }}
                 >
                     Назад
                 </Button>
@@ -89,6 +95,7 @@ export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsM
             maskClosable={false}
             closable={false}
             footer={null}
+            data-test-id="modal-no-review"
         >
             {result[resultType]}
         </Modal>
