@@ -13,6 +13,7 @@ import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { filterTrainingByName } from '@utils/filter-training-by-name';
 import { selectTraining } from '@redux/trainingSlice';
 import { calendarModalType } from '@constants/enums';
+import { useWindowSize } from '@uidotdev/usehooks';
 
 type props = {
     date: Date
@@ -21,6 +22,8 @@ type props = {
 export const ModalDrawer: React.FC<props> = ({ date }) => {
     const dispatch = useAppDispatch();
     const training = useAppSelector(selectTraining);
+    const browserWidth = useWindowSize().width || 0;
+    const isMobile = browserWidth <= 800;
     const { isEdit, isDrawer, selectedTraining, exerciseFormFields, modalType } = useAppSelector(selectCalendarModalData);
     const listData = selectedTraining !== null ? [selectedTraining] : [];
     const [checkboxList, setCheckboxList] = useState<{ [key: number]: boolean }>({});
@@ -40,9 +43,7 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
     };
 
     useEffect(() => {
-        if (form.current) {
-            form.current.resetFields()
-        }
+        if (form.current) form.current.resetFields();
     }, [exerciseFormFields]);
 
     useEffect(() => {
@@ -93,6 +94,8 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
             maskClosable={true}
             onClose={handleDrawerClose}
             destroyOnClose={true}
+            placement={isMobile ? "bottom" : "right"}
+            height={555}
             className={styles["drawer"]}
         >
             <p className={styles["drawer__title"]}>
@@ -194,6 +197,9 @@ export const ModalDrawer: React.FC<props> = ({ date }) => {
                     </Button>
                 </Form>
             </div>
+            {isEdit && date <= new Date(Date.now()) &&
+                <p className={styles["drawer__warning"]}>После сохранения внесенных изменений отредактировать проведенную тренировку будет невозможно</p>
+            }
         </Drawer>
     );
 };

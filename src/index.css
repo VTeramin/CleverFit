@@ -126,9 +126,11 @@
     --button-padding: 4px 15px;
     --border-radius: 2px;
     --border-radius-drawer: 8px;
+    --border-radius-drawer-bottom: 24px;
     --flex-gap: 20px;
     --flex-gap-small: 16px;
     --calendar-input-height: 28px;
+    --calendar-input-height-small: 22px;
 }
 
 html {

@@ -1,13 +1,22 @@
 export function getCalendarModalCoords(browserWidth: number) {
-    if (!document.getElementsByClassName("ant-picker-cell-selected")[0]) return { x: 0, y: 0 };
+    const coords = { x: 0, y: 0 };
+    if (!document.getElementsByClassName("ant-picker-cell-selected")[0]) return coords;
+    const isMobile = browserWidth <= 800;
     const calendarMargin = 4;
-    const modalWidth = 264;
+    const modalWidth = isMobile ? 312: 264;
     const cellSelected = document.getElementsByClassName("ant-picker-cell-selected")[0];
-    const cellWidth = document.getElementsByClassName("ant-picker-cell-selected")[0].clientWidth;
+    const cellWidth = cellSelected.clientWidth;
+    const tdHeight = isMobile ? 30 : 0;
 
     const cellX = cellSelected.getBoundingClientRect().x;
     const cellY = cellSelected.getBoundingClientRect().y;
-    const x = cellX + 300 > browserWidth ? cellX - (modalWidth - cellWidth) - calendarMargin : cellX + calendarMargin;
-    const y = cellY;
-    return { x, y };
+
+    if (isMobile) {
+        coords.x = (browserWidth - modalWidth) / 2;
+        coords.y = cellY + tdHeight - 3;
+    } else {
+        coords.x = cellX + 300 > browserWidth ? cellX - (modalWidth - cellWidth) - calendarMargin : cellX + calendarMargin;
+        coords.y = cellY;
+    }
+    return coords;
 }

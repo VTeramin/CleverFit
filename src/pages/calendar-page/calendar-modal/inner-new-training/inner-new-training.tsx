@@ -23,7 +23,6 @@ export const InnerNewTraining: React.FC<props> = ({ date }) => {
     const training = useAppSelector(selectTraining);
     const trainingList = useAppSelector(selectTrainingList);
     const { selectedTraining, editTraining, exerciseFormFields, isEdit } = useAppSelector(selectCalendarModalData);
-    const isSmthSelected = selectedTraining !== null;
     const trainingOnSelDate = filterTrainingByDay(training, date);
     const exerciseNames = getTrainingNames(exerciseFormFields);
     const isNoExercise = exerciseNames.length === 0;
@@ -41,7 +40,7 @@ export const InnerNewTraining: React.FC<props> = ({ date }) => {
     }
 
     function handleAddTraining() {
-        if (isSmthSelected) dispatch(toggleIsDrawer(true));
+        dispatch(toggleIsDrawer(true));
     }
 
     function handleSaveTraining() {

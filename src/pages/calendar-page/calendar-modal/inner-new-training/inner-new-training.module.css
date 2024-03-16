@@ -1,9 +1,14 @@
 .modal__header {
-    padding-top: 12px;
+    padding: 12px 18px 0 9px;
 }
 
 .modal__input {
     width: calc(100% - 14px);
+}
+
+.modal__header .modal__input [class*="select-selector"],
+.modal__header [class*="select-selector"] [class*="selection-search"] [class*="search-input"] {
+    height: 28px;
 }
 
 .modal__input [class*="selection-placeholder"] {
@@ -31,6 +36,7 @@
 }
 
 .modal__body {
+    min-height: 67px;
     max-height: 200px;
     overflow-y: scroll;
     padding: 4px 4px 4px 12px;
@@ -60,7 +66,7 @@
 }
 
 .modal__empty [class*="empty-image"] {
-    height: 64px;
+    height: 60px;
     margin: 0;
     padding: 16px 0;
 }

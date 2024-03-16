@@ -10,7 +10,7 @@ import { getTraining, getTrainingList, status } from '@utils/requests';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarResult } from './calendar-result/calendar-result';
 import { CalendarModal } from './calendar-modal/calendar-modal';
-import { useMeasure } from '@uidotdev/usehooks';
+import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
 import { CalendarTrainingList } from './calendar-training-list/calendar-training-list';
 import { filterTrainingByDay } from '@utils/filter-training-by-day';
 import { selectTraining } from '@redux/trainingSlice';
@@ -27,15 +27,15 @@ export const CalendarPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const training = useAppSelector(selectTraining);
     const { isModal, resultType } = useAppSelector(selectCalendarModalData);
-
+    const [date, setDate] = useState(moment());
+    const [ref, { width }] = useMeasure();
+    const pageWidth = width;
+    const browserWidth = useWindowSize().width || 0;
+    const isMobile = browserWidth <= 800;
     const [resultTypeCalendar, setResultTypeCalendar] = useState(resultType);
     useEffect(() => {
         dispatch(changeResultType(resultTypeCalendar));
     }, [resultTypeCalendar, dispatch]);
-
-    const [date, setDate] = useState(moment());
-    const [ref, { width }] = useMeasure();
-    const pageWidth = width;
 
     useEffect(() => {
         dispatch(getTraining()).then(resp => {
@@ -53,14 +53,20 @@ export const CalendarPage: React.FC = () => {
     }, [dispatch]);
 
     function handleDateSelect(target: moment.Moment) {
-        dispatch(changeModalType(calendarModalType.default));
         setDate(target);
+        if (isMobile && date.toDate().getMonth() !== target.toDate().getMonth()) return;
+        dispatch(changeModalType(calendarModalType.default));
         dispatch(toggleIsModal(true));
     }
 
     function dateCellRender(moment: moment.Moment) {
         const listData = filterTrainingByDay(training, moment.toDate());
-        return <CalendarTrainingList date={moment.toDate()} listData={listData} />
+        if(isMobile && listData.length !== 0) {
+            return <div className={styles["no-empty"]}></div>;
+        }
+        if(!isMobile) {
+            return <CalendarTrainingList date={moment.toDate()} listData={listData} />;
+        }
     }
 
     return (
@@ -68,6 +74,7 @@ export const CalendarPage: React.FC = () => {
             <ConfigProvider locale={locale}>
                 <Calendar
                     className={styles["calendar"]}
+                    fullscreen={!isMobile}
                     value={date}
                     onSelect={handleDateSelect}
                     onPanelChange={() => dispatch(toggleIsModal(false))}

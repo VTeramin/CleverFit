@@ -8,6 +8,12 @@
     border-radius: var(--border-radius-drawer) 0 0 var(--border-radius-drawer);
 }
 
+@media (max-width: 800px) {
+    .drawer [class*="drawer-content"] {
+        border-radius: var(--border-radius-drawer-bottom) var(--border-radius-drawer-bottom) 0 0;
+    }
+}
+
 .drawer [class*="drawer-body"] {
     padding: 24px;
     padding-left: 32px;
@@ -15,9 +21,16 @@
     grid-template-rows: max-content max-content 1fr;
 }
 
+@media (max-width: 800px) {
+    .drawer [class*="drawer-body"] {
+        padding: 24px 4px;
+        padding-left: 16px;
+    }
+}
+
 .drawer [class*="drawer-body"]>*:first-child,
 .drawer [class*="drawer-body"]>*:nth-child(2) {
-    padding-right: 8px;
+    padding-right: 12px;
 }
 
 .drawer__title {
@@ -41,6 +54,7 @@
     flex-direction: row;
     justify-content: space-between;
 
+    font-size: 13px;
     font-weight: var(--font-weight-medium);
     line-height: var(--line-height);
     color: var(--character-light-secondary-45);
@@ -56,13 +70,13 @@
 }
 
 .drawer__training-type-wrapper li [class*="badge-status-text"] {
-    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size);
     line-height: var(--line-height);
     color: var(--character-light-secondary-45);
 }
 
 .drawer__form {
-    padding-bottom: 24px;
+    padding-right: 4px;
     overflow-y: scroll;
 }
 
@@ -128,14 +142,29 @@
     text-align: left;
 }
 
+@media (max-width: 800px) {
+    .drawer [class*="label"] {
+        padding-bottom: 0;
+    }
+}
+
 .drawer__inputs-wrapper [class*="group-addon"] {
-    padding: 0 13px;
+    width: 36px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0;
 }
 
 .drawer__inputs-wrapper [class*="ant-row"] {
     display: flex;
     flex-direction: column;
     height: 54px;
+}
+
+@media (max-width: 575px) {
+    .drawer__inputs-wrapper [class*="ant-row"] {
+        flex-direction: row;
+    }
 }
 
 .drawer [class*="item-control-input"] {
@@ -147,9 +176,19 @@
     width: 89px;
 }
 
+.drawer__form input:focus,
+.drawer__form input:hover,
+.drawer__form input:active {
+    border: 1px solid var(--primary-light-6);
+}
+
 .drawer__inputs-wrapper>[class*="ant-form-item"]:first-child {
     width: 120px;
     margin-right: auto;
+}
+
+.drawer__inputs-wrapper>[class*="ant-form-item"]:first-child [class*="ant-input-number-in-form-item"] {
+    width: 85px;
 }
 
 .drawer__inputs-wrapper input::-webkit-outer-spin-button,
@@ -198,6 +237,16 @@
     color: var(--character-light-title-85);
 }
 
+.drawer__warning {
+    width: 260px;
+    margin: 24px auto 0;
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--character-light-secondary-45);
+    margin-bottom: 0;
+}
+
 .drawer__close {
     display: block;
     height: max-content;
@@ -215,4 +264,10 @@
 
 .drawer__close svg {
     fill: var(--character-light-secondary-45);
+}
+
+@media (max-width: 800px) {
+    .drawer__close {
+        right: 14px;
+    }
 }

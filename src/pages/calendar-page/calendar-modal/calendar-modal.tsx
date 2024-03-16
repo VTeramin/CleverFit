@@ -21,8 +21,7 @@ type modalInner = {
 
 export const CalendarModal: React.FC<props> = ({ date, pageWidth }) => {
     const dispatch = useAppDispatch();
-    const { modalType, modalCoord, selectedTraining } = useAppSelector(selectCalendarModalData);
-    const isSmthSelected = selectedTraining !== null;
+    const { modalType, modalCoord } = useAppSelector(selectCalendarModalData);
     const width = useWindowSize().width || 0;
     useEffect(() => {
         const coordinates = getCalendarModalCoords(width);
@@ -41,9 +40,9 @@ export const CalendarModal: React.FC<props> = ({ date, pageWidth }) => {
     return (
         <div className={styles["modal"]} style={{ left: `${modalCoord.x}px`, top: `${modalCoord.y}px` }}>
             {modalInner[modalType]}
-            {isSmthSelected && <ModalDrawer
+            <ModalDrawer
                 date={date}
-            />}
+            />
         </div>
     );
 };
