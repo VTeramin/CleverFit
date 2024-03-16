@@ -114,6 +114,12 @@
     }
 }
 
+.settings__icon-no-wrap {
+    background: none;
+    box-shadow: none;
+    border: none;
+}
+
 .settings__line {
     line-height: var(--line-height);
     margin: auto;

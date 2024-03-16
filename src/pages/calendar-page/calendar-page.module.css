@@ -224,6 +224,7 @@
 }
 
 @media (max-width: 800px) {
+
     .page .calendar [class*="picker-content"] td,
     .page .calendar [class*="cell-inner"],
     .page .calendar [class*="date-value"] {
@@ -258,12 +259,12 @@
     .page .calendar .no-empty:before {
         content: "";
         display: block;
-        width: 49px;
+        width: 46px;
         height: 24px;
         position: absolute;
         top: 0;
         left: 0;
-        transform: translateX(-15%);
+        transform: translateX(-11%);
         background: var(--primary-light-1);
         z-index: -1;
     }

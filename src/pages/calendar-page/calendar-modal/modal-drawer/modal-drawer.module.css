@@ -104,10 +104,14 @@
 }
 
 .drawer input {
-    height: 24px;
+    height: 100%;
     padding: 1px 0 1px 8px;
     margin: 0;
     line-height: var(--line-height);
+}
+
+.drawer [class*="ant-input-group"] {
+    height: 24px;
 }
 
 .drawer [class*="ant-input-disabled"] {
@@ -176,9 +180,9 @@
     width: 89px;
 }
 
-.drawer__form input:focus,
-.drawer__form input:hover,
-.drawer__form input:active {
+.drawer__form [class*="input-wrap"]:focus,
+.drawer__form [class*="input-wrap"]:hover,
+.drawer__form [class*="input-wrap"]:active {
     border: 1px solid var(--primary-light-6);
 }
 

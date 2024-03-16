@@ -1,5 +1,5 @@
 .modal__header {
-    padding: 16px 12px;
+    padding: 16px 0;
 }
 
 .modal__title {
@@ -37,7 +37,7 @@
 
 .modal__body .modal__list-wrapper li {
     height: 22px;
-    padding: 1px 12px;
+    padding: 1px 0;
 }
 
 .modal__list-wrapper [class*="anticon-edit"] svg {
