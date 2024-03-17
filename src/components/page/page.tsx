@@ -40,7 +40,7 @@ export const Page: React.FC<props> = ({ innerLayout }) => {
 
     return (
         <Layout className={styles["page"]}>
-            <SideBar collapsed={collapsed} />
+            <SideBar collapsed={collapsed} setCollapsed={setCollapsed}/>
             <Layout className={styles["page-layout"]}>
                 <Breadcrumb className={styles["page-layout__breadcrumbs"]}>
                     <Breadcrumb.Item onClick={() => navigate(ROUTE.MAIN)}>Главная</Breadcrumb.Item>

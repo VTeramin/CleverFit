@@ -10,16 +10,19 @@ import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import { ROUTE } from '@constants/enums';
+import { useOutsideClick } from '@hooks/use-outside-click';
 
 type props = {
-    collapsed: boolean
+    collapsed: boolean,
+    setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const SideBar: React.FC<props> = ({ collapsed }) => {
+export const SideBar: React.FC<props> = ({ collapsed, setCollapsed }) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const width = useWindowSize().width || 0;
     const isFullWidth = width > 800;
+    const siderRef = useOutsideClick(() => setCollapsed(true));
 
     function handleLogoClick() {
         navigate(ROUTE.MAIN);
@@ -51,6 +54,7 @@ export const SideBar: React.FC<props> = ({ collapsed }) => {
     return (
         <Sider
             trigger={null}
+            ref={siderRef}
             collapsible
             collapsed={collapsed}
             width={isFullWidth ? "208" : "106"}
