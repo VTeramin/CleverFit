@@ -25,6 +25,11 @@
     color: var(--character-light-title-85);
 }
 
+.trainings-list button {
+    width: max-content;
+    padding: 0;
+}
+
 .done [class*="badge-status-text"] {
     color: var(--character-light-disable-25);
 }

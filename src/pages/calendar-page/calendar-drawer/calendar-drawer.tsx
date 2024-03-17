@@ -49,7 +49,7 @@ export const CalendarDrawer: React.FC<props> = ({ date }) => {
                     listData={[selectedTraining as string]}
                     date={date}
                 />
-                <p>{convertDate(date.toISOString())}</p>
+                <p>{convertDate(date)}</p>
             </div>
             <div className={styles["drawer__form"]}>
                 <CalendarDrawerForm date={date} />

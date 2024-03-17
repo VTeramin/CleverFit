@@ -10,6 +10,7 @@ import { sortDrawerFormFromEmpty } from '@utils/calendar-utils/sort-drawer-form-
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { selectTraining } from '@redux/trainingSlice';
 import { findExercises } from '@utils/calendar-utils/find-exercises';
+import { getFixedDate } from '@utils/get-fixed-date';
 
 type props = {
     date: Date
@@ -35,7 +36,7 @@ export const CalendarDrawerForm: React.FC<props> = ({ date }) => {
         if (form.current) form.current.resetFields();
     }, [exerciseFormFields]);
 
-    const fixedDate = date.toISOString().substring(0, 10);
+    const fixedDate = getFixedDate(date);
     useEffect(() => {
         const formData = dispatch(findExercises(fixedDate, selectedTraining as string));
         dispatch(changeExerciseFormFields(formData));

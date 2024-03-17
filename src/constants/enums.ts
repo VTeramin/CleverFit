@@ -12,6 +12,12 @@ export enum badgeColors {
     "Кардио" = "pink"
 }
 
+export enum valid {
+    normal = "normal",
+    error = "error",
+    success = "success"
+}
+
 export enum status {
     empty = "",
     redirect = "redirect",

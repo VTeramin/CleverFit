@@ -14,7 +14,7 @@ import { validAuth } from '@constants/types';
 import { checkEmail } from '@utils/requests/check-email';
 import { register } from '@utils/requests/register';
 import { login } from '@utils/requests/login';
-import { ROUTE } from '@constants/enums';
+import { ROUTE, valid } from '@constants/enums';
 import { googleAuth } from '@utils/requests/google-auth';
 
 type props = {
@@ -29,14 +29,14 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
     const [isValid, setIsValid] = useState({
         email: true,
         password: true,
-        password2: true
+        confirmPassword: true
     });
     const [validStatus, setValidStatus] = useState<validAuth>({
-        email: "success",
-        password: "success",
-        password2: "success",
-        passwordHelp: "normal",
-        password2Help: "normal"
+        email: valid.success,
+        password: valid.success,
+        confirmPassword: valid.success,
+        passwordHelp: valid.normal,
+        confirmPasswordHelp: valid.normal
     });
     const [isDisabled, setIsDisabled] = useState(true);
     useEffect(() => {
@@ -54,12 +54,12 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
         setIsValid(prev => ({
             ...prev,
             password: validPassword(event.target.value),
-            pasword2: formData.password2 === event.target.value
+            pasword2: formData.confirmPassword === event.target.value
         }));
     }
 
-    function handlePassword2Change(event: { target: HTMLInputElement }) {
-        dispatch(changeLoginData({ password2: event.target.value }));
+    function handleConfirmPasswordChange(event: { target: HTMLInputElement }) {
+        dispatch(changeLoginData({ confirmPassword: event.target.value }));
         setIsValid(prev => ({ ...prev, pasword2: formData.password === event.target.value }))
     }
 
@@ -83,7 +83,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
 
     const help = {
         password: isRegistration && <p className={styles[validStatus.passwordHelp]}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>,
-        password2: validStatus.password2Help === "error" && <p className={styles[validStatus.password2Help]}>Пароли не совпадают</p>
+        confirmPassword: validStatus.confirmPasswordHelp === valid.error && <p className={styles[validStatus.confirmPasswordHelp]}>Пароли не совпадают</p>
     }
 
     return (
@@ -139,16 +139,16 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                     {isRegistration &&
                         <Form.Item
                             name="password-repeat"
-                            validateStatus={validStatus.password2}
-                            help={help.password2}
+                            validateStatus={validStatus.confirmPassword}
+                            help={help.confirmPassword}
                         >
                             <Input.Password
                                 className={styles["login-form__input"]}
                                 iconRender={eyeRender}
                                 type="password"
                                 placeholder="Повторите пароль"
-                                value={formData.password2}
-                                onChange={handlePassword2Change}
+                                value={formData.confirmPassword}
+                                onChange={handleConfirmPasswordChange}
                                 data-test-id="registration-confirm-password"
                             />
                         </Form.Item>}

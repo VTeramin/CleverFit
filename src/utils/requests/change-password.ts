@@ -13,9 +13,9 @@ const params = {
 
 export const changePassword = () => async (dispatch: AppDispatch, getState: GetState) => {
     dispatch(toggleLoader(true));
-    const { password, password2 } = getState().login;
+    const { password, confirmPassword } = getState().login;
 
-    return axios.post(`${API}/auth/change-password`, { password, confirmPassword: password2 }, params)
+    return axios.post(`${API}/auth/change-password`, { password, confirmPassword }, params)
         .then(() => ROUTE.SUCCESS_CHANGE_PASSWORD)
         .catch(() => ROUTE.ERROR_CHANGE_PASSWORD)
         .finally(() => dispatch(toggleLoader(false)));

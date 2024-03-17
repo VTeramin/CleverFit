@@ -43,7 +43,7 @@ export const InnerDefault: React.FC<props> = ({ date }) => {
     return (
         <div data-test-id="modal-create-training">
             <div className={styles["modal__header"]}>
-                <p className={styles["modal__title"]}>Тренировки на {convertDate(date.toISOString())}</p>
+                <p className={styles["modal__title"]}>Тренировки на {convertDate(date)}</p>
                 {isNoTrainings && <p className={styles["modal__subtitle"]}>Нет активных тренировок</p>}
             </div>
             <div className={styles["modal__body"]}>

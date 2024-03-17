@@ -9,7 +9,7 @@ type changeData = {
 const initialState: login = {
     email: "",
     password: "",
-    password2: "",
+    confirmPassword: "",
     isRemember: false
 };
 

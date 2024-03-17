@@ -1,28 +1,28 @@
-import { calendarModalType, status } from "./enums"
+import { calendarModalType, status, valid } from "./enums"
 
 export type validChange = {
-    password: "success" | "error",
-    password2: "success" | "error"
+    password: valid.success | valid.error,
+    confirmPassword: valid.success | valid.error
 }
 
 export type validAuth = {
-    email: "error" | "success",
-    password: "error" | "success",
-    password2: "error" | "success",
-    passwordHelp: "error" | "normal",
-    password2Help: "error" | "normal"
+    email: valid.error | valid.success,
+    password: valid.error | valid.success,
+    confirmPassword: valid.error | valid.success,
+    passwordHelp: valid.error | valid.normal,
+    confirmPasswordHelp: valid.error | valid.normal
 }
 
 export type passwords = {
     password: string,
-    password2: string
+    confirmPassword: string
 }
 
 export type login = {
     email: string,
     isRemember: boolean,
     password: string,
-    password2: string
+    confirmPassword: string
 }
 
 export type feedback = {
@@ -34,11 +34,11 @@ export type feedback = {
 }
 
 export type exercise = {
-    _id?: string,
     name: string,
     replays: number,
     weight: number,
     approaches: number,
+    _id?: string,
     isImplementation?: boolean
 }
 
@@ -53,9 +53,10 @@ export type drawerFormFields = {
 }
 
 export type training = {
-    _id?: string,
     name: string,
     date: Date,
+    exercises: exercise[],
+    _id?: string,
     isImplementation?: boolean,
     userId?: string,
     parameters?: {
@@ -63,8 +64,7 @@ export type training = {
         period: number,
         jointTraining: boolean,
         participants: string[]
-    },
-    exercises: exercise[]
+    }
 }
 
 export type calendarModal = {
