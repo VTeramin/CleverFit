@@ -2,11 +2,12 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import styles from './calendar-result.module.css';
 import { Button, Modal, Result } from 'antd';
-import { getTrainingList, status } from '@utils/requests';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { CloseCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeResultType, selectCalendarModalData, toggleIsModal } from '@redux/calendarModalSlice';
+import { status } from '@constants/enums';
+import { getTrainingList } from '@utils/requests/get-training-list';
 
 export const CalendarResult: React.FC = () => {
     const dispatch = useAppDispatch();

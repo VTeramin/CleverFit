@@ -3,10 +3,11 @@ import '../modal.css';
 import styles from './confirm-email.module.css';
 import VerificationInput from 'react-verification-input';
 import { CloseCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
-import { confirmEmail, status } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectLogin } from '@redux/loginSlice';
+import { confirmEmail } from '@utils/requests/confirm-email';
+import { status } from '@constants/enums';
 
 export const ConfirmEmail: React.FC = () => {
     const navigate = useNavigate();

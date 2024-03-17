@@ -3,11 +3,10 @@ import 'antd/dist/antd.css';
 import styles from './result-modal.module.css';
 import { Button, Modal, Result } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE } from '@route/routes';
-import { status } from '@utils/requests';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { changeResultType } from '@redux/calendarModalSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { ROUTE, status } from '@constants/enums';
 
 type props = {
     resultType: status,

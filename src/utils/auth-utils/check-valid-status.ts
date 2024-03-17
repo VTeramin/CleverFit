@@ -1,18 +1,5 @@
-import { login } from "@redux/loginSlice";
 import { validPassword } from "./valid-password";
-
-export type validChange = {
-    password: "success" | "error",
-    password2: "success" | "error"
-}
-
-export type validAuth = {
-    email: "error" | "success",
-    password: "error" | "success",
-    password2: "error" | "success",
-    passwordHelp: "error" | "normal",
-    password2Help: "error" | "normal"
-}
+import { login, validAuth, validChange } from "@constants/types";
 
 type isValid = {
     [name: string]: boolean

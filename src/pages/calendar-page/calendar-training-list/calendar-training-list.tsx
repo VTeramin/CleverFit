@@ -1,13 +1,13 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import styles from './calendar-training-list.module.css';
-import { Badge } from 'antd';
+import { Badge, Button } from 'antd';
 import { badgeColors, calendarModalType } from '@constants/enums';
 import { EditOutlined } from '@ant-design/icons';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { changeEditTraining, changeModalType, changeSelectedTraining, toggleIsEdit } from '@redux/calendarModalSlice';
-import { selectTraining } from '@redux/trainingSlice';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { changeEditTraining, changeExerciseFormFields, changeModalType, changeSelectedTraining, toggleIsEdit } from '@redux/calendarModalSlice';
 import { checkIsTrainingDone } from '@utils/calendar-utils/check-is-training-done';
+import { findExercises } from '@utils/calendar-utils/find-exercises';
 
 type props = {
     date: Date,
@@ -17,29 +17,33 @@ type props = {
 
 export const CalendarTrainingList: React.FC<props> = ({ date, listData, edit }) => {
     const dispatch = useAppDispatch();
-    const training = useAppSelector(selectTraining);
 
     function handleEdit(name: string) {
         dispatch(changeSelectedTraining(name));
-        dispatch(toggleIsEdit(true));
         dispatch(changeEditTraining(name));
+        const exercises = dispatch(findExercises(date.toISOString(), name));
+        dispatch(changeExerciseFormFields(exercises));
+        dispatch(toggleIsEdit(true));
         dispatch(changeModalType(calendarModalType.newTraining));
     }
 
     return (
         <ul className={styles["trainings-list"]}>
-            {listData.map((name, ind) => (
-                <li key={ind} className={checkIsTrainingDone(name, training, date) ? styles["done"] : ""}>
-                    <Badge text={name} color={badgeColors[name as keyof typeof badgeColors]} />
-                    {edit && <EditOutlined
-                        onClick={() => handleEdit(name)}
-                        type="text"
-                        data-test-id={`modal-update-training-edit-button${ind}`}
-                        disabled={checkIsTrainingDone(name, training, date)}
-                        style={{pointerEvents: checkIsTrainingDone(name, training, date) ? "none" : "auto"}}
-                    />}
-                </li>
-            ))}
+            {listData.map((name, ind) => {
+                const isTrainingDone = dispatch(checkIsTrainingDone(name, date));
+                return (
+                    <li key={ind} className={isTrainingDone ? styles["done"] : ""}>
+                        <Badge text={name} color={badgeColors[name as keyof typeof badgeColors]} />
+                        {edit && <Button
+                            type="text"
+                            icon={<EditOutlined />}
+                            onClick={() => handleEdit(name)}
+                            data-test-id={`modal-update-training-edit-button${ind}`}
+                            disabled={isTrainingDone}
+                        />}
+                    </li>
+                )
+            })}
         </ul>
     );
 };

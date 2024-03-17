@@ -4,14 +4,18 @@ import '../modal.css';
 import styles from './auth.module.css';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { GooglePlusOutlined, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
-import { checkEmail, googleAuth, login, register } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
 import { changeLoginData, selectLogin } from '@redux/loginSlice';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { ROUTE } from '@route/routes';
 import { validPassword } from '@utils/auth-utils/valid-password';
 import { validEmail } from '@utils/auth-utils/valid-email';
-import { checkDisabledAuth, checkValidAuth, validAuth } from '@utils/auth-utils/check-valid-status';
+import { checkDisabledAuth, checkValidAuth } from '@utils/auth-utils/check-valid-status';
+import { validAuth } from '@constants/types';
+import { checkEmail } from '@utils/requests/check-email';
+import { register } from '@utils/requests/register';
+import { login } from '@utils/requests/login';
+import { ROUTE } from '@constants/enums';
+import { googleAuth } from '@utils/requests/google-auth';
 
 type props = {
     isRegistration: boolean

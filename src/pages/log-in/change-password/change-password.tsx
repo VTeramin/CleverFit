@@ -4,11 +4,12 @@ import '../modal.css';
 import styles from './change-password.module.css';
 import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { changePassword } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
 import { changePasswords } from '@redux/loginSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { checkDisabledChangePassword, checkValidChangePassword, validChange } from '@utils/auth-utils/check-valid-status';
+import { checkDisabledChangePassword, checkValidChangePassword } from '@utils/auth-utils/check-valid-status';
+import { validChange } from '@constants/types';
+import { changePassword } from '@utils/requests/change-password';
 
 export const ChangePassword: React.FC = () => {
     const navigate = useNavigate();

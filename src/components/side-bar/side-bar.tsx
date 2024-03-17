@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { toggleIsAuthorized } from '@redux/userDataSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { ROUTE } from '@route/routes';
 import { MenuInfo } from 'rc-menu/lib/interface';
+import { ROUTE } from '@constants/enums';
 
 type props = {
     collapsed: boolean

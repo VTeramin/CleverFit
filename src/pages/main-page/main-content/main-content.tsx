@@ -2,11 +2,10 @@ import React, { MouseEvent } from 'react';
 import 'antd/dist/antd.css';
 import styles from './main-content.module.css';
 import { Button, Layout } from 'antd';
-
 const { Content } = Layout;
 import { HeartTwoTone, CalendarTwoTone, IdcardTwoTone } from '@ant-design/icons';
-import { ROUTE } from '@route/routes';
 import { useNavigate } from 'react-router-dom';
+import { ROUTE } from '@constants/enums';
 
 export const MainContent: React.FC = () => {
     const navigate = useNavigate();

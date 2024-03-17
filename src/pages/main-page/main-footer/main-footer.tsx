@@ -5,7 +5,7 @@ import { Button, Layout } from 'antd';
 const { Footer } = Layout;
 import { AndroidFilled, AppleFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE } from '@route/routes';
+import { ROUTE } from '@constants/enums';
 
 export const MainFooter: React.FC = () => {
     const navigate = useNavigate();

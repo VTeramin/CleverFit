@@ -6,13 +6,14 @@ import { Button, Divider, Empty, Select } from 'antd';
 import { calendarModalType } from '@constants/enums';
 import emptyIcon from '../../../../assets/icon/empty.svg';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { getTraining, saveTraining } from '@utils/requests';
 import { selectTraining } from '@redux/trainingSlice';
-import { filterTrainingByDay } from '@utils/calendar-utils/filter-training-by-day';
-import { selectTrainingList } from '@redux/trainingListSlice';
 import { changeEditTraining, changeModalType, changeSelectedTraining, selectCalendarModalData, toggleIsDrawer, toggleIsEdit } from '@redux/calendarModalSlice';
-import { getTrainingNames } from '@utils/calendar-utils/get-trainings-names';
+import { getNamesInForm } from '@utils/calendar-utils/get-names-in-form';
 import { getTrainingSelectOptions } from '@utils/calendar-utils/get-training-select-options';
+import { saveTraining } from '@utils/requests/save-training';
+import { getTraining } from '@utils/requests/get-training';
+import { findAllTraining } from '@utils/calendar-utils/find-all-training';
+
 type props = {
     date: Date
 }
@@ -20,16 +21,15 @@ type props = {
 export const InnerNewTraining: React.FC<props> = ({ date }) => {
     const dispatch = useAppDispatch();
     const training = useAppSelector(selectTraining);
-    const trainingList = useAppSelector(selectTrainingList);
-    const { selectedTraining, editTraining, exerciseFormFields, isEdit } = useAppSelector(selectCalendarModalData);
-    const trainingOnSelDate = filterTrainingByDay(training, date);
-    const exerciseNames = getTrainingNames(exerciseFormFields);
+    const { selectedTraining, editTraining, isEdit } = useAppSelector(selectCalendarModalData);
+    const trainingNames = findAllTraining(training, date).map(el => el.name);
+    const exerciseNames = dispatch(getNamesInForm());
     const isNoExercise = exerciseNames.length === 0;
-    const selectOptions = getTrainingSelectOptions(training, trainingOnSelDate, trainingList, date, isEdit);
+    const selectOptions = dispatch(getTrainingSelectOptions(date));
     const isSaveDisabled = !isEdit && exerciseNames.length === 0;
 
     function handleSelect(value: string) {
-        if (trainingOnSelDate.includes(value)) {
+        if (trainingNames.includes(value)) {
             dispatch(toggleIsEdit(true));
             dispatch(changeEditTraining(value));
         } else {

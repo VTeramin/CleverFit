@@ -1,10 +1,7 @@
-import { training } from "@constants/types";
-import { convertDate } from "../convert-date";
+import { AppDispatch, GetState } from "@redux/configure-store";
+import { checkIsDatesEqual } from "@utils/check-is-dates-equal";
 
-export function checkIsTrainingDone(name: string, training: training[], date: Date) {
-    return training.find(el => {
-        const cellDate = convertDate(date.toISOString());
-        const nameDate = convertDate(el.date.toString());
-        return cellDate === nameDate && el.name === name;
-    })?.isImplementation;
+export const checkIsTrainingDone = (trainingName: string, date: Date) => (_: AppDispatch, getState: GetState) => {
+    const training = getState().training;
+    return training.find(el => checkIsDatesEqual(date, new Date(el.date)) && el.name === trainingName)?.isImplementation;
 }

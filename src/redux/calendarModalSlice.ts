@@ -1,23 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./configure-store";
-import { status } from "@utils/requests";
-import { calendarModalType } from "@constants/enums";
-import { drawerFormFields } from "@constants/types";
-
-type calendarModal = {
-    isEdit: boolean,
-    isModal: boolean,
-    isDrawer: boolean,
-    resultType: status,
-    modalType: calendarModalType,
-    modalCoord: {
-        x: number,
-        y: number
-    },
-    selectedTraining: string | null,
-    editTraining: string | null,
-    exerciseFormFields: drawerFormFields
-}
+import { calendarModalType, status } from "@constants/enums";
+import { calendarModal, drawerFormFields } from "@constants/types";
 
 const initialState: calendarModal = {
     isEdit: false,

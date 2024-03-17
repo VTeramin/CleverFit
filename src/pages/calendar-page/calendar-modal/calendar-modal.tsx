@@ -8,7 +8,7 @@ import { calendarModalType } from '@constants/enums';
 import { InnerNewTraining } from './inner-new-training/inner-new-training';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeModalCoord, selectCalendarModalData } from '@redux/calendarModalSlice';
-import { ModalDrawer } from './modal-drawer/modal-drawer';
+import { CalendarDrawer } from '../calendar-drawer/calendar-drawer';
 
 type props = {
     date: Date,
@@ -40,10 +40,13 @@ export const CalendarModal: React.FC<props> = ({ date, pageWidth }) => {
     return (
         <div
             className={styles["modal"]}
-            style={{ left: `${modalCoord.x}px`, top: `${modalCoord.y}px` }}
+            style={{
+                left: `${modalCoord.x}px`,
+                top: `${modalCoord.y}px`
+            }}
         >
             {modalInner[modalType]}
-            <ModalDrawer
+            <CalendarDrawer
                 date={date}
             />
         </div>

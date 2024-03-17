@@ -4,12 +4,12 @@ import styles from './feedbacks-page.module.css';
 import { Button, Layout } from 'antd';
 import { FeedbackCards } from './feeback-cards/feedback-cards';
 import { FeedbackModal } from './feedback-modal/feedback-modal';
-import { getFeedbacks, status } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectFeedback } from '@redux/feedbackSlice';
-import { ROUTE } from '@route/routes';
 import { ResultModal } from '@components/result-modal/result-modal';
+import { ROUTE, status } from '@constants/enums';
+import { getFeedbacks } from '@utils/requests/get-feedbacks';
 
 export const FeedbacksPage: React.FC = () => {
     const navigate = useNavigate();

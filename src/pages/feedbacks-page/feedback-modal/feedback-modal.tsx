@@ -3,9 +3,12 @@ import 'antd/dist/antd.css';
 import styles from './feedback-modal.module.css';
 import { Button, Form, Input, Modal, Rate } from 'antd';
 import { StarTwoTone } from '@ant-design/icons';
-import { sendFeedback, status } from '@utils/requests';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useWindowSize } from '@uidotdev/usehooks';
+import { sendFeedback } from '@utils/requests/send-feedback';
+import { ROUTE, status } from '@constants/enums';
+import { getFeedbacks } from '@utils/requests/get-feedbacks';
+import { useNavigate } from 'react-router-dom';
 
 type props = {
     isModalOpen: boolean,
@@ -15,6 +18,7 @@ type props = {
 
 export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, setResultType }) => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const width = useWindowSize().width || 0;
     const isFullWidth = width > 833;
     const [feedback, setFeedback] = useState({
@@ -27,7 +31,12 @@ export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, se
             .then((response) => {
                 setResultType(response);
                 setIsModalOpen(false);
+                return dispatch(getFeedbacks());
             })
+            .then(response => {
+                if (response === status.redirect) navigate(ROUTE.AUTH);
+                if (response === status.noToken || response === status.errorFeedback) setResultType(status.noToken);
+            });
     }
 
     function handleRating(value: number) {

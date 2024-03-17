@@ -6,13 +6,12 @@ const { Header } = Layout;
 import { MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { ROUTE } from '@route/routes';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeResultType, selectCalendarModalData } from '@redux/calendarModalSlice';
-import { status } from '@utils/requests';
 import { CalendarResult } from '@pages/calendar-page/calendar-result/calendar-result';
 import { SideBar } from '@components/side-bar/side-bar';
 import { ResultModal } from '@components/result-modal/result-modal';
+import { ROUTE, status } from '@constants/enums';
 
 type props = {
     innerLayout: React.ReactElement

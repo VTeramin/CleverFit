@@ -1,15 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./configure-store";
-
-type passwords = {
-    password: string,
-    password2: string
-};
-
-export type login = {
-    email: string,
-    isRemember: boolean
-} & passwords;
+import { login, passwords } from "@constants/types";
 
 type changeData = {
     [name:string]: string | boolean
