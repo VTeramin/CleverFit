@@ -1,0 +1,23 @@
+.modal {
+    position: absolute;
+    border-radius: var(--border-radius);
+    width: 264px;
+    height: max-content;
+    box-shadow: var(--box-shadow);
+    background: var(--character-light-primary-inverse);
+    z-index: 2;
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+}
+
+.modal > * {
+    padding: 0 12px;
+}
+
+@media (max-width: 800px) {
+    .modal {
+        width: 312px;
+    }
+}

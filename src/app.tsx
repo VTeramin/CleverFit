@@ -2,13 +2,14 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { HistoryRouter } from 'redux-first-history/rr6'
 import { history, store } from '@redux/configure-store';
-import { Loader } from '@pages/components/loader/loader';
+import { Loader } from '@components/loader/loader';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { ROUTE } from './route/routes';
 import { MainPage, Auth, Result, ConfirmEmail, ChangePassword, FeedbacksPage } from './pages';
 import { PrivateRoutes } from './route/PrivateRoutes';
 import { AuthRoutes } from './route/AuthRoutes';
 import { PushRoutes } from './route/PushRoutes';
+import { CalendarPage } from '@pages/calendar-page';
+import { ROUTE } from '@constants/enums';
 
 export const App: React.FC = () => {
     return (
@@ -27,6 +28,7 @@ export const App: React.FC = () => {
                     <Route element={<PrivateRoutes />}>
                         <Route path={ROUTE.MAIN} element={<MainPage />} />
                         <Route path={ROUTE.FEEDBACKS} element={<FeedbacksPage />} />
+                        <Route path={ROUTE.CALENDAR} element={<CalendarPage />} />
                     </Route>
                     <Route element={<PushRoutes />}>
                         <Route path={ROUTE.RESULT} element={<Result />} />

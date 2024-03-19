@@ -6,6 +6,9 @@ import loginReducer from "./loginSlice";
 import loaderReducer from "./loaderSlice";
 import userDataReducer from "./userDataSlice";
 import feedbackReducer from "./feedbackSlice";
+import trainingReducer from "./trainingSlice";
+import trainingListReducer from "./trainingListSlice";
+import calendarModalReducer from "./calendarModalSlice";
 import { thunk } from "redux-thunk";
 
 const {
@@ -20,6 +23,9 @@ export const store = configureStore({
         loader: loaderReducer,
         userData: userDataReducer,
         feedback: feedbackReducer,
+        training: trainingReducer,
+        trainingList: trainingListReducer,
+        calendarModal: calendarModalReducer,
         router: routerReducer
     }),
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware).concat(thunk),

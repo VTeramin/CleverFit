@@ -4,11 +4,13 @@ import '../modal.css';
 import styles from './change-password.module.css';
 import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { changePassword } from '@utils/requests';
 import { useNavigate } from 'react-router-dom';
 import { changePasswords } from '@redux/loginSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { checkDisabledChangePassword, checkValidChangePassword, validChange } from '@utils/check-valid-status';
+import { checkDisabledChangePassword, checkValidChangePassword } from '@utils/auth-utils/check-valid-status';
+import { validChange } from '@constants/types';
+import { changePassword } from '@utils/requests/change-password';
+import { valid } from '@constants/enums';
 
 export const ChangePassword: React.FC = () => {
     const navigate = useNavigate();
@@ -16,12 +18,12 @@ export const ChangePassword: React.FC = () => {
 
     const [passwords, setPasswords] = useState({
         password: "",
-        password2: ""
+        confirmPassword: ""
     });
 
     const [validStatus, setValidStatus] = useState<validChange>({
-        password: "success",
-        password2: "success"
+        password: valid.success,
+        confirmPassword: valid.success
     });
 
     useEffect(() => {
@@ -67,8 +69,8 @@ export const ChangePassword: React.FC = () => {
                         />
                     </Form.Item>
                     <Form.Item
-                        help={validStatus.password2 === "error" && "Пароли не совпадают"}
-                        validateStatus={validStatus.password2}
+                        help={validStatus.confirmPassword === valid.error && "Пароли не совпадают"}
+                        validateStatus={validStatus.confirmPassword}
                     >
                         <Input.Password
                             className={styles["change-modal__input"]}
@@ -76,7 +78,7 @@ export const ChangePassword: React.FC = () => {
                             type="password"
                             name="password2"
                             placeholder="Повторите пароль"
-                            value={passwords.password2}
+                            value={passwords.confirmPassword}
                             onChange={handlePassword}
                             data-test-id="change-confirm-password"
                         />

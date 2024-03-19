@@ -4,9 +4,11 @@ import styles from './result.module.css';
 import '../modal.css';
 import { WarningFilled, CloseCircleFilled, CheckCircleFilled } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
-import { changePassword, checkEmail, register } from '@utils/requests';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { ROUTE } from '@route/routes';
+import { ROUTE } from '@constants/enums';
+import { register } from '@utils/requests/register';
+import { changePassword } from '@utils/requests/change-password';
+import { checkEmail } from '@utils/requests/check-email';
 
 type resultData = {
     [key: string]: {

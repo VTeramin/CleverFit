@@ -1,3 +1,3 @@
-export function convertDate(date: string) {
-    return date.substring(0, 10).split("-").reverse().join(".");
+export function convertDate(date: Date) {
+    return date.toISOString().substring(0, 10).split("-").reverse().join(".");
 }

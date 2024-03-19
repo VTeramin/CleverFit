@@ -1,0 +1,43 @@
+.trainings-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.trainings-list [class*="badge-not-a-wrapper"],
+.trainings-list li {
+    height: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.trainings-list li {
+    display: flex;
+    justify-content: space-between;
+}
+
+.trainings-list [class*="badge-status-text"] {
+    display: inline-block;
+    height: 16px;
+    align-self: start;
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.trainings-list button {
+    width: max-content;
+    padding: 0;
+}
+
+.done [class*="badge-status-text"] {
+    color: var(--character-light-disable-25);
+}
+
+.done [class*="anticon-edit"] svg {
+    fill: var(--character-light-disable-25);
+}
+
+[class*="badge-status-dot"] {
+    top: 0;
+}

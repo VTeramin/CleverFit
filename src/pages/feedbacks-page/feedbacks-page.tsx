@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import styles from './feedbacks-page.module.css';
 import { Button, Layout } from 'antd';
-import { FeedbackCards } from './components/feeback-cards/feedback-cards';
-import { FeedbackModal } from './components/feedback-modal/feedback-modal';
-import { FeedbackResult } from './components/feedback-result/feedback-result';
-import { getFeedbacks, status } from '@utils/requests';
+import { FeedbackCards } from './feeback-cards/feedback-cards';
+import { FeedbackModal } from './feedback-modal/feedback-modal';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectFeedback } from '@redux/feedbackSlice';
-import { ROUTE } from '@route/routes';
+import { ResultModal } from '@components/result-modal/result-modal';
+import { ROUTE, status } from '@constants/enums';
+import { getFeedbacks } from '@utils/requests/get-feedbacks';
 
 export const FeedbacksPage: React.FC = () => {
     const navigate = useNavigate();
@@ -24,14 +24,14 @@ export const FeedbacksPage: React.FC = () => {
     useEffect(() => {
         dispatch(getFeedbacks()).then(response => {
             if (response === status.redirect) navigate(ROUTE.AUTH);
-            if (response === status.noToken || response === status.error) setResultType(status.noToken);
+            if (response === status.noToken || response === status.errorFeedback) setResultType(status.noToken);
         });
     }, [dispatch, navigate]);
 
     const firstFeedback = (
-        <div className={styles["firstFeedback"]}>
-            <h2 className={styles["firstFeedback__title"]}>Оставьте свой отзыв первым</h2>
-            <p className={styles["firstFeedback__subtitle"]}>Вы можете быть первым, кто оставит отзыв об этом фитнесс приложении.<br />Поделитесь своим мнением и опытом с другими пользователями,<br />и помогите им сделать правильный выбор.</p>
+        <div className={styles["first-feedback"]}>
+            <h2 className={styles["first-feedback__title"]}>Оставьте свой отзыв первым</h2>
+            <p className={styles["first-feedback__subtitle"]}>Вы можете быть первым, кто оставит отзыв об этом фитнесс приложении.<br />Поделитесь своим мнением и опытом с другими пользователями,<br />и помогите им сделать правильный выбор.</p>
         </div>
     );
 
@@ -60,7 +60,7 @@ export const FeedbacksPage: React.FC = () => {
                 setIsModalOpen={setIsModalOpen}
                 setResultType={setResultType}
             />
-            {resultType !== status.empty && <FeedbackResult
+            {resultType !== status.empty && <ResultModal
                 resultType={resultType}
                 setResultType={setResultType}
                 setIsModalOpen={setIsModalOpen}

@@ -103,6 +103,7 @@
     --trigger-collapsed-clip-path: path("M0 0L32 5.81818V42.1818L0 48V0Z");
     --background-blur-filter: blur(6px);
     --background-blur-color: rgba(121, 156, 212, 0.5);
+    --background-blur-color-light: rgba(121, 156, 212, 0.1);
     --box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
     --box-shadow-exit: inset 0 1px 0 0 var(--character-light-dividers);
     --box-shadow-button: 0 2px 0 0 rgba(0, 0, 0, 0.04);
@@ -116,6 +117,7 @@
     --button-width-smaller: 130px;
     --button-width-small: 74px;
     --button-height: 40px;
+    --button-height-small: 28px;
     --button-border: 1px solid var(--primary-light-6);
     --button-border-light: 1px solid var(--character-light-border);
     --button-border-auth: 1px solid var(--character-light-dividers);
@@ -123,8 +125,12 @@
     --button-border-error: 1px solid var(--character-light-error);
     --button-padding: 4px 15px;
     --border-radius: 2px;
+    --border-radius-drawer: 8px;
+    --border-radius-drawer-bottom: 24px;
     --flex-gap: 20px;
     --flex-gap-small: 16px;
+    --calendar-input-height: 28px;
+    --calendar-input-height-small: 22px;
 }
 
 html {

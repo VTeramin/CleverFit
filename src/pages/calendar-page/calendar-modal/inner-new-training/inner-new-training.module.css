@@ -1,0 +1,103 @@
+.modal__header {
+    padding: 12px 0 0;
+}
+
+.modal__input {
+    width: calc(100% - 14px);
+}
+
+.modal__header .modal__input [class*="select-selector"],
+.modal__header [class*="select-selector"] [class*="selection-search"] [class*="search-input"] {
+    height: 28px;
+}
+
+.modal__input [class*="selection-placeholder"] {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.modal__input [class*="select-arrow"] {
+    color: var(--character-light-secondary-45);
+}
+
+.modal__dropdown [class*="select-item-option"] {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.modal__divider {
+    margin: 12px 0;
+}
+
+.modal__body {
+    min-height: 67px;
+    max-height: 180px;
+    overflow-y: auto;
+    padding: 4px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal__body .trainings__name {
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    margin-bottom: 0;
+}
+
+.modal__body::-webkit-scrollbar {
+    width: 4px;
+    transform: translateX(-10px);
+}
+
+.modal__body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.modal__body::-webkit-scrollbar-thumb {
+    background: var(--character-light-disable-25);
+    border-radius: 20px;
+}
+
+.modal__empty img {
+    width: var(--icon-large);
+    height: var(--icon-large);
+}
+
+.modal__empty [class*="empty-image"] {
+    height: 60px;
+    margin: 0;
+    padding: 16px 0;
+}
+
+.body__trainings {
+    height: 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.trainings__name {
+    line-height: var(--line-height);
+    color: var(--character-light-secondary-45);
+}
+
+.trainings__edit svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    fill: var(--primary-light-6);
+    cursor: pointer;
+}
+
+.modal__buttons {
+    padding-bottom: 12px;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+}
