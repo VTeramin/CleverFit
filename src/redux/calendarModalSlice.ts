@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./configure-store";
-import { calendarModalType, status } from "@constants/enums";
-import { calendarModal, drawerFormFields } from "@constants/types";
+import { ECalendarModalType, EStatus } from "@constants/enums";
+import { TCalendarModal, TDrawerFormFields } from "@constants/types";
 
-const initialState: calendarModal = {
+const initialState: TCalendarModal = {
     isEdit: false,
     isModal: false,
     isDrawer: false,
-    resultType: status.empty,
-    modalType: calendarModalType.default,
+    resultType: EStatus.empty,
+    modalType: ECalendarModalType.default,
     modalCoord: {
         x: 0,
         y: 0
@@ -31,11 +31,11 @@ export const calendarModalSlice = createSlice({
         toggleIsDrawer: (state, action: PayloadAction<boolean>) => {
             state.isDrawer = action.payload;
         },
-        changeResultType: (state, action: PayloadAction<status>) => {
+        changeResultType: (state, action: PayloadAction<EStatus>) => {
             state.resultType = action.payload;
         },
-        changeModalType: (state, action: PayloadAction<calendarModalType>) => {
-            if(action.payload === calendarModalType.default) {
+        changeModalType: (state, action: PayloadAction<ECalendarModalType>) => {
+            if(action.payload === ECalendarModalType.default) {
                 state.selectedTraining = null;
                 state.editTraining = null;
                 Object.keys(state.exerciseFormFields).forEach(key => delete state.exerciseFormFields[key]);
@@ -53,7 +53,7 @@ export const calendarModalSlice = createSlice({
         changeEditTraining: (state, action: PayloadAction<string | null>) => {
             state.editTraining = action.payload;
         },
-        changeExerciseFormFields: (state, action: PayloadAction<drawerFormFields>) => {
+        changeExerciseFormFields: (state, action: PayloadAction<TDrawerFormFields>) => {
             Object.keys(state.exerciseFormFields).forEach(key => delete state.exerciseFormFields[key]);
             Object.assign(state.exerciseFormFields, action.payload);
         }

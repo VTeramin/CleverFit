@@ -9,7 +9,7 @@ import { PrivateRoutes } from './route/PrivateRoutes';
 import { AuthRoutes } from './route/AuthRoutes';
 import { PushRoutes } from './route/PushRoutes';
 import { CalendarPage } from '@pages/calendar-page';
-import { ROUTE } from '@constants/enums';
+import { EROUTE } from '@constants/enums';
 
 export const App: React.FC = () => {
     return (
@@ -17,21 +17,21 @@ export const App: React.FC = () => {
             <HistoryRouter history={history}>
                 <Routes>
                     <Route element={<AuthRoutes />}>
-                        <Route path={ROUTE.HOME} element={<Navigate to={ROUTE.AUTH} />} />
-                        <Route path={ROUTE.AUTH} element={<Auth isRegistration={false} />} />
-                        <Route path={ROUTE.REGISTRATION} element={<Auth isRegistration={true} />} />
+                        <Route path={EROUTE.HOME} element={<Navigate to={EROUTE.AUTH} />} />
+                        <Route path={EROUTE.AUTH} element={<Auth isRegistration={false} />} />
+                        <Route path={EROUTE.REGISTRATION} element={<Auth isRegistration={true} />} />
                         <Route element={<PushRoutes />}>
-                            <Route path={ROUTE.CHANGE_PASSWORD} element={<ChangePassword />} />
-                            <Route path={ROUTE.CONFIRM_EMAIL} element={<ConfirmEmail />} />
+                            <Route path={EROUTE.CHANGE_PASSWORD} element={<ChangePassword />} />
+                            <Route path={EROUTE.CONFIRM_EMAIL} element={<ConfirmEmail />} />
                         </Route>
                     </Route>
                     <Route element={<PrivateRoutes />}>
-                        <Route path={ROUTE.MAIN} element={<MainPage />} />
-                        <Route path={ROUTE.FEEDBACKS} element={<FeedbacksPage />} />
-                        <Route path={ROUTE.CALENDAR} element={<CalendarPage />} />
+                        <Route path={EROUTE.MAIN} element={<MainPage />} />
+                        <Route path={EROUTE.FEEDBACKS} element={<FeedbacksPage />} />
+                        <Route path={EROUTE.CALENDAR} element={<CalendarPage />} />
                     </Route>
                     <Route element={<PushRoutes />}>
-                        <Route path={ROUTE.RESULT} element={<Result />} />
+                        <Route path={EROUTE.RESULT} element={<Result />} />
                     </Route>
                 </Routes>
                 <Loader />

@@ -2,7 +2,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import styles from './calendar-training-list.module.css';
 import { Badge, Button } from 'antd';
-import { badgeColors, calendarModalType } from '@constants/enums';
+import { EBadgeColors, ECalendarModalType } from '@constants/enums';
 import { EditOutlined } from '@ant-design/icons';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { changeEditTraining, changeExerciseFormFields, changeModalType, changeSelectedTraining, toggleIsEdit } from '@redux/calendarModalSlice';
@@ -24,7 +24,7 @@ export const CalendarTrainingList: React.FC<props> = ({ date, listData, edit }) 
         const exercises = dispatch(findExercises(date.toISOString(), name));
         dispatch(changeExerciseFormFields(exercises));
         dispatch(toggleIsEdit(true));
-        dispatch(changeModalType(calendarModalType.newTraining));
+        dispatch(changeModalType(ECalendarModalType.newTraining));
     }
 
     return (
@@ -33,7 +33,7 @@ export const CalendarTrainingList: React.FC<props> = ({ date, listData, edit }) 
                 const isTrainingDone = dispatch(checkIsTrainingDone(name, date));
                 return (
                     <li key={ind} className={isTrainingDone ? styles["done"] : ""}>
-                        <Badge text={name} color={badgeColors[name as keyof typeof badgeColors]} />
+                        <Badge text={name} color={EBadgeColors[name as keyof typeof EBadgeColors]} />
                         {edit && <Button
                             type="text"
                             icon={<EditOutlined />}

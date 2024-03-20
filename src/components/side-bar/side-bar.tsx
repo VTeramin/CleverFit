@@ -9,7 +9,7 @@ import { toggleIsAuthorized } from '@redux/userDataSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { MenuInfo } from 'rc-menu/lib/interface';
-import { ROUTE } from '@constants/enums';
+import { EROUTE } from '@constants/enums';
 import { useOutsideClick } from '@hooks/use-outside-click';
 
 type props = {
@@ -25,18 +25,18 @@ export const SideBar: React.FC<props> = ({ collapsed, setCollapsed }) => {
     const siderRef = useOutsideClick(() => setCollapsed(true));
 
     function handleLogoClick() {
-        navigate(ROUTE.MAIN);
+        navigate(EROUTE.MAIN);
     }
 
     function handleExit() {
         localStorage.clear();
         dispatch(toggleIsAuthorized(false));
-        navigate(ROUTE.AUTH);
+        navigate(EROUTE.AUTH);
     }
 
     function handleMenuClick(item: MenuInfo) {
         const index = Number(item.key);
-        const paths = [ROUTE.CALENDAR];
+        const paths = [EROUTE.CALENDAR];
         navigate(paths[index]);
     }
 

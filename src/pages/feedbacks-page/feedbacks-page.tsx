@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectFeedback } from '@redux/feedbackSlice';
 import { ResultModal } from '@components/result-modal/result-modal';
-import { ROUTE, status } from '@constants/enums';
+import { EROUTE, EStatus } from '@constants/enums';
 import { getFeedbacks } from '@utils/requests/get-feedbacks';
 
 export const FeedbacksPage: React.FC = () => {
@@ -19,12 +19,12 @@ export const FeedbacksPage: React.FC = () => {
     const cardsData = isShowAll ? feedbackData : feedbackData.slice(0, 4);
     const isNoCards = cardsData.length === 0;
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [resultType, setResultType] = useState(status.empty);
+    const [resultType, setResultType] = useState(EStatus.empty);
 
     useEffect(() => {
         dispatch(getFeedbacks()).then(response => {
-            if (response === status.redirect) navigate(ROUTE.AUTH);
-            if (response === status.noToken || response === status.errorFeedback) setResultType(status.noToken);
+            if (response === EStatus.redirect) navigate(EROUTE.AUTH);
+            if (response === EStatus.noToken || response === EStatus.errorFeedback) setResultType(EStatus.noToken);
         });
     }, [dispatch, navigate]);
 
@@ -60,7 +60,7 @@ export const FeedbacksPage: React.FC = () => {
                 setIsModalOpen={setIsModalOpen}
                 setResultType={setResultType}
             />
-            {resultType !== status.empty && <ResultModal
+            {resultType !== EStatus.empty && <ResultModal
                 resultType={resultType}
                 setResultType={setResultType}
                 setIsModalOpen={setIsModalOpen}

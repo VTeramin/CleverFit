@@ -6,7 +6,7 @@ import { useWindowSize } from '@uidotdev/usehooks';
 import { CloseCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeResultType, selectCalendarModalData, toggleIsModal } from '@redux/calendarModalSlice';
-import { status } from '@constants/enums';
+import { EStatus } from '@constants/enums';
 import { getTrainingList } from '@utils/requests/get-training-list';
 
 export const CalendarResult: React.FC = () => {
@@ -15,21 +15,21 @@ export const CalendarResult: React.FC = () => {
     const width = useWindowSize().width || 0;
 
     function handleUpdate() {
-        dispatch(changeResultType(status.empty));
+        dispatch(changeResultType(EStatus.empty));
         dispatch(getTrainingList());
     }
 
     function handleClose() {
-        dispatch(changeResultType(status.empty));
+        dispatch(changeResultType(EStatus.empty));
     }
 
     function handleCloseAll() {
-        dispatch(changeResultType(status.empty));
+        dispatch(changeResultType(EStatus.empty));
         dispatch(toggleIsModal(false));
     }
 
     const result: { [name: string]: JSX.Element } = {
-        [status.errorTrainingList]:
+        [EStatus.errorTrainingList]:
             <Modal
                 centered={true}
                 maskStyle={{
@@ -38,7 +38,7 @@ export const CalendarResult: React.FC = () => {
                 }}
                 width={width > 800 ? 384 : 539}
                 className={styles["result"]}
-                open={resultType !== status.empty}
+                open={resultType !== EStatus.empty}
                 onCancel={handleClose}
                 maskClosable={false}
                 closable={true}
@@ -62,7 +62,7 @@ export const CalendarResult: React.FC = () => {
                     ]}
                 />
             </Modal>,
-        [status.errorSaveTraining]:
+        [EStatus.errorSaveTraining]:
             <Modal
                 centered={true}
                 maskStyle={{
@@ -71,7 +71,7 @@ export const CalendarResult: React.FC = () => {
                 }}
                 width={width > 800 ? 416 : 328}
                 className={`${styles["result"]} ${styles["result-error-save"]}`}
-                open={resultType !== status.empty}
+                open={resultType !== EStatus.empty}
                 onCancel={handleClose}
                 maskClosable={false}
                 closable={false}

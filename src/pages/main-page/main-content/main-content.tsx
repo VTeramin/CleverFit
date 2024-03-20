@@ -5,7 +5,7 @@ import { Button, Layout } from 'antd';
 const { Content } = Layout;
 import { HeartTwoTone, CalendarTwoTone, IdcardTwoTone } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE } from '@constants/enums';
+import { EROUTE } from '@constants/enums';
 
 export const MainContent: React.FC = () => {
     const navigate = useNavigate();
@@ -13,7 +13,7 @@ export const MainContent: React.FC = () => {
     function handleBlockClick(event: MouseEvent<HTMLButtonElement>) {
         const text = event.currentTarget.textContent || "";
         const paths: { [name: string]: string } = {
-            "Календарь": ROUTE.CALENDAR
+            "Календарь": EROUTE.CALENDAR
         };
         navigate(paths[text]);
     }

@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import styles from './inner-new-training.module.css';
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Divider, Empty, Select } from 'antd';
-import { calendarModalType } from '@constants/enums';
+import { ECalendarModalType } from '@constants/enums';
 import emptyIcon from '../../../../assets/icon/empty.svg';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectTraining } from '@redux/trainingSlice';
@@ -63,7 +63,7 @@ export const InnerNewTraining: React.FC<props> = ({ date }) => {
         <div data-test-id="modal-create-exercise">
             <div className={styles["modal__header"]}>
                 <ArrowLeftOutlined
-                    onClick={() => dispatch(changeModalType(calendarModalType.default))}
+                    onClick={() => dispatch(changeModalType(ECalendarModalType.default))}
                     data-test-id="modal-exercise-training-button-close"
                 />
                 <Select

@@ -1,5 +1,5 @@
 import { API } from "@constants/api";
-import { status } from "@constants/enums";
+import { EStatus } from "@constants/enums";
 import { AppDispatch, GetState } from "@redux/configure-store";
 import { changeFeedbackData } from "@redux/feedbackSlice";
 import { toggleLoader } from "@redux/loaderSlice";
@@ -20,13 +20,13 @@ export const getFeedbacks = () => async (dispatch: AppDispatch, getState: GetSta
     return axios.get(`${API}/feedback`, params)
         .then(response => dispatch(changeFeedbackData(response.data)))
         .catch(error => {
-            if (error.config.headers.Authorization === "Bearer null") return status.noToken;
+            if (error.config.headers.Authorization === "Bearer null") return EStatus.noToken;
             if (error.response.status === 403) {
                 localStorage.clear();
                 dispatch(toggleIsAuthorized(false));
-                return status.redirect;
+                return EStatus.redirect;
             }
-            return status.errorFeedback;
+            return EStatus.errorFeedback;
         })
         .finally(() => dispatch(toggleLoader(false)));
 };

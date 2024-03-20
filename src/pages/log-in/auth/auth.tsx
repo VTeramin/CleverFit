@@ -10,11 +10,11 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { validPassword } from '@utils/auth-utils/valid-password';
 import { validEmail } from '@utils/auth-utils/valid-email';
 import { checkDisabledAuth, checkValidAuth } from '@utils/auth-utils/check-valid-status';
-import { validAuth } from '@constants/types';
+import { TValidAuth } from '@constants/types';
 import { checkEmail } from '@utils/requests/check-email';
 import { register } from '@utils/requests/register';
 import { login } from '@utils/requests/login';
-import { ROUTE, valid } from '@constants/enums';
+import { EROUTE, EValid } from '@constants/enums';
 import { googleAuth } from '@utils/requests/google-auth';
 
 type props = {
@@ -31,12 +31,12 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
         password: true,
         confirmPassword: true
     });
-    const [validStatus, setValidStatus] = useState<validAuth>({
-        email: valid.success,
-        password: valid.success,
-        confirmPassword: valid.success,
-        passwordHelp: valid.normal,
-        confirmPasswordHelp: valid.normal
+    const [validStatus, setValidStatus] = useState<TValidAuth>({
+        email: EValid.success,
+        password: EValid.success,
+        confirmPassword: EValid.success,
+        passwordHelp: EValid.normal,
+        confirmPasswordHelp: EValid.normal
     });
     const [isDisabled, setIsDisabled] = useState(true);
     useEffect(() => {
@@ -83,7 +83,7 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
 
     const help = {
         password: isRegistration && <p className={styles[validStatus.passwordHelp]}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>,
-        confirmPassword: validStatus.confirmPasswordHelp === valid.error && <p className={styles[validStatus.confirmPasswordHelp]}>Пароли не совпадают</p>
+        confirmPassword: validStatus.confirmPasswordHelp === EValid.error && <p className={styles[validStatus.confirmPasswordHelp]}>Пароли не совпадают</p>
     }
 
     return (
@@ -98,14 +98,14 @@ export const Auth: React.FC<props> = ({ isRegistration }) => {
                     <Form.Item className={styles["login-form__form-select-buttons"]}>
                         <Button
                             type="text"
-                            onClick={() => navigate(ROUTE.AUTH)}
+                            onClick={() => navigate(EROUTE.AUTH)}
                             className={`${styles["text-button"]} ${!isRegistration && styles["active"]}`}
                         >
                             Вход
                         </Button>
                         <Button
                             type="text"
-                            onClick={() => navigate(ROUTE.REGISTRATION)}
+                            onClick={() => navigate(EROUTE.REGISTRATION)}
                             className={`${styles["text-button"]} ${isRegistration && styles["active"]}`}
                         >
                             Регистрация

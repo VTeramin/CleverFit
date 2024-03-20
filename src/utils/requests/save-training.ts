@@ -1,5 +1,5 @@
 import { API } from "@constants/api";
-import { calendarModalType, status } from "@constants/enums";
+import { ECalendarModalType, EStatus } from "@constants/enums";
 import { changeModalType, changeResultType } from "@redux/calendarModalSlice";
 import { AppDispatch, GetState } from "@redux/configure-store";
 import { toggleLoader } from "@redux/loaderSlice";
@@ -33,7 +33,7 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
         ? axios.put(`${API}/training/${trainingId}`, { ...data, isImplementation }, params)
         : axios.post(`${API}/training`, data, params);
 
-    return action.then(() => dispatch(changeModalType(calendarModalType.default)))
-        .catch(() => dispatch(changeResultType(status.errorSaveTraining)))
+    return action.then(() => dispatch(changeModalType(ECalendarModalType.default)))
+        .catch(() => dispatch(changeResultType(EStatus.errorSaveTraining)))
         .finally(() => dispatch(toggleLoader(false)));
 };

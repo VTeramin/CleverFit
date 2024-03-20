@@ -5,7 +5,7 @@ import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, FormInstance, Input, InputNumber } from 'antd';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeExerciseFormFields, selectCalendarModalData, toggleIsDrawer } from '@redux/calendarModalSlice';
-import { drawerFormFields } from '@constants/types';
+import { TDrawerFormFields } from '@constants/types';
 import { sortDrawerFormFromEmpty } from '@utils/calendar-utils/sort-drawer-form-from-empty';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { selectTraining } from '@redux/trainingSlice';
@@ -20,7 +20,7 @@ export const CalendarDrawerForm: React.FC<props> = ({ date }) => {
     const dispatch = useAppDispatch();
     const training = useAppSelector(selectTraining);
     const { isEdit, selectedTraining, exerciseFormFields } = useAppSelector(selectCalendarModalData);
-    const form = useRef<FormInstance<{ exercises: drawerFormFields }>>(null);
+    const form = useRef<FormInstance<{ exercises: TDrawerFormFields }>>(null);
     const initialFormValues = {
         exercises: Object.values(exerciseFormFields).length === 0
             ? [{
@@ -68,7 +68,7 @@ export const CalendarDrawerForm: React.FC<props> = ({ date }) => {
         remove(checkboxTrueList);
     }
 
-    function onFinish(values: { exercises: drawerFormFields }) {
+    function onFinish(values: { exercises: TDrawerFormFields }) {
         dispatch(changeExerciseFormFields(sortDrawerFormFromEmpty(values)));
         dispatch(toggleIsDrawer(false));
     }

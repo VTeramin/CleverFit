@@ -1,5 +1,5 @@
 import { API } from "@constants/api";
-import { ROUTE } from "@constants/enums";
+import { EROUTE } from "@constants/enums";
 import { AppDispatch, GetState } from "@redux/configure-store";
 import { toggleLoader } from "@redux/loaderSlice";
 import axios from "axios";
@@ -16,7 +16,7 @@ export const changePassword = () => async (dispatch: AppDispatch, getState: GetS
     const { password, confirmPassword } = getState().login;
 
     return axios.post(`${API}/auth/change-password`, { password, confirmPassword }, params)
-        .then(() => ROUTE.SUCCESS_CHANGE_PASSWORD)
-        .catch(() => ROUTE.ERROR_CHANGE_PASSWORD)
+        .then(() => EROUTE.SUCCESS_CHANGE_PASSWORD)
+        .catch(() => EROUTE.ERROR_CHANGE_PASSWORD)
         .finally(() => dispatch(toggleLoader(false)));
 };

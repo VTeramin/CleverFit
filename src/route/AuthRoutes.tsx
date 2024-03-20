@@ -4,7 +4,7 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { getTokenFromSearch } from '@utils/get-token-from-search';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { ROUTE } from '@constants/enums';
+import { EROUTE } from '@constants/enums';
 
 export const AuthRoutes: React.FC = () => {
     const { isAuthorized } = useAppSelector(selectUserData);
@@ -13,5 +13,5 @@ export const AuthRoutes: React.FC = () => {
         store.dispatch(changeSessionToken(token));
         store.dispatch(toggleIsAuthorized(true));
     }
-    return isAuthorized ? <Navigate to={ROUTE.MAIN} /> : <Outlet />;
+    return isAuthorized ? <Navigate to={EROUTE.MAIN} /> : <Outlet />;
 };

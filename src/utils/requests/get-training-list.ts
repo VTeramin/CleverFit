@@ -1,5 +1,5 @@
 import { API } from "@constants/api";
-import { status } from "@constants/enums";
+import { EStatus } from "@constants/enums";
 import { changeResultType } from "@redux/calendarModalSlice";
 import { AppDispatch, GetState } from "@redux/configure-store";
 import { toggleLoader } from "@redux/loaderSlice";
@@ -22,7 +22,7 @@ export const getTrainingList = () => async (dispatch: AppDispatch, getState: Get
         .then(response => dispatch(changeTrainingListData(response.data)))
         .catch(() => {
             dispatch(changeTrainingData([]));
-            dispatch(changeResultType(status.errorTrainingList));
+            dispatch(changeResultType(EStatus.errorTrainingList));
         })
         .finally(() => dispatch(toggleLoader(false)));
 };

@@ -6,11 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { changeResultType } from '@redux/calendarModalSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { ROUTE, status } from '@constants/enums';
+import { EROUTE, EStatus } from '@constants/enums';
 
 type props = {
-    resultType: status,
-    setResultType: React.Dispatch<React.SetStateAction<status>>,
+    resultType: EStatus,
+    setResultType: React.Dispatch<React.SetStateAction<EStatus>>,
     setIsModalOpen?: (a: boolean) => void
 }
 
@@ -22,11 +22,11 @@ export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsM
 
     function handleWriteReview() {
         if (setIsModalOpen) setIsModalOpen(true);
-        setResultType(status.empty);
+        setResultType(EStatus.empty);
     }
 
     const result: { [name: string]: JSX.Element } = {
-        [status.errorFeedback]: <Result
+        [EStatus.errorFeedback]: <Result
             status="error"
             title="Данные не сохранились"
             subTitle="Что-то пошло не так. Попробуйте еще раз."
@@ -42,26 +42,26 @@ export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsM
                 <Button
                     key="Закрыть"
                     className={`${styles["conf-button"]} ${styles["conf-button-white"]}`}
-                    onClick={() => setResultType(status.empty)}
+                    onClick={() => setResultType(EStatus.empty)}
                 >
                     Закрыть
                 </Button>
             ]}
         />,
-        [status.successFeedback]: <Result
+        [EStatus.successFeedback]: <Result
             status="success"
             title="Отзыв успешно опубликован"
             extra={[
                 <Button
                     key="Отлично"
                     className={`${styles["conf-button"]}`}
-                    onClick={() => setResultType(status.empty)}
+                    onClick={() => setResultType(EStatus.empty)}
                 >
                     Отлично
                 </Button>
             ]}
         />,
-        [status.noToken]: <Result
+        [EStatus.noToken]: <Result
             status="500"
             title="Что-то пошло не так"
             subTitle="Произошла ошибка, попробуйте ещё раз."
@@ -71,8 +71,8 @@ export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsM
                     key="Назад"
                     className={`${styles["conf-button"]}`}
                     onClick={() => {
-                        navigate(ROUTE.HOME);
-                        dispatch(changeResultType(status.empty));
+                        navigate(EROUTE.HOME);
+                        dispatch(changeResultType(EStatus.empty));
                     }}
                 >
                     Назад

@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./configure-store";
-import { training } from "@constants/types";
+import { TTraining } from "@constants/types";
 
-const initialState: training[] = [];
+const initialState: TTraining[] = [];
 
 export const trainingSlice = createSlice({
     name: 'training',
     initialState,
     reducers: {
-        changeTrainingData: (state, action: PayloadAction<training[]>) => {
+        changeTrainingData: (state, action: PayloadAction<TTraining[]>) => {
             state.splice(0, state.length);
             state.push(...action.payload);
         }

@@ -8,9 +8,9 @@ import { useNavigate } from 'react-router-dom';
 import { changePasswords } from '@redux/loginSlice';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { checkDisabledChangePassword, checkValidChangePassword } from '@utils/auth-utils/check-valid-status';
-import { validChange } from '@constants/types';
+import { TValidChange } from '@constants/types';
 import { changePassword } from '@utils/requests/change-password';
-import { valid } from '@constants/enums';
+import { EValid } from '@constants/enums';
 
 export const ChangePassword: React.FC = () => {
     const navigate = useNavigate();
@@ -21,9 +21,9 @@ export const ChangePassword: React.FC = () => {
         confirmPassword: ""
     });
 
-    const [validStatus, setValidStatus] = useState<validChange>({
-        password: valid.success,
-        confirmPassword: valid.success
+    const [validStatus, setValidStatus] = useState<TValidChange>({
+        password: EValid.success,
+        confirmPassword: EValid.success
     });
 
     useEffect(() => {
@@ -69,7 +69,7 @@ export const ChangePassword: React.FC = () => {
                         />
                     </Form.Item>
                     <Form.Item
-                        help={validStatus.confirmPassword === valid.error && "Пароли не совпадают"}
+                        help={validStatus.confirmPassword === EValid.error && "Пароли не совпадают"}
                         validateStatus={validStatus.confirmPassword}
                     >
                         <Input.Password

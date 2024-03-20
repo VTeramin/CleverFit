@@ -8,7 +8,7 @@ import { CalendarTrainingList } from '@pages/calendar-page/calendar-training-lis
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectTrainingList } from '@redux/trainingListSlice';
 import { changeModalType, toggleIsEdit, toggleIsModal } from '@redux/calendarModalSlice';
-import { calendarModalType } from '@constants/enums';
+import { ECalendarModalType } from '@constants/enums';
 import { convertDate } from '@utils/convert-date';
 import { findAllTraining } from '@utils/calendar-utils/find-all-training';
 import { selectTraining } from '@redux/trainingSlice';
@@ -26,7 +26,7 @@ export const InnerDefault: React.FC<props> = ({ date }) => {
 
     function handleAddTraining() {
         dispatch(toggleIsEdit(false));
-        dispatch(changeModalType(calendarModalType.newTraining));
+        dispatch(changeModalType(ECalendarModalType.newTraining));
     }
     const isAddTrainingDisabled = trainingNames.length === trainingList.length || date < new Date(Date.now());
 

@@ -10,7 +10,7 @@ import { CalendarModal } from './calendar-modal/calendar-modal';
 import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
 import { CalendarTrainingList } from './calendar-training-list/calendar-training-list';
 import { changeModalType, selectCalendarModalData, toggleIsModal } from '@redux/calendarModalSlice';
-import { ROUTE, calendarModalType, status } from '@constants/enums';
+import { EROUTE, ECalendarModalType, EStatus } from '@constants/enums';
 import { useNavigate } from 'react-router-dom';
 import { getTraining } from '@utils/requests/get-training';
 import { getTrainingList } from '@utils/requests/get-training-list';
@@ -37,8 +37,8 @@ export const CalendarPage: React.FC = () => {
 
     useEffect(() => {
         dispatch(getTraining()).then(resp => {
-            if (resp === status.noToken) {
-                navigate(ROUTE.MAIN);
+            if (resp === EStatus.noToken) {
+                navigate(EROUTE.MAIN);
             } else {
                 return dispatch(getTrainingList());
             }
@@ -50,7 +50,7 @@ export const CalendarPage: React.FC = () => {
         setDate(target);
         const isCurrentMonth = date.toDate().getMonth() !== target.toDate().getMonth();
         if (isMobile && isCurrentMonth) return;
-        dispatch(changeModalType(calendarModalType.default));
+        dispatch(changeModalType(ECalendarModalType.default));
         dispatch(toggleIsModal(true));
     }
 

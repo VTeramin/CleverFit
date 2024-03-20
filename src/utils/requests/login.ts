@@ -1,5 +1,5 @@
 import { API } from "@constants/api";
-import { ROUTE } from "@constants/enums";
+import { EROUTE } from "@constants/enums";
 import { AppDispatch, GetState } from "@redux/configure-store";
 import { toggleLoader } from "@redux/loaderSlice";
 import { changeSessionToken, toggleIsAuthorized } from "@redux/userDataSlice";
@@ -17,8 +17,8 @@ export const login = () => async (dispatch: AppDispatch, getState: GetState) => 
             if (isRemember) localStorage.setItem("token", token);
             dispatch(changeSessionToken(token));
             dispatch(toggleIsAuthorized(true));
-            return ROUTE.MAIN;
+            return EROUTE.MAIN;
         })
-        .catch(() => ROUTE.ERROR_LOGIN)
+        .catch(() => EROUTE.ERROR_LOGIN)
         .finally(() => dispatch(toggleLoader(false)));
 };

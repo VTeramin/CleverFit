@@ -1,5 +1,5 @@
 import { API } from "@constants/api";
-import { status } from "@constants/enums";
+import { EStatus } from "@constants/enums";
 import { AppDispatch, GetState } from "@redux/configure-store";
 import { toggleLoader } from "@redux/loaderSlice";
 import axios from "axios";
@@ -17,7 +17,7 @@ export const sendFeedback = (message: string, rating: number) => async (dispatch
     };
 
     return axios.post(`${API}/feedback`, { message, rating }, params)
-        .then(() => status.successFeedback)
-        .catch(() => status.errorFeedback)
+        .then(() => EStatus.successFeedback)
+        .catch(() => EStatus.errorFeedback)
         .finally(() => dispatch(toggleLoader(false)));
 };

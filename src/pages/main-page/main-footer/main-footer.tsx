@@ -5,7 +5,7 @@ import { Button, Layout } from 'antd';
 const { Footer } = Layout;
 import { AndroidFilled, AppleFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE } from '@constants/enums';
+import { EROUTE } from '@constants/enums';
 
 export const MainFooter: React.FC = () => {
     const navigate = useNavigate();
@@ -23,7 +23,7 @@ export const MainFooter: React.FC = () => {
             <Button
                 type="text"
                 className={styles["footer__reviews"]}
-                onClick={() => navigate(ROUTE.FEEDBACKS)}
+                onClick={() => navigate(EROUTE.FEEDBACKS)}
                 data-test-id="see-reviews"
             >
                 Смотреть отзывы

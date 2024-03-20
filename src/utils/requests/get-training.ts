@@ -1,5 +1,5 @@
 import { API } from "@constants/api";
-import { status } from "@constants/enums";
+import { EStatus } from "@constants/enums";
 import { changeResultType } from "@redux/calendarModalSlice";
 import { AppDispatch, GetState } from "@redux/configure-store";
 import { toggleLoader } from "@redux/loaderSlice";
@@ -20,8 +20,8 @@ export const getTraining = () => async (dispatch: AppDispatch, getState: GetStat
     return axios.get(`${API}/training`, params)
         .then(response => dispatch(changeTrainingData(response.data)))
         .catch(() => {
-            dispatch(changeResultType(status.noToken));
-            return status.noToken;
+            dispatch(changeResultType(EStatus.noToken));
+            return EStatus.noToken;
         })
         .finally(() => dispatch(toggleLoader(false)));
 };

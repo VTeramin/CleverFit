@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectLogin } from '@redux/loginSlice';
 import { confirmEmail } from '@utils/requests/confirm-email';
-import { status } from '@constants/enums';
+import { EStatus } from '@constants/enums';
 
 export const ConfirmEmail: React.FC = () => {
     const navigate = useNavigate();
@@ -19,11 +19,11 @@ export const ConfirmEmail: React.FC = () => {
     function handleVerifInputComplete(value: string) {
         if(!email) return;
         dispatch(confirmEmail(value)).then((resp) => {
-            if (resp !== status.error) navigate(resp);
+            if (resp !== EStatus.error) navigate(resp);
             setIsError(true);
             setCode("");
             dispatch(confirmEmail(value)).then((resp) => {
-                if (resp !== status.error) navigate(resp);
+                if (resp !== EStatus.error) navigate(resp);
             });
         });
     }

@@ -4,7 +4,7 @@ import styles from './calendar-modal.module.css';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { getCalendarModalCoords } from '@utils/calendar-utils/get-calendar-modal-coords';
 import { InnerDefault } from './inner-default/inner-default';
-import { calendarModalType } from '@constants/enums';
+import { ECalendarModalType } from '@constants/enums';
 import { InnerNewTraining } from './inner-new-training/inner-new-training';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeModalCoord, selectCalendarModalData } from '@redux/calendarModalSlice';
@@ -29,10 +29,10 @@ export const CalendarModal: React.FC<props> = ({ date, pageWidth }) => {
     }, [date, width, pageWidth, dispatch]);
 
     const modalInner: modalInner = {
-        [calendarModalType.default]: <InnerDefault
+        [ECalendarModalType.default]: <InnerDefault
             date={date}
         />,
-        [calendarModalType.newTraining]: <InnerNewTraining
+        [ECalendarModalType.newTraining]: <InnerNewTraining
             date={date}
         />
     };

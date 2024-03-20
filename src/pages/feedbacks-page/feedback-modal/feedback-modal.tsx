@@ -6,13 +6,13 @@ import { StarTwoTone } from '@ant-design/icons';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { sendFeedback } from '@utils/requests/send-feedback';
-import { ROUTE, status } from '@constants/enums';
+import { EROUTE, EStatus } from '@constants/enums';
 import { getFeedbacks } from '@utils/requests/get-feedbacks';
 import { useNavigate } from 'react-router-dom';
 
 type props = {
     isModalOpen: boolean,
-    setResultType: React.Dispatch<React.SetStateAction<status>>,
+    setResultType: React.Dispatch<React.SetStateAction<EStatus>>,
     setIsModalOpen: (a: boolean) => void
 }
 
@@ -34,8 +34,8 @@ export const FeedbackModal: React.FC<props> = ({ isModalOpen, setIsModalOpen, se
                 return dispatch(getFeedbacks());
             })
             .then(response => {
-                if (response === status.redirect) navigate(ROUTE.AUTH);
-                if (response === status.noToken || response === status.errorFeedback) setResultType(status.noToken);
+                if (response === EStatus.redirect) navigate(EROUTE.AUTH);
+                if (response === EStatus.noToken || response === EStatus.errorFeedback) setResultType(EStatus.noToken);
             });
     }
 

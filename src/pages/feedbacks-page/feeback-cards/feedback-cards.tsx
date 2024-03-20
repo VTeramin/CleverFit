@@ -4,10 +4,10 @@ import styles from './feedback-cards.module.css';
 import { Avatar, Card, Comment, Rate } from 'antd';
 import { StarTwoTone, UserOutlined } from '@ant-design/icons';
 import { convertDate } from '@utils/convert-date';
-import { feedback } from '@constants/types';
+import { TFeedback } from '@constants/types';
 
 type props = {
-    cardsData: feedback[]
+    cardsData: TFeedback[]
 }
 
 export const FeedbackCards: React.FC<props> = ({ cardsData }) => {

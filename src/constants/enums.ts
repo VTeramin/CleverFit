@@ -1,9 +1,9 @@
-export enum calendarModalType {
+export enum ECalendarModalType {
     default = "default",
     newTraining = "newTraining"
 }
 
-export enum badgeColors {
+export enum EBadgeColors {
     "Ноги" = "volcano",
     "Силовая" = "yellow",
     "Руки" = "cyan",
@@ -12,13 +12,13 @@ export enum badgeColors {
     "Кардио" = "pink"
 }
 
-export enum valid {
+export enum EValid {
     normal = "normal",
     error = "error",
     success = "success"
 }
 
-export enum status {
+export enum EStatus {
     empty = "",
     redirect = "redirect",
     noToken = "noToken",
@@ -30,7 +30,7 @@ export enum status {
     errorSaveTraining = "errorSaveTraining"
 }
 
-export enum ROUTE {
+export enum EROUTE {
     HOME = "/",
     AUTH = "/auth",
     REGISTRATION = "/auth/registration",

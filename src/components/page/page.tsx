@@ -11,7 +11,7 @@ import { changeResultType, selectCalendarModalData } from '@redux/calendarModalS
 import { CalendarResult } from '@pages/calendar-page/calendar-result/calendar-result';
 import { SideBar } from '@components/side-bar/side-bar';
 import { ResultModal } from '@components/result-modal/result-modal';
-import { ROUTE, status } from '@constants/enums';
+import { EROUTE, EStatus } from '@constants/enums';
 
 type props = {
     innerLayout: React.ReactElement
@@ -43,7 +43,7 @@ export const Page: React.FC<props> = ({ innerLayout }) => {
             <SideBar collapsed={collapsed} setCollapsed={setCollapsed}/>
             <Layout className={styles["page-layout"]}>
                 <Breadcrumb className={styles["page-layout__breadcrumbs"]}>
-                    <Breadcrumb.Item onClick={() => navigate(ROUTE.MAIN)}>Главная</Breadcrumb.Item>
+                    <Breadcrumb.Item onClick={() => navigate(EROUTE.MAIN)}>Главная</Breadcrumb.Item>
                     {isCrumbs && <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>}
                 </Breadcrumb>
                 {!isFeedbacks && <Header className={styles["header"]}>
@@ -63,7 +63,7 @@ export const Page: React.FC<props> = ({ innerLayout }) => {
                     {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
                 </div>
             </Layout>
-            {resultType === status.noToken
+            {resultType === EStatus.noToken
                 ? <ResultModal
                     resultType={resultType}
                     setResultType={setResultTypeCalendar}

@@ -1,5 +1,5 @@
 import { API } from "@constants/api";
-import { ROUTE } from "@constants/enums";
+import { EROUTE } from "@constants/enums";
 import { AppDispatch, GetState } from "@redux/configure-store";
 import { toggleLoader } from "@redux/loaderSlice";
 import axios from "axios";
@@ -11,10 +11,10 @@ export const checkEmail = () => async (dispatch: AppDispatch, getState: GetState
     const { email } = getState().login;
 
     return axios.post(`${API}/auth/check-email`, { email })
-        .then(() => ROUTE.CONFIRM_EMAIL)
+        .then(() => EROUTE.CONFIRM_EMAIL)
         .catch(error => {
-            if (error.response.data.message === "Email не найден") return ROUTE.ERROR_EMAIL_NO_EXIST;
-            return ROUTE.ERROR_CHECK_EMAIL;
+            if (error.response.data.message === "Email не найден") return EROUTE.ERROR_EMAIL_NO_EXIST;
+            return EROUTE.ERROR_CHECK_EMAIL;
         })
         .finally(() => dispatch(toggleLoader(false)));
 };

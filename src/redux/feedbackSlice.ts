@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./configure-store";
-import { feedback } from "@constants/types";
+import { TFeedback } from "@constants/types";
 
-const initialState: feedback[] = [];
+const initialState: TFeedback[] = [];
 
 export const feedbackSlice = createSlice({
     name: 'feedback',
     initialState,
     reducers: {
-        changeFeedbackData: (state, action: PayloadAction<feedback[]>) => {
+        changeFeedbackData: (state, action: PayloadAction<TFeedback[]>) => {
             state.splice(0, state.length);
             state.push(...action.payload.reverse());
         }

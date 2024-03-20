@@ -5,7 +5,7 @@ import '../modal.css';
 import { WarningFilled, CloseCircleFilled, CheckCircleFilled } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { ROUTE } from '@constants/enums';
+import { EROUTE } from '@constants/enums';
 import { register } from '@utils/requests/register';
 import { changePassword } from '@utils/requests/change-password';
 import { checkEmail } from '@utils/requests/check-email';
@@ -34,7 +34,7 @@ export const Result: React.FC = () => {
             subtitle: "Что-то пошло не так. Попробуйте еще раз",
             button: <Button
                 className={`${styles["result-modal__button"]}`}
-                onClick={() => navigate(ROUTE.AUTH)}
+                onClick={() => navigate(EROUTE.AUTH)}
                 data-test-id="login-retry-button"
             >Повторить</Button>
         },
@@ -46,7 +46,7 @@ export const Result: React.FC = () => {
             subtitle: "Такой e-mail уже записан в системе. Попробуйте\u000Aзарегистрироваться по другому e\u2011mail.",
             button: <Button
                 className={styles["result-modal__button"]}
-                onClick={() => navigate(ROUTE.REGISTRATION)}
+                onClick={() => navigate(EROUTE.REGISTRATION)}
                 data-test-id="registration-back-button"
             >Назад к регистрации</Button>
         },
@@ -59,7 +59,7 @@ export const Result: React.FC = () => {
             button: <Button
                 className={styles["result-modal__button"]}
                 onClick={() => {
-                    navigate(ROUTE.REGISTRATION);
+                    navigate(EROUTE.REGISTRATION);
                     dispatch(register()).then(navigate);
                 }}
                 data-test-id="registration-retry-button"
@@ -73,7 +73,7 @@ export const Result: React.FC = () => {
             subtitle: "Регистрация прошла успешно. Зайдите\u000Aв приложение, используя свои e\u2011mail и пароль.",
             button: <Button
                 className={styles["result-modal__button"]}
-                onClick={() => navigate(ROUTE.MAIN)}
+                onClick={() => navigate(EROUTE.MAIN)}
                 data-test-id="registration-enter-button"
             >Войти</Button>
         },
@@ -85,7 +85,7 @@ export const Result: React.FC = () => {
             subtitle: "Мы не нашли в базе вашего e-mail. Попробуйте\u000Aвойти с другим e-mail.",
             button: <Button
                 className={`${styles["result-modal__button"]} ${styles["medium"]} ${styles["margin"]}`}
-                onClick={() => navigate(ROUTE.AUTH)}
+                onClick={() => navigate(EROUTE.AUTH)}
                 data-test-id="check-retry-button"
             >Попробовать снова</Button>
         },
@@ -97,7 +97,7 @@ export const Result: React.FC = () => {
             subtitle: "Теперь можно войти в аккаунт, используя\u000Aсвой логин и новый пароль",
             button: <Button
                 className={`${styles["result-modal__button"]} ${styles["margin-shrink"]} ${styles["margin"]}`}
-                onClick={() => navigate(ROUTE.AUTH)}
+                onClick={() => navigate(EROUTE.AUTH)}
                 data-test-id="change-entry-button"
             >Вход</Button>
         },
@@ -110,7 +110,7 @@ export const Result: React.FC = () => {
             button: <Button
                 className={`${styles["result-modal__button"]} ${styles["margin-shrink"]} ${styles["margin"]}`}
                 onClick={() => {
-                    navigate(ROUTE.CHANGE_PASSWORD);
+                    navigate(EROUTE.CHANGE_PASSWORD);
                     dispatch(changePassword()).then(navigate);
                 }}
                 data-test-id="change-retry-button"
@@ -123,7 +123,7 @@ export const Result: React.FC = () => {
             button: <Button
                 className={`${styles["result-modal__button"]} ${styles["margin-shrink"]} ${styles["margin"]} ${styles["small"]}`}
                 onClick={() => {
-                    navigate(ROUTE.AUTH);
+                    navigate(EROUTE.AUTH);
                     dispatch(checkEmail()).then(navigate);
                 }}
                 data-test-id="check-back-button"
