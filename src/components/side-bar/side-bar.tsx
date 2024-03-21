@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CalendarTwoTone, HeartTwoTone, IdcardTwoTone,TrophyTwoTone } from '@ant-design/icons';
+import { CalendarTwoTone, HeartTwoTone, IdcardTwoTone, TrophyTwoTone } from '@ant-design/icons';
 import { EROUTE } from '@constants/enums';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useOutsideClick } from '@hooks/use-outside-click';
 import { toggleIsAuthorized } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { Layout, Menu } from 'antd';
+import { Button, Layout, Menu } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
 
 import 'antd/dist/antd.css';
@@ -65,10 +65,13 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
             theme="light"
             className={styles.sider}
         >
-            <div
-            className={`${styles.sider__logo} ${styles[collapsed ? 'logo-collapsed' : 'logo']}`}
-            onClick={handleLogoClick}
-            />
+            <Button
+                onClick={() => handleLogoClick()}
+                className={styles['logo-button']}
+                type='text'
+            >
+                <div className={`${styles.sider__logo} ${styles[collapsed ? 'logo-collapsed' : 'logo']}`} />
+            </Button>
             <Menu
                 theme="light"
                 mode="inline"
@@ -77,10 +80,10 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
                 onClick={item => handleMenuClick(item)}
                 items={menuItems}
             />
-            <div className={styles.sider__exit} onClick={handleExit}>
+            <Button className={styles.sider__exit} onClick={() => handleExit()}>
                 <div className={styles.exit__icon} />
                 {!collapsed && <p className={styles.exit__line}>Выход</p>}
-            </div>
+            </Button>
         </Sider>
     );
 };

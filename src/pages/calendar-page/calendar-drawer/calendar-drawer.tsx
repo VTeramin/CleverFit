@@ -49,7 +49,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
             </p>
             <div className={styles['drawer__training-type-wrapper']}>
                 <CalendarTrainingList
-                    listData={[selectedTraining as string]}
+                    listData={[{ key: '1', name: selectedTraining as string }]}
                     date={date}
                 />
                 <p>{convertDate(date)}</p>

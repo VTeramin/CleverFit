@@ -39,7 +39,9 @@ export const FeedbacksPage: React.FC = () => {
 
     return (
         <Layout className={`${styles.page} ${isNoCards && styles['no-feedback']}`}>
-            {isNoCards ? firstFeedback : <FeedbackCards cardsData={cardsData} />}
+            {isNoCards
+                ? firstFeedback
+                : <FeedbackCards cardsData={cardsData} />}
             <div className={styles.page__buttons}>
                 <Button
                     className={`${styles['conf-button']}`}

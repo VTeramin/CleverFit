@@ -51,8 +51,8 @@ export const InnerNewTraining: React.FC<TProps> = ({ date }) => {
     const trainings = isNoExercise
         ? <Empty image={emptyIcon} description="" className={styles.modal__empty} />
         : exerciseNames.map((el, ind) => (
-            <div key={ind} className={styles.body__trainings}>
-                <p className={styles.trainings__name}>{el}</p>
+            <div key={el.key} className={styles.body__trainings}>
+                <p className={styles.trainings__name}>{el.name}</p>
                 <EditOutlined
                     className={styles.trainings__edit}
                     onClick={() => handleAddTraining()}
@@ -89,7 +89,9 @@ export const InnerNewTraining: React.FC<TProps> = ({ date }) => {
                 <Button
                     onClick={() => handleAddTraining()}
                     disabled={selectedTraining === null}
-                >Добавить упражнения</Button>
+                >
+                    Добавить упражнения
+                </Button>
                 <Button
                     type="text"
                     disabled={isSaveDisabled}

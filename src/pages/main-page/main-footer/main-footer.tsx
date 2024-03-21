@@ -12,7 +12,7 @@ const { Footer } = Layout;
 export const MainFooter: React.FC = () => {
     const navigate = useNavigate();
     const phoneIcons = [AndroidFilled, AppleFilled].map((icon, index) => (
-            <div key={index + 1} className={styles['download-block__content']}>
+            <div key={['Android', 'Apple'][index]} className={styles['download-block__content']}>
                 {React.createElement(icon, { className: styles['download-block__icon'] })}
                 <p className={styles['download-block__content-title']}>{['Android OS', 'Apple iOS'][index]}</p>
             </div>

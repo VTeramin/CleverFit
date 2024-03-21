@@ -6,7 +6,7 @@ import { CalendarTrainingList } from '@pages/calendar-page/calendar-training-lis
 import { changeModalType, toggleIsEdit, toggleIsModal } from '@redux/calendar-modal-slice';
 import { selectTrainingList } from '@redux/training-list-slice';
 import { selectTraining } from '@redux/training-slice';
-import { findAllTraining } from '@utils/calendar-utils/find-all-training';
+import { getListData } from '@utils/calendar-utils/get-list-data';
 import { convertDate } from '@utils/convert-date';
 import { Button, Divider, Empty } from 'antd';
 
@@ -23,7 +23,7 @@ export const InnerDefault: React.FC<TProps> = ({ date }) => {
     const dispatch = useAppDispatch();
     const trainingList = useAppSelector(selectTrainingList);
     const training = useAppSelector(selectTraining);
-    const trainingNames = findAllTraining(training, date).map(el => el.name);
+    const trainingNames = getListData(training, date);
     const isNoTrainings = trainingNames.length === 0;
 
     function handleAddTraining() {

@@ -12,7 +12,7 @@ import styles from './calendar-training-list.module.css';
 
 type TProps = {
     date: Date,
-    listData: string[],
+    listData: Array<{ key: string, name: string }>,
     edit?: boolean
 }
 
@@ -31,16 +31,16 @@ export const CalendarTrainingList: React.FC<TProps> = ({ date, listData, edit })
 
     return (
         <ul className={styles['trainings-list']}>
-            {listData.map((name, ind) => {
-                const isTrainingDone = dispatch(checkIsTrainingDone(name, date));
+            {listData.map((el, ind) => {
+                const isTrainingDone = dispatch(checkIsTrainingDone(el.name, date));
 
                 return (
-                    <li key={ind} className={isTrainingDone ? styles.done : ''}>
-                        <Badge text={name} color={EBadgeColors[name as keyof typeof EBadgeColors]} />
+                    <li key={el.key} className={isTrainingDone ? styles.done : ''}>
+                        <Badge text={el.name} color={EBadgeColors[el.name as keyof typeof EBadgeColors]} />
                         {edit && <Button
                             type="text"
                             icon={<EditOutlined />}
-                            onClick={() => handleEdit(name)}
+                            onClick={() => handleEdit(el.name)}
                             data-test-id={`modal-update-training-edit-button${ind}`}
                             disabled={isTrainingDone}
                         />}

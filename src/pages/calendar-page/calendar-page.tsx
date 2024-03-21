@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeModalType, selectCalendarModalData, toggleIsModal } from '@redux/calendar-modal-slice';
 import { selectTraining } from '@redux/training-slice';
 import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
-import { findAllTraining } from '@utils/calendar-utils/find-all-training';
+import { getListData } from '@utils/calendar-utils/get-list-data';
 import { getTraining } from '@utils/requests/get-training';
 import { getTrainingList } from '@utils/requests/get-training-list';
 import { Calendar, ConfigProvider, Layout } from 'antd';
@@ -59,13 +59,13 @@ export const CalendarPage: React.FC = () => {
     }
 
     function dateCellRender(cellMoment: Moment) {
-        const trainingNames = findAllTraining(training, cellMoment.toDate()).map(el => el.name);
+        const trainingList = getListData(training, cellMoment.toDate());
 
-        if (isMobile && trainingNames.length !== 0) {
+        if (isMobile && trainingList.length !== 0) {
             return <div className={styles['no-empty']} />;
         }
         if (!isMobile) {
-            return <CalendarTrainingList date={cellMoment.toDate()} listData={trainingNames} />;
+            return <CalendarTrainingList date={cellMoment.toDate()} listData={trainingList} />;
         }
 
         return <div />;

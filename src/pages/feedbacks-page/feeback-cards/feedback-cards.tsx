@@ -13,8 +13,8 @@ type TProps = {
 
 export const FeedbackCards: React.FC<TProps> = ({ cardsData }) => (
         <section className={styles.page__cards}>
-            {cardsData.map((cardData, ind) => (
-                <Card key={ind} className={styles.card}>
+            {cardsData.map(cardData => (
+                <Card key={cardData.id} className={styles.card}>
                     <Comment
                         avatar={<div className={styles.card__person}>
                             <Avatar

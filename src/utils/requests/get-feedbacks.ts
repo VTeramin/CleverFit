@@ -18,7 +18,9 @@ export const getFeedbacks = () => async (dispatch: AppDispatch, getState: GetSta
     };
 
     return axios.get(`${API}/feedback`, params)
-        .then(response => dispatch(changeFeedbackData(response.data)))
+        .then(response => {
+            dispatch(changeFeedbackData(response.data))
+        })
         .catch(error => {
             if (error.config.headers.Authorization === 'Bearer null') return EStatus.noToken;
             if (error.response.status === 403) {

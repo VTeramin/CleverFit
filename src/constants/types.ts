@@ -26,6 +26,7 @@ export type TLogin = {
 }
 
 export type TFeedback = {
+    id: string,
     imageSrc: string,
     fullName: string,
     rating: number,

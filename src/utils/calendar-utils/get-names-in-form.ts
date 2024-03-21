@@ -4,5 +4,5 @@ export const getNamesInForm = () => (_: AppDispatch, getState: GetState) => {
     const form = getState().calendarModal.exerciseFormFields;
     const keys = Object.keys(form);
 
-    return keys.map(key => form[key].name);
+    return keys.map(key => ({ key, name: form[key].name }));
 }

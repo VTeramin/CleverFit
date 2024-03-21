@@ -22,16 +22,19 @@ export const MainContent: React.FC = () => {
         navigate(paths[text]);
     }
 
+    const navBlocksTitles = ['Расписать тренировки', 'Назначить календарь', 'Заполнить профиль'];
+    const navBlocksSubtitles = ['Тренировки', 'Календарь', 'Профиль'];
+
     const navBlocks = [HeartTwoTone, CalendarTwoTone, IdcardTwoTone].map((icon, index) => (
-            <div key={index + 1} className={`${styles.nav__block} ${styles.box}`}>
-                <p className={styles.block__title}>{['Расписать тренировки', 'Назначить календарь', 'Заполнить профиль'][index]}</p>
+            <div key={navBlocksSubtitles[index]} className={`${styles.nav__block} ${styles.box}`}>
+                <p className={styles.block__title}>{navBlocksTitles[index]}</p>
                 <Button
                     className={styles.block__content}
                     onClick={event => handleBlockClick(event as MouseEvent<HTMLButtonElement>)}
                     data-test-id={['', 'menu-button-calendar', ''][index]}
                 >
                     {React.createElement(icon, { className: styles.block__icon, twoToneColor: 'var(--primary-light-6)' })}
-                    <p className={styles.block__subtitle}>{['Тренировки', 'Календарь', 'Профиль'][index]}</p>
+                    <p className={styles.block__subtitle}>{navBlocksSubtitles[index]}</p>
                 </Button>
             </div>
         ));
