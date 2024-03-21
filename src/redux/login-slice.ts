@@ -1,15 +1,16 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "./configure-store";
-import { TLogin, TPasswords } from "@constants/types";
+import { TLogin, TPasswords } from '@constants/types';
+import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 
-type changeData = {
+import { RootState } from './configure-store';
+
+type TChangeData = {
     [name:string]: string | boolean
 }
 
 const initialState: TLogin = {
-    email: "",
-    password: "",
-    confirmPassword: "",
+    email: '',
+    password: '',
+    confirmPassword: '',
     isRemember: false
 };
 
@@ -17,7 +18,7 @@ export const loginSlice = createSlice({
     name: 'login',
     initialState,
     reducers: {
-        changeLoginData: (state, action: PayloadAction<changeData>) => {
+        changeLoginData: (state, action: PayloadAction<TChangeData>) => {
             Object.assign(state, action.payload)
         },
         changePasswords: (state, action: PayloadAction<TPasswords>) => {

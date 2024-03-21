@@ -1,6 +1,7 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "./configure-store";
-import { TTraining } from "@constants/types";
+import { TTraining } from '@constants/types';
+import { createSlice,PayloadAction } from '@reduxjs/toolkit';
+
+import { RootState } from './configure-store';
 
 const initialState: TTraining[] = [];
 

@@ -1,20 +1,21 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { EROUTE, EStatus } from '@constants/enums';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { changeResultType } from '@redux/calendar-modal-slice';
+import { useWindowSize } from '@uidotdev/usehooks';
+import { Button, Modal, Result } from 'antd';
+
 import 'antd/dist/antd.css';
 import styles from './result-modal.module.css';
-import { Button, Modal, Result } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { useWindowSize } from '@uidotdev/usehooks';
-import { changeResultType } from '@redux/calendarModalSlice';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { EROUTE, EStatus } from '@constants/enums';
 
-type props = {
+type TProps = {
     resultType: EStatus,
     setResultType: React.Dispatch<React.SetStateAction<EStatus>>,
     setIsModalOpen?: (a: boolean) => void
 }
 
-export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsModalOpen }) => {
+export const ResultModal: React.FC<TProps> = ({ resultType, setResultType, setIsModalOpen }) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const width = useWindowSize().width || 0;
@@ -33,15 +34,15 @@ export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsM
             extra={[
                 <Button
                     key="Написать отзыв"
-                    className={styles["conf-button"]}
-                    onClick={handleWriteReview}
+                    className={styles['conf-button']}
+                    onClick={() => handleWriteReview()}
                     data-test-id="write-review-not-saved-modal"
                 >
                     Написать отзыв
                 </Button>,
                 <Button
                     key="Закрыть"
-                    className={`${styles["conf-button"]} ${styles["conf-button-white"]}`}
+                    className={`${styles['conf-button']} ${styles['conf-button-white']}`}
                     onClick={() => setResultType(EStatus.empty)}
                 >
                     Закрыть
@@ -54,7 +55,7 @@ export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsM
             extra={[
                 <Button
                     key="Отлично"
-                    className={`${styles["conf-button"]}`}
+                    className={`${styles['conf-button']}`}
                     onClick={() => setResultType(EStatus.empty)}
                 >
                     Отлично
@@ -65,11 +66,11 @@ export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsM
             status="500"
             title="Что-то пошло не так"
             subTitle="Произошла ошибка, попробуйте ещё раз."
-            className={styles["no-token"]}
+            className={styles['no-token']}
             extra={[
                 <Button
                     key="Назад"
-                    className={`${styles["conf-button"]}`}
+                    className={`${styles['conf-button']}`}
                     onClick={() => {
                         navigate(EROUTE.HOME);
                         dispatch(changeResultType(EStatus.empty));
@@ -85,11 +86,11 @@ export const ResultModal: React.FC<props> = ({ resultType, setResultType, setIsM
         <Modal
             centered={true}
             maskStyle={{
-                backdropFilter: "var(--background-blur-filter)",
-                background: "var(--background-blur-color)"
+                backdropFilter: 'var(--background-blur-filter)',
+                background: 'var(--background-blur-color)'
             }}
             width={resultWidth}
-            className={styles["result"]}
+            className={styles.result}
             open={true}
             maskClosable={false}
             closable={false}

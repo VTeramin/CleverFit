@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import 'antd/dist/antd.css';
-import styles from './feedbacks-page.module.css';
-import { Button, Layout } from 'antd';
-import { FeedbackCards } from './feeback-cards/feedback-cards';
-import { FeedbackModal } from './feedback-modal/feedback-modal';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { selectFeedback } from '@redux/feedbackSlice';
 import { ResultModal } from '@components/result-modal/result-modal';
 import { EROUTE, EStatus } from '@constants/enums';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { selectFeedback } from '@redux/feedback-slice';
 import { getFeedbacks } from '@utils/requests/get-feedbacks';
+import { Button, Layout } from 'antd';
+
+import { FeedbackCards } from './feeback-cards/feedback-cards';
+import { FeedbackModal } from './feedback-modal/feedback-modal';
+
+import 'antd/dist/antd.css';
+import styles from './feedbacks-page.module.css';
 
 export const FeedbacksPage: React.FC = () => {
     const navigate = useNavigate();
@@ -29,18 +31,18 @@ export const FeedbacksPage: React.FC = () => {
     }, [dispatch, navigate]);
 
     const firstFeedback = (
-        <div className={styles["first-feedback"]}>
-            <h2 className={styles["first-feedback__title"]}>Оставьте свой отзыв первым</h2>
-            <p className={styles["first-feedback__subtitle"]}>Вы можете быть первым, кто оставит отзыв об этом фитнесс приложении.<br />Поделитесь своим мнением и опытом с другими пользователями,<br />и помогите им сделать правильный выбор.</p>
+        <div className={styles['first-feedback']}>
+            <h2 className={styles['first-feedback__title']}>Оставьте свой отзыв первым</h2>
+            <p className={styles['first-feedback__subtitle']}>Вы можете быть первым, кто оставит отзыв об этом фитнесс приложении.<br />Поделитесь своим мнением и опытом с другими пользователями,<br />и помогите им сделать правильный выбор.</p>
         </div>
     );
 
     return (
-        <Layout className={`${styles["page"]} ${isNoCards && styles["no-feedback"]}`}>
+        <Layout className={`${styles.page} ${isNoCards && styles['no-feedback']}`}>
             {isNoCards ? firstFeedback : <FeedbackCards cardsData={cardsData} />}
-            <div className={styles["page__buttons"]}>
+            <div className={styles.page__buttons}>
                 <Button
-                    className={`${styles["conf-button"]}`}
+                    className={`${styles['conf-button']}`}
                     onClick={() => setIsModalOpen(true)}
                     data-test-id="write-review"
                 >
@@ -48,11 +50,11 @@ export const FeedbacksPage: React.FC = () => {
                 </Button>
                 {!isNoCards && <Button
                     type="text"
-                    className={styles["text-button"]}
+                    className={styles['text-button']}
                     onClick={() => setIsShowAll(prev => !prev)}
                     data-test-id="all-reviews-button"
                 >
-                    {isShowAll ? "Свернуть все отзывы" : "Разернуть все отзывы"}
+                    {isShowAll ? 'Свернуть все отзывы' : 'Разернуть все отзывы'}
                 </Button>}
             </div>
             <FeedbackModal

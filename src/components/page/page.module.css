@@ -141,6 +141,8 @@
 .trigger {
     width: 20px;
     height: 66px;
+    padding: 0;
+    border: none;
     clip-path: var(--trigger-clip-path);
     box-shadow: var(--box-shadow);
     background: var(--character-light-primary-inverse);

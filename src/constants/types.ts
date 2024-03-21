@@ -1,4 +1,4 @@
-import { ECalendarModalType, EStatus, EValid } from "./enums"
+import { ECalendarModalType, EStatus, EValid } from './enums'
 
 export type TValidChange = {
     password: EValid.success | EValid.error,

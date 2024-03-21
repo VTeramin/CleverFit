@@ -1,15 +1,16 @@
-import { combineReducers } from "redux";
-import { configureStore } from "@reduxjs/toolkit";
-import { createReduxHistoryContext } from "redux-first-history";
-import { createBrowserHistory } from "history";
-import loginReducer from "./loginSlice";
-import loaderReducer from "./loaderSlice";
-import userDataReducer from "./userDataSlice";
-import feedbackReducer from "./feedbackSlice";
-import trainingReducer from "./trainingSlice";
-import trainingListReducer from "./trainingListSlice";
-import calendarModalReducer from "./calendarModalSlice";
-import { thunk } from "redux-thunk";
+import { combineReducers } from 'redux';
+import { createReduxHistoryContext } from 'redux-first-history';
+import { thunk } from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+import { createBrowserHistory } from 'history';
+
+import calendarModalReducer from './calendar-modal-slice';
+import feedbackReducer from './feedback-slice';
+import loaderReducer from './loader-slice';
+import loginReducer from './login-slice';
+import trainingListReducer from './training-list-slice';
+import trainingReducer from './training-slice';
+import userDataReducer from './user-data-slice';
 
 const {
     createReduxHistory,

@@ -1,44 +1,43 @@
 import React from 'react';
+import { StarTwoTone, UserOutlined } from '@ant-design/icons';
+import { TFeedback } from '@constants/types';
+import { convertDate } from '@utils/convert-date';
+import { Avatar, Card, Comment, Rate } from 'antd';
+
 import 'antd/dist/antd.css';
 import styles from './feedback-cards.module.css';
-import { Avatar, Card, Comment, Rate } from 'antd';
-import { StarTwoTone, UserOutlined } from '@ant-design/icons';
-import { convertDate } from '@utils/convert-date';
-import { TFeedback } from '@constants/types';
 
-type props = {
+type TProps = {
     cardsData: TFeedback[]
 }
 
-export const FeedbackCards: React.FC<props> = ({ cardsData }) => {
-    return (
-        <section className={styles["page__cards"]}>
+export const FeedbackCards: React.FC<TProps> = ({ cardsData }) => (
+        <section className={styles.page__cards}>
             {cardsData.map((cardData, ind) => (
-                <Card key={ind} className={styles["card"]}>
+                <Card key={ind} className={styles.card}>
                     <Comment
-                        avatar={<div className={styles["card__person"]}>
+                        avatar={<div className={styles.card__person}>
                             <Avatar
                                 src={cardData.imageSrc || <UserOutlined />}
                                 alt={cardData.fullName}
                                 size={42}
-                                className={styles["person__img"]}
+                                className={styles.person__img}
                             />
-                            <p className={styles["person__name"]}>{cardData.fullName || "Пользователь"}</p>
+                            <p className={styles.person__name}>{cardData.fullName || 'Пользователь'}</p>
                         </div>}
                         author={<Rate
-                            disabled
+                            disabled={true}
                             value={cardData.rating}
-                            character={<StarTwoTone twoToneColor="var(--character-light-warning)" className={styles["rate__star"]} />}
-                            className={`${styles["card__rate"]} ${styles["rate"]}`}
+                            character={<StarTwoTone twoToneColor="var(--character-light-warning)" className={styles.rate__star} />}
+                            className={`${styles.card__rate} ${styles.rate}`}
                         />}
-                        datetime={<span className={styles["card__time"]}>
+                        datetime={<span className={styles.card__time}>
                             {convertDate(new Date(cardData.createdAt))}
                         </span>}
                         content={<p>{cardData.message}</p>}
-                        className={styles["card__comment"]}
+                        className={styles.card__comment}
                     />
                 </Card>
             ))}
         </section>
     );
-};

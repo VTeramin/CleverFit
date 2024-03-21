@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import 'antd/dist/antd.css';
-import styles from './calendar-page.module.css';
-import { Calendar, ConfigProvider, Layout } from 'antd';
-import locale from 'antd/es/locale/ru_RU';
-import 'moment/locale/ru';
-import moment from 'moment';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { CalendarModal } from './calendar-modal/calendar-modal';
-import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
-import { CalendarTrainingList } from './calendar-training-list/calendar-training-list';
-import { changeModalType, selectCalendarModalData, toggleIsModal } from '@redux/calendarModalSlice';
-import { EROUTE, ECalendarModalType, EStatus } from '@constants/enums';
 import { useNavigate } from 'react-router-dom';
+import { ECalendarModalType, EROUTE, EStatus } from '@constants/enums';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { changeModalType, selectCalendarModalData, toggleIsModal } from '@redux/calendar-modal-slice';
+import { selectTraining } from '@redux/training-slice';
+import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
+import { findAllTraining } from '@utils/calendar-utils/find-all-training';
 import { getTraining } from '@utils/requests/get-training';
 import { getTrainingList } from '@utils/requests/get-training-list';
-import { findAllTraining } from '@utils/calendar-utils/find-all-training';
-import { selectTraining } from '@redux/trainingSlice';
+import { Calendar, ConfigProvider, Layout } from 'antd';
+import locale from 'antd/es/locale/ru_RU';
+import moment, { Moment } from 'moment';
 
-moment.updateLocale("ru", {
+import { CalendarModal } from './calendar-modal/calendar-modal';
+import { CalendarTrainingList } from './calendar-training-list/calendar-training-list';
+
+import 'antd/dist/antd.css';
+import styles from './calendar-page.module.css';
+
+import 'moment/locale/ru';
+
+moment.updateLocale('ru', {
     week: { dow: 1 },
-    weekdaysMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
-    monthsShort: ["Янв", "Февр", "Март", "Апр", "Май", "Июнь", "Июль", "Авг", "Сент", "Окт", "Нояб", "Дек"],
+    weekdaysMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+    monthsShort: ['Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Нояб', 'Дек'],
 });
 
 export const CalendarPage: React.FC = () => {
@@ -39,41 +42,45 @@ export const CalendarPage: React.FC = () => {
         dispatch(getTraining()).then(resp => {
             if (resp === EStatus.noToken) {
                 navigate(EROUTE.MAIN);
-            } else {
-                return dispatch(getTrainingList());
             }
+
+            return dispatch(getTrainingList());
         });
         dispatch(toggleIsModal(false));
     }, [dispatch, navigate]);
 
-    function handleDateSelect(target: moment.Moment) {
+    function handleDateSelect(target: Moment) {
         setDate(target);
         const isCurrentMonth = date.toDate().getMonth() !== target.toDate().getMonth();
+
         if (isMobile && isCurrentMonth) return;
         dispatch(changeModalType(ECalendarModalType.default));
         dispatch(toggleIsModal(true));
     }
 
-    function dateCellRender(moment: moment.Moment) {
-        const trainingNames = findAllTraining(training, moment.toDate()).map(el => el.name);
-        if(isMobile && trainingNames.length !== 0) {
-            return <div className={styles["no-empty"]}></div>;
+    function dateCellRender(cellMoment: Moment) {
+        const trainingNames = findAllTraining(training, cellMoment.toDate()).map(el => el.name);
+
+        if (isMobile && trainingNames.length !== 0) {
+            return <div className={styles['no-empty']} />;
         }
-        if(!isMobile) {
-            return <CalendarTrainingList date={moment.toDate()} listData={trainingNames} />;
+        if (!isMobile) {
+            return <CalendarTrainingList date={cellMoment.toDate()} listData={trainingNames} />;
         }
+
+        return <div />;
     }
 
     return (
-        <Layout className={styles["page"]} ref={ref}>
+        <Layout className={styles.page} ref={ref}>
             <ConfigProvider locale={locale}>
                 <Calendar
-                    className={styles["calendar"]}
+                    className={styles.calendar}
                     fullscreen={!isMobile}
                     value={date}
-                    onSelect={handleDateSelect}
+                    onSelect={target => handleDateSelect(target)}
                     onPanelChange={() => dispatch(toggleIsModal(false))}
-                    dateCellRender={dateCellRender}
+                    dateCellRender={cellMoment => dateCellRender(cellMoment)}
                 />
             </ConfigProvider>
             {isModal && <CalendarModal

@@ -1,9 +1,9 @@
-import { API } from "@constants/api";
-import { EROUTE } from "@constants/enums";
-import { AppDispatch, GetState } from "@redux/configure-store";
-import { toggleLoader } from "@redux/loaderSlice";
-import { changeSessionToken, toggleIsAuthorized } from "@redux/userDataSlice";
-import axios from "axios";
+import { API } from '@constants/api';
+import { EROUTE } from '@constants/enums';
+import { AppDispatch, GetState } from '@redux/configure-store';
+import { toggleLoader } from '@redux/loader-slice';
+import { changeSessionToken, toggleIsAuthorized } from '@redux/user-data-slice';
+import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
@@ -14,9 +14,11 @@ export const login = () => async (dispatch: AppDispatch, getState: GetState) => 
     return axios.post(`${API}/auth/login`, { email, password })
         .then(response => {
             const token = response.data.accessToken;
-            if (isRemember) localStorage.setItem("token", token);
+
+            if (isRemember) localStorage.setItem('token', token);
             dispatch(changeSessionToken(token));
             dispatch(toggleIsAuthorized(true));
+
             return EROUTE.MAIN;
         })
         .catch(() => EROUTE.ERROR_LOGIN)

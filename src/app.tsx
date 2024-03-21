@@ -1,19 +1,19 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { HistoryRouter } from 'redux-first-history/rr6'
-import { history, store } from '@redux/configure-store';
-import { Loader } from '@components/loader/loader';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { MainPage, Auth, Result, ConfirmEmail, ChangePassword, FeedbacksPage } from './pages';
-import { PrivateRoutes } from './route/PrivateRoutes';
-import { AuthRoutes } from './route/AuthRoutes';
-import { PushRoutes } from './route/PushRoutes';
-import { CalendarPage } from '@pages/calendar-page';
+import { HistoryRouter } from 'redux-first-history/rr6'
+import { Loader } from '@components/loader/loader';
 import { EROUTE } from '@constants/enums';
+import { CalendarPage } from '@pages/calendar-page';
 import { ProfilePage } from '@pages/profile-page';
+import { history, store } from '@redux/configure-store';
 
-export const App: React.FC = () => {
-    return (
+import { AuthRoutes } from './route/auth-routes';
+import { PrivateRoutes } from './route/private-routes';
+import { PushRoutes } from './route/push-routes';
+import { Auth, ChangePassword, ConfirmEmail, FeedbacksPage,MainPage, Result } from './pages';
+
+export const App: React.FC = () => (
         <Provider store={store}>
             <HistoryRouter history={history}>
                 <Routes>
@@ -40,4 +40,3 @@ export const App: React.FC = () => {
             </HistoryRouter>
         </Provider>
     );
-};

@@ -1,7 +1,8 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "./configure-store";
-import { ECalendarModalType, EStatus } from "@constants/enums";
-import { TCalendarModal, TDrawerFormFields } from "@constants/types";
+import { ECalendarModalType, EStatus } from '@constants/enums';
+import { TCalendarModal, TDrawerFormFields } from '@constants/types';
+import { createSlice,PayloadAction } from '@reduxjs/toolkit';
+
+import { RootState } from './configure-store';
 
 const initialState: TCalendarModal = {
     isEdit: false,
