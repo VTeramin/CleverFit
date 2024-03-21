@@ -10,6 +10,7 @@ import { AuthRoutes } from './route/AuthRoutes';
 import { PushRoutes } from './route/PushRoutes';
 import { CalendarPage } from '@pages/calendar-page';
 import { EROUTE } from '@constants/enums';
+import { ProfilePage } from '@pages/profile-page';
 
 export const App: React.FC = () => {
     return (
@@ -29,6 +30,7 @@ export const App: React.FC = () => {
                         <Route path={EROUTE.MAIN} element={<MainPage />} />
                         <Route path={EROUTE.FEEDBACKS} element={<FeedbacksPage />} />
                         <Route path={EROUTE.CALENDAR} element={<CalendarPage />} />
+                        <Route path={EROUTE.PROFILE} element={<ProfilePage />} />
                     </Route>
                     <Route element={<PushRoutes />}>
                         <Route path={EROUTE.RESULT} element={<Result />} />

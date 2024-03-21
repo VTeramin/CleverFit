@@ -36,7 +36,7 @@ export const SideBar: React.FC<props> = ({ collapsed, setCollapsed }) => {
 
     function handleMenuClick(item: MenuInfo) {
         const index = Number(item.key);
-        const paths = [EROUTE.CALENDAR];
+        const paths = [EROUTE.CALENDAR, EROUTE.MAIN, EROUTE.MAIN, EROUTE.PROFILE];
         navigate(paths[index]);
     }
 

@@ -32,7 +32,7 @@ export const FeedbackCards: React.FC<props> = ({ cardsData }) => {
                             className={`${styles["card__rate"]} ${styles["rate"]}`}
                         />}
                         datetime={<span className={styles["card__time"]}>
-                            {convertDate(cardData.createdAt)}
+                            {convertDate(new Date(cardData.createdAt))}
                         </span>}
                         content={<p>{cardData.message}</p>}
                         className={styles["card__comment"]}

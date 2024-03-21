@@ -76,7 +76,7 @@ export const ChangePassword: React.FC = () => {
                             className={styles["change-modal__input"]}
                             iconRender={eyeIcon}
                             type="password"
-                            name="password2"
+                            name="confirmPassword"
                             placeholder="Повторите пароль"
                             value={passwords.confirmPassword}
                             onChange={handlePassword}

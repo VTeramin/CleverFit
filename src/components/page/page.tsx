@@ -20,17 +20,12 @@ type props = {
 export const Page: React.FC<props> = ({ innerLayout }) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const width = useWindowSize().width || 0;
-    const isFullWidth = width > 800;
     const { pathname } = useLocation();
     const [collapsed, setCollapsed] = useState(false);
-    const isMain = pathname === "/main";
-    const isFeedbacks = pathname === "/feedbacks";
     const { resultType } = useAppSelector(selectCalendarModalData);
     const [resultTypeCalendar, setResultTypeCalendar] = useState(resultType);
-    useEffect(() => {
-        dispatch(changeResultType(resultTypeCalendar));
-    }, [resultTypeCalendar, dispatch]);
+    const width = useWindowSize().width || 0;
+    const isFullWidth = width > 800;
 
     const breadCrumbs: { [url: string]: string } = {
         "/feedbacks": "Отзывы пользователей",
@@ -38,21 +33,66 @@ export const Page: React.FC<props> = ({ innerLayout }) => {
     };
     const isCrumbs = Object.keys(breadCrumbs).includes(pathname);
 
-    return (
-        <Layout className={styles["page"]}>
-            <SideBar collapsed={collapsed} setCollapsed={setCollapsed}/>
-            <Layout className={styles["page-layout"]}>
+    useEffect(() => {
+        dispatch(changeResultType(resultTypeCalendar));
+    }, [resultTypeCalendar, dispatch]);
+
+    const header: { [route: string]: React.ReactElement } = {
+        [EROUTE.MAIN]: (
+            <div>
                 <Breadcrumb className={styles["page-layout__breadcrumbs"]}>
                     <Breadcrumb.Item onClick={() => navigate(EROUTE.MAIN)}>Главная</Breadcrumb.Item>
                     {isCrumbs && <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>}
                 </Breadcrumb>
-                {!isFeedbacks && <Header className={styles["header"]}>
-                    {isMain && <h1 className={styles["header__title"]}>Приветствуем тебя в&nbsp;CleverFit — приложении,<br />которое поможет тебе добиться своей мечты!</h1>}
+                <Header className={styles["header"]}>
+                    <h1 className={styles["header__title"]}>Приветствуем тебя в&nbsp;CleverFit — приложении,<br />которое поможет тебе добиться своей мечты!</h1>
                     <div className={styles["header__settings"]}>
-                        {<SettingOutlined className={styles["settings__icon"]} />}
+                        <SettingOutlined className={styles["settings__icon"]} />
                         <p className={styles["settings__line"]}>Настройки</p>
                     </div>
-                </Header>}
+                </Header>
+            </div>
+        ),
+        [EROUTE.FEEDBACKS]: (
+            <div>
+                <Breadcrumb className={styles["page-layout__breadcrumbs"]}>
+                    <Breadcrumb.Item onClick={() => navigate(EROUTE.MAIN)}>Главная</Breadcrumb.Item>
+                    {isCrumbs && <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>}
+                </Breadcrumb>
+            </div>
+        ),
+        [EROUTE.CALENDAR]: (
+            <div>
+                <Breadcrumb className={styles["page-layout__breadcrumbs"]}>
+                    <Breadcrumb.Item onClick={() => navigate(EROUTE.MAIN)}>Главная</Breadcrumb.Item>
+                    {isCrumbs && <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>}
+                </Breadcrumb>
+                <Header className={styles["header"]}>
+                    <div className={styles["header__settings"]}>
+                        <SettingOutlined className={styles["settings__icon"]} />
+                        <p className={styles["settings__line"]}>Настройки</p>
+                    </div>
+                </Header>
+            </div>
+        ),
+        [EROUTE.PROFILE]: (
+            <div>
+                <Header className={`${styles["header"]} ${styles["profile-header"]}`}>
+                    <h1 className={styles["header__title"]}>Профиль</h1>
+                    <div className={styles["header__settings"]}>
+                        <SettingOutlined className={styles["settings__icon"]} />
+                        <p className={styles["settings__line"]}>Настройки</p>
+                    </div>
+                </Header>
+            </div>
+        )
+    };
+
+    return (
+        <Layout className={styles["page"]}>
+            <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
+            <Layout className={styles["page-layout"]}>
+                {header[pathname]}
                 {innerLayout}
                 <div
                     className={`${styles["trigger"]} ${styles[collapsed ? "trigger-collapsed" : "trigger-not-collapsed"]}`}
