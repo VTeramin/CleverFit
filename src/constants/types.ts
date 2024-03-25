@@ -83,3 +83,10 @@ export type TCalendarModal = {
     editTraining: string | null,
     exerciseFormFields: TDrawerFormFields
 }
+
+export type TSettingsSwitchesData = {
+    [name: string]: {
+        text: string,
+        title: string
+    }
+}

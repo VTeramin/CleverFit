@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons';
 import { ResultModal } from '@components/result-modal/result-modal';
 import { SideBar } from '@components/side-bar/side-bar';
 import { EROUTE, EStatus } from '@constants/enums';
@@ -48,10 +48,16 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
                 </Breadcrumb>
                 <Header className={styles.header}>
                     <h1 className={styles.header__title}>Приветствуем тебя в&nbsp;CleverFit — приложении,<br />которое поможет тебе добиться своей мечты!</h1>
-                    <div className={styles.header__settings}>
-                        <SettingOutlined className={styles.settings__icon} />
-                        <p className={styles.settings__line}>Настройки</p>
-                    </div>
+                    <Button
+                        type='text'
+                        className={styles['header__settings-button']}
+                        onClick={() => navigate(EROUTE.SETTINGS)}
+                    >
+                        <div className={styles.header__settings}>
+                            <SettingOutlined className={styles.settings__icon} />
+                            <p className={styles.settings__line}>Настройки</p>
+                        </div>
+                    </Button>
                 </Header>
             </div>
         ),
@@ -70,10 +76,16 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
                     {isCrumbs && <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>}
                 </Breadcrumb>
                 <Header className={styles.header}>
-                    <div className={styles.header__settings}>
-                        <SettingOutlined className={styles.settings__icon} />
-                        <p className={styles.settings__line}>Настройки</p>
-                    </div>
+                    <Button
+                        type='text'
+                        className={styles['header__settings-button']}
+                        onClick={() => navigate(EROUTE.SETTINGS)}
+                    >
+                        <div className={styles.header__settings}>
+                            <SettingOutlined className={styles.settings__icon} />
+                            <p className={styles.settings__line}>Настройки</p>
+                        </div>
+                    </Button>
                 </Header>
             </div>
         ),
@@ -81,10 +93,30 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
             <div>
                 <Header className={`${styles.header} ${styles['profile-header']}`}>
                     <h1 className={`${styles.header__title} ${styles['profile-title']}`}>Профиль</h1>
-                    <div className={styles.header__settings}>
-                        <SettingOutlined className={styles.settings__icon} />
-                        <p className={styles.settings__line}>Настройки</p>
-                    </div>
+                    <Button
+                        type='text'
+                        className={styles['header__settings-button']}
+                        onClick={() => navigate(EROUTE.SETTINGS)}
+                    >
+                        <div className={styles.header__settings}>
+                            <SettingOutlined className={styles.settings__icon} />
+                            <p className={styles.settings__line}>Настройки</p>
+                        </div>
+                    </Button>
+                </Header>
+            </div>
+        ),
+        [EROUTE.SETTINGS]: (
+            <div>
+                <Header className={`${styles.header} ${styles['profile-header']}`}>
+                    <Button
+                        onClick={() => navigate(EROUTE.MAIN)}
+                        className={styles['profile-arrow-back']}
+                        type='text'
+                    >
+                        <ArrowLeftOutlined />
+                    </Button>
+                    <h1 className={`${styles.header__title} ${styles['profile-title']}`}>Настройки</h1>
                 </Header>
             </div>
         )
