@@ -80,7 +80,7 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
         [EROUTE.PROFILE]: (
             <div>
                 <Header className={`${styles.header} ${styles['profile-header']}`}>
-                    <h1 className={styles.header__title}>Профиль</h1>
+                    <h1 className={`${styles.header__title} ${styles['profile-title']}`}>Профиль</h1>
                     <div className={styles.header__settings}>
                         <SettingOutlined className={styles.settings__icon} />
                         <p className={styles.settings__line}>Настройки</p>

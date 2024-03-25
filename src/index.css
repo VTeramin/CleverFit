@@ -129,6 +129,7 @@
     --border-radius-drawer-bottom: 24px;
     --flex-gap: 20px;
     --flex-gap-small: 16px;
+    --input-height-big: 40px;
     --calendar-input-height: 28px;
     --calendar-input-height-small: 22px;
 }

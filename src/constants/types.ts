@@ -22,7 +22,8 @@ export type TLogin = {
     email: string,
     isRemember: boolean,
     password: string,
-    confirmPassword: string
+    confirmPassword: string,
+    valid: TValidChange
 }
 
 export type TFeedback = {
