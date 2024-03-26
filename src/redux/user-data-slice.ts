@@ -1,3 +1,4 @@
+import { TUserDataFormReponse } from '@constants/types';
 import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from './configure-store';
@@ -16,10 +17,13 @@ export const userDataSlice = createSlice({
         },
         changeSessionToken: (state, action: PayloadAction<string>) => {
             state.sessionToken = action.payload;
+        },
+        changeUserData: (state, action: PayloadAction<TUserDataFormReponse>) => {
+            Object.assign(state, action.payload);
         }
     }
 });
 
-export const { toggleIsAuthorized, changeSessionToken } = userDataSlice.actions;
+export const { toggleIsAuthorized, changeSessionToken, changeUserData } = userDataSlice.actions;
 export const selectUserData = (state: RootState) => state.userData;
 export default userDataSlice.reducer;

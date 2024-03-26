@@ -90,3 +90,17 @@ export type TSettingsSwitchesData = {
         title: string
     }
 }
+
+export type TUserDataFormReponse = {
+    email: string,
+    firstName: string,
+    lastName: string,
+    birthday: Date,
+    imgSrc: string,
+    readyForJointTraining: boolean,
+    sendNotification: boolean,
+    tariff: {
+        tariffId: string,
+        expired: Date
+    }
+}
