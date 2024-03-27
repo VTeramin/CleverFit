@@ -1,0 +1,67 @@
+.result [class*="modal-body"] {
+    padding: 32px 32px 24px;
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+}
+
+.result [class*="result-info"] {
+    padding: 0;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    grid-template-areas:
+        "icon title"
+        "icon subtitle"
+        "icon button";
+    column-gap: 16px;
+    row-gap: 8px;
+}
+
+.result [class*="result-icon"] {
+    grid-area: icon;
+    margin-bottom: 0;
+}
+
+.result [class*="close-circle"] {
+    font-size: var(--font-size-large);
+}
+
+.result [class*="result-title"] {
+    grid-area: title;
+    font-size: var(--font-size-larger);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+    text-align: left;
+}
+
+.result [class*="result-subtitle"] {
+    grid-area: subtitle;
+    line-height: var(--line-height);
+    color: var(--character-light-secondary-45);
+    text-align: left;
+}
+
+.result [class*="result-title"]>p,
+.result [class*="result-subtitle"]>p {
+    margin: 0;
+}
+
+.result [class*="result-extra"] {
+    grid-area: button;
+    margin-top: 16px;
+    text-align: end;
+}
+
+.conf-button {
+    height: var(--button-height);
+    border: var(--button-border);
+    border-radius: var(--border-radius);
+    padding: var(--button-padding);
+    box-shadow: var(--box-shadow-button);
+    background: var(--primary-light-6);
+
+    line-height: var(--line-height);
+    color: var(--character-light-primary-inverse);
+}

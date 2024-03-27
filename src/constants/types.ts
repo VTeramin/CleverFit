@@ -92,15 +92,21 @@ export type TSettingsSwitchesData = {
 }
 
 export type TUserDataFormReponse = {
-    email: string,
-    firstName: string,
-    lastName: string,
-    birthday: Date,
-    imgSrc: string,
-    readyForJointTraining: boolean,
-    sendNotification: boolean,
-    tariff: {
-        tariffId: string,
-        expired: Date
+    email?: string,
+    firstName?: string,
+    lastName?: string,
+    birthday?: string,
+    imgSrc?: string,
+    readyForJointTraining?: boolean,
+    sendNotification?: boolean,
+    tariff?: {
+        tariffId?: string,
+        expired?: Date
     }
+}
+
+export type TUserData = {
+    isAuthorized: boolean,
+    sessionToken: string,
+    userInfo: TUserDataFormReponse
 }

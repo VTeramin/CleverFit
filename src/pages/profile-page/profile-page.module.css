@@ -76,11 +76,16 @@
 
 .profile-form [class*="upload-picture-card-wrapper"] {
     grid-area: upload;
+    width: 104px;
+}
+
+.profile-form [class*="upload-list-picture-card-container"] {
+    margin: 0;
 }
 
 .profile-form [class*="upload-select-picture-card"] {
     margin: 0;
-    padding: 14px;
+    padding: 8px;
 }
 
 .profile-form [class*="ant-upload"]>div>div {
@@ -89,9 +94,41 @@
 }
 
 @media (max-width: 800px) {
-    .profile-form [class*="ant-upload"] {
+    .profile-form [class*="ant-upload-select-picture"] {
         width: 100%;
     }
+
+    .profile-form [class*="ant-upload-span"] {
+        justify-content: space-between;
+    }
+
+    .profile-form [class*="ant-upload-span"]>[class*="item-name"] {
+        display: none;
+    }
+}
+
+.profile-form [class*="thumbnail"] {
+    opacity: 1;
+}
+
+.profile-form [class*="list-item-uploading"] [class*="upload-list-item-thumbnail"] {
+    display: none;
+}
+
+.profile-form [class*="list-item-uploading"] [class*="upload-span"]::after {
+    content: "Загружаем";
+    text-align: center;
+    line-height: 50px;
+    color: var(--character-light-title-85);
+}
+
+.profile-form [class*="ant-progress-bg"] {
+    background: var(--primary-light-6);
+}
+
+.profile-form [class*="item-actions"] {
+    display: flex;
+    align-items: center;
 }
 
 .profile-form__upload-inner-mobile {
@@ -166,6 +203,13 @@
     margin-bottom: 28px;
 }
 
+.profile-form__privacy [class*="addon"] {
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--character-light-title-85);
+    width: 71px;
+}
+
 .profile-form__conf-button {
     width: 206px;
     height: var(--button-height);
@@ -185,4 +229,23 @@
     .profile-form__conf-button {
         width: 100%;
     }
+}
+
+.profile-form__alert {
+    width: 395px;
+    position: fixed;
+    bottom: 72px;
+    left: 0;
+    transform: translateX(calc(50vw - 50%));
+    color: var(--character-light-title-85);
+}
+
+@media (max-width: 800px) {
+    .profile-form__alert {
+        width: 312px;
+    }
+}
+
+.profile-form__alert [class*='alert-icon'] {
+    margin-right: 10px;
 }

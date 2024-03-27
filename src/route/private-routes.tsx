@@ -8,12 +8,11 @@ import { getUserData } from '@utils/requests/get-user-data';
 
 export const PrivateRoutes: React.FC = () => {
     const dispatch = useAppDispatch();
-    const userData = useAppSelector(selectUserData);
     const { isAuthorized } = useAppSelector(selectUserData);
 
     useEffect(() => {
         dispatch(getUserData());
-    }, [dispatch, userData]);
+    }, [dispatch]);
 
     return isAuthorized ? <Page innerLayout={<Outlet />} /> : <Navigate to={EROUTE.AUTH} />;
 };

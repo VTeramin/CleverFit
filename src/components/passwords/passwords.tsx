@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { EValid } from '@constants/enums';
 import { TValidChange } from '@constants/types';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { changePasswords, changeValidStatus } from '@redux/login-slice';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { changePasswords, changeValidStatus, selectLogin } from '@redux/login-slice';
 import { checkValidChangePassword } from '@utils/auth-utils/check-valid-status';
 import { Form, Input } from 'antd';
 
@@ -14,11 +14,21 @@ import styles from './passwords.module.css';
 export const Passwords: React.FC = () => {
     const dispatch = useAppDispatch();
     const { pathname } = useLocation();
+    const { password, confirmPassword } = useAppSelector(selectLogin);
 
     const [passwords, setPasswords] = useState({
         password: '',
         confirmPassword: ''
     });
+
+    useEffect(() => {
+        if(password === '' && confirmPassword === '') {
+            setPasswords({
+                password: '',
+                confirmPassword: ''
+            });
+        }
+    }, [password, confirmPassword]);
 
     const [validStatus, setValidStatus] = useState<TValidChange>({
         password: EValid.success,

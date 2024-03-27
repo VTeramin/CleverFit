@@ -101,7 +101,7 @@
 
 .header__settings-button {
     width: max-content;
-    padding: 0;
+    padding: var(--button-padding);
     margin-left: auto;
 }
 
@@ -123,7 +123,7 @@
     }
 
     .profile-header .settings__icon {
-        display: block;
+        display: flex;
     }
 }
 

@@ -27,7 +27,9 @@ export enum EStatus {
     errorFeedback = 'errorFeedback',
     successFeedback = 'successFeedback',
     errorTrainingList = 'errorTrainingList',
-    errorSaveTraining = 'errorSaveTraining'
+    errorSaveTraining = 'errorSaveTraining',
+    errorUploadPicture = 'errorUploadPicture',
+    errorSaveUserData = 'errorSaveUserData'
 }
 
 export enum EROUTE {
