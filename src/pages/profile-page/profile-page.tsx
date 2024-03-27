@@ -51,7 +51,7 @@ export const ProfilePage: React.FC = () => {
         const isListEmpty = fileList.length === 0;
 
         if (isFormEmpty) setUserFormInfo(userInfo);
-        if (isListEmpty) setFileList(userInfo.imgSrc
+        if (isFormEmpty && isListEmpty) setFileList(userInfo.imgSrc
             ? [{
                 uid: '-1',
                 name: 'avatar',
@@ -148,7 +148,7 @@ export const ProfilePage: React.FC = () => {
                             }}
                             className={styles['profile-form__upload']}
                         >
-                            {fileList.length === 1 ? null : innerUpload}
+                            {fileList.length === 0 ? innerUpload : null}
                         </Upload>
                         <Form.Item>
                             <Input

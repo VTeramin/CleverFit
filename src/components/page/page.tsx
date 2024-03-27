@@ -7,6 +7,7 @@ import { EROUTE, EStatus } from '@constants/enums';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarResult } from '@pages/calendar-page/calendar-result/calendar-result';
 import { changeResultType, selectCalendarModalData } from '@redux/calendar-modal-slice';
+import { history } from '@redux/configure-store';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { Breadcrumb, Button, Layout } from 'antd';
 
@@ -110,8 +111,8 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
             <div>
                 <Header className={`${styles.header} ${styles['profile-header']}`}>
                     <Button
-                        onClick={() => navigate(EROUTE.MAIN)}
-                        className={styles['profile-arrow-back']}
+                        onClick={() => history.back()}
+                        className={styles['settings-arrow-back']}
                         type='text'
                     >
                         <ArrowLeftOutlined />
