@@ -16,6 +16,7 @@ import {
     ConfirmEmail,
     FeedbacksPage,
     MainPage,
+    NotFoundPage,
     ProfilePage,
     Result,
     SettingsPage
@@ -40,6 +41,7 @@ export const App: React.FC = () => (
                     <Route path={EROUTE.CALENDAR} element={<CalendarPage />} />
                     <Route path={EROUTE.PROFILE} element={<ProfilePage />} />
                     <Route path={EROUTE.SETTINGS} element={<SettingsPage />} />
+                    <Route path='*' element={<NotFoundPage />} />
                 </Route>
                 <Route element={<PushRoutes />}>
                     <Route path={EROUTE.RESULT} element={<Result />} />
