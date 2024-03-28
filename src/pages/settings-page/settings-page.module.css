@@ -155,6 +155,10 @@
     }
 }
 
+.settings-page__switch>.switch__title--disabled {
+    color: var(--character-light-disable-25);
+}
+
 .settings-page__switch>span {
     height: 18px;
     color: var(--character-light-secondary-45);

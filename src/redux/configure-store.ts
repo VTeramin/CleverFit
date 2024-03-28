@@ -8,6 +8,7 @@ import calendarModalReducer from './calendar-modal-slice';
 import feedbackReducer from './feedback-slice';
 import loaderReducer from './loader-slice';
 import loginReducer from './login-slice';
+import tariffListReducer from './tariff-list-slice';
 import trainingListReducer from './training-list-slice';
 import trainingReducer from './training-slice';
 import userDataReducer from './user-data-slice';
@@ -27,7 +28,8 @@ export const store = configureStore({
         training: trainingReducer,
         trainingList: trainingListReducer,
         calendarModal: calendarModalReducer,
-        router: routerReducer
+        router: routerReducer,
+        tariffList: tariffListReducer,
     }),
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware).concat(thunk),
 });

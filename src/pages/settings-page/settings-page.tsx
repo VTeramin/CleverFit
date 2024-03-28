@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CheckOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { TSettingsSwitchesData } from '@constants/types';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { changeUserInfo, selectUserData } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
+import { changeRemoteUserData } from '@utils/requests/change-remote-user-data';
+import { getTariffList } from '@utils/requests/get-tariff-list';
 import { Button, Layout, Switch, Tooltip } from 'antd';
 
 import freeTarif from '../../assets/img/tarif-free.png';
@@ -11,8 +15,43 @@ import 'antd/dist/antd.css';
 import styles from './settings-page.module.css';
 
 export const SettingsPage: React.FC = () => {
+    const dispatch = useAppDispatch();
     const width = useWindowSize().width || 0;
     const isMobile = width <= 800;
+    const { userInfo } = useAppSelector(selectUserData);
+    const isTariffFree = !Object.keys(userInfo).includes('tariff');
+    const [switchValues, setSwitchValues] = useState<{ [name: string]: boolean | undefined }>({
+        'тренировки': userInfo.readyForJointTraining,
+        'уведомления': userInfo.sendNotification,
+        'тема': false
+    });
+
+    useEffect(() => {
+        dispatch(getTariffList());
+    }, [dispatch]);
+
+    useEffect(() => {
+        setSwitchValues({
+            'тренировки': userInfo.readyForJointTraining,
+            'уведомления': userInfo.sendNotification,
+            'тема': false
+        });
+    }, [userInfo]);
+
+    useEffect(() => {
+        dispatch(changeUserInfo({
+            readyForJointTraining: switchValues['тренировки'],
+            sendNotification: switchValues['уведомления']
+        }));
+        dispatch(changeRemoteUserData());
+    }, [dispatch, switchValues]);
+
+    function handleSwitchChange(checked: boolean, switchItem: string) {
+        setSwitchValues(prev => ({
+            ...prev,
+            [switchItem]: checked
+        }));
+    }
 
     return (
         <Layout className={styles['settings-page']}>
@@ -50,25 +89,32 @@ export const SettingsPage: React.FC = () => {
                     ))}
                 </div>
                 <div className={styles['settings-page__switches-wrapper']}>
-                    {['тренировки', 'уведомления', 'тема'].map((switchItem: string) => {
+                    {Object.keys(switchValues).map((switchItem: string) => {
                         const switchesData: TSettingsSwitchesData = {
                             'тренировки': {
                                 text: 'Открыт для совместных тренировок',
-                                title: 'включеная функция позволит участвовать в совместных тренировках'
+                                title: 'включеная функция позволит участвовать в совместных тренировках',
+                                disabled: false
                             },
                             'уведомления': {
                                 text: 'Уведомления',
-                                title: 'включеная функция позволит получать уведомления об активностях'
+                                title: 'включеная функция позволит получать уведомления об активностях',
+                                disabled: false
                             },
                             'тема': {
                                 text: 'Тёмная тема',
-                                title: 'темная тема доступна для PRO tarif'
+                                title: 'темная тема доступна для PRO tarif',
+                                disabled: isTariffFree
                             }
                         };
 
                         return (
                             <div key={switchItem} className={styles['settings-page__switch']}>
-                                <p>
+                                <p
+                                    className={switchesData[switchItem].disabled
+                                        ? styles['switch__title--disabled']
+                                        : undefined}
+                                >
                                     {switchesData[switchItem].text}
                                 </p>
                                 <Tooltip
@@ -79,7 +125,12 @@ export const SettingsPage: React.FC = () => {
                                 >
                                     <InfoCircleOutlined />
                                 </Tooltip>
-                                <Switch size={isMobile ? 'small' : 'default'} />
+                                <Switch
+                                    size={isMobile ? 'small' : 'default'}
+                                    disabled={switchesData[switchItem].disabled}
+                                    checked={switchValues[switchItem]}
+                                    onClick={checked => handleSwitchChange(checked, switchItem)}
+                                />
                             </div>
                         )
                     })}
