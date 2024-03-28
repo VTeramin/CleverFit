@@ -3,7 +3,8 @@ import path from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+    base: command === 'build' ? '/VTeramin/' : '/',
     plugins: [react()],
     server: {
         host: true,
@@ -22,4 +23,4 @@ export default defineConfig({
             '@route': path.resolve(__dirname, 'src/route'),
         },
     },
-});
+}));
