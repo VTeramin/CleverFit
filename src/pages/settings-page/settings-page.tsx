@@ -111,17 +111,23 @@ export const SettingsPage: React.FC = () => {
                         const switchesData: TSettingsSwitchesData = {
                             'тренировки': {
                                 text: 'Открыт для совместных тренировок',
-                                title: 'включеная функция позволит участвовать в совместных тренировках',
+                                title: <p className={styles.tooltip}>
+                                    включеная функция<br />позволит участвовать<br />в совместных тренировках
+                                </p>,
                                 disabled: false
                             },
                             'уведомления': {
                                 text: 'Уведомления',
-                                title: 'включеная функция позволит получать уведомления об активностях',
+                                title: <p className={styles.tooltip}>
+                                    включеная функция<br />позволит получать<br />уведомления об активностях
+                                </p>,
                                 disabled: false
                             },
                             'тема': {
                                 text: 'Тёмная тема',
-                                title: 'темная тема доступна для PRO tarif',
+                                title: <p className={styles.tooltip}>
+                                    темная тема<br />доступна для<br />PRO tarif
+                                </p>,
                                 disabled: isTariffFree
                             }
                         };
@@ -139,7 +145,7 @@ export const SettingsPage: React.FC = () => {
                                     title={switchesData[switchItem].title}
                                     color='var(--neutral-gray-13)'
                                     arrowPointAtCenter={true}
-                                    placement='bottomLeft'
+                                    placement={isMobile ? 'topLeft' : 'bottomLeft'}
                                 >
                                     <InfoCircleOutlined />
                                 </Tooltip>

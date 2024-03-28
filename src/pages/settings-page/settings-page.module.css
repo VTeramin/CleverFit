@@ -172,6 +172,10 @@
     align-self: flex-start;
 }
 
+.tooltip {
+    margin: 0;
+}
+
 .settings-page__switch>button[class*="checked"] {
     background: var(--primary-light-6);
 }

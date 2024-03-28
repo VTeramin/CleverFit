@@ -87,7 +87,7 @@ export type TCalendarModal = {
 export type TSettingsSwitchesData = {
     [name: string]: {
         text: string,
-        title: string,
+        title: JSX.Element,
         disabled: boolean
     }
 }
