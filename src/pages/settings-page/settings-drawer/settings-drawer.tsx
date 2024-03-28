@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircleFilled, CloseCircleOutlined, CloseOutlined } from '@ant-design/icons';
+import { EStatus } from '@constants/enums';
 import { tariffsInfo } from '@constants/tariffs-info';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectTariffList } from '@redux/tariff-list-slice';
@@ -12,10 +13,11 @@ import styles from './settings-drawer.module.css';
 
 type TProps = {
     isDrawer: boolean,
-    setIsDrawer: React.Dispatch<React.SetStateAction<boolean>>
+    setIsDrawer: React.Dispatch<React.SetStateAction<boolean>>,
+    setResultType: React.Dispatch<React.SetStateAction<EStatus>>
 }
 
-export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer }) => {
+export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer, setResultType }) => {
     const dispatch = useAppDispatch();
     const browserWidth = useWindowSize().width || 0;
     const isMobile = browserWidth <= 800;
@@ -26,7 +28,9 @@ export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer }) => {
 
     function handleSubmit() {
         // eslint-disable-next-line no-underscore-dangle
-        dispatch(changeTariff(proTariff?._id as string, selectedTariff));
+        dispatch(changeTariff(proTariff?._id as string, selectedTariff))
+            .then(response => setResultType(response));
+        setIsDrawer(false);
     }
 
     return (

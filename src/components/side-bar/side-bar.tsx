@@ -80,7 +80,12 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
                 onClick={item => handleMenuClick(item)}
                 items={menuItems}
             />
-            <Button className={styles.sider__exit} onClick={() => handleExit()} type='text'>
+            <Button
+            className={styles.sider__exit}
+            onClick={() => handleExit()}
+            type='text'
+            id='side-bar__exit'
+            >
                 <div className={styles.exit__icon} />
                 {!collapsed && <p className={styles.exit__line}>Выход</p>}
             </Button>

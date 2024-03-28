@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CheckOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { EStatus } from '@constants/enums';
 import { TSettingsSwitchesData, TSwitchesValues } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeUserInfo, selectUserData } from '@redux/user-data-slice';
@@ -12,6 +13,7 @@ import freeTarif from '../../assets/img/tarif-free.png';
 import proTarif from '../../assets/img/tarif-pro.png'
 
 import { SettingsDrawer } from './settings-drawer/settings-drawer';
+import { SettingsResult } from './settings-result/settings-result';
 
 import 'antd/dist/antd.css';
 import styles from './settings-page.module.css';
@@ -20,7 +22,6 @@ export const SettingsPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const width = useWindowSize().width || 0;
     const isMobile = width <= 800;
-
     const { userInfo } = useAppSelector(selectUserData);
     const isTariffFree = !Object.keys(userInfo).includes('tariff');
     const [switchValues, setSwitchValues] = useState<TSwitchesValues>({
@@ -29,6 +30,7 @@ export const SettingsPage: React.FC = () => {
         'тема': false
     });
     const [isDrawer, setIsDrawer] = useState(false);
+    const [resultType, setResultType] = useState(EStatus.empty);
 
     useEffect(() => {
         dispatch(getTariffList());
@@ -155,7 +157,9 @@ export const SettingsPage: React.FC = () => {
             <SettingsDrawer
                 isDrawer={isDrawer}
                 setIsDrawer={setIsDrawer}
+                setResultType={setResultType}
             />
+            {resultType !== EStatus.empty && <SettingsResult />}
         </Layout>
     );
 };
