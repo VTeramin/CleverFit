@@ -33,7 +33,7 @@
 .drawer__title {
     display: flex;
     align-items: center;
-    margin-bottom: 64px;
+    margin-bottom: 40px;
     margin-top: 24px;
 
     font-size: 20px;
@@ -46,6 +46,29 @@
     .drawer__title {
         margin-bottom: 16px;
     }
+}
+
+.drawer__expiration {
+    min-height: 24px;
+}
+
+.expiration__wrapper {
+    background: var(--primary-light-1);
+    padding: 14px 0;
+    text-align: center;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-larger);
+    color: var(--primary-light-10);
+}
+
+@media (max-width: 800px) {
+    .expiration__wrapper {
+        margin-top: 24px;
+    }
+}
+
+.expiration__wrapper>p {
+    margin: 0;
 }
 
 .drawer__tariffs-info {
@@ -94,6 +117,10 @@
 .tariffs-info__header>p:nth-child(2) {
     background: var(--primary-light-1);
     color: var(--primary-light-7);
+}
+
+.tariffs-info__header span {
+    color: var(--character-light-success);
 }
 
 .tariffs-info__info-row {

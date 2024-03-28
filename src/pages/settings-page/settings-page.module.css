@@ -25,7 +25,7 @@
     margin-bottom: 16px;
 }
 
-.settings-page__tarifs-cards-wrapper {
+.settings-page__tariffs-cards-wrapper {
     display: flex;
     flex-direction: row;
     gap: 25px;
@@ -33,14 +33,14 @@
 }
 
 @media (max-width: 800px) {
-    .settings-page__tarifs-cards-wrapper {
+    .settings-page__tariffs-cards-wrapper {
         flex-direction: column;
         gap: 12px;
         margin-bottom: 36px;
     }
 }
 
-.tarifs-card {
+.tariffs-card {
     width: 240px;
     box-shadow: var(--box-shadow);
     background: var(--character-light-primary-inverse);
@@ -48,12 +48,12 @@
 }
 
 @media (max-width: 800px) {
-    .tarifs-card {
+    .tariffs-card {
         width: 100%;
     }
 }
 
-.tarifs-card__header {
+.tariffs-card__header {
     height: 53px;
     display: flex;
     flex-direction: row;
@@ -61,17 +61,17 @@
     justify-content: space-between;
 }
 
-.tarifs-card__header>* {
+.tariffs-card__header>* {
     width: 50%;
 }
 
 @media (max-width: 800px) {
-    .tarifs-card__header>* {
+    .tariffs-card__header>* {
         width: 45%;
     }
 }
 
-.tarifs-card__title {
+.tariffs-card__title {
     margin: 0;
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-larger);
@@ -80,26 +80,30 @@
     color: var(--character-light-title-85);
 }
 
-.tarifs-card__img-wrapper {
+.tariffs-card__img-wrapper {
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.tarifs-card__img-wrapper,
-.tarifs-card__img {
+.tariffs-card__img-wrapper,
+.tariffs-card__img {
     height: 149px;
 }
 
 @media (max-width: 800px) {
-    .tarifs-card__img-wrapper,
-    .tarifs-card__img {
+    .tariffs-card__img-wrapper,
+    .tariffs-card__img {
         height: 194px;
     }
 }
 
-.tarifs-card__footer {
+.tariffs-card__img--disabled {
+    opacity: 0.5;
+}
+
+.tariffs-card__footer {
     height: 95px;
     display: flex;
     flex-direction: column;
@@ -108,17 +112,18 @@
 }
 
 @media (max-width: 800px) {
-    .tarifs-card__footer {
+    .tariffs-card__footer {
         height: 64px;
     }
 }
 
-.tarifs-card__status {
+.tariffs-card__status {
     margin: 0;
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-larger);
     line-height: var(--line-height);
     color: var(--primary-light-10);
+    text-align: center;
 }
 
 .settings-page__switches-wrapper {

@@ -5,6 +5,7 @@ import { TSettingsSwitchesData, TSwitchesValues } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeUserInfo, selectUserData } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
+import { convertDate } from '@utils/convert-date';
 import { changeRemoteUserData } from '@utils/requests/change-remote-user-data';
 import { getTariffList } from '@utils/requests/get-tariff-list';
 import { Button, Layout, Switch, Tooltip } from 'antd';
@@ -31,6 +32,9 @@ export const SettingsPage: React.FC = () => {
     });
     const [isDrawer, setIsDrawer] = useState(false);
     const [resultType, setResultType] = useState(EStatus.empty);
+    const expirationDate = userInfo.tariff?.expired
+        ? convertDate(new Date(userInfo.tariff.expired)).slice(0, 5)
+        : '';
 
     useEffect(() => {
         dispatch(getTariffList());
@@ -59,15 +63,19 @@ export const SettingsPage: React.FC = () => {
         }));
     }
 
+    const proTariffFooter = isTariffFree
+        ? <Button className={styles['conf-button']}>Активировать</Button>
+        : <p className={styles['tariffs-card__status']}>aктивен<br />до {expirationDate}</p>;
+
     return (
         <Layout className={styles['settings-page']}>
             <div className={styles['settings-page__inner']}>
                 <h2 className={styles['settings-page__title']}>Мой тариф</h2>
-                <div className={styles['settings-page__tarifs-cards-wrapper']}>
-                    {['FREE', 'PRO'].map(tarif => (
-                        <div key={tarif} className={styles['tarifs-card']}>
-                            <div className={styles['tarifs-card__header']}>
-                                <p className={styles['tarifs-card__title']}>{`${tarif} tarif`}</p>
+                <div className={styles['settings-page__tariffs-cards-wrapper']}>
+                    {['FREE', 'PRO'].map(tariff => (
+                        <div key={tariff} className={styles['tariffs-card']}>
+                            <div className={styles['tariffs-card__header']}>
+                                <p className={styles['tariffs-card__title']}>{`${tariff} tarif`}</p>
                                 <Button
                                     className={styles['text-button']}
                                     type='text'
@@ -76,21 +84,19 @@ export const SettingsPage: React.FC = () => {
                                     Подробнее
                                 </Button>
                             </div>
-                            <div className={styles['tarifs-card__img-wrapper']}>
+                            <div className={styles['tariffs-card__img-wrapper']}>
                                 <img
-                                    src={tarif === 'FREE' ? freeTarif : proTarif}
+                                    src={tariff === 'FREE' ? freeTarif : proTarif}
                                     alt='tarif'
-                                    className={styles['tarifs-card__img']}
+                                    className={isTariffFree && tariff !== 'FREE'
+                                        ? `${styles['tariffs-card__img--disabled']} ${styles['tariffs-card__img']}`
+                                        : styles['tariffs-card__img']}
                                 />
                             </div>
-                            <div className={styles['tarifs-card__footer']}>
-                                {tarif === 'FREE'
-                                    ? <p className={styles['tarifs-card__status']}>aктивен <CheckOutlined /></p>
-                                    : <Button
-                                        className={styles['conf-button']}
-                                    >
-                                        Активировать
-                                    </Button>}
+                            <div className={styles['tariffs-card__footer']}>
+                                {tariff === 'FREE'
+                                    ? <p className={styles['tariffs-card__status']}>aктивен <CheckOutlined /></p>
+                                    : proTariffFooter}
                             </div>
                         </div>
                     ))}

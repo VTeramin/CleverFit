@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { CheckCircleFilled, CloseCircleOutlined, CloseOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, CheckCircleOutlined, CloseCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import { EStatus } from '@constants/enums';
 import { tariffsInfo } from '@constants/tariffs-info';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectTariffList } from '@redux/tariff-list-slice';
+import { selectUserData } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
+import { convertDate } from '@utils/convert-date';
 import { changeTariff } from '@utils/requests/change-tariff';
 import { Button, Divider, Drawer } from 'antd';
 
@@ -25,6 +27,11 @@ export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer, setRes
     const proTariff = tariffList.find(el => el.name === 'Pro');
     const periods = proTariff ? Object.values(proTariff.periods) : undefined;
     const [selectedTariff, setSelectedTariff] = useState(0);
+    const { userInfo } = useAppSelector(selectUserData);
+    const isTariffFree = !Object.keys(userInfo).includes('tariff');
+    const expirationDate = userInfo.tariff?.expired
+        ? convertDate(new Date(userInfo.tariff.expired)).slice(0, 5)
+        : '';
 
     function handleSubmit() {
         // eslint-disable-next-line no-underscore-dangle
@@ -47,10 +54,15 @@ export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer, setRes
             className={styles.drawer}
         >
             <p className={styles.drawer__title}>Сравнить тарифы</p>
+            <div className={styles.drawer__expiration}>
+                {!isTariffFree && <div className={styles.expiration__wrapper}>
+                    <p>Ваш PRO tarif активен до {expirationDate}</p>
+                </div>}
+            </div>
             <div className={styles['drawer__tariffs-info']}>
                 <div className={styles['tariffs-info__header']}>
                     <p>FREE</p>
-                    <p>PRO</p>
+                    <p>PRO {!isTariffFree && <CheckCircleOutlined />}</p>
                 </div>
                 {Object.keys(tariffsInfo).map(el => (
                     <div key={el} className={styles['tariffs-info__info-row']}>
@@ -66,31 +78,33 @@ export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer, setRes
                     </div>
                 ))}
             </div>
-            <p className={styles.drawer__subtitle}>Стоимость тарифа</p>
-            <div className={styles['drawer__tariff-selector']}>
-                {periods?.map(period => (
-                    <div key={period.text} className={styles['tariff-selector__row']}>
-                        <p>{period.text}</p>
-                        <div className={styles['tariff-selector__radio-wrapper']}>
-                            <p>{String(period.cost).replace('.', ',')} $</p>
-                            <input
-                                type='radio'
-                                name='tariff'
-                                value={period.days}
-                                onClick={() => setSelectedTariff(period.days)}
-                            />
+            {isTariffFree && <React.Fragment>
+                <p className={styles.drawer__subtitle}>Стоимость тарифа</p>
+                <div className={styles['drawer__tariff-selector']}>
+                    {periods?.map(period => (
+                        <div key={period.text} className={styles['tariff-selector__row']}>
+                            <p>{period.text}</p>
+                            <div className={styles['tariff-selector__radio-wrapper']}>
+                                <p>{String(period.cost).replace('.', ',')} $</p>
+                                <input
+                                    type='radio'
+                                    name='tariff'
+                                    value={period.days}
+                                    onClick={() => setSelectedTariff(period.days)}
+                                />
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </div>
-            <Divider />
-            <Button
-                className={styles['drawer__conf-button']}
-                disabled={selectedTariff === 0}
-                onClick={() => handleSubmit()}
-            >
-                Выбрать и оплатить
-            </Button>
+                    ))}
+                </div>
+                <Divider />
+                <Button
+                    className={styles['drawer__conf-button']}
+                    disabled={selectedTariff === 0}
+                    onClick={() => handleSubmit()}
+                >
+                    Выбрать и оплатить
+                </Button>
+            </React.Fragment>}
             <Button
                 type="text"
                 className={styles.drawer__close}
