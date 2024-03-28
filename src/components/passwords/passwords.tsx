@@ -22,7 +22,7 @@ export const Passwords: React.FC = () => {
     });
 
     useEffect(() => {
-        if(password === '' && confirmPassword === '') {
+        if (password === '' && confirmPassword === '') {
             setPasswords({
                 password: '',
                 confirmPassword: ''
@@ -67,7 +67,7 @@ export const Passwords: React.FC = () => {
                     placeholder={pathname === '/profile' ? 'Пароль' : 'Новый пароль'}
                     value={passwords.password}
                     onChange={event => handlePassword(event)}
-                    data-test-id="change-password"
+                    data-test-id={pathname === '/profile' ? 'profile-password' : 'change-password'}
                 />
             </Form.Item>
             <Form.Item
@@ -82,7 +82,7 @@ export const Passwords: React.FC = () => {
                     placeholder="Повторите пароль"
                     value={passwords.confirmPassword}
                     onChange={event => handlePassword(event)}
-                    data-test-id="change-confirm-password"
+                    data-test-id={pathname === '/profile' ? 'profile-repeat-password' : 'change-confirm-password'}
                 />
             </Form.Item>
         </div>

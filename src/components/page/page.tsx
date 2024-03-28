@@ -53,6 +53,7 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
                         type='text'
                         className={styles['header__settings-button']}
                         onClick={() => navigate(EROUTE.SETTINGS)}
+                        data-test-id='header-settings'
                     >
                         <div className={styles.header__settings}>
                             <SettingOutlined className={styles.settings__icon} />
@@ -81,6 +82,7 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
                         type='text'
                         className={styles['header__settings-button']}
                         onClick={() => navigate(EROUTE.SETTINGS)}
+                        data-test-id='header-settings'
                     >
                         <div className={styles.header__settings}>
                             <SettingOutlined className={styles.settings__icon} />
@@ -98,6 +100,7 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
                         type='text'
                         className={styles['header__settings-button']}
                         onClick={() => navigate(EROUTE.SETTINGS)}
+                        data-test-id='header-settings'
                     >
                         <div className={styles.header__settings}>
                             <SettingOutlined className={styles.settings__icon} />
@@ -114,6 +117,7 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
                         onClick={() => history.back()}
                         className={styles['settings-arrow-back']}
                         type='text'
+                        data-test-id='settings-back'
                     >
                         <ArrowLeftOutlined />
                     </Button>

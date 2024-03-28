@@ -69,7 +69,13 @@ export const SettingsPage: React.FC = () => {
     }
 
     const proTariffFooter = isTariffFree
-        ? <Button className={styles['conf-button']}>Активировать</Button>
+        ? <Button
+            className={styles['conf-button']}
+            onClick={() => setIsDrawer(true)}
+            data-test-id='activate-tariff-btn'
+        >
+            Активировать
+        </Button>
         : <p className={styles['tariffs-card__status']}>aктивен<br />до {expirationDate}</p>;
 
     return (
@@ -78,7 +84,11 @@ export const SettingsPage: React.FC = () => {
                 <h2 className={styles['settings-page__title']}>Мой тариф</h2>
                 <div className={styles['settings-page__tariffs-cards-wrapper']}>
                     {['FREE', 'PRO'].map(tariff => (
-                        <div key={tariff} className={styles['tariffs-card']}>
+                        <div
+                            key={tariff}
+                            className={styles['tariffs-card']}
+                            data-test-id={tariff === 'PRO' && 'pro-tariff-card'}
+                        >
                             <div className={styles['tariffs-card__header']}>
                                 <p className={styles['tariffs-card__title']}>{`${tariff} tarif`}</p>
                                 <Button
@@ -114,21 +124,33 @@ export const SettingsPage: React.FC = () => {
                                 title: <p className={styles.tooltip}>
                                     включеная функция<br />позволит участвовать<br />в совместных тренировках
                                 </p>,
-                                disabled: false
+                                disabled: false,
+                                test: {
+                                    switch: 'tariff-trainings',
+                                    tooltip: 'tariff-trainings-icon'
+                                }
                             },
                             'уведомления': {
                                 text: 'Уведомления',
                                 title: <p className={styles.tooltip}>
                                     включеная функция<br />позволит получать<br />уведомления об активностях
                                 </p>,
-                                disabled: false
+                                disabled: false,
+                                test: {
+                                    switch: 'tariff-notifications',
+                                    tooltip: 'tariff-notifications-icon'
+                                }
                             },
                             'тема': {
                                 text: 'Тёмная тема',
                                 title: <p className={styles.tooltip}>
                                     темная тема<br />доступна для<br />PRO tarif
                                 </p>,
-                                disabled: isTariffFree
+                                disabled: isTariffFree,
+                                test: {
+                                    switch: 'tariff-theme',
+                                    tooltip: 'tariff-theme-icon'
+                                }
                             }
                         };
 
@@ -146,6 +168,7 @@ export const SettingsPage: React.FC = () => {
                                     color='var(--neutral-gray-13)'
                                     arrowPointAtCenter={true}
                                     placement={isMobile ? 'topLeft' : 'bottomLeft'}
+                                    data-test-id={switchesData[switchItem].test.tooltip}
                                 >
                                     <InfoCircleOutlined />
                                 </Tooltip>
@@ -154,6 +177,7 @@ export const SettingsPage: React.FC = () => {
                                     disabled={switchesData[switchItem].disabled}
                                     checked={switchValues[switchItem]}
                                     onClick={checked => handleSwitchChange(checked, switchItem)}
+                                    data-test-id={switchesData[switchItem].test.switch}
                                 />
                             </div>
                         )

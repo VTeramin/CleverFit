@@ -33,6 +33,7 @@ export const SettingsResult: React.FC = () => {
             onCancel={() => handleClose()}
             footer={null}
             wrapClassName={styles.result}
+            data-test-id='tariff-modal-success'
         >
             <Result
                 status="success"

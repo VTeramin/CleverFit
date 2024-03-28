@@ -149,6 +149,7 @@ export const ProfilePage: React.FC = () => {
                                 showInfo: false
                             }}
                             className={styles['profile-form__upload']}
+                            data-test-id='profile-avatar'
                         >
                             {fileList.length === 0 ? innerUpload : null}
                         </Upload>
@@ -157,6 +158,7 @@ export const ProfilePage: React.FC = () => {
                                 placeholder='Имя'
                                 value={userFormInfo.firstName}
                                 onChange={event => handleFormChange(event, 'firstName')}
+                                data-test-id='profile-name'
                             />
                         </Form.Item>
                         <Form.Item>
@@ -164,6 +166,7 @@ export const ProfilePage: React.FC = () => {
                                 placeholder='Фамилия'
                                 value={userFormInfo.lastName}
                                 onChange={event => handleFormChange(event, 'lastName')}
+                                data-test-id='profile-surname'
                             />
                         </Form.Item>
                         <Form.Item>
@@ -171,6 +174,7 @@ export const ProfilePage: React.FC = () => {
                                 placeholder='Дата рождения'
                                 format='DD.MM.YYYY'
                                 onChange={value => handleFormChange(value, 'birthday')}
+                                data-test-id='profile-birthday'
                             />
                         </Form.Item>
                     </div>
@@ -183,6 +187,7 @@ export const ProfilePage: React.FC = () => {
                                 required={true}
                                 value={userFormInfo.email}
                                 onChange={event => handleFormChange(event, 'email')}
+                                data-test-id='profile-email'
                             />
                         </Form.Item>
                         <Passwords />
@@ -191,6 +196,7 @@ export const ProfilePage: React.FC = () => {
                                 className={styles['profile-form__conf-button']}
                                 disabled={isSubmitDisabled}
                                 onClick={() => handleSaveChanges()}
+                                data-test-id='profile-submit'
                             >
                                 Сохранить изменения
                             </Button>
@@ -208,6 +214,7 @@ export const ProfilePage: React.FC = () => {
                     closable={true}
                     onClose={() => setResultType(EStatus.empty)}
                     className={styles['profile-form__alert']}
+                    data-test-id='alert'
                 />}
             </div>
         </Layout>

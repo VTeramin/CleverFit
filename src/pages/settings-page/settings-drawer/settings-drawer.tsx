@@ -52,6 +52,7 @@ export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer, setRes
             destroyOnClose={true}
             placement={isMobile ? 'bottom' : 'right'}
             className={styles.drawer}
+            data-test-id='tariff-sider'
         >
             <p className={styles.drawer__title}>Сравнить тарифы</p>
             <div className={styles.drawer__expiration}>
@@ -80,7 +81,7 @@ export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer, setRes
             </div>
             {isTariffFree && <React.Fragment>
                 <p className={styles.drawer__subtitle}>Стоимость тарифа</p>
-                <div className={styles['drawer__tariff-selector']}>
+                <div className={styles['drawer__tariff-selector']} data-test-id='tariff-cost'>
                     {periods?.map(period => (
                         <div key={period.text} className={styles['tariff-selector__row']}>
                             <p>{period.text}</p>

@@ -31,7 +31,7 @@ export const MainContent: React.FC = () => {
                 <Button
                     className={styles.block__content}
                     onClick={event => handleBlockClick(event as MouseEvent<HTMLButtonElement>)}
-                    data-test-id={['', 'menu-button-calendar', ''][index]}
+                    data-test-id={['', 'menu-button-calendar', 'menu-button-profile'][index]}
                 >
                     {React.createElement(icon, { className: styles.block__icon, twoToneColor: 'var(--primary-light-6)' })}
                     <p className={styles.block__subtitle}>{navBlocksSubtitles[index]}</p>

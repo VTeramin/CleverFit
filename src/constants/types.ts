@@ -88,7 +88,10 @@ export type TSettingsSwitchesData = {
     [name: string]: {
         text: string,
         title: JSX.Element,
-        disabled: boolean
+        disabled: boolean,
+        test: {
+            [name: string]: string
+        }
     }
 }
 
