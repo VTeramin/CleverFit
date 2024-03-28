@@ -167,6 +167,10 @@
     align-self: flex-start;
 }
 
+.settings-page__switch>button[class*="checked"] {
+    background: var(--primary-light-6);
+}
+
 @media (max-width: 800px) {
     .settings-page__switch>button {
         align-self: center;

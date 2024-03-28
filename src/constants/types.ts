@@ -92,6 +92,10 @@ export type TSettingsSwitchesData = {
     }
 }
 
+export type TSwitchesValues = {
+    [name: string]: boolean | undefined
+}
+
 export type TUserDataFormReponse = {
     email?: string,
     firstName?: string,
@@ -110,4 +114,11 @@ export type TUserData = {
     isAuthorized: boolean,
     sessionToken: string,
     userInfo: TUserDataFormReponse
+}
+
+export type TTariffsInfo = {
+    [name: string]: {
+        free: boolean,
+        pro: boolean
+    }
 }

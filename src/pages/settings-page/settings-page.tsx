@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CheckOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import { TSettingsSwitchesData } from '@constants/types';
+import { TSettingsSwitchesData, TSwitchesValues } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeUserInfo, selectUserData } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
@@ -11,6 +11,8 @@ import { Button, Layout, Switch, Tooltip } from 'antd';
 import freeTarif from '../../assets/img/tarif-free.png';
 import proTarif from '../../assets/img/tarif-pro.png'
 
+import { SettingsDrawer } from './settings-drawer/settings-drawer';
+
 import 'antd/dist/antd.css';
 import styles from './settings-page.module.css';
 
@@ -18,13 +20,15 @@ export const SettingsPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const width = useWindowSize().width || 0;
     const isMobile = width <= 800;
+
     const { userInfo } = useAppSelector(selectUserData);
     const isTariffFree = !Object.keys(userInfo).includes('tariff');
-    const [switchValues, setSwitchValues] = useState<{ [name: string]: boolean | undefined }>({
+    const [switchValues, setSwitchValues] = useState<TSwitchesValues>({
         'тренировки': userInfo.readyForJointTraining,
         'уведомления': userInfo.sendNotification,
         'тема': false
     });
+    const [isDrawer, setIsDrawer] = useState(false);
 
     useEffect(() => {
         dispatch(getTariffList());
@@ -65,6 +69,7 @@ export const SettingsPage: React.FC = () => {
                                 <Button
                                     className={styles['text-button']}
                                     type='text'
+                                    onClick={() => setIsDrawer(true)}
                                 >
                                     Подробнее
                                 </Button>
@@ -147,6 +152,10 @@ export const SettingsPage: React.FC = () => {
                     Смотреть все отзывы
                 </Button>
             </div>
+            <SettingsDrawer
+                isDrawer={isDrawer}
+                setIsDrawer={setIsDrawer}
+            />
         </Layout>
     );
 };
