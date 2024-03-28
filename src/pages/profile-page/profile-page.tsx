@@ -27,6 +27,7 @@ export const ProfilePage: React.FC = () => {
     const { password } = useAppSelector(selectLogin);
 
     const [userFormInfo, setUserFormInfo] = useState(userInfo);
+    const [isFormChanged, setIsFormChanged] = useState(false);
     const emailValidStatus = userFormInfo.email && !validEmail(userFormInfo.email) ? EValid.error : EValid.success;
     const { valid } = useAppSelector(selectLogin);
 
@@ -41,7 +42,6 @@ export const ProfilePage: React.FC = () => {
         ? [{
             uid: '-1',
             name: 'avatar',
-            status: 'done',
             url: userInfo.imgSrc,
         }]
         : []);
@@ -64,10 +64,10 @@ export const ProfilePage: React.FC = () => {
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
     useEffect(() => {
-        const checkRes = checkIsSubmitProfileDisabled(fileList, valid, password);
+        const checkResult = checkIsSubmitProfileDisabled(fileList, valid, password, isFormChanged);
 
-        if(checkRes !== null) setIsSubmitDisabled(checkRes);
-    }, [fileList, userFormInfo, valid, password]);
+        if(checkResult !== null) setIsSubmitDisabled(checkResult);
+    }, [fileList, userFormInfo, valid, password, isFormChanged]);
 
     function onUploadChange(info: UploadChangeParam<UploadFile>) {
         if (info.file.status === 'error') {
@@ -86,6 +86,7 @@ export const ProfilePage: React.FC = () => {
         }
 
         setFileList(info.fileList);
+        setIsFormChanged(true);
     }
 
     function handleFormChange(event: React.ChangeEvent<HTMLInputElement> | moment.Moment | null, field: string) {
@@ -101,6 +102,7 @@ export const ProfilePage: React.FC = () => {
             }));
         }
         setIsSubmitDisabled(false);
+        setIsFormChanged(true);
     }
 
     function handleSaveChanges() {
