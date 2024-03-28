@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CheckOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import { EStatus } from '@constants/enums';
+import { ResultModal } from '@components/result-modal/result-modal';
+import { EROUTE, EStatus } from '@constants/enums';
 import { TSettingsSwitchesData, TSwitchesValues } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { FeedbackModal } from '@pages/feedbacks-page/feedback-modal/feedback-modal';
 import { changeUserInfo, selectUserData } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { convertDate } from '@utils/convert-date';
@@ -20,6 +23,7 @@ import 'antd/dist/antd.css';
 import styles from './settings-page.module.css';
 
 export const SettingsPage: React.FC = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const width = useWindowSize().width || 0;
     const isMobile = width <= 800;
@@ -31,6 +35,7 @@ export const SettingsPage: React.FC = () => {
         'тема': false
     });
     const [isDrawer, setIsDrawer] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [resultType, setResultType] = useState(EStatus.empty);
     const expirationDate = userInfo.tariff?.expired
         ? convertDate(new Date(userInfo.tariff.expired)).slice(0, 5)
@@ -150,12 +155,14 @@ export const SettingsPage: React.FC = () => {
                 </div>
                 <Button
                     className={styles['conf-button']}
+                    onClick={() => setIsModalOpen(true)}
                 >
                     Написать отзыв
                 </Button>
                 <Button
                     className={styles['text-button']}
                     type='text'
+                    onClick={() => navigate(EROUTE.FEEDBACKS)}
                 >
                     Смотреть все отзывы
                 </Button>
@@ -165,7 +172,17 @@ export const SettingsPage: React.FC = () => {
                 setIsDrawer={setIsDrawer}
                 setResultType={setResultType}
             />
-            {resultType !== EStatus.empty && <SettingsResult />}
+            <FeedbackModal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                setResultType={setResultType}
+            />
+            {resultType === EStatus.successTariff && <SettingsResult />}
+            {resultType !== EStatus.empty && <ResultModal
+                resultType={resultType}
+                setResultType={setResultType}
+                setIsModalOpen={setIsModalOpen}
+            />}
         </Layout>
     );
 };
