@@ -74,8 +74,11 @@
     }
 }
 
-.profile-form [class*="upload-picture-card-wrapper"] {
+.profile-form .profile-form__upload  {
     grid-area: upload;
+}
+
+.profile-form [class*="upload-picture-card-wrapper"] {
     width: 104px;
 }
 

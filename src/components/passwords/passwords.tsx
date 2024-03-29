@@ -67,6 +67,7 @@ export const Passwords: React.FC = () => {
                     placeholder={pathname === '/profile' ? 'Пароль' : 'Новый пароль'}
                     value={passwords.password}
                     onChange={event => handlePassword(event)}
+                    aria-invalid={validStatus.password === EValid.error ? true : undefined}
                     data-test-id={pathname === '/profile' ? 'profile-password' : 'change-password'}
                 />
             </Form.Item>
@@ -82,6 +83,7 @@ export const Passwords: React.FC = () => {
                     placeholder="Повторите пароль"
                     value={passwords.confirmPassword}
                     onChange={event => handlePassword(event)}
+                    aria-invalid={validStatus.confirmPassword === EValid.error ? true : undefined}
                     data-test-id={pathname === '/profile' ? 'profile-repeat-password' : 'change-confirm-password'}
                 />
             </Form.Item>

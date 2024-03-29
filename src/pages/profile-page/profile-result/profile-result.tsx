@@ -30,6 +30,7 @@ export const ProfileResult: React.FC<TProps> = ({ resultType, setResultType }) =
                         key="Закрыть"
                         className={`${styles['conf-button']}`}
                         onClick={() => handleClose()}
+                        data-test-id='big-file-error-close'
                     >
                         Закрыть
                     </Button>
@@ -45,7 +46,6 @@ export const ProfileResult: React.FC<TProps> = ({ resultType, setResultType }) =
                         key="Закрыть"
                         className={`${styles['conf-button']}`}
                         onClick={() => handleClose()}
-                        data-test-id='big-file-error-close'
                     >
                         Закрыть
                     </Button>

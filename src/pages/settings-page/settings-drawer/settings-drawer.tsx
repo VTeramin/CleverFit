@@ -92,6 +92,7 @@ export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer, setRes
                                     name='tariff'
                                     value={period.days}
                                     onClick={() => setSelectedTariff(period.days)}
+                                    data-test-id={`tariff-${period.cost}`}
                                 />
                             </div>
                         </div>
@@ -102,6 +103,7 @@ export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer, setRes
                     className={styles['drawer__conf-button']}
                     disabled={selectedTariff === 0}
                     onClick={() => handleSubmit()}
+                    data-test-id='tariff-submit'
                 >
                     Выбрать и оплатить
                 </Button>

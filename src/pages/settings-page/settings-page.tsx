@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { CheckOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { ResultModal } from '@components/result-modal/result-modal';
 import { EROUTE, EStatus } from '@constants/enums';
-import { TSettingsSwitchesData, TSwitchesValues } from '@constants/types';
+import { switchesData } from '@constants/switches-data';
+import { TSwitchesValues } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { FeedbackModal } from '@pages/feedbacks-page/feedback-modal/feedback-modal';
 import { changeUserInfo, selectUserData } from '@redux/user-data-slice';
@@ -118,66 +119,32 @@ export const SettingsPage: React.FC = () => {
                 </div>
                 <div className={styles['settings-page__switches-wrapper']}>
                     {Object.keys(switchValues).map((switchItem: string) => {
-                        const switchesData: TSettingsSwitchesData = {
-                            'тренировки': {
-                                text: 'Открыт для совместных тренировок',
-                                title: <p className={styles.tooltip}>
-                                    включеная функция<br />позволит участвовать<br />в совместных тренировках
-                                </p>,
-                                disabled: false,
-                                test: {
-                                    switch: 'tariff-trainings',
-                                    tooltip: 'tariff-trainings-icon'
-                                }
-                            },
-                            'уведомления': {
-                                text: 'Уведомления',
-                                title: <p className={styles.tooltip}>
-                                    включеная функция<br />позволит получать<br />уведомления об активностях
-                                </p>,
-                                disabled: false,
-                                test: {
-                                    switch: 'tariff-notifications',
-                                    tooltip: 'tariff-notifications-icon'
-                                }
-                            },
-                            'тема': {
-                                text: 'Тёмная тема',
-                                title: <p className={styles.tooltip}>
-                                    темная тема<br />доступна для<br />PRO tarif
-                                </p>,
-                                disabled: isTariffFree,
-                                test: {
-                                    switch: 'tariff-theme',
-                                    tooltip: 'tariff-theme-icon'
-                                }
-                            }
-                        };
+                        const data = switchesData(styles, isTariffFree);
 
                         return (
                             <div key={switchItem} className={styles['settings-page__switch']}>
                                 <p
-                                    className={switchesData[switchItem].disabled
+                                    className={data[switchItem].disabled
                                         ? styles['switch__title--disabled']
                                         : undefined}
                                 >
-                                    {switchesData[switchItem].text}
+                                    {data[switchItem].text}
                                 </p>
                                 <Tooltip
-                                    title={switchesData[switchItem].title}
+                                    title={data[switchItem].title}
                                     color='var(--neutral-gray-13)'
                                     arrowPointAtCenter={true}
                                     placement={isMobile ? 'topLeft' : 'bottomLeft'}
-                                    data-test-id={switchesData[switchItem].test.tooltip}
+                                    popupVisible={true}
                                 >
-                                    <InfoCircleOutlined />
+                                    <InfoCircleOutlined data-test-id={data[switchItem].test.tooltip} />
                                 </Tooltip>
                                 <Switch
                                     size={isMobile ? 'small' : 'default'}
-                                    disabled={switchesData[switchItem].disabled}
+                                    disabled={data[switchItem].disabled}
                                     checked={switchValues[switchItem]}
                                     onClick={checked => handleSwitchChange(checked, switchItem)}
-                                    data-test-id={switchesData[switchItem].test.switch}
+                                    data-test-id={data[switchItem].test.switch}
                                 />
                             </div>
                         )
@@ -208,7 +175,7 @@ export const SettingsPage: React.FC = () => {
                 setResultType={setResultType}
             />
             {resultType === EStatus.successTariff && <SettingsResult />}
-            {resultType !== EStatus.empty && <ResultModal
+            {resultType !== EStatus.empty && resultType !== EStatus.successTariff && <ResultModal
                 resultType={resultType}
                 setResultType={setResultType}
                 setIsModalOpen={setIsModalOpen}

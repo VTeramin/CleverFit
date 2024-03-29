@@ -2,18 +2,15 @@ import { EValid } from '@constants/enums';
 import { TValidChange } from '@constants/types';
 import { UploadFile } from 'antd/lib/upload';
 
-export const checkIsSubmitProfileDisabled = (fileList: UploadFile[], valid: TValidChange, password: string, isFormChanged: boolean) => {
-    const isPictureError = fileList[0]?.status !== 'done';
-    const isPicture = fileList[0];
+export const checkIsSubmitProfileDisabled = (fileList: UploadFile[], valid: TValidChange, password: string, emailValid: EValid, email: string | undefined) => {
+    const isPictureError = fileList[0]?.status === 'error';
     const isPasswordsNotValid = valid.password === EValid.error || valid.confirmPassword === EValid.error;
+    const isEmailNotValid = emailValid === EValid.error;
+    const isEmailExist = email !== '' && email !== undefined;
 
-    if (isPictureError && isPicture && isFormChanged || isPasswordsNotValid) {
-        return true
+    if (isPictureError || isPasswordsNotValid && password !== '' || isEmailNotValid && isEmailExist) {
+        return true;
     }
 
-    if (!isPasswordsNotValid && password !== '' || isPicture && isFormChanged) {
-        return false
-    }
-
-    return null;
+    return false;
 }

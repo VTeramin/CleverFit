@@ -27,7 +27,6 @@ export const ProfilePage: React.FC = () => {
     const { password } = useAppSelector(selectLogin);
 
     const [userFormInfo, setUserFormInfo] = useState(userInfo);
-    const [isFormChanged, setIsFormChanged] = useState(false);
     const emailValidStatus = userFormInfo.email && !validEmail(userFormInfo.email) ? EValid.error : EValid.success;
     const { valid } = useAppSelector(selectLogin);
 
@@ -55,19 +54,12 @@ export const ProfilePage: React.FC = () => {
             ? [{
                 uid: '-1',
                 name: 'avatar',
-                status: 'done',
                 url: userInfo.imgSrc,
             }]
             : []);
     }, [userFormInfo, userInfo, fileList]);
 
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-
-    useEffect(() => {
-        const checkResult = checkIsSubmitProfileDisabled(fileList, valid, password, isFormChanged);
-
-        if(checkResult !== null) setIsSubmitDisabled(checkResult);
-    }, [fileList, userFormInfo, valid, password, isFormChanged]);
 
     function onUploadChange(info: UploadChangeParam<UploadFile>) {
         if (info.file.status === 'error') {
@@ -77,16 +69,17 @@ export const ProfilePage: React.FC = () => {
                 status: 'error'
             }]);
             setResultType(EStatus.errorUploadPicture);
+            setIsSubmitDisabled(true);
 
             return;
         }
 
         if (info.file.status === 'done') {
             dispatch(changeUserInfo({ imgSrc: `https://training-api.clevertec.ru/${info.file.response.url}` }));
+            setIsSubmitDisabled(checkIsSubmitProfileDisabled(fileList, valid, password, emailValidStatus, userFormInfo.email));
         }
 
         setFileList(info.fileList);
-        setIsFormChanged(true);
     }
 
     function handleFormChange(event: React.ChangeEvent<HTMLInputElement> | moment.Moment | null, field: string) {
@@ -101,8 +94,7 @@ export const ProfilePage: React.FC = () => {
                 [field]: event?.target.value
             }));
         }
-        setIsSubmitDisabled(false);
-        setIsFormChanged(true);
+        setIsSubmitDisabled(checkIsSubmitProfileDisabled(fileList, valid, password, emailValidStatus, userFormInfo.email));
     }
 
     function handleSaveChanges() {
@@ -111,22 +103,18 @@ export const ProfilePage: React.FC = () => {
             password: '',
             confirmPassword: ''
         }));
+        setIsSubmitDisabled(true);
     }
 
-
     const innerUpload = isMobile
-        ? (
-            <div className={styles['profile-form__upload-inner-mobile']}>
-                <p>Загрузить фото профиля:</p>
-                <Button icon={<UploadOutlined />}>Загрузить</Button>
-            </div>
-        )
-        : (
-            <div>
-                <PlusOutlined />
-                <div>Загрузить фото профиля</div>
-            </div>
-        );
+        ? <div className={styles['profile-form__upload-inner-mobile']}>
+            <p>Загрузить фото профиля:</p>
+            <Button icon={<UploadOutlined />}>Загрузить</Button>
+        </div>
+        : <div>
+            <PlusOutlined />
+            <div>Загрузить фото профиля</div>
+        </div>;
 
     return (
         <Layout className={styles.page}>
@@ -134,25 +122,28 @@ export const ProfilePage: React.FC = () => {
                 <Form className={styles['profile-form']}>
                     <h2 className={styles['profile-form__block-title']}>Личная информация</h2>
                     <div className={styles['profile-form__personal-info']}>
-                        <Upload
-                            listType={isMobile ? 'picture' : 'picture-card'}
-                            action={`${API}/upload-image`}
-                            headers={{
-                                'Authorization': `Bearer ${sessionToken}`
-                            }}
-                            withCredentials={true}
-                            maxCount={1}
-                            fileList={fileList}
-                            onChange={info => onUploadChange(info)}
-                            progress={{
-                                strokeWidth: 4,
-                                showInfo: false
-                            }}
+                        <div
                             className={styles['profile-form__upload']}
                             data-test-id='profile-avatar'
                         >
-                            {fileList.length === 0 ? innerUpload : null}
-                        </Upload>
+                            <Upload
+                                listType={isMobile ? 'picture' : 'picture-card'}
+                                action={`${API}/upload-image`}
+                                headers={{
+                                    'Authorization': `Bearer ${sessionToken}`
+                                }}
+                                withCredentials={true}
+                                maxCount={1}
+                                fileList={fileList}
+                                onChange={info => onUploadChange(info)}
+                                progress={{
+                                    strokeWidth: 4,
+                                    showInfo: false
+                                }}
+                            >
+                                {fileList.length === 0 ? innerUpload : null}
+                            </Upload>
+                        </div>
                         <Form.Item>
                             <Input
                                 placeholder='Имя'
@@ -187,6 +178,7 @@ export const ProfilePage: React.FC = () => {
                                 required={true}
                                 value={userFormInfo.email}
                                 onChange={event => handleFormChange(event, 'email')}
+                                aria-invalid={emailValidStatus === EValid.error ? true : undefined}
                                 data-test-id='profile-email'
                             />
                         </Form.Item>
