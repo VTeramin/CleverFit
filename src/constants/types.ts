@@ -1,31 +1,33 @@
-import { calendarModalType, status, valid } from "./enums"
+import { ECalendarModalType, EStatus, EValid } from './enums'
 
-export type validChange = {
-    password: valid.success | valid.error,
-    confirmPassword: valid.success | valid.error
+export type TValidChange = {
+    password: EValid.success | EValid.error,
+    confirmPassword: EValid.success | EValid.error
 }
 
-export type validAuth = {
-    email: valid.error | valid.success,
-    password: valid.error | valid.success,
-    confirmPassword: valid.error | valid.success,
-    passwordHelp: valid.error | valid.normal,
-    confirmPasswordHelp: valid.error | valid.normal
+export type TValidAuth = {
+    email: EValid.error | EValid.success,
+    password: EValid.error | EValid.success,
+    confirmPassword: EValid.error | EValid.success,
+    passwordHelp: EValid.error | EValid.normal,
+    confirmPasswordHelp: EValid.error | EValid.normal
 }
 
-export type passwords = {
+export type TPasswords = {
     password: string,
     confirmPassword: string
 }
 
-export type login = {
+export type TLogin = {
     email: string,
     isRemember: boolean,
     password: string,
-    confirmPassword: string
+    confirmPassword: string,
+    valid: TValidChange
 }
 
-export type feedback = {
+export type TFeedback = {
+    id: string,
     imageSrc: string,
     fullName: string,
     rating: number,
@@ -33,7 +35,7 @@ export type feedback = {
     message: string
 }
 
-export type exercise = {
+export type TExercise = {
     name: string,
     replays: number,
     weight: number,
@@ -42,20 +44,20 @@ export type exercise = {
     isImplementation?: boolean
 }
 
-export type drawerFormFields = {
+export type TDrawerFormFields = {
     [key: string]: {
-        name: string | undefined,
-        replays: number | undefined,
-        weight: number | undefined,
-        approaches: number | undefined,
+        name?: string,
+        replays?: number,
+        weight?: number,
+        approaches?: number,
         isImplementation?: boolean
     }
 }
 
-export type training = {
+export type TTraining = {
     name: string,
     date: Date,
-    exercises: exercise[],
+    exercises: TExercise[],
     _id?: string,
     isImplementation?: boolean,
     userId?: string,
@@ -67,17 +69,59 @@ export type training = {
     }
 }
 
-export type calendarModal = {
+export type TCalendarModal = {
     isEdit: boolean,
     isModal: boolean,
     isDrawer: boolean,
-    resultType: status,
-    modalType: calendarModalType,
+    resultType: EStatus,
+    modalType: ECalendarModalType,
     modalCoord: {
         x: number,
         y: number
     },
     selectedTraining: string | null,
     editTraining: string | null,
-    exerciseFormFields: drawerFormFields
+    exerciseFormFields: TDrawerFormFields
+}
+
+export type TSettingsSwitchesData = {
+    [name: string]: {
+        text: string,
+        title: JSX.Element,
+        disabled: boolean,
+        test: {
+            [name: string]: string
+        }
+    }
+}
+
+export type TSwitchesValues = {
+    [name: string]: boolean | undefined
+}
+
+export type TUserDataFormReponse = {
+    email?: string,
+    firstName?: string,
+    lastName?: string,
+    birthday?: string,
+    imgSrc?: string,
+    readyForJointTraining?: boolean,
+    sendNotification?: boolean,
+    tariff?: {
+        tariffId?: string,
+        expired?: Date
+    }
+}
+
+export type TUserData = {
+    isAuthorized: boolean,
+    sessionToken: string,
+    userInfo: TUserDataFormReponse
+}
+
+export type TTariffsInfo = {
+    [name: string]: {
+        free: boolean,
+        pro: boolean
+    }
 }

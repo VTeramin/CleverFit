@@ -1,0 +1,223 @@
+.settings-page {
+    padding: 24px 24px 42px;
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+}
+
+@media (max-width: 800px) {
+    .settings-page {
+        padding: 24px 0 42px;
+    }
+}
+
+.settings-page__inner {
+    height: 100%;
+    padding: 24px;
+    background: var(--character-light-primary-inverse);
+    border-radius: var(--border-radius-drawer);
+}
+
+
+.settings-page__title {
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+.settings-page__tariffs-cards-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+@media (max-width: 800px) {
+    .settings-page__tariffs-cards-wrapper {
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 36px;
+    }
+}
+
+.tariffs-card {
+    width: 240px;
+    box-shadow: var(--box-shadow);
+    background: var(--character-light-primary-inverse);
+    border-radius: var(--border-radius);
+}
+
+@media (max-width: 800px) {
+    .tariffs-card {
+        width: 100%;
+    }
+}
+
+.tariffs-card__header {
+    height: 53px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tariffs-card__header>* {
+    width: 50%;
+}
+
+@media (max-width: 800px) {
+    .tariffs-card__header>* {
+        width: 45%;
+    }
+}
+
+.tariffs-card__title {
+    margin: 0;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-larger);
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--character-light-title-85);
+}
+
+.tariffs-card__img-wrapper {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tariffs-card__img-wrapper,
+.tariffs-card__img {
+    height: 149px;
+}
+
+@media (max-width: 800px) {
+    .tariffs-card__img-wrapper,
+    .tariffs-card__img {
+        height: 194px;
+    }
+}
+
+.tariffs-card__img--disabled {
+    opacity: 0.5;
+}
+
+.tariffs-card__footer {
+    height: 95px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 800px) {
+    .tariffs-card__footer {
+        height: 64px;
+    }
+}
+
+.tariffs-card__status {
+    margin: 0;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-larger);
+    line-height: var(--line-height);
+    color: var(--primary-light-10);
+    text-align: center;
+}
+
+.settings-page__switches-wrapper {
+    width: 505px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 112px;
+}
+
+@media (max-width: 800px) {
+    .settings-page__switches-wrapper {
+        width: 100%;
+        gap: 24px;
+        margin-bottom: 36px;
+    }
+}
+
+.settings-page__switch {
+    display: flex;
+    flex-direction: row;
+}
+
+.settings-page__switch>p {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+@media (max-width: 800px) {
+    .settings-page__switch>p {
+        max-width: 176px;
+    }
+}
+
+.settings-page__switch>.switch__title--disabled {
+    color: var(--character-light-disable-25);
+}
+
+.settings-page__switch>span {
+    height: 18px;
+    color: var(--character-light-secondary-45);
+    margin-left: 8px;
+    margin-right: auto;
+    align-self: flex-start;
+}
+
+.tooltip {
+    margin: 0;
+}
+
+.settings-page__switch>button[class*="checked"] {
+    background: var(--primary-light-6);
+}
+
+@media (max-width: 800px) {
+    .settings-page__switch>button {
+        align-self: center;
+    }
+}
+
+.settings-page__inner>.conf-button {
+    margin-right: 8px;
+}
+
+@media (max-width: 800px) {
+    .settings-page__inner>.conf-button {
+        margin-right: 0;
+        margin-bottom: 16px;
+    }
+
+    .settings-page__inner>.conf-button,
+    .settings-page__inner>.text-button {
+        width: 100%;
+    }
+}
+
+.conf-button {
+    height: var(--button-height);
+    padding: var(--button-padding);
+    border: var(--button-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-button);
+    background: var(--primary-light-6);
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--character-light-primary-inverse);
+}
+
+.text-button {
+    font-family: var(--font-family);
+    color: var(--primary-light-6);
+}

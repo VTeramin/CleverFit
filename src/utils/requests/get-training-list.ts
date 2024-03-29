@@ -1,11 +1,11 @@
-import { API } from "@constants/api";
-import { status } from "@constants/enums";
-import { changeResultType } from "@redux/calendarModalSlice";
-import { AppDispatch, GetState } from "@redux/configure-store";
-import { toggleLoader } from "@redux/loaderSlice";
-import { changeTrainingListData } from "@redux/trainingListSlice";
-import { changeTrainingData } from "@redux/trainingSlice";
-import axios from "axios";
+import { API } from '@constants/api';
+import { EStatus } from '@constants/enums';
+import { changeResultType } from '@redux/calendar-modal-slice';
+import { AppDispatch, GetState } from '@redux/configure-store';
+import { toggleLoader } from '@redux/loader-slice';
+import { changeTrainingListData } from '@redux/training-list-slice';
+import { changeTrainingData } from '@redux/training-slice';
+import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
@@ -14,7 +14,7 @@ export const getTrainingList = () => async (dispatch: AppDispatch, getState: Get
     const { sessionToken } = getState().userData;
     const params = {
         headers: {
-            "Authorization": `Bearer ${sessionToken}`
+            'Authorization': `Bearer ${sessionToken}`
         }
     };
 
@@ -22,7 +22,7 @@ export const getTrainingList = () => async (dispatch: AppDispatch, getState: Get
         .then(response => dispatch(changeTrainingListData(response.data)))
         .catch(() => {
             dispatch(changeTrainingData([]));
-            dispatch(changeResultType(status.errorTrainingList));
+            dispatch(changeResultType(EStatus.errorTrainingList));
         })
         .finally(() => dispatch(toggleLoader(false)));
 };

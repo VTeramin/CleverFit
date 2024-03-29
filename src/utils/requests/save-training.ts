@@ -1,11 +1,11 @@
-import { API } from "@constants/api";
-import { calendarModalType, status } from "@constants/enums";
-import { changeModalType, changeResultType } from "@redux/calendarModalSlice";
-import { AppDispatch, GetState } from "@redux/configure-store";
-import { toggleLoader } from "@redux/loaderSlice";
-import { checkIsFuture } from "@utils/check-is-future";
-import axios from "axios";
-import { findTrainingId } from "@utils/calendar-utils/find-training-id";
+import { API } from '@constants/api';
+import { ECalendarModalType, EStatus } from '@constants/enums';
+import { changeModalType, changeResultType } from '@redux/calendar-modal-slice';
+import { AppDispatch, GetState } from '@redux/configure-store';
+import { toggleLoader } from '@redux/loader-slice';
+import { findTrainingId } from '@utils/calendar-utils/find-training-id';
+import { checkIsFuture } from '@utils/check-is-future';
+import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
@@ -25,7 +25,7 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
 
     const params = {
         headers: {
-            "Authorization": `Bearer ${sessionToken}`
+            'Authorization': `Bearer ${sessionToken}`
         }
     };
 
@@ -33,7 +33,7 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
         ? axios.put(`${API}/training/${trainingId}`, { ...data, isImplementation }, params)
         : axios.post(`${API}/training`, data, params);
 
-    return action.then(() => dispatch(changeModalType(calendarModalType.default)))
-        .catch(() => dispatch(changeResultType(status.errorSaveTraining)))
+    return action.then(() => dispatch(changeModalType(ECalendarModalType.default)))
+        .catch(() => dispatch(changeResultType(EStatus.errorSaveTraining)))
         .finally(() => dispatch(toggleLoader(false)));
 };

@@ -1,18 +1,19 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "./configure-store";
+import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 
-export type trainingListItem = {
-    "name": "string",
-    "key": "string"
+import { RootState } from './configure-store';
+
+export type TTrainingListItem = {
+    'name': 'string',
+    'key': 'string'
 }
 
-const initialState: trainingListItem[] = [];
+const initialState: TTrainingListItem[] = [];
 
 export const trainingListSlice = createSlice({
     name: 'trainingList',
     initialState,
     reducers: {
-        changeTrainingListData: (state, action: PayloadAction<trainingListItem[]>) => {
+        changeTrainingListData: (state, action: PayloadAction<TTrainingListItem[]>) => {
             state.splice(0, state.length);
             state.push(...action.payload);
         }

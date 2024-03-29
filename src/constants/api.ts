@@ -1,1 +1,1 @@
-export const API = "https://marathon-api.clevertec.ru";
+export const API = 'https://marathon-api.clevertec.ru';
