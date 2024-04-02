@@ -20,7 +20,7 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
     const data = {
         name: selectedTraining as string,
         date,
-        exercises: exerciseFormFields
+        exercises: Object.values(exerciseFormFields)
     };
 
     const params = {
@@ -34,6 +34,9 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
         : axios.post(`${API}/training`, data, params);
 
     return action.then(() => dispatch(changeModalType(ECalendarModalType.default)))
-        .catch(() => dispatch(changeResultType(EStatus.errorSaveTraining)))
+        .catch((error) => {
+            console.log(error)
+            dispatch(changeResultType(EStatus.errorSaveTraining))
+        })
         .finally(() => dispatch(toggleLoader(false)));
 };

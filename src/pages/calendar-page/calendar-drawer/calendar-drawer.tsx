@@ -36,7 +36,6 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
             maskStyle={{ background: 'transparent' }}
             maskClosable={true}
             onClose={() => handleDrawerClose()}
-            destroyOnClose={true}
             placement={isMobile ? 'bottom' : 'right'}
             height={555}
             className={styles.drawer}
