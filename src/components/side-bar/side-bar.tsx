@@ -28,7 +28,7 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
     const { pathname } = useLocation();
     const paths =  useMemo(() => [
         EROUTE.CALENDAR,
-        '',
+        EROUTE.TRAINING,
         '',
         EROUTE.PROFILE
     ], []);

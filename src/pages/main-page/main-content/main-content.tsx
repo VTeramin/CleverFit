@@ -15,6 +15,7 @@ export const MainContent: React.FC = () => {
     function handleBlockClick(event: MouseEvent<HTMLButtonElement>) {
         const text = event.currentTarget.textContent || '';
         const paths: { [name: string]: string } = {
+            'Тренировки': EROUTE.TRAINING,
             'Календарь': EROUTE.CALENDAR,
             'Профиль': EROUTE.PROFILE
         };

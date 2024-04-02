@@ -19,7 +19,8 @@ import {
     NotFoundPage,
     ProfilePage,
     Result,
-    SettingsPage
+    SettingsPage,
+    TrainingPage
 } from './pages';
 
 export const App: React.FC = () => (
@@ -41,6 +42,7 @@ export const App: React.FC = () => (
                     <Route path={EROUTE.CALENDAR} element={<CalendarPage />} />
                     <Route path={EROUTE.PROFILE} element={<ProfilePage />} />
                     <Route path={EROUTE.SETTINGS} element={<SettingsPage />} />
+                    <Route path={EROUTE.TRAINING} element={<TrainingPage />} />
                     <Route path='*' element={<NotFoundPage />} />
                 </Route>
                 <Route element={<PushRoutes />}>
