@@ -34,9 +34,6 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
         : axios.post(`${API}/training`, data, params);
 
     return action.then(() => dispatch(changeModalType(ECalendarModalType.default)))
-        .catch((error) => {
-            console.log(error)
-            dispatch(changeResultType(EStatus.errorSaveTraining))
-        })
+        .catch(() => dispatch(changeResultType(EStatus.errorSaveTraining)))
         .finally(() => dispatch(toggleLoader(false)));
 };

@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CalendarTwoTone, HeartTwoTone, IdcardTwoTone, TrophyTwoTone } from '@ant-design/icons';
 import { EROUTE } from '@constants/enums';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
@@ -25,6 +25,19 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
     const width = useWindowSize().width || 0;
     const isFullWidth = width > 800;
     const siderRef = useOutsideClick(() => setCollapsed(true));
+    const { pathname } = useLocation();
+    const paths =  useMemo(() => [
+        EROUTE.CALENDAR,
+        '',
+        '',
+        EROUTE.PROFILE
+    ], []);
+
+    const [selectedMenuItem, setSelectedMenuItem] = useState<string[]>([]);
+
+    useEffect(() => {
+        setSelectedMenuItem([String(paths.indexOf(pathname as EROUTE))]);
+    }, [paths, pathname]);
 
     function handleLogoClick() {
         navigate(EROUTE.MAIN);
@@ -38,9 +51,9 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
 
     function handleMenuClick(item: MenuInfo) {
         const index = Number(item.key);
-        const paths = [EROUTE.CALENDAR, EROUTE.MAIN, EROUTE.MAIN, EROUTE.PROFILE];
 
         navigate(paths[index]);
+        setSelectedMenuItem([item.key]);
     }
 
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
@@ -75,16 +88,16 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
             <Menu
                 theme="light"
                 mode="inline"
-                defaultSelectedKeys={['4']}
+                selectedKeys={selectedMenuItem}
                 className={styles.sider__menu}
                 onClick={item => handleMenuClick(item)}
                 items={menuItems}
             />
             <Button
-            className={styles.sider__exit}
-            onClick={() => handleExit()}
-            type='text'
-            id='side-bar__exit'
+                className={styles.sider__exit}
+                onClick={() => handleExit()}
+                type='text'
+                id='side-bar__exit'
             >
                 <div className={styles.exit__icon} />
                 {!collapsed && <p className={styles.exit__line}>Выход</p>}
