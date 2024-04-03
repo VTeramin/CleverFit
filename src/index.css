@@ -106,6 +106,7 @@
     --background-blur-color-light: rgba(121, 156, 212, 0.1);
     --box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
     --box-shadow-exit: inset 0 1px 0 0 var(--character-light-dividers);
+    --box-shadow-training: inset 0 -1px 0 0 var(--character-light-dividers);
     --box-shadow-button: 0 2px 0 0 rgba(0, 0, 0, 0.04);
     --icon-large: 32px;
     --icon-size: 16px;

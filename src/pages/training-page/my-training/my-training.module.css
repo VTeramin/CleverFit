@@ -1,0 +1,116 @@
+.training {
+    background: transparent;
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+}
+
+.training__header {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 24px;
+}
+
+.header__training-type {
+    padding: 8px;
+}
+
+.header__training-type,
+.row__select-wrapper {
+    width: 259px;
+    margin-right: 12px;
+}
+
+.header__training-sort,
+.row__frequency {
+    width: 240px;
+    margin-right: 12px;
+}
+
+.header__training-type,
+.header__training-sort {
+    height: 32px;
+    background: var(--character-light-dividers);
+    font-size: var(--font-size-smaller);
+}
+
+.training__header>.header__training-sort>[class*="select-selector"] {
+    padding: 0 8px;
+    border: none;
+    background: var(--character-light-dividers);
+}
+
+.training__row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row__select-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.row__select-wrapper>*,
+.row__frequency {
+    height: 32px;
+    box-shadow: var(--box-shadow-training);
+}
+
+.row__select-wrapper>[class*="badge"] {
+    margin-right: 12px;
+    line-height: 32px;
+}
+
+.row__select {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.row__select>p {
+    line-height: 32px;
+    margin: 0;
+    margin-right: auto;
+    color: var(--character-light-title-85);
+}
+
+.row__dropdown {
+    padding: 0;
+}
+
+.row__dropdown span {
+    font-size: 10px;
+}
+
+.row__frequency {
+    margin-bottom: 0;
+    line-height: 32px;
+    vertical-align: middle;
+    color: var(--character-light-title-85);
+}
+
+.training__row>span>svg {
+    width: 25px;
+    height: 25px;
+    fill: var(--primary-light-6);
+}
+
+.training__conf-button {
+    margin-top: 54px;
+    width: var(--button-width-larger);
+    height: var(--button-height);
+    padding: var(--button-padding);
+    border: var(--button-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-button);
+    background: var(--primary-light-6);
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--character-light-primary-inverse);
+}

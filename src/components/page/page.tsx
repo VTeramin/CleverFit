@@ -32,7 +32,8 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
 
     const breadCrumbs: { [url: string]: string } = {
         '/feedbacks': 'Отзывы пользователей',
-        '/calendar': 'Календарь'
+        '/calendar': 'Календарь',
+        '/training': 'Тренировки'
     };
     const isCrumbs = Object.keys(breadCrumbs).includes(pathname);
 
@@ -122,6 +123,27 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
                         <ArrowLeftOutlined />
                     </Button>
                     <h1 className={`${styles.header__title} ${styles['profile-title']}`}>Настройки</h1>
+                </Header>
+            </div>
+        ),
+        [EROUTE.TRAINING]: (
+            <div>
+                <Breadcrumb className={styles['page-layout__breadcrumbs']}>
+                    <Breadcrumb.Item onClick={() => navigate(EROUTE.MAIN)}>Главная</Breadcrumb.Item>
+                    {isCrumbs && <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>}
+                </Breadcrumb>
+                <Header className={styles.header}>
+                    <Button
+                        type='text'
+                        className={styles['header__settings-button']}
+                        onClick={() => navigate(EROUTE.SETTINGS)}
+                        data-test-id='header-settings'
+                    >
+                        <div className={styles.header__settings}>
+                            <SettingOutlined className={styles.settings__icon} />
+                            <p className={styles.settings__line}>Настройки</p>
+                        </div>
+                    </Button>
                 </Header>
             </div>
         )
