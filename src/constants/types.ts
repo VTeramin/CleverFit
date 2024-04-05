@@ -81,6 +81,8 @@ export type TCalendarModal = {
     },
     selectedTraining: string | null,
     editTraining: string | null,
+    interval: number | null,
+    isSaveDisabled: boolean,
     exerciseFormFields: TDrawerFormFields
 }
 
@@ -124,4 +126,8 @@ export type TTariffsInfo = {
         free: boolean,
         pro: boolean
     }
+}
+
+export type TDrawerTitles = {
+    [name: string]: JSX.Element
 }

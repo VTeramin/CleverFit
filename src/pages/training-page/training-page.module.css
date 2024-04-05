@@ -14,6 +14,12 @@
     background: var(--character-light-primary-inverse);
 }
 
+.tablist,
+.tablist [class*="content"],
+.tablist [class*="tabs-tabpane"] {
+    height: 100%;
+}
+
 .tablist>[class*="tabs-nav"] {
     margin-bottom: 36px;
 }

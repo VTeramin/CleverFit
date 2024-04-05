@@ -55,3 +55,9 @@ export enum EROUTE {
     ERROR_CHANGE_PASSWORD='/result/error-change-password',
     ERROR_CHECK_EMAIL='/result/error-check-email'
 }
+
+export enum EDrawer {
+    default='default',
+    edit='edit',
+    noDate='noDate'
+}

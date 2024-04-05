@@ -1,0 +1,11 @@
+.modal__input [class*="selection-placeholder"] {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.modal__input [class*="select-arrow"] {
+    color: var(--character-light-secondary-45);
+}
