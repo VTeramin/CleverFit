@@ -5,7 +5,7 @@ import { intervalOptions } from '@constants/interval-options';
 import { TDrawerFormFields } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { TrainingSelect } from '@pages/calendar-page/calendar-modal/inner-new-training/training-select/training-select';
-import { changeExerciseFormFields, changeInterval, selectCalendarModalData, toggleIsDrawer, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
+import { changeBackUp, changeExerciseFormFields, changeInterval, selectCalendarModalData, toggleIsDrawer, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
 import { selectTraining } from '@redux/training-slice';
 import { findExercises } from '@utils/calendar-utils/find-exercises';
 import { findTraining } from '@utils/calendar-utils/find-training';
@@ -42,9 +42,9 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
             : Object.values(exerciseFormFields)
     };
 
-    // useEffect(() => {
-    //     if (form.current) form.current.resetFields();
-    // }, [exerciseFormFields]);
+    useEffect(() => {
+        if (form.current) form.current.resetFields();
+    }, [exerciseFormFields]);
 
     const [isInterval, setIsInterval] = useState(false);
     const fixedDate = date ? getFixedDate(date) : '';
@@ -100,7 +100,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
         const formFields = form.current?.getFieldsValue(exerciseFormFields).exercises;
         const isAnyExercises = formFields.filter((el: TDrawerFormFields) => el.name).length;
 
-        dispatch(changeExerciseFormFields(sortDrawerFormFromEmpty({ exercises: formFields })));
+        dispatch(changeBackUp(sortDrawerFormFromEmpty({ exercises: formFields })));
         dispatch(toggleIsSaveDisabled(pickedMoment === null || selectedTraining === null || form.current === null || !isAnyExercises));
     }
 

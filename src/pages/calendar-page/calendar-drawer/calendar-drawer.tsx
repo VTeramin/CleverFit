@@ -5,7 +5,7 @@ import { EDrawer } from '@constants/enums';
 import { TDrawerTitles } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarTrainingList } from '@pages/calendar-page/calendar-training-list/calendar-training-list';
-import { changeExerciseFormFields, changeInterval, changeSelectedTraining, selectCalendarModalData, toggleIsDrawer, toggleIsEdit, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
+import { changeExerciseFormFields, selectCalendarModalData, toggleIsDrawer, toggleIsEdit } from '@redux/calendar-modal-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { checkIsFuture } from '@utils/check-is-future';
 import { convertDate } from '@utils/convert-date';
@@ -27,7 +27,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
     const { pathname } = useLocation();
     const browserWidth = useWindowSize().width || 0;
     const isMobile = browserWidth <= 800;
-    const { isEdit, isDrawer, selectedTraining, isSaveDisabled } = useAppSelector(selectCalendarModalData);
+    const { isEdit, isDrawer, selectedTraining, isSaveDisabled, formBackUp } = useAppSelector(selectCalendarModalData);
     const isMyTrainingPage = pathname === '/training';
     const isWarning = date ? !checkIsFuture(date) : false;
     const [drawerType, setDrawerType] = useState(EDrawer.default);
@@ -40,12 +40,6 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
     }, [isEdit, isMyTrainingPage, dispatch]);
 
     useEffect(() => {
-        if (isMyTrainingPage && !isEdit) {
-            dispatch(changeSelectedTraining(null));
-            dispatch(changeExerciseFormFields({}));
-            dispatch(changeInterval(null));
-            dispatch(toggleIsSaveDisabled(true));
-        }
         if (!isDrawer) {
             setPickedMoment(null);
         }
@@ -62,7 +56,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
     }
 
     function handleSave() {
-
+        dispatch(changeExerciseFormFields(formBackUp));
         dispatch(saveTraining(new Date(pickedMoment?.format() as string)));
         setPickedMoment(null);
         dispatch(toggleIsDrawer(false));
@@ -83,7 +77,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
     return (
         <Drawer
             open={isDrawer}
-            destroyOnClose={isMyTrainingPage}
+            destroyOnClose={true}
             width={408}
             headerStyle={{ display: 'none' }}
             maskStyle={{ background: 'transparent' }}

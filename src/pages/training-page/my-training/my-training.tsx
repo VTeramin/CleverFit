@@ -6,11 +6,13 @@ import { intervalOptions } from '@constants/interval-options';
 import { TTraining } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarDrawer } from '@pages/calendar-page/calendar-drawer/calendar-drawer';
-import { changeEditTraining, changeExerciseFormFields, changeResultType, changeSelectedTraining, selectCalendarModalData, toggleIsDrawer, toggleIsEdit } from '@redux/calendar-modal-slice';
+import { changeEditTraining, changeExerciseFormFields, changeInterval, changeModalCoord, changeResultType, changeSelectedTraining, selectCalendarModalData, toggleIsDrawer, toggleIsEdit, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
 import { selectTrainingList } from '@redux/training-list-slice';
 import { selectTraining } from '@redux/training-slice';
 import { findExercises } from '@utils/calendar-utils/find-exercises';
 import { Alert, Badge, Button, Layout, Pagination, Select } from 'antd';
+
+import { MyTrainingModal } from './my-training-modal/my-training-modal';
 
 import 'antd/dist/antd.css';
 import styles from './my-training.module.css';
@@ -28,6 +30,7 @@ export const MyTraining: React.FC = () => {
         [EStatus.success]: 'Новая тренировка успешно добавлена',
         [EStatus.successEdit]: 'Тренирока успешно обновлена'
     }
+    const [isModal, setIsModal] = useState(false);
 
     const frequency = (el: TTraining) => intervalOptions.find(option => option.value === el.parameters?.period)?.label;
     const [selectedDate, setSelectdDate] = useState<Date | null>(null);
@@ -48,8 +51,26 @@ export const MyTraining: React.FC = () => {
     }
 
     function handleNewTraining() {
+        dispatch(changeSelectedTraining(null));
+        dispatch(changeExerciseFormFields({}));
+        dispatch(changeInterval(null));
+        dispatch(toggleIsSaveDisabled(true));
         dispatch(toggleIsEdit(false));
         dispatch(toggleIsDrawer(true));
+    }
+
+    function showModal(el: TTraining, ind: number) {
+        const exercises = dispatch(findExercises(el.date, el.name));
+
+        dispatch(changeExerciseFormFields(exercises));
+        dispatch(changeSelectedTraining(el.name));
+        dispatch(toggleIsEdit(true));
+
+        dispatch(changeModalCoord({
+            x: 18,
+            y: 57 + 32 * (ind % pageSize)
+        }));
+        setIsModal(true);
     }
 
     return (
@@ -78,7 +99,7 @@ export const MyTraining: React.FC = () => {
                             className={styles['header__training-sort']}
                         />
                     </div>
-                    {training.slice((currentPage - 1) * pageSize, currentPage * pageSize).map(el => (
+                    {training.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((el, ind) => (
                         <div key={el._id} className={styles.training__row}>
                             <div className={styles['row__select-wrapper']}>
                                 <Badge color={EBadgeColors[el.name as keyof typeof EBadgeColors]} />
@@ -86,6 +107,8 @@ export const MyTraining: React.FC = () => {
                                     <p>{el.name}</p>
                                     <Button
                                         type='text'
+                                        id={`Dropdown ${el._id}`}
+                                        onClick={() => showModal(el, ind)}
                                         className={styles.row__dropdown}
                                     >
                                         <DownOutlined />
@@ -130,6 +153,9 @@ export const MyTraining: React.FC = () => {
                         onClose={() => dispatch(changeResultType(EStatus.empty))}
                         className={styles.training__alert}
                         data-test-id='alert'
+                    />}
+                    {isModal && <MyTrainingModal
+                        setIsModal={setIsModal}
                     />}
                 </Layout>}
             <CalendarDrawer date={selectedDate || undefined} />

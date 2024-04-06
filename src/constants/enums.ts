@@ -4,12 +4,11 @@ export enum ECalendarModalType {
 }
 
 export enum EBadgeColors {
-    'Ноги' = 'volcano',
-    'Силовая' = 'yellow',
-    'Руки' = 'cyan',
-    'Грудь' = 'green',
-    'Спина' = 'orange',
-    'Кардио' = 'pink'
+    'Ноги' = '#fa541c',
+    'Силовая' = '#fadb14',
+    'Руки' = '#13c2c2',
+    'Грудь' = '#52c41a',
+    'Спина' = '#fa8c16'
 }
 
 export enum EValid {

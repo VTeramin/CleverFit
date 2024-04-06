@@ -18,7 +18,8 @@ const initialState: TCalendarModal = {
     editTraining: null,
     interval: null,
     isSaveDisabled: true,
-    exerciseFormFields: {}
+    exerciseFormFields: {},
+    formBackUp: {}
 };
 
 export const calendarModalSlice = createSlice({
@@ -38,11 +39,6 @@ export const calendarModalSlice = createSlice({
             state.resultType = action.payload;
         },
         changeModalType: (state, action: PayloadAction<ECalendarModalType>) => {
-            if(action.payload === ECalendarModalType.default) {
-                state.selectedTraining = null;
-                state.editTraining = null;
-                Object.keys(state.exerciseFormFields).forEach(key => delete state.exerciseFormFields[key]);
-            }
             state.modalType = action.payload;
         },
         changeModalCoord: (state, action: PayloadAction<{ x: number, y: number }>) => {
@@ -65,6 +61,10 @@ export const calendarModalSlice = createSlice({
         changeExerciseFormFields: (state, action: PayloadAction<TDrawerFormFields>) => {
             Object.keys(state.exerciseFormFields).forEach(key => delete state.exerciseFormFields[key]);
             Object.assign(state.exerciseFormFields, action.payload);
+        },
+        changeBackUp: (state, action: PayloadAction<TDrawerFormFields>) => {
+            Object.keys(state.formBackUp).forEach(key => delete state.exerciseFormFields[key]);
+            Object.assign(state.formBackUp, action.payload);
         }
     }
 });
@@ -80,7 +80,8 @@ export const {
     changeEditTraining,
     changeInterval,
     toggleIsSaveDisabled,
-    changeExerciseFormFields
+    changeExerciseFormFields,
+    changeBackUp
 } = calendarModalSlice.actions;
 export const selectCalendarModalData = (state: RootState) => state.calendarModal;
 export default calendarModalSlice.reducer;
