@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { EDrawer } from '@constants/enums';
 import { TDrawerTitles } from '@constants/types';
@@ -10,7 +11,7 @@ import { checkIsFuture } from '@utils/check-is-future';
 import { convertDate } from '@utils/convert-date';
 import { saveTraining } from '@utils/requests/save-training';
 import { Button, Divider, Drawer } from 'antd';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 
 import { CalendarDrawerForm } from './calendar-drawer-form/calendar-drawer-form';
 
@@ -23,39 +24,45 @@ type TProps = {
 
 export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
     const dispatch = useAppDispatch();
+    const { pathname } = useLocation();
     const browserWidth = useWindowSize().width || 0;
     const isMobile = browserWidth <= 800;
     const { isEdit, isDrawer, selectedTraining, isSaveDisabled } = useAppSelector(selectCalendarModalData);
-    const isNoDate = date === undefined;
-    const isWarning = isNoDate ? false : isEdit && !checkIsFuture(date);
+    const isMyTrainingPage = pathname === '/training';
+    const isWarning = date ? !checkIsFuture(date) : false;
     const [drawerType, setDrawerType] = useState(EDrawer.default);
     const [pickedMoment, setPickedMoment] = useState<Moment | null>(null);
 
     useEffect(() => {
         if (isEdit) setDrawerType(EDrawer.edit);
-        if (isNoDate) {
-            setDrawerType(EDrawer.noDate);
-            dispatch(toggleIsEdit(false));
-        };
-        if (!isEdit && !isNoDate) setDrawerType(EDrawer.default);
-    }, [isEdit, isNoDate, dispatch]);
+        if (isMyTrainingPage && !isEdit) setDrawerType(EDrawer.noDate);
+        if (!isEdit && !isMyTrainingPage) setDrawerType(EDrawer.default);
+    }, [isEdit, isMyTrainingPage, dispatch]);
 
     useEffect(() => {
-        if (isNoDate) {
+        if (isMyTrainingPage && !isEdit) {
             dispatch(changeSelectedTraining(null));
             dispatch(changeExerciseFormFields({}));
             dispatch(changeInterval(null));
             dispatch(toggleIsSaveDisabled(true));
-        };
-    }, [isNoDate, isDrawer, dispatch]);
+        }
+        if (!isDrawer) {
+            setPickedMoment(null);
+        }
+        if (isDrawer && isEdit) {
+            setPickedMoment(moment(date));
+        }
+    }, [isMyTrainingPage, isDrawer, isEdit, date, dispatch]);
 
     function handleClose() {
+        if (isMyTrainingPage) dispatch(toggleIsEdit(false));
         const closeBtn = document.getElementById('drawer__close') as HTMLElement;
 
         closeBtn.click();
     }
 
     function handleSave() {
+
         dispatch(saveTraining(new Date(pickedMoment?.format() as string)));
         setPickedMoment(null);
         dispatch(toggleIsDrawer(false));
@@ -76,7 +83,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
     return (
         <Drawer
             open={isDrawer}
-            destroyOnClose={isNoDate}
+            destroyOnClose={isMyTrainingPage}
             width={408}
             headerStyle={{ display: 'none' }}
             maskStyle={{ background: 'transparent' }}
@@ -90,7 +97,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
             <p className={styles.drawer__title}>
                 {drawerTitles[drawerType]}
             </p>
-            {!isNoDate &&
+            {!isMyTrainingPage && date &&
                 <div className={styles['drawer__training-type-wrapper']}>
                     <CalendarTrainingList
                         listData={[{ key: '1', name: selectedTraining as string }]}
@@ -109,7 +116,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
                 <p className={styles.drawer__warning}>
                     После сохранения внесенных изменений отредактировать проведенную тренировку будет невозможно
                 </p>}
-            {isNoDate &&
+            {isMyTrainingPage &&
                 <React.Fragment>
                     <Divider className={styles.drawer__divider} />
                     <Button

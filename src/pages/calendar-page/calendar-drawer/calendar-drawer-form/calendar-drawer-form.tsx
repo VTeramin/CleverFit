@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CalendarTwoTone, CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { intervalOptions } from '@constants/interval-options';
 import { TDrawerFormFields } from '@constants/types';
@@ -7,6 +8,7 @@ import { TrainingSelect } from '@pages/calendar-page/calendar-modal/inner-new-tr
 import { changeExerciseFormFields, changeInterval, selectCalendarModalData, toggleIsDrawer, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
 import { selectTraining } from '@redux/training-slice';
 import { findExercises } from '@utils/calendar-utils/find-exercises';
+import { findTraining } from '@utils/calendar-utils/find-training';
 import { sortDrawerFormFromEmpty } from '@utils/calendar-utils/sort-drawer-form-from-empty';
 import { getFixedDate } from '@utils/get-fixed-date';
 import { Button, Checkbox, DatePicker, Form, FormInstance, Input, InputNumber, Select } from 'antd';
@@ -24,7 +26,8 @@ type TProps = {
 
 export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPickedMoment }) => {
     const dispatch = useAppDispatch();
-    const isNoDate = date === undefined;
+    const { pathname } = useLocation();
+    const isMyTrainingPage = pathname === '/training';
     const training = useAppSelector(selectTraining);
     const { isEdit, selectedTraining, interval, exerciseFormFields } = useAppSelector(selectCalendarModalData);
     const form = useRef<FormInstance<{ exercises: TDrawerFormFields }>>(null);
@@ -38,21 +41,30 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
             }]
             : Object.values(exerciseFormFields)
     };
+
+    // useEffect(() => {
+    //     if (form.current) form.current.resetFields();
+    // }, [exerciseFormFields]);
+
     const [isInterval, setIsInterval] = useState(false);
+    const fixedDate = date ? getFixedDate(date) : '';
 
     useEffect(() => {
-        if (form.current) form.current.resetFields();
-    }, [exerciseFormFields]);
+        if (fixedDate !== '') {
+            const period = dispatch(findTraining(new Date(fixedDate), selectedTraining as string))?.parameters?.period || 0;
 
-    const fixedDate = isNoDate ? '' : getFixedDate(date);
+            setIsInterval(period > 0);
+            dispatch(changeInterval(period > 0 ? period : null));
+        };
+    }, [dispatch, selectedTraining, fixedDate]);
 
     useEffect(() => {
-        if (!isNoDate) {
+        if (!isMyTrainingPage) {
             const formData = dispatch(findExercises(fixedDate, selectedTraining as string));
 
             dispatch(changeExerciseFormFields(formData));
         }
-    }, [dispatch, isEdit, selectedTraining, training, fixedDate, isNoDate]);
+    }, [dispatch, isEdit, selectedTraining, training, fixedDate, isMyTrainingPage]);
 
     const [checkboxList, setCheckboxList] = useState<{ [key: number]: boolean }>({});
     const [isDeleteDisabled, setIsDeleteDisabled] = useState(true);
@@ -88,6 +100,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
         const formFields = form.current?.getFieldsValue(exerciseFormFields).exercises;
         const isAnyExercises = formFields.filter((el: TDrawerFormFields) => el.name).length;
 
+        dispatch(changeExerciseFormFields(sortDrawerFormFromEmpty({ exercises: formFields })));
         dispatch(toggleIsSaveDisabled(pickedMoment === null || selectedTraining === null || form.current === null || !isAnyExercises));
     }
 
@@ -106,7 +119,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
             <Form.List name="exercises">
                 {(fields, { add, remove }) => (
                     <React.Fragment>
-                        {isNoDate && <div className={styles['drawer__no-date-group']}>
+                        {isMyTrainingPage && <div className={styles['drawer__no-date-group']}>
                             <TrainingSelect />
                             <div className={styles['no-date-group__date']}>
                                 <DatePicker
@@ -136,7 +149,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                                 <Form.Item name={[name, 'name']} required={true}>
                                     <Input
                                         placeholder="Упражнение"
-                                        addonAfter={isEdit && <Checkbox
+                                        addonAfter={isEdit && !isMyTrainingPage && <Checkbox
                                             checked={checkboxList[name]}
                                             onChange={(event) => handleCheckboxChange(event, name)}
                                             name="checkbox"
@@ -181,10 +194,10 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                                     type="text"
                                     icon={<PlusOutlined />}
                                 >
-                                    {isNoDate ? 'Добавить ещё упражнение' : 'Добавить ещё'}
+                                    {isMyTrainingPage ? 'Добавить ещё упражнение' : 'Добавить ещё'}
                                 </Button>
                             </Form.Item>
-                            {isEdit && <Form.Item>
+                            {isEdit && !isMyTrainingPage && <Form.Item>
                                 <Button
                                     className={styles.drawer__button}
                                     onClick={() => handleDelete(remove)}

@@ -117,6 +117,10 @@
     fill: var(--primary-light-6);
 }
 
+.row__edit-disabled>span>svg {
+    fill: var(--character-light-disable-25);
+}
+
 .training__pagination {
     margin-top: 24px;
 }

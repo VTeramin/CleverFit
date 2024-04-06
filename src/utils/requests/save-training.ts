@@ -19,7 +19,7 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
     const trainingId = dispatch(findTrainingId(date, selectedTraining as string));
     const isImplementation = !checkIsFuture(date);
 
-    const parameters = interval === 0 ? {} : {
+    const parameters = interval === null ? {} : {
         repeat: true,
         period: interval
     };
@@ -43,7 +43,7 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
 
     return action.then(() => {
         dispatch(changeModalType(ECalendarModalType.default));
-        dispatch(changeResultType(EStatus.success));
+        dispatch(changeResultType(isEdit ? EStatus.successEdit : EStatus.success));
         dispatch(getTraining());
     })
         .catch(() => dispatch(changeResultType(EStatus.errorSaveTraining)))

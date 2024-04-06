@@ -126,6 +126,7 @@
 
 .drawer__form {
     overflow-y: auto;
+    margin-bottom: auto;
 }
 
 .drawer__form::-webkit-scrollbar {
@@ -261,7 +262,6 @@
     background: var(--character-light-dividers);
     display: flex;
     flex-direction: row;
-    margin-bottom: 12px;
 }
 
 .drawer__button-wrapper>[class*="form-item"] {
@@ -289,12 +289,14 @@
 
 .drawer__warning {
     width: 260px;
+    height: max-content;
     margin: 24px auto 0;
     font-size: var(--font-size-smaller);
     line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-secondary-45);
     margin-bottom: 0;
+    align-self: flex-end;
 }
 
 .drawer__close {
@@ -323,11 +325,12 @@
 }
 
 .drawer__divider {
-    margin-top: auto;
+    margin-top: 12px;
     margin-bottom: 12px;
     width: calc(100% + 64px);
     position: relative;
     right: 32px;
+    align-self: flex-end;
 }
 
 .drawer__conf-button {

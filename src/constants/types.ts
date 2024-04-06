@@ -56,7 +56,7 @@ export type TDrawerFormFields = {
 
 export type TTraining = {
     name: string,
-    date: Date,
+    date: string,
     exercises: TExercise[],
     _id?: string,
     isImplementation?: boolean,

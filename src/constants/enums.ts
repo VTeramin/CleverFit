@@ -24,6 +24,7 @@ export enum EStatus {
     noToken = 'noToken',
     error = 'error',
     success = 'success',
+    successEdit = 'successEdit',
     successFeedback = 'successFeedback',
     errorFeedback = 'errorFeedback',
     successTariff = 'successTarif',

@@ -11,7 +11,7 @@ export const getTrainingSelectOptions = (date: Date | undefined) => (_: AppDispa
     const trainingNames = findAllTraining(training, date).map(el => el.name);
     const allTrainingNames = trainingList.map((el: TTrainingListItem) => ({ value: el.name }));
 
-    if(date === undefined) return allTrainingNames;
+    if (date === undefined) return allTrainingNames;
 
     const isFuture = checkIsFuture(date);
 

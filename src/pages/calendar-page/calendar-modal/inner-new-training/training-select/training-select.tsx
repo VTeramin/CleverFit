@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeEditTraining, changeSelectedTraining, selectCalendarModalData, toggleIsEdit } from '@redux/calendar-modal-slice';
 import { selectTraining } from '@redux/training-slice';
@@ -16,16 +17,20 @@ type TProps = {
 export const TrainingSelect: React.FC<TProps> = ({ date }) => {
     const dispatch = useAppDispatch();
     const training = useAppSelector(selectTraining);
+    const { pathname } = useLocation();
+    const isMyTrainingPage = pathname === '/training';
     const { selectedTraining, editTraining } = useAppSelector(selectCalendarModalData);
     const trainingNames = findAllTraining(training, date).map(el => el.name);
     const selectOptions = dispatch(getTrainingSelectOptions(date));
 
     function handleSelect(value: string) {
-        if (trainingNames.includes(value) && date !== undefined) {
-            dispatch(toggleIsEdit(true));
-            dispatch(changeEditTraining(value));
-        } else {
-            dispatch(toggleIsEdit(false));
+        if (!isMyTrainingPage) {
+            if (trainingNames.includes(value)) {
+                dispatch(toggleIsEdit(true));
+                dispatch(changeEditTraining(value));
+            } else {
+                dispatch(toggleIsEdit(false));
+            }
         }
         dispatch(changeSelectedTraining(value));
     }
