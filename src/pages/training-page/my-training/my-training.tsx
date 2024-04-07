@@ -9,8 +9,9 @@ import { CalendarDrawer } from '@pages/calendar-page/calendar-drawer/calendar-dr
 import { changeEditTraining, changeExerciseFormFields, changeInterval, changeModalCoord, changeResultType, changeSelectedTraining, selectCalendarModalData, toggleIsDrawer, toggleIsEdit, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
 import { selectTrainingList } from '@redux/training-list-slice';
 import { selectTraining } from '@redux/training-slice';
+import { useWindowSize } from '@uidotdev/usehooks';
 import { findExercises } from '@utils/calendar-utils/find-exercises';
-import { getMyTrainingModalCoords } from '@utils/calendar-utils/get-my-training-modal-coords';
+import { getMyTrainingModalCoords } from '@utils/training-utils/get-my-training-modal-coords';
 import { Alert, Badge, Button, Layout, Pagination, Select } from 'antd';
 
 import { MyTrainingModal } from './my-training-modal/my-training-modal';
@@ -20,13 +21,15 @@ import styles from './my-training.module.css';
 
 export const MyTraining: React.FC = () => {
     const dispatch = useAppDispatch();
+    const width = useWindowSize().width || 0;
+    const isMobile = width < 800;
     const training = useAppSelector(selectTraining);
     const isNoTraining = training.length === 0;
     const trainingList = useAppSelector(selectTrainingList);
     const isTraingListEmpty = trainingList.length === 0;
     const { resultType } = useAppSelector(selectCalendarModalData);
     const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 14;
+    const pageSize = isMobile ? 8 : 14;
     const alertMessages: { [name: string]: string } = {
         [EStatus.success]: 'Новая тренировка успешно добавлена',
         [EStatus.successEdit]: 'Тренирока успешно обновлена'
@@ -65,7 +68,7 @@ export const MyTraining: React.FC = () => {
         dispatch(changeExerciseFormFields(exercises));
         dispatch(changeSelectedTraining(el.name));
         dispatch(toggleIsEdit(true));
-        dispatch(changeModalCoord(getMyTrainingModalCoords(ind, pageSize)));
+        dispatch(changeModalCoord(getMyTrainingModalCoords(ind, pageSize, isMobile)));
         setIsModal(true);
     }
 
@@ -89,7 +92,7 @@ export const MyTraining: React.FC = () => {
                             options={[
                                 {
                                     value: 'Периодичность',
-                                    label: 'Сортировка по периоду',
+                                    label: 'Периодичность',
                                 }
                             ]}
                             className={styles['header__training-sort']}

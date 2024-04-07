@@ -18,14 +18,6 @@ import { CalendarTrainingList } from './calendar-training-list/calendar-training
 import 'antd/dist/antd.css';
 import styles from './calendar-page.module.css';
 
-import 'moment/locale/ru';
-
-moment.updateLocale('ru', {
-    week: { dow: 1 },
-    weekdaysMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-    monthsShort: ['Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Нояб', 'Дек'],
-});
-
 export const CalendarPage: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();

@@ -15,9 +15,14 @@
 }
 
 .drawer [class*="drawer-body"] {
+    overflow: hidden;
     padding: 24px 32px 12px;
     display: grid;
     grid-template-rows: max-content max-content 1fr;
+}
+
+.drawer-my-page [class*="drawer-body"] {
+    grid-template-rows: max-content 1fr max-content max-content;
 }
 
 @media (max-width: 800px) {
@@ -50,10 +55,24 @@
     margin: 24px 0;
 }
 
+@media (max-width: 800px) {
+    .drawer__no-date-group [class*="select-show-arrow"] {
+        margin: 0;
+        margin-bottom: 16px;
+    }
+}
+
 .drawer__no-date-group [class*="select-show-arrow"]>[class*="select-selector"],
 .drawer__no-date-group [class*="select-show-arrow"] [class*="select-selector"] [class*="select-selection"] {
     height: 100%;
     line-height: 26px;
+    color: var(--character-light-disable-25);
+}
+
+.drawer__no-date-group [class*="select-show-arrow"] [class*="select-selector"] [class*="select-selection-item"] {
+    height: 100%;
+    line-height: 26px;
+    color: var(--character-light-title-85);
 }
 
 .no-date-group__date {
@@ -70,12 +89,96 @@
     padding-right: 11px;
 }
 
+.no-date-group__date>[class*="ant-picker-disabled"] {
+    background: none;
+}
+
+.no-date-group__date>[class*="ant-picker"] input[disabled] {
+    color: var(--character-light-title-85);
+}
+
 .no-date-group__date>[class*="ant-picker"]>[class*="picker-input"] {
     width: 140px;
 }
 
 .no-date-group__date [class*="ant-picker-suffix"] svg>path {
     fill: var(--character-light-disable-25);
+}
+
+.no-date-group__calendar-popup {
+    width: 296px;
+}
+
+@media (max-width: 800px) {
+    .no-date-group__calendar-popup {
+        width: 246px;
+    }
+}
+
+.no-date-group__calendar-popup {
+    background: var(--neutral-gray-1);
+}
+
+.no-date-group__calendar-popup [class*="picker-panel"] {
+    background: transparent;
+}
+
+@media (max-width: 800px) {
+    .no-date-group__calendar-popup [class*="picker-content"] th {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.no-empty:before {
+    content: "";
+    display: block;
+    width: 43px;
+    height: 22px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-7%, 15%);
+    background: var(--primary-light-1);
+    z-index: -1;
+}
+
+@media (max-width: 800px) {
+    .no-empty:before {
+        width: 36px;
+        transform: translate(-6%, 15%);
+    }
+}
+
+.no-date-group__calendar-popup [class*="picker-panel"],
+.no-date-group__calendar-popup [class*="picker-date-panel"],
+.no-date-group__calendar-popup [class*="picker-content"] {
+    width: 100%;
+}
+
+.no-date-group__calendar-popup .today::after {
+    content: "";
+    display: block;
+    width: 32px;
+    height: 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(10%, 10%);
+    z-index: -1;
+    border-radius: var(--border-radius);
+    border: var(--button-border);
+}
+
+@media (max-width: 800px) {
+    .no-date-group__calendar-popup .today::after {
+        width: 25px;
+        transform: translate(16%, 10%);
+    }
+}
+
+.no-date-group__calendar-popup [class*="picker-cell"] [class*="picker-cell-inner"] {
+    width: 30px;
 }
 
 .no-date-group__date [class*="checkbox-wrapper"]>span:nth-child(2) {
@@ -124,7 +227,14 @@
     margin-top: 24px;
 }
 
+@media (max-width: 800px) {
+    .drawer__form-wrapper {
+        margin-top: 16px;
+    }
+}
+
 .drawer__form {
+    height: 100%;
     overflow-y: auto;
     margin-bottom: auto;
 }
@@ -228,7 +338,13 @@
 
 .drawer__form [class*="input-wrap"]:focus,
 .drawer__form [class*="input-wrap"]:hover,
-.drawer__form [class*="input-wrap"]:active {
+.drawer__form [class*="input-wrap"]:active,
+.drawer [class="ant-input"]:focus,
+.drawer [class="ant-input"]:hover,
+.drawer [class="ant-input"]:active,
+.no-date-group__date>[class*="ant-picker"]:focus,
+.no-date-group__date>[class*="ant-picker"]:hover,
+.no-date-group__date>[class*="ant-picker"]:active {
     border: 1px solid var(--primary-light-6);
 }
 

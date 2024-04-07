@@ -81,7 +81,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
             onClose={() => closeDrawer()}
             placement={isMobile ? 'bottom' : 'right'}
             height={555}
-            className={styles.drawer}
+            className={`${styles.drawer} ${isMyTrainingPage && styles['drawer-my-page']}`}
             data-test-id="modal-drawer-right"
         >
             <p className={styles.drawer__title}>

@@ -6,13 +6,17 @@ import { TDrawerFormFields } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { TrainingSelect } from '@pages/calendar-page/calendar-modal/inner-new-training/training-select/training-select';
 import { changeExerciseFormFields, changeInterval, selectCalendarModalData, toggleIsDrawer, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
+import { selectTraining } from '@redux/training-slice';
 import { findTraining } from '@utils/calendar-utils/find-training';
+import { getListData } from '@utils/calendar-utils/get-list-data';
 import { sortCheckboxListFromEmpty } from '@utils/calendar-utils/sort-checkbox-list-from-empty';
 import { sortDrawerFormFromEmpty } from '@utils/calendar-utils/sort-drawer-form-from-empty';
+import { checkIsDatesEqual } from '@utils/check-is-dates-equal';
 import { getFixedDate } from '@utils/get-fixed-date';
 import { checkIsSaveDisabled } from '@utils/training-utils/check-is-save-disabled';
-import { Button, Checkbox, DatePicker, Form, FormInstance, Input, InputNumber, Select } from 'antd';
+import { Button, Checkbox, ConfigProvider, DatePicker, Form, FormInstance, Input, InputNumber, Select } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import locale from 'antd/es/locale/ru_RU';
 import moment, { Moment } from 'moment';
 
 import 'antd/dist/antd.css';
@@ -31,6 +35,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
     const dispatch = useAppDispatch();
     const { pathname } = useLocation();
     const { isEdit, selectedTraining, interval, exerciseFormFields, isDrawer } = useAppSelector(selectCalendarModalData);
+    const training = useAppSelector(selectTraining);
     const isMyTrainingPage = pathname === '/training';
     const form = useRef<FormInstance<{ exercises: TDrawerFormFields }>>(null);
     const initialFormValues = { exercises: Object.values(exerciseFormFields) };
@@ -78,6 +83,18 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
         dispatch(toggleIsDrawer(false));
     }
 
+    function dateCellRender(cellMoment: Moment) {
+        const trainingList = getListData(training, cellMoment.toDate());
+        const todayClass = checkIsDatesEqual(new Date(Date.now()), cellMoment.toDate()) ? 'today' : 'empty';
+        const emtyClass = trainingList.length === 0 ? 'empty' : 'no-empty'
+
+        return (
+            <div className={`${styles[emtyClass]} ${styles[todayClass]}`}>
+                {cellMoment.toDate().getDate()}
+            </div>
+        );
+    }
+
     return (
         <Form
             ref={form}
@@ -86,34 +103,40 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
             onValuesChange={(_, allValues) => setFormBackUp(allValues)}
             initialValues={initialFormValues}
         >
+            {isMyTrainingPage && <div className={styles['drawer__no-date-group']}>
+                <TrainingSelect disabled={isEdit} />
+                <div className={styles['no-date-group__date']}>
+                    <ConfigProvider locale={locale}>
+                        <DatePicker
+                            format='DD.MM.YYYY'
+                            disabled={isEdit}
+                            disabledDate={currentMoment => currentMoment.toDate() <= new Date(Date.now())}
+                            value={date ? moment(date) : pickedMoment}
+                            onChange={value => setPickedMoment(value)}
+                            suffixIcon={<CalendarTwoTone twoToneColor='var(--character-light-disable-25)' />}
+                            dateRender={cellMoment => dateCellRender(cellMoment)}
+                            popupClassName={styles['no-date-group__calendar-popup']}
+                        />
+                    </ConfigProvider>
+                    <Checkbox
+                        checked={isInterval}
+                        onChange={event => setIsInterval(event.target.checked)}
+                    >
+                        С периодичностью
+                    </Checkbox>
+                </div>
+                {isInterval && <Select
+                    placeholder='Периодичность'
+                    options={intervalOptions}
+                    value={interval}
+                    onChange={value => dispatch(changeInterval(value))}
+                    className={styles['no-date-group__interval-select']}
+                />}
+            </div>}
             <Form.List name="exercises">
                 {(fields, { add, remove }) => (
                     <React.Fragment>
-                        {isMyTrainingPage && <div className={styles['drawer__no-date-group']}>
-                            <TrainingSelect />
-                            <div className={styles['no-date-group__date']}>
-                                <DatePicker
-                                    size='small'
-                                    format='DD.MM.YYYY'
-                                    value={date ? moment(date) : pickedMoment}
-                                    onChange={value => setPickedMoment(value)}
-                                    suffixIcon={<CalendarTwoTone twoToneColor='var(--character-light-disable-25)' />}
-                                />
-                                <Checkbox
-                                    checked={isInterval}
-                                    onChange={event => setIsInterval(event.target.checked)}
-                                >
-                                    С периодичностью
-                                </Checkbox>
-                            </div>
-                            {isInterval && <Select
-                                placeholder='Периодичность'
-                                options={intervalOptions}
-                                value={interval}
-                                onChange={value => dispatch(changeInterval(value))}
-                                className={styles['no-date-group__interval-select']}
-                            />}
-                        </div>}
+
                         {fields.map(({ name, key }) => (
                             <div key={key} className={styles['drawer__form-wrapper']}>
                                 <Form.Item name={[name, 'name']} required={true}>

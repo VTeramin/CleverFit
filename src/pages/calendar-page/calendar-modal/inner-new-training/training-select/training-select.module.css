@@ -1,4 +1,5 @@
-.modal__input [class*="selection-placeholder"] {
+.modal__input [class*="selection-placeholder"],
+.modal__input[class*="select-disabled"] [class*="select-selector"] span {
     font-family: var(--font-family);
     font-weight: var(--font-weight);
     font-size: var(--font-size);

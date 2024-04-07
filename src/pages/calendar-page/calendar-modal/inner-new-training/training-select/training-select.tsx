@@ -12,10 +12,11 @@ import 'antd/dist/antd.css';
 import styles from './training-select.module.css';
 
 type TProps = {
-    date?: Date
+    date?: Date,
+    disabled?: boolean
 }
 
-export const TrainingSelect: React.FC<TProps> = ({ date }) => {
+export const TrainingSelect: React.FC<TProps> = ({ date, disabled }) => {
     const dispatch = useAppDispatch();
     const training = useAppSelector(selectTraining);
     const { pathname } = useLocation();
@@ -46,6 +47,7 @@ export const TrainingSelect: React.FC<TProps> = ({ date }) => {
             placeholder="Выбор типа тренировки"
             value={selectedTraining}
             defaultValue={editTraining}
+            disabled={disabled}
             onSelect={value => handleSelect(value)}
             options={selectOptions}
             bordered={false}
