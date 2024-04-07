@@ -7,8 +7,10 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { TrainingSelect } from '@pages/calendar-page/calendar-modal/inner-new-training/training-select/training-select';
 import { changeExerciseFormFields, changeInterval, selectCalendarModalData, toggleIsDrawer, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
 import { findTraining } from '@utils/calendar-utils/find-training';
+import { sortCheckboxListFromEmpty } from '@utils/calendar-utils/sort-checkbox-list-from-empty';
 import { sortDrawerFormFromEmpty } from '@utils/calendar-utils/sort-drawer-form-from-empty';
 import { getFixedDate } from '@utils/get-fixed-date';
+import { checkIsSaveDisabled } from '@utils/training-utils/check-is-save-disabled';
 import { Button, Checkbox, DatePicker, Form, FormInstance, Input, InputNumber, Select } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import moment, { Moment } from 'moment';
@@ -32,9 +34,10 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
     const isMyTrainingPage = pathname === '/training';
     const form = useRef<FormInstance<{ exercises: TDrawerFormFields }>>(null);
     const initialFormValues = { exercises: Object.values(exerciseFormFields) };
-    const [isInterval, setIsInterval] = useState(false);
     const fixedDate = date ? getFixedDate(date) : '';
-
+    const [isInterval, setIsInterval] = useState(false);
+    const [checkboxList, setCheckboxList] = useState<{ [key: number]: boolean }>({});
+    const [isDeleteDisabled, setIsDeleteDisabled] = useState(true);
 
     useEffect(() => {
         if (!isDrawer) dispatch(toggleIsSaveDisabled(true));
@@ -49,9 +52,6 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
         };
     }, [dispatch, selectedTraining, fixedDate]);
 
-    const [checkboxList, setCheckboxList] = useState<{ [key: number]: boolean }>({});
-    const [isDeleteDisabled, setIsDeleteDisabled] = useState(true);
-
     useEffect(() => {
         setIsDeleteDisabled(!Object.values(checkboxList).some(el => el === true));
     }, [checkboxList]);
@@ -64,29 +64,13 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
     }
 
     function handleDelete(remove: (index: number | number[]) => void) {
-        const checkboxKeys = Object.keys(checkboxList).map(key => Number(key));
-        const checkboxTrueList = checkboxKeys.filter(key => checkboxList[key] === true);
-
-        setCheckboxList(prev => {
-            const newList = { ...prev };
-
-            checkboxTrueList.forEach(key => {
-                delete newList[key];
-            });
-
-            return newList;
-        });
-        remove(checkboxTrueList);
+        setCheckboxList(prev => sortCheckboxListFromEmpty(checkboxList, prev, remove));
     }
 
     function handleFormChange() {
-        const formFields = form.current?.getFieldsValue(exerciseFormFields);
-        const isAnyExercises = formFields.exercises.filter((el: TDrawerFormFields) => el.name).length;
-        const isDate = date !== undefined || pickedMoment !== null;
-        const isNoTraining = selectedTraining === null;
-        const isNoForm = form.current === null;
+        const chekcResult = checkIsSaveDisabled({ form, date, pickedMoment, selectedTraining, exerciseFormFields });
 
-        dispatch(toggleIsSaveDisabled(!isDate || isNoTraining || isNoForm || !isAnyExercises));
+        dispatch(toggleIsSaveDisabled(chekcResult));
     }
 
     function onFinish(values: { exercises: TDrawerFormFields }) {
