@@ -1,6 +1,6 @@
 import { ECalendarModalType, EStatus } from '@constants/enums';
 import { TCalendarModal, TDrawerFormFields } from '@constants/types';
-import { createSlice,PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from './configure-store';
 
@@ -18,8 +18,14 @@ const initialState: TCalendarModal = {
     editTraining: null,
     interval: null,
     isSaveDisabled: true,
-    exerciseFormFields: {},
-    formBackUp: {}
+    exerciseFormFields: {
+        0: {
+            name: undefined,
+            replays: undefined,
+            weight: undefined,
+            approaches: undefined
+        }
+    }
 };
 
 export const calendarModalSlice = createSlice({
@@ -42,7 +48,7 @@ export const calendarModalSlice = createSlice({
             state.modalType = action.payload;
         },
         changeModalCoord: (state, action: PayloadAction<{ x: number, y: number }>) => {
-            if(action.payload.x === 0 && action.payload.y === 0) state.isModal = false
+            if (action.payload.x === 0 && action.payload.y === 0) state.isModal = false
             state.modalCoord.x = action.payload.x;
             state.modalCoord.y = action.payload.y;
         },
@@ -60,11 +66,18 @@ export const calendarModalSlice = createSlice({
         },
         changeExerciseFormFields: (state, action: PayloadAction<TDrawerFormFields>) => {
             Object.keys(state.exerciseFormFields).forEach(key => delete state.exerciseFormFields[key]);
-            Object.assign(state.exerciseFormFields, action.payload);
-        },
-        changeBackUp: (state, action: PayloadAction<TDrawerFormFields>) => {
-            Object.keys(state.formBackUp).forEach(key => delete state.exerciseFormFields[key]);
-            Object.assign(state.formBackUp, action.payload);
+            if (Object.keys(action.payload).length === 0) {
+                Object.assign(state.exerciseFormFields, {
+                    0: {
+                        name: undefined,
+                        replays: undefined,
+                        weight: undefined,
+                        approaches: undefined
+                    }
+                });
+            } else {
+                Object.assign(state.exerciseFormFields, action.payload);
+            }
         }
     }
 });
@@ -80,8 +93,7 @@ export const {
     changeEditTraining,
     changeInterval,
     toggleIsSaveDisabled,
-    changeExerciseFormFields,
-    changeBackUp
+    changeExerciseFormFields
 } = calendarModalSlice.actions;
 export const selectCalendarModalData = (state: RootState) => state.calendarModal;
 export default calendarModalSlice.reducer;

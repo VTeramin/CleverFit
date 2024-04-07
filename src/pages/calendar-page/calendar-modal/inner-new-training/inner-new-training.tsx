@@ -21,8 +21,8 @@ export const InnerNewTraining: React.FC<TProps> = ({ date }) => {
     const dispatch = useAppDispatch();
     const { selectedTraining, isEdit } = useAppSelector(selectCalendarModalData);
     const exerciseNames = dispatch(getNamesInForm());
-    const isNoExercise = exerciseNames.length === 0;
-    const isSaveDisabled = !isEdit && exerciseNames.length === 0;
+    const isNoExercise = exerciseNames[0]?.name === undefined;
+    const isSaveDisabled = !isEdit && isNoExercise;
 
     function handleAddTraining() {
         dispatch(toggleIsDrawer(true));

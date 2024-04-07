@@ -1,9 +1,10 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { changeEditTraining, changeSelectedTraining, selectCalendarModalData, toggleIsEdit } from '@redux/calendar-modal-slice';
+import { changeEditTraining, changeExerciseFormFields, changeSelectedTraining, selectCalendarModalData, toggleIsEdit } from '@redux/calendar-modal-slice';
 import { selectTraining } from '@redux/training-slice';
 import { findAllTraining } from '@utils/calendar-utils/find-all-training';
+import { findExercises } from '@utils/calendar-utils/find-exercises';
 import { getTrainingSelectOptions } from '@utils/calendar-utils/get-training-select-options';
 import { Select } from 'antd';
 
@@ -33,6 +34,11 @@ export const TrainingSelect: React.FC<TProps> = ({ date }) => {
             }
         }
         dispatch(changeSelectedTraining(value));
+        if (date) {
+            const exercises = dispatch(findExercises(date.toISOString(), value));
+
+            dispatch(changeExerciseFormFields(exercises));
+        }
     }
 
     return (

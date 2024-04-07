@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { DownOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { EBadgeColors, EStatus } from '@constants/enums';
 import { intervalOptions } from '@constants/interval-options';
@@ -10,6 +10,7 @@ import { changeEditTraining, changeExerciseFormFields, changeInterval, changeMod
 import { selectTrainingList } from '@redux/training-list-slice';
 import { selectTraining } from '@redux/training-slice';
 import { findExercises } from '@utils/calendar-utils/find-exercises';
+import { getMyTrainingModalCoords } from '@utils/calendar-utils/get-my-training-modal-coords';
 import { Alert, Badge, Button, Layout, Pagination, Select } from 'antd';
 
 import { MyTrainingModal } from './my-training-modal/my-training-modal';
@@ -23,7 +24,7 @@ export const MyTraining: React.FC = () => {
     const isNoTraining = training.length === 0;
     const trainingList = useAppSelector(selectTrainingList);
     const isTraingListEmpty = trainingList.length === 0;
-    const { resultType, isDrawer } = useAppSelector(selectCalendarModalData);
+    const { resultType } = useAppSelector(selectCalendarModalData);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 14;
     const alertMessages: { [name: string]: string } = {
@@ -31,45 +32,40 @@ export const MyTraining: React.FC = () => {
         [EStatus.successEdit]: 'Тренирока успешно обновлена'
     }
     const [isModal, setIsModal] = useState(false);
-
     const frequency = (el: TTraining) => intervalOptions.find(option => option.value === el.parameters?.period)?.label;
     const [selectedDate, setSelectdDate] = useState<Date | null>(null);
 
-    useEffect(() => {
-        if (!isDrawer) setSelectdDate(null);
-    }, [isDrawer]);
-
     function handleEdit(el: TTraining) {
+        const exercises = dispatch(findExercises(el.date, el.name));
+
+        setIsModal(false);
         setSelectdDate(new Date(el.date));
         dispatch(changeSelectedTraining(el.name));
         dispatch(changeEditTraining(el.name));
-        const exercises = dispatch(findExercises(el.date, el.name));
-
         dispatch(changeExerciseFormFields(exercises));
         dispatch(toggleIsEdit(true));
         dispatch(toggleIsDrawer(true));
     }
 
     function handleNewTraining() {
+        setIsModal(false);
         dispatch(changeSelectedTraining(null));
         dispatch(changeExerciseFormFields({}));
         dispatch(changeInterval(null));
         dispatch(toggleIsSaveDisabled(true));
         dispatch(toggleIsEdit(false));
+        setSelectdDate(null);
         dispatch(toggleIsDrawer(true));
     }
 
     function showModal(el: TTraining, ind: number) {
         const exercises = dispatch(findExercises(el.date, el.name));
 
+        setSelectdDate(new Date(el.date));
         dispatch(changeExerciseFormFields(exercises));
         dispatch(changeSelectedTraining(el.name));
         dispatch(toggleIsEdit(true));
-
-        dispatch(changeModalCoord({
-            x: 18,
-            y: 57 + 32 * (ind % pageSize)
-        }));
+        dispatch(changeModalCoord(getMyTrainingModalCoords(ind, pageSize)));
         setIsModal(true);
     }
 
@@ -108,6 +104,7 @@ export const MyTraining: React.FC = () => {
                                     <Button
                                         type='text'
                                         id={`Dropdown ${el._id}`}
+                                        disabled={el.isImplementation}
                                         onClick={() => showModal(el, ind)}
                                         className={styles.row__dropdown}
                                     >
@@ -158,7 +155,7 @@ export const MyTraining: React.FC = () => {
                         setIsModal={setIsModal}
                     />}
                 </Layout>}
-            <CalendarDrawer date={selectedDate || undefined} />
+            <CalendarDrawer date={selectedDate === null ? undefined : selectedDate} />
         </React.Fragment>
     );
 };

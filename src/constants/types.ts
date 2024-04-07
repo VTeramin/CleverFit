@@ -83,8 +83,7 @@ export type TCalendarModal = {
     editTraining: string | null,
     interval: number | null,
     isSaveDisabled: boolean,
-    exerciseFormFields: TDrawerFormFields,
-    formBackUp: TDrawerFormFields
+    exerciseFormFields: TDrawerFormFields
 }
 
 export type TSettingsSwitchesData = {

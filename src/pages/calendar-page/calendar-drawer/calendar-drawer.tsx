@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { EDrawer } from '@constants/enums';
-import { TDrawerTitles } from '@constants/types';
+import { TDrawerFormFields, TDrawerTitles } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarTrainingList } from '@pages/calendar-page/calendar-training-list/calendar-training-list';
-import { changeExerciseFormFields, selectCalendarModalData, toggleIsDrawer, toggleIsEdit } from '@redux/calendar-modal-slice';
+import { changeExerciseFormFields, selectCalendarModalData, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
+import { sortDrawerFormFromEmpty } from '@utils/calendar-utils/sort-drawer-form-from-empty';
 import { checkIsFuture } from '@utils/check-is-future';
 import { convertDate } from '@utils/convert-date';
 import { saveTraining } from '@utils/requests/save-training';
 import { Button, Divider, Drawer } from 'antd';
-import moment, { Moment } from 'moment';
+import { Moment } from 'moment';
 
 import { CalendarDrawerForm } from './calendar-drawer-form/calendar-drawer-form';
 
@@ -27,11 +28,22 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
     const { pathname } = useLocation();
     const browserWidth = useWindowSize().width || 0;
     const isMobile = browserWidth <= 800;
-    const { isEdit, isDrawer, selectedTraining, isSaveDisabled, formBackUp } = useAppSelector(selectCalendarModalData);
+    const { isEdit, isDrawer, selectedTraining, isSaveDisabled } = useAppSelector(selectCalendarModalData);
     const isMyTrainingPage = pathname === '/training';
     const isWarning = date ? !checkIsFuture(date) : false;
     const [drawerType, setDrawerType] = useState(EDrawer.default);
     const [pickedMoment, setPickedMoment] = useState<Moment | null>(null);
+    const [formBackUp, setFormBackUp] = useState<{ exercises: TDrawerFormFields } | null>(null);
+
+    function closeDrawer() {
+        const closeBtn = document.getElementById('drawer__close') as HTMLElement;
+
+        closeBtn.click();
+    }
+
+    useEffect(() => {
+        if (!isDrawer) setPickedMoment(null);
+    }, [isDrawer])
 
     useEffect(() => {
         if (isEdit) setDrawerType(EDrawer.edit);
@@ -39,27 +51,11 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
         if (!isEdit && !isMyTrainingPage) setDrawerType(EDrawer.default);
     }, [isEdit, isMyTrainingPage, dispatch]);
 
-    useEffect(() => {
-        if (!isDrawer) {
-            setPickedMoment(null);
-        }
-        if (isDrawer && isEdit) {
-            setPickedMoment(moment(date));
-        }
-    }, [isMyTrainingPage, isDrawer, isEdit, date, dispatch]);
-
-    function handleClose() {
-        if (isMyTrainingPage) dispatch(toggleIsEdit(false));
-        const closeBtn = document.getElementById('drawer__close') as HTMLElement;
-
-        closeBtn.click();
-    }
-
     function handleSave() {
-        dispatch(changeExerciseFormFields(formBackUp));
-        dispatch(saveTraining(new Date(pickedMoment?.format() as string)));
-        setPickedMoment(null);
-        dispatch(toggleIsDrawer(false));
+        closeDrawer();
+        if(formBackUp !== null) dispatch(changeExerciseFormFields(sortDrawerFormFromEmpty(formBackUp)));
+        dispatch(saveTraining(isEdit && date ? date : new Date(pickedMoment?.format() as string)));
+        dispatch(toggleIsSaveDisabled(true));
     }
 
     const drawerTitles: TDrawerTitles = {
@@ -82,7 +78,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
             headerStyle={{ display: 'none' }}
             maskStyle={{ background: 'transparent' }}
             maskClosable={true}
-            onClose={() => handleClose()}
+            onClose={() => closeDrawer()}
             placement={isMobile ? 'bottom' : 'right'}
             height={555}
             className={styles.drawer}
@@ -104,6 +100,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
                     date={date}
                     pickedMoment={pickedMoment}
                     setPickedMoment={setPickedMoment}
+                    setFormBackUp={setFormBackUp}
                 />
             </div>
             {isWarning &&
