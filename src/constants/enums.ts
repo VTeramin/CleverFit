@@ -28,6 +28,7 @@ export enum EStatus {
     errorFeedback = 'errorFeedback',
     successTariff = 'successTarif',
     errorTrainingList = 'errorTrainingList',
+    errorUserJointTrainingList = 'errorUserJointTrainingList',
     errorSaveTraining = 'errorSaveTraining',
     errorUploadPicture = 'errorUploadPicture',
     errorSaveUserData = 'errorSaveUserData'

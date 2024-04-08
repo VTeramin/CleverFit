@@ -98,36 +98,38 @@ export const MyTraining: React.FC = () => {
                             className={styles['header__training-sort']}
                         />
                     </div>
-                    {training.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((el, ind) => (
-                        <div key={el._id} className={styles.training__row}>
-                            <div className={styles['row__select-wrapper']}>
-                                <Badge color={EBadgeColors[el.name as keyof typeof EBadgeColors]} />
-                                <div className={styles.row__select}>
-                                    <p>{el.name}</p>
-                                    <Button
-                                        type='text'
-                                        id={`Dropdown ${el._id}`}
-                                        disabled={el.isImplementation}
-                                        onClick={() => showModal(el, ind)}
-                                        className={styles.row__dropdown}
-                                    >
-                                        <DownOutlined />
-                                    </Button>
+                    {training
+                        .slice((currentPage - 1) * pageSize, currentPage * pageSize)
+                        .map((el, ind) => (
+                            <div key={el._id} className={styles.training__row}>
+                                <div className={styles['row__select-wrapper']}>
+                                    <Badge color={EBadgeColors[el.name as keyof typeof EBadgeColors]} />
+                                    <div className={styles.row__select}>
+                                        <p>{el.name}</p>
+                                        <Button
+                                            type='text'
+                                            id={`Dropdown ${el._id}`}
+                                            disabled={el.isImplementation}
+                                            onClick={() => showModal(el, ind)}
+                                            className={styles.row__dropdown}
+                                        >
+                                            <DownOutlined />
+                                        </Button>
+                                    </div>
                                 </div>
+                                <p className={styles.row__frequency}>
+                                    {frequency(el)}
+                                </p>
+                                <Button
+                                    type='text'
+                                    disabled={el.isImplementation}
+                                    onClick={() => handleEdit(el)}
+                                    className={`${styles.row__edit} ${el.isImplementation && styles['row__edit-disabled']}`}
+                                >
+                                    <EditOutlined />
+                                </Button>
                             </div>
-                            <p className={styles.row__frequency}>
-                                {frequency(el)}
-                            </p>
-                            <Button
-                                type='text'
-                                disabled={el.isImplementation}
-                                onClick={() => handleEdit(el)}
-                                className={`${styles.row__edit} ${el.isImplementation && styles['row__edit-disabled']}`}
-                            >
-                                <EditOutlined />
-                            </Button>
-                        </div>
-                    ))}
+                        ))}
                     <Pagination
                         size="small"
                         current={currentPage}

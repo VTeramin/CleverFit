@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeResultType, selectCalendarModalData, toggleIsModal } from '@redux/calendar-modal-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { getTrainingList } from '@utils/requests/get-training-list';
+import { getUserJointTrainingList } from '@utils/requests/get-user-joint-training-list';
 import { Button, Modal, Result } from 'antd';
 
 import 'antd/dist/antd.css';
@@ -18,6 +19,10 @@ export const CalendarResult: React.FC = () => {
     function handleUpdate() {
         dispatch(changeResultType(EStatus.empty));
         dispatch(getTrainingList());
+    }
+
+    function handleUpdateJoint() {
+        dispatch(getUserJointTrainingList());
     }
 
     function handleClose() {
@@ -43,7 +48,7 @@ export const CalendarResult: React.FC = () => {
                 onCancel={() => handleClose()}
                 maskClosable={false}
                 closable={true}
-                closeIcon={<CloseOutlined data-test-id="modal-error-user-training-button-close"/>}
+                closeIcon={<CloseOutlined data-test-id="modal-error-user-training-button-close" />}
                 footer={null}
             >
                 <Result
@@ -56,6 +61,39 @@ export const CalendarResult: React.FC = () => {
                             key="Обновить"
                             className={`${styles['conf-button']}`}
                             onClick={() => handleUpdate()}
+                            data-test-id="modal-error-user-training-button"
+                        >
+                            Обновить
+                        </Button>
+                    ]}
+                />
+            </Modal>,
+        [EStatus.errorUserJointTrainingList]:
+            <Modal
+                centered={true}
+                maskStyle={{
+                    backdropFilter: 'var(--background-blur-filter)',
+                    background: 'var(--background-blur-color-light)'
+                }}
+                width={width > 800 ? 384 : 539}
+                className={styles.result}
+                open={resultType !== EStatus.empty}
+                onCancel={() => handleClose()}
+                maskClosable={false}
+                closable={true}
+                closeIcon={<CloseOutlined data-test-id="modal-error-user-training-button-close" />}
+                footer={null}
+            >
+                <Result
+                    icon={<CloseCircleOutlined style={{ color: 'var(--primary-light-6)' }} />}
+                    title={<p data-test-id="modal-error-user-training-title">При открытии данных произошла ошибка</p>}
+                    subTitle={<p data-test-id="modal-error-user-training-subtitle">Попробуйте еще раз.</p>}
+                    className={styles['error-trining-list']}
+                    extra={[
+                        <Button
+                            key="Обновить"
+                            className={`${styles['conf-button']}`}
+                            onClick={() => handleUpdateJoint()}
                             data-test-id="modal-error-user-training-button"
                         >
                             Обновить

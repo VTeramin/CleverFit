@@ -76,6 +76,7 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
             width={isFullWidth ? '208' : '106'}
             collapsedWidth={isFullWidth ? '64' : '1'}
             theme="light"
+            id='side-bar'
             className={styles.sider}
         >
             <Button
