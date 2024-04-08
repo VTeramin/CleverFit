@@ -6,6 +6,7 @@ import { getTraining } from '@utils/requests/get-training';
 import { getTrainingList } from '@utils/requests/get-training-list';
 import { Layout, Tabs } from 'antd';
 
+import { JointTraining } from './joint-training/joint-training';
 import { MyTraining } from './my-training/my-training';
 
 import 'antd/dist/antd.css';
@@ -34,7 +35,7 @@ export const TrainingPage: React.FC = () => {
                     className={styles.tablist}
                     items={[
                         { label: 'Мои тренировки', key: 'item-1', children: <MyTraining /> },
-                        { label: 'Соместные тренировки', key: 'item-2' },
+                        { label: 'Соместные тренировки', key: 'item-2', children: <JointTraining /> },
                         { label: 'Марафоны', key: 'item-3' }
                     ]}
                 />

@@ -1,0 +1,68 @@
+.joint-training {
+    background: transparent;
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+}
+
+.joint-training__no-training-card {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border: var(--button-border-auth);
+    background: var(--character-light-table-header);
+    border-radius: var(--border-radius);
+}
+
+.no-training-card__title {
+    margin: 24px 0;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-large);
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--primary-light-9);
+}
+
+.no-training-card__subtitle {
+    width: 80%;
+    margin-bottom: 24px;
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--character-light-secondary-45);
+}
+
+.no-training-card__divider {
+    margin: 0;
+}
+
+.no-training-card__buttons-wrapper {
+    width: 78%;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.no-training-card__buttons-wrapper>button {
+    width: 50%;
+    height: 32px;
+}
+
+.no-training-card__buttons-wrapper>button:first-child {
+    color: var(--primary-light-6);
+}
+
+.participants-section__title {
+    margin-bottom: 12px;
+    font-weight: var(--font-weight-medium);
+    font-size: 20px;
+    line-height: var(--line-height);
+}
+
+.participants-section__subtitle {
+    margin: 0;
+    color: var(--character-light-secondary-45);
+}
