@@ -60,5 +60,6 @@ export enum EROUTE {
 export enum EDrawer {
     default='default',
     edit='edit',
-    noDate='noDate'
+    noDate='noDate',
+    joint='joint'
 }

@@ -47,6 +47,38 @@
     margin-right: 10px;
 }
 
+.joint-training-pal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.joint-training-pal>[class*="ant-avatar"] {
+    background: var(--character-light-background);
+}
+
+.joint-training-pal img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.joint-training-pal path {
+    fill: var(--character-light-title-85);
+}
+
+.joint-training-pal__name {
+    margin: 0;
+    margin-left: 8px;
+}
+
+.joint-training-pal__training-type {
+    align-self: flex-end;
+    margin-left: auto;
+}
+
 .drawer__no-date-group [class*="select-show-arrow"] {
     width: 100%;
     height: var(--calendar-input-height);

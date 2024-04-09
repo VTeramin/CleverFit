@@ -71,6 +71,7 @@ export type TTraining = {
 
 export type TCalendarModal = {
     isEdit: boolean,
+    isJoint: boolean,
     isModal: boolean,
     isDrawer: boolean,
     resultType: EStatus,
@@ -80,6 +81,7 @@ export type TCalendarModal = {
         y: number
     },
     selectedTraining: string | null,
+    selectedPal: string | null,
     editTraining: string | null,
     interval: number | null,
     isSaveDisabled: boolean,

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { EDrawer } from '@constants/enums';
+import { EDrawer, EStatus } from '@constants/enums';
 import { TDrawerFormFields, TDrawerTitles } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarTrainingList } from '@pages/calendar-page/calendar-training-list/calendar-training-list';
-import { changeExerciseFormFields, selectCalendarModalData, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
+import { changeExerciseFormFields, changeResultType, selectCalendarModalData, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { sortDrawerFormFromEmpty } from '@utils/calendar-utils/sort-drawer-form-from-empty';
 import { checkIsFuture } from '@utils/check-is-future';
@@ -28,7 +28,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
     const { pathname } = useLocation();
     const browserWidth = useWindowSize().width || 0;
     const isMobile = browserWidth <= 800;
-    const { isEdit, isDrawer, selectedTraining, isSaveDisabled } = useAppSelector(selectCalendarModalData);
+    const { isEdit, isJoint, isDrawer, selectedTraining, isSaveDisabled } = useAppSelector(selectCalendarModalData);
     const isMyTrainingPage = pathname === '/training';
     const isWarning = date ? !checkIsFuture(date) : false;
     const [drawerType, setDrawerType] = useState(EDrawer.default);
@@ -49,13 +49,20 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
         if (isEdit) setDrawerType(EDrawer.edit);
         if (isMyTrainingPage && !isEdit) setDrawerType(EDrawer.noDate);
         if (!isEdit && !isMyTrainingPage) setDrawerType(EDrawer.default);
-    }, [isEdit, isMyTrainingPage, dispatch]);
+        if (isJoint) setDrawerType(EDrawer.joint);
+    }, [isEdit, isMyTrainingPage, isJoint, dispatch]);
 
     function handleSave() {
         closeDrawer();
-        if(formBackUp !== null) dispatch(changeExerciseFormFields(sortDrawerFormFromEmpty(formBackUp)));
-        dispatch(saveTraining(isEdit && date ? date : new Date(pickedMoment?.format() as string)));
         dispatch(toggleIsSaveDisabled(true));
+        if (formBackUp !== null) dispatch(changeExerciseFormFields(sortDrawerFormFromEmpty(formBackUp)));
+
+        const dateFromMoment = new Date(pickedMoment?.format() as string);
+        const dateValue = isEdit && date ? date : dateFromMoment;
+
+        dispatch(saveTraining(dateValue)).then(() => {
+            if(!isJoint) dispatch(changeResultType(EStatus.empty));
+        });
     }
 
     const drawerTitles: TDrawerTitles = {
@@ -67,6 +74,9 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
         </React.Fragment>,
         noDate: <React.Fragment>
             <PlusOutlined className={styles['drawer__title-icon']} />Новая тренировка
+        </React.Fragment>,
+        joint: <React.Fragment>
+            <PlusOutlined className={styles['drawer__title-icon']} />Совместная тренировка
         </React.Fragment>
     };
 
@@ -115,7 +125,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
                         className={styles['drawer__conf-button']}
                         onClick={() => handleSave()}
                     >
-                        Сохранить
+                        {isJoint ? 'Отправить приглашение' : 'Сохранить'}
                     </Button>
                 </React.Fragment>}
         </Drawer>

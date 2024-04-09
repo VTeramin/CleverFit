@@ -32,6 +32,7 @@ export const TrainingPage: React.FC = () => {
                 <Tabs
                     defaultActiveKey="1"
                     size='large'
+                    destroyInactiveTabPane={true}
                     className={styles.tablist}
                     items={[
                         { label: 'Мои тренировки', key: 'item-1', children: <MyTraining /> },

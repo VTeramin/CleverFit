@@ -22,5 +22,5 @@ export function getJointUserName(name: string, searchInputValue: string) {
     const firstName = getNameValueComponent(0);
     const lastName = getNameValueComponent(1);
 
-    return <p>{firstName}<br />{lastName}</p>;
+    return <span>{firstName}<br />{lastName}</span>;
 }

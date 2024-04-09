@@ -106,8 +106,8 @@
 
 .cards__card {
     width: 234px;
-    height: max-content;
-    padding: 16px 16px 36px;
+    height: 194px;
+    padding: 16px 16px 8px;
     background: var(--primary-light-1);
     border-radius: var(--border-radius);
 }
@@ -120,7 +120,7 @@
     margin-bottom: 12px;
 }
 
-.card__header span {
+.card__header [class*="ant-avatar"] {
     background: var(--character-light-background);
 }
 

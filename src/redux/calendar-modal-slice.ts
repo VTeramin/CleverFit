@@ -6,6 +6,7 @@ import { RootState } from './configure-store';
 
 const initialState: TCalendarModal = {
     isEdit: false,
+    isJoint: false,
     isModal: false,
     isDrawer: false,
     resultType: EStatus.empty,
@@ -16,6 +17,7 @@ const initialState: TCalendarModal = {
     },
     selectedTraining: null,
     editTraining: null,
+    selectedPal: null,
     interval: null,
     isSaveDisabled: true,
     exerciseFormFields: {
@@ -35,10 +37,14 @@ export const calendarModalSlice = createSlice({
         toggleIsEdit: (state, action: PayloadAction<boolean>) => {
             state.isEdit = action.payload;
         },
+        toggleIsJoint: (state, action: PayloadAction<boolean>) => {
+            state.isJoint = action.payload;
+        },
         toggleIsModal: (state, action: PayloadAction<boolean>) => {
             state.isModal = action.payload;
         },
         toggleIsDrawer: (state, action: PayloadAction<boolean>) => {
+            if(!action.payload) state.isJoint = false;
             state.isDrawer = action.payload;
         },
         changeResultType: (state, action: PayloadAction<EStatus>) => {
@@ -54,6 +60,9 @@ export const calendarModalSlice = createSlice({
         },
         changeSelectedTraining: (state, action: PayloadAction<string | null>) => {
             state.selectedTraining = action.payload;
+        },
+        changeSelectedPal: (state, action: PayloadAction<string | null>) => {
+            state.selectedPal = action.payload;
         },
         changeEditTraining: (state, action: PayloadAction<string | null>) => {
             state.editTraining = action.payload;
@@ -84,12 +93,14 @@ export const calendarModalSlice = createSlice({
 
 export const {
     toggleIsEdit,
+    toggleIsJoint,
     toggleIsModal,
     toggleIsDrawer,
     changeResultType,
     changeModalType,
     changeModalCoord,
     changeSelectedTraining,
+    changeSelectedPal,
     changeEditTraining,
     changeInterval,
     toggleIsSaveDisabled,
