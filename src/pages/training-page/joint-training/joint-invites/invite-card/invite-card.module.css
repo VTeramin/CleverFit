@@ -1,0 +1,105 @@
+.invites-section__invite-card {
+    position: relative;
+    padding: 20px;
+    padding-left: 12px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    box-shadow: var(--box-shadow-button);
+    background: var(--character-light-primary-inverse);
+    border-radius: var(--border-radius) 16px 16px 16px;
+}
+
+.invite-card__user-info {
+    width: 174px;
+    padding: 2px 0;
+    margin-right: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+
+    text-align: center;
+    font-size: var(--font-size-larger);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.invite-card__avatar[class*="ant-avatar"] {
+    background: var(--character-light-background);
+}
+
+.invite-card__avatar img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.invite-card__avatar path {
+    fill: var(--character-light-title-85);
+}
+
+.invite-card__invite-info {
+    padding-right: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-shrink: 1;
+    gap: 8px;
+    margin-right: auto;
+}
+
+.invite-card__date {
+    margin: 0;
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
+    color: var(--character-light-disable-25);
+}
+
+.invite-card__message {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-larger);
+    line-height: var(--line-height);
+    color: var(--primary-light-9);
+}
+
+.invite-card__details-btn {
+    padding: 4px 0;
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--primary-light-6);
+}
+
+.invite-card__btns-wrapper {
+    width: 190px;
+    padding-bottom: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.invite-card__conf-btn,
+.invite-card__default-btn {
+    height: var(--button-height);
+}
+
+.conf-button {
+    padding: var(--button-padding);
+    border: var(--button-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-button);
+    background: var(--primary-light-6);
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--character-light-primary-inverse);
+}

@@ -1,17 +1,17 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react';
-import { DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectTrainingPals } from '@redux/training-pals-slice';
 import { selectUserData } from '@redux/user-data-slice';
-import { convertDate } from '@utils/convert-date';
 import { getTrainingPals } from '@utils/requests/catalogs/get-training-pals';
 import { getUserJointTrainingList } from '@utils/requests/catalogs/get-user-joint-training-list';
-import { handleInvite } from '@utils/requests/invite/handle-invite';
 import { getMostPopularTraining } from '@utils/training-utils/get-most-popular-training';
-import { Avatar, Button, Divider, } from 'antd';
+import { Button, Divider, } from 'antd';
 
 import { UserCard } from '../user-card/user-card';
+
+import { InviteCard } from './invite-card/invite-card';
 
 import 'antd/dist/antd.css';
 import styles from './joint-invites.module.css';
@@ -43,57 +43,11 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
         setInner('users');
     }
 
-    function handleAcceptInvite(id: string) {
-        setHide(true);
-        dispatch(handleInvite(id, 'accepted'));
-    }
-
-    function handleRejectInvite(id: string) {
-        setHide(true);
-        dispatch(handleInvite(id, 'rejected'));
-    }
-
     return (
         <React.Fragment>
             {invites.length > 0 && !hide && <div className={styles['joint-training__invites-section']}>
                 <p className={styles['invites-section__new-messages']}>Новое сообщение ({invites.length})</p>
-                {invites.slice(0, invitesDisplayed).map(invite => (
-                    <div key={invite.from._id} className={styles['invites-section__invite-card']}>
-                        <div className={styles['invite-card__user-info']}>
-                            <Avatar
-                                src={invite.from.imageSrc || <UserOutlined />}
-                                alt={invite.from.firstName || ''}
-                                size={42}
-                                className={styles['invite-card__avatar']}
-                            />
-                            <p>{invite.from.firstName}<br />{invite.from.lastName}</p>
-                        </div>
-                        <div className={styles['invite-card__invite-info']}>
-                            <p className={styles['invite-card__date']}>{convertDate(new Date(invite.createdAt))}</p>
-                            <p className={styles['invite-card__message']}>Привет, я ищу партнёра для совместных [силовых тренировок]. Ты хочешь присоединиться ко мне на следующих тренировках?</p>
-                            <Button
-                                type='text'
-                                className={styles['invite-card__details-btn']}
-                            >
-                                Посмотреть детали тренировки
-                            </Button>
-                        </div>
-                        <div className={styles['invite-card__btns-wrapper']}>
-                            <Button
-                                className={`${styles['invite-card__conf-btn']} ${styles['conf-button']}`}
-                                onClick={() => handleAcceptInvite(invite._id)}
-                            >
-                                Тренироваться вместе
-                            </Button>
-                            <Button
-                                className={styles['invite-card__default-btn']}
-                                onClick={() => handleRejectInvite(invite._id)}
-                            >
-                                Отклонить запрос
-                            </Button>
-                        </div>
-                    </div>
-                ))}
+                {invites.slice(0, invitesDisplayed).map(invite => <InviteCard invite={invite} setHide={setHide} />)}
                 {invites.length > 1 && <Button
                     type='text'
                     className={styles['invites-section__show-btn']}
@@ -109,8 +63,12 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
                 </Button>}
             </div>}
             {!hide && <div className={styles['joint-training__add-training-card']}>
-                <h3 className={styles['add-training-card__title']}>Хочешь тренироваться с тем, кто разделяет твои цели и темп?<br />Можешь найти друга для совместных тренировок среди других пользователей.</h3>
-                <p className={styles['add-training-card__subtitle']}>Можешь воспользоваться случайным выбором или выбрать друга с похожим на твой уровень и вид тренировки, и мы найдем тебе идеального спортивного друга.</p>
+                <h3 className={styles['add-training-card__title']}>
+                    Хочешь тренироваться с тем, кто разделяет твои цели и темп?<br />Можешь найти друга для совместных тренировок среди других пользователей.
+                </h3>
+                <p className={styles['add-training-card__subtitle']}>
+                    Можешь воспользоваться случайным выбором или выбрать друга с похожим на твой уровень и вид тренировки, и мы найдем тебе идеального спортивного друга.
+                </p>
                 <Divider className={styles['add-training-card__divider']} />
                 <div className={styles['add-training-card__buttons-wrapper']}>
                     <Button
