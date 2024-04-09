@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowLeftOutlined, UserOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, CheckCircleFilled, ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { EJointStatus } from '@constants/enums';
+import { jointCardsStatus } from '@constants/joint-cards-status';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarDrawer } from '@pages/calendar-page/calendar-drawer/calendar-drawer';
 import { changeExerciseFormFields, changeInterval, changeSelectedPal, changeSelectedTraining, toggleIsDrawer, toggleIsEdit, toggleIsJoint, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
-import { selectTrainingPals } from '@redux/training-pals-slice';
+import { selectTrainingPals,TPalData } from '@redux/training-pals-slice';
 import { selectUserJointTrainingList } from '@redux/user-joint-training-list-slice';
 import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
 import { getTrainingPals } from '@utils/requests/catalogs/get-training-pals';
 import { getUserJointTrainingList } from '@utils/requests/catalogs/get-user-joint-training-list';
 import { getJointUserName } from '@utils/training-utils/get-joint-user-name';
 import { getMostPopularTraining } from '@utils/training-utils/get-most-popular-training';
-import { Avatar, Button, Divider, Input, Layout, Pagination } from 'antd';
+import { statusSortJoinUsers } from '@utils/training-utils/status-sort-joint-users';
+import { Avatar, Button, Divider, Input, Layout, Pagination, Tooltip } from 'antd';
 
 import 'antd/dist/antd.css';
 import styles from './joint-training.module.css';
@@ -23,10 +26,13 @@ export const JointTraining: React.FC = () => {
     const [inner, setInner] = useState('default');
     const [currentPage, setCurrentPage] = useState(1);
     const pageWidth = useWindowSize().width || 0;
-    const isTablet = pageWidth < 1400;
+    const isTablet = pageWidth < 1300;
     const [ref, { width }] = useMeasure();
     const [pageSize, setPageSize] = useState(0);
     const [searchInputValue, setSearchInputValue] = useState('');
+    const statusSortedUsers = statusSortJoinUsers(userJointTrainingList);
+    const usersInfoAfterSearch = statusSortedUsers.filter(el => el.name.includes(searchInputValue));
+    const cardsData = usersInfoAfterSearch.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
     useEffect(() => {
         const sideBar = document.getElementById('side-bar');
@@ -41,13 +47,6 @@ export const JointTraining: React.FC = () => {
     // useEffect(() => {
     //     dispatch(getTrainingPals()).then(() => console.log(trainingPals));
     // }, [dispatch, trainingPals]);
-
-    const usersInfoAfterSearch = userJointTrainingList
-        .filter(el => el.name.includes(searchInputValue));
-
-    const cardsData = usersInfoAfterSearch
-        .sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)
-        .slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
     function handleBack() {
         setInner('default');
@@ -145,11 +144,32 @@ export const JointTraining: React.FC = () => {
                                 </div>
                             </div>
                             <Button
-                            onClick={() => handleAddTraining(user.trainingType, user.id)}
-                            className={styles['card__conf-button']}
+                                onClick={() => handleAddTraining(user.trainingType, user.id)}
+                                disabled={user.status === EJointStatus.pending}
+                                className={styles['card__conf-button']}
                             >
                                 Создать тренировку
-                                </Button>
+                            </Button>
+                            {user.status !== null &&
+                                <p className={styles.card__status}>
+                                    {jointCardsStatus[user.status]}
+                                    {user.status === EJointStatus.rejected && <Tooltip
+                                        title={<p className={styles.tooltip}>
+                                            повторный запрос <br />будет доступен <br />через 2 недели
+                                        </p>}
+                                        placement='topRight'
+                                        color='var(--neutral-gray-13)'
+                                    >
+                                        <ExclamationCircleOutlined
+                                            size={16}
+                                            className={styles.exclamation}
+                                        />
+                                    </Tooltip>}
+                                    {user.status === EJointStatus.accepted && <CheckCircleFilled
+                                        size={16}
+                                        className={styles.checked}
+                                    />}
+                                </p>}
                         </div>
                     ))}
                 </div>

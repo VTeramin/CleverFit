@@ -63,3 +63,9 @@ export enum EDrawer {
     noDate='noDate',
     joint='joint'
 }
+
+export enum EJointStatus {
+    accepted='accepted',
+    pending='pending',
+    rejected='rejected'
+}

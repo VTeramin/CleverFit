@@ -186,6 +186,29 @@
     color: var(--character-light-primary-inverse);
 }
 
+.card__status {
+    margin: 12px 0 0;
+    text-align: center;
+    font-size: var(--font-size-smaller);
+}
+
+.card__status .exclamation,
+.card__status .checked {
+    margin-left: 8px;
+}
+
+.card__status .exclamation path {
+    fill: var(--character-dark-secondary-45);
+}
+
+.card__status .checked path {
+    fill: var(--character-dark-success);
+}
+
+[class*="ant-tooltip"] p {
+    margin: 0;
+}
+
 .pals__pagination {
     margin-top: auto;
     margin-bottom: 18px;
