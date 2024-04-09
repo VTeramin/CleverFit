@@ -66,6 +66,11 @@
     font-size: var(--font-size);
 }
 
+.sider .sider__menu .menu__item [class*="menu-item-icon"] {
+    height: var(--icon-size);
+    line-height: var(--icon-size);
+}
+
 .menu__item:not(:last-child) svg>path {
     fill: var(--primary-light-9);
 }
@@ -76,6 +81,15 @@
 
 .menu__item:last-child svg>path:nth-child(2) {
     fill: none;
+}
+
+.menu__itm sup {
+    height: 16px;
+}
+
+.sider[class*="collapsed"] .menu__item sup {
+    transform: translate(50%, 20%);
+    transform-origin: 100% 0%;
 }
 
 @media (max-width: 1439px) {

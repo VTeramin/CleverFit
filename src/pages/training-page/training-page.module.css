@@ -1,4 +1,5 @@
 .page {
+    height: calc(100vh - 98px);
     background: transparent;
     padding: 36px 24px 42px;
 
@@ -95,4 +96,23 @@
 
 .tablist [class*="ink-bar"] {
     background: var(--primary-light-6);
+}
+
+.tablist__badge sup {
+    width: 24px;
+    height: 16px;
+    margin-left: 4px;
+    font-size: var(--font-size-smaller);
+}
+
+.tablist__badge sup span {
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
+    transform: translateY(-1px);
+}
+
+.tablist [class*="content-holder"] {
+    height: 100%;
+    overflow-y: auto;
 }

@@ -1,0 +1,103 @@
+.pals__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.header__arrow-back {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--flex-gap-small);
+    margin-right: 159px;
+}
+
+.header__arrow-back>span:last-child {
+    margin: 0;
+    font-size: 20px;
+    font-weight: var(--font-weight-medium);
+    color: var(--character-light-title-85);
+}
+
+.header__search {
+    width: 484px;
+}
+
+.pals__cards {
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--flex-gap-small);
+    margin-bottom: 16px;
+}
+
+.cards__card {
+    width: 234px;
+    height: 194px;
+    padding: 16px 16px 8px;
+    background: var(--primary-light-1);
+    border-radius: var(--border-radius);
+}
+
+.conf-button {
+    padding: var(--button-padding);
+    border: var(--button-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-button);
+    background: var(--primary-light-6);
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--character-light-primary-inverse);
+}
+
+.card__conf-button {
+    width: 100%;
+    height: 28px;
+}
+
+.card__status {
+    margin: 12px 0 0;
+    text-align: center;
+    font-size: var(--font-size-smaller);
+}
+
+.card__status .exclamation,
+.card__status .checked {
+    margin-left: 8px;
+}
+
+.card__status .exclamation path {
+    fill: var(--character-dark-secondary-45);
+}
+
+.card__status .checked path {
+    fill: var(--character-dark-success);
+}
+
+[class*="ant-tooltip"] p {
+    margin: 0;
+}
+
+.pals__pagination {
+    margin-top: auto;
+    margin-bottom: 18px;
+}
+
+.joint-training .pals__pagination>[class*="pagination"] {
+    height: 20px;
+    line-height: 18px;
+}
+
+.pals__pagination [class*="item-active"] {
+    border-color: var(--primary-light-6);
+}
+
+.pals__pagination [class*="item-active"]>a {
+    color: var(--primary-light-6);
+}

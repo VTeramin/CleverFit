@@ -61,7 +61,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
         const dateValue = isEdit && date ? date : dateFromMoment;
 
         dispatch(saveTraining(dateValue)).then(() => {
-            if(!isJoint) dispatch(changeResultType(EStatus.empty));
+            if(isJoint) dispatch(changeResultType(EStatus.empty));
         });
     }
 

@@ -1,0 +1,57 @@
+.card__header {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.card__header [class*="ant-avatar"] {
+    background: var(--character-light-background);
+}
+
+.card__header img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.card__header path {
+    fill: var(--character-light-title-85);
+}
+
+.card__pal-name {
+    margin: 0;
+    color: var(--character-light-title-85);
+    line-height: var(--line-height);
+}
+
+.card__info {
+    display: flex;
+    flex-direction: row;
+    gap: var(--flex-gap-small);
+    margin-bottom: 20px;
+}
+
+.card__info p {
+    margin: 0;
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
+}
+
+.card__labels {
+    color: var(--character-light-secondary-45);
+}
+
+.card__data {
+    font-weight: var(--font-weight-medium);
+    color: var(--primary-light-6);
+}
+
+.card__labels,
+.card__data {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

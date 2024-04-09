@@ -1,4 +1,4 @@
-import { ECalendarModalType, EStatus, EValid } from './enums'
+import { ECalendarModalType, EJointStatus, EStatus, EValid } from './enums'
 
 export type TValidChange = {
     password: EValid.success | EValid.error,
@@ -117,9 +117,23 @@ export type TUserDataFormReponse = {
     }
 }
 
+export type TInvite = {
+    _id: string,
+    from: {
+      _id: string,
+      firstName: string | null,
+      lastName: string | null,
+      imageSrc: string | null
+    },
+    training: TTraining,
+    status: EJointStatus,
+    createdAt: string
+  }
+
 export type TUserData = {
     isAuthorized: boolean,
     sessionToken: string,
+    invites: TInvite[],
     userInfo: TUserDataFormReponse
 }
 

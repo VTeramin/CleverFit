@@ -1,4 +1,4 @@
-import { TUserData, TUserDataFormReponse } from '@constants/types';
+import { TInvite, TUserData, TUserDataFormReponse } from '@constants/types';
 import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from './configure-store';
@@ -6,6 +6,7 @@ import { RootState } from './configure-store';
 const initialState: TUserData = {
     isAuthorized: localStorage.getItem('token') !== null,
     sessionToken: localStorage.getItem('token') || '',
+    invites: [],
     userInfo: {}
 };
 
@@ -19,12 +20,16 @@ export const userDataSlice = createSlice({
         changeSessionToken: (state, action: PayloadAction<string>) => {
             state.sessionToken = action.payload;
         },
+        changeInvites: (state, action: PayloadAction<TInvite[]>) => {
+            state.invites.splice(0, state.invites.length);
+            state.invites.push(...action.payload);
+        },
         changeUserInfo: (state, action: PayloadAction<TUserDataFormReponse>) => {
             Object.assign(state.userInfo, action.payload);
         }
     }
 });
 
-export const { toggleIsAuthorized, changeSessionToken, changeUserInfo } = userDataSlice.actions;
+export const { toggleIsAuthorized, changeSessionToken, changeInvites, changeUserInfo } = userDataSlice.actions;
 export const selectUserData = (state: RootState) => state.userData;
 export default userDataSlice.reducer;

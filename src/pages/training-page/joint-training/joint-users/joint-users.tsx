@@ -1,0 +1,127 @@
+/* eslint-disable no-underscore-dangle */
+import React, { useEffect, useState } from 'react';
+import { ArrowLeftOutlined, CheckCircleFilled, ExclamationCircleOutlined } from '@ant-design/icons';
+import { EJointStatus } from '@constants/enums';
+import { jointCardsStatus } from '@constants/joint-cards-status';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { CalendarDrawer } from '@pages/calendar-page/calendar-drawer/calendar-drawer';
+import { changeExerciseFormFields, changeInterval, changeSelectedPal, changeSelectedTraining, toggleIsDrawer, toggleIsEdit, toggleIsJoint, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
+import { selectUserJointTrainingList } from '@redux/user-joint-training-list-slice';
+import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
+import { statusSortJoinUsers } from '@utils/training-utils/status-sort-joint-users';
+import { Button, Input, Pagination, Tooltip } from 'antd';
+
+import { UserCard } from '../user-card/user-card';
+
+import 'antd/dist/antd.css';
+import styles from './joint-users.module.css';
+
+const { Search } = Input;
+
+type TProps = {
+    setInner: React.Dispatch<React.SetStateAction<string>>
+}
+
+export const JointUsers: React.FC<TProps> = ({ setInner }) => {
+    const dispatch = useAppDispatch();
+    const userJointTrainingList = useAppSelector(selectUserJointTrainingList);
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageWidth = useWindowSize().width || 0;
+    const isTablet = pageWidth < 1300;
+    const [ref, { width }] = useMeasure();
+    const [pageSize, setPageSize] = useState(0);
+    const [searchInputValue, setSearchInputValue] = useState('');
+    const statusSortedUsers = statusSortJoinUsers(userJointTrainingList);
+    const usersInfoAfterSearch = statusSortedUsers.filter(el => el.name.includes(searchInputValue));
+    const cardsData = usersInfoAfterSearch.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+    useEffect(() => {
+        const sideBar = document.getElementById('side-bar');
+        const sideBarWidth = sideBar === null ? 70 : sideBar.offsetWidth
+        const fullPageSize = sideBarWidth > 65 ? 12 : 15;
+
+        setPageSize(isTablet ? 8 : fullPageSize);
+    }, [isTablet, width]);
+
+    function handleBack() {
+        setInner('invites');
+        setCurrentPage(1);
+        setSearchInputValue('');
+    }
+
+    function handleAddTraining(trainingType: string, palId: string) {
+        dispatch(changeSelectedTraining(trainingType));
+        dispatch(changeSelectedPal(palId));
+        dispatch(changeExerciseFormFields({}));
+        dispatch(changeInterval(null));
+        dispatch(toggleIsSaveDisabled(true));
+        dispatch(toggleIsEdit(true));
+        dispatch(toggleIsJoint(true));
+        dispatch(toggleIsDrawer(true));
+    }
+
+    return (
+        <React.Fragment>
+            <div className={styles.pals__header}>
+                <Button
+                    type='text'
+                    onClick={() => handleBack()}
+                    className={styles['header__arrow-back']}
+                >
+                    <ArrowLeftOutlined /> Назад
+                </Button>
+                <Search
+                    value={searchInputValue}
+                    onChange={event => setSearchInputValue(event.target.value)}
+                    placeholder="Поиск по имени"
+                    className={styles.header__search}
+                />
+            </div>
+            <div className={styles.pals__cards} ref={ref}>
+                {cardsData.map(user => (
+                    <div key={user.id} className={styles.cards__card}>
+                        <UserCard user={user} searchInputValue={searchInputValue} />
+                        <Button
+                            onClick={() => handleAddTraining(user.trainingType, user.id)}
+                            disabled={user.status === EJointStatus.pending || user.status === EJointStatus.rejected}
+                            className={`${styles['card__conf-button']} ${styles['conf-button']}`}
+                        >
+                            Создать тренировку
+                        </Button>
+                        {user.status !== null &&
+                            <p className={styles.card__status}>
+                                {jointCardsStatus[user.status]}
+                                {user.status === EJointStatus.rejected && <Tooltip
+                                    title={<p className={styles.tooltip}>
+                                        повторный запрос <br />будет доступен <br />через 2 недели
+                                    </p>}
+                                    placement='topRight'
+                                    color='var(--neutral-gray-13)'
+                                >
+                                    <ExclamationCircleOutlined
+                                        size={16}
+                                        className={styles.exclamation}
+                                    />
+                                </Tooltip>}
+                                {user.status === EJointStatus.accepted && <CheckCircleFilled
+                                    size={16}
+                                    className={styles.checked}
+                                />}
+                            </p>}
+                    </div>
+                ))}
+            </div>
+            <Pagination
+                size="small"
+                current={currentPage}
+                total={usersInfoAfterSearch.length}
+                pageSize={pageSize}
+                onChange={(page) => setCurrentPage(page)}
+                showSizeChanger={false}
+                hideOnSinglePage={true}
+                className={styles.pals__pagination}
+            />
+            <CalendarDrawer />
+        </React.Fragment>
+    );
+};

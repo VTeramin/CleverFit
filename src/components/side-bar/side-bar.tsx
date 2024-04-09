@@ -2,11 +2,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CalendarTwoTone, HeartTwoTone, IdcardTwoTone, TrophyTwoTone } from '@ant-design/icons';
 import { EROUTE } from '@constants/enums';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useOutsideClick } from '@hooks/use-outside-click';
-import { toggleIsAuthorized } from '@redux/user-data-slice';
+import { selectUserData, toggleIsAuthorized } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { Button, Layout, Menu } from 'antd';
+import { Badge, Button, Layout, Menu } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
 
 import 'antd/dist/antd.css';
@@ -26,12 +26,13 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
     const isFullWidth = width > 800;
     const siderRef = useOutsideClick(() => setCollapsed(true));
     const { pathname } = useLocation();
-    const paths =  useMemo(() => [
+    const paths = useMemo(() => [
         EROUTE.CALENDAR,
         EROUTE.TRAINING,
         '',
         EROUTE.PROFILE
     ], []);
+    const { invites } = useAppSelector(selectUserData);
 
     const [selectedMenuItem, setSelectedMenuItem] = useState<string[]>([]);
 
@@ -58,10 +59,20 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
 
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
         key: index,
-        icon: React.createElement(icon, {
-            twoToneColor: 'var(--primary-light-9)',
-            className: styles.menu__icon
-        }),
+        icon: icon === HeartTwoTone
+            ? <Badge
+                count={invites.length}
+                size='small'
+            >
+                {React.createElement(icon, {
+                    twoToneColor: 'var(--primary-light-9)',
+                    className: styles.menu__icon
+                })}
+            </Badge>
+            : React.createElement(icon, {
+                twoToneColor: 'var(--primary-light-9)',
+                className: styles.menu__icon
+            }),
         label: ['Календарь', 'Тренировки', 'Достижения', 'Профиль'][index],
         style: collapsed ? {} : { paddingLeft: isFullWidth ? '16px' : '0' },
         className: styles.menu__item

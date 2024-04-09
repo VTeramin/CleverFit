@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function getJointUserName(name: string, searchInputValue: string) {
     function getNameValueComponent(index: number) {
         const nameHalf = name.split(' ')[index] || '';
@@ -11,9 +9,9 @@ export function getJointUserName(name: string, searchInputValue: string) {
             const isNotLast = ind !== nameParts.length - 1;
 
             return isOdd && isNotLast
-                ? <React.Fragment>
-                    <span>{part}</span><span style={{ color: 'var(--character-light-red-4)' }}>{searchInputValue}</span>
-                </React.Fragment>
+                ? <span key={part}>
+                    <span key={part}>{part}</span><span style={{ color: 'var(--character-light-red-4)' }}>{searchInputValue}</span>
+                </span>
                 : <span>{part}</span>
         })
 

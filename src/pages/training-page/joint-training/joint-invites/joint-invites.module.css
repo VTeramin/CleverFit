@@ -1,0 +1,210 @@
+.joint-training__invites-section,
+.joint-training__add-training-card {
+    background: var(--character-light-table-header);
+}
+
+.joint-training__invites-section {
+    padding: 16px 24px 24px;
+    margin-bottom: 24px;
+}
+
+.invites-section__new-messages {
+    color: var(--character-light-secondary-45);
+    margin-bottom: 16px;
+}
+
+.invites-section__invite-card {
+    padding: 20px;
+    padding-left: 12px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    box-shadow: var(--box-shadow-button);
+    background: var(--character-light-primary-inverse);
+    border-radius: var(--border-radius) 16px 16px 16px;
+}
+
+.invite-card__user-info {
+    width: 174px;
+    padding: 2px 0;
+    margin-right: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+
+    text-align: center;
+    font-size: var(--font-size-larger);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.invite-card__avatar[class*="ant-avatar"] {
+    background: var(--character-light-background);
+}
+
+.invite-card__avatar img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.invite-card__avatar path {
+    fill: var(--character-light-title-85);
+}
+
+.invite-card__invite-info {
+    padding-right: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-shrink: 1;
+    gap: 8px;
+    margin-right: auto;
+}
+
+.invite-card__date {
+    margin: 0;
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
+    color: var(--character-light-disable-25);
+}
+
+.invite-card__message {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-larger);
+    line-height: var(--line-height);
+    color: var(--primary-light-9);
+}
+
+.invite-card__details-btn {
+    padding: 4px 0;
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--primary-light-6);
+}
+
+.invite-card__btns-wrapper {
+    width: 190px;
+    padding-bottom: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.invite-card__conf-btn,
+.invite-card__default-btn {
+    height: var(--button-height);
+}
+
+.invites-section__show-btn {
+    width: 200px;
+    padding: 0;
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--primary-light-6);
+}
+
+.invites-section__show-btn svg {
+    margin-right: 10px;
+}
+
+.joint-training__add-training-card {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border: var(--button-border-auth);
+    border-radius: var(--border-radius);
+}
+
+.add-training-card__title {
+    margin: 24px 0;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-large);
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--primary-light-9);
+}
+
+.add-training-card__subtitle {
+    width: 80%;
+    margin-bottom: 24px;
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--character-light-secondary-45);
+}
+
+.add-training-card__divider {
+    margin: 0;
+}
+
+.add-training-card__buttons-wrapper {
+    width: 78%;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--flex-gap-small);
+}
+
+.add-training-card__buttons-wrapper>button {
+    width: 50%;
+    height: 32px;
+}
+
+.add-training-card__buttons-wrapper>button:first-child {
+    color: var(--primary-light-6);
+}
+
+.participants-section__title {
+    margin-bottom: 12px;
+    font-weight: var(--font-weight-medium);
+    font-size: 20px;
+    line-height: var(--line-height);
+}
+
+.participants-section__subtitle {
+    margin: 0;
+    color: var(--character-light-secondary-45);
+}
+
+.conf-button {
+    padding: var(--button-padding);
+    border: var(--button-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-button);
+    background: var(--primary-light-6);
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--character-light-primary-inverse);
+}
+
+.participants-section__pals {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--flex-gap-small);
+}
+
+.pals__pal-card {
+    width: 234px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+
+    border: var(--button-border-auth);
+    border-radius: var(--border-radius);
+    background: var(--character-light-primary-inverse);
+}
