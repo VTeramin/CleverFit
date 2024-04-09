@@ -7,7 +7,7 @@ import { selectTariffList } from '@redux/tariff-list-slice';
 import { selectUserData } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { convertDate } from '@utils/convert-date';
-import { changeTariff } from '@utils/requests/change-tariff';
+import { changeTariff } from '@utils/requests/tariff/change-tariff';
 import { Button, Divider, Drawer } from 'antd';
 
 import 'antd/dist/antd.css';

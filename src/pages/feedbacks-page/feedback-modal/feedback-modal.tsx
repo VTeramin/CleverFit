@@ -4,8 +4,8 @@ import { StarTwoTone } from '@ant-design/icons';
 import { EROUTE, EStatus } from '@constants/enums';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { getFeedbacks } from '@utils/requests/get-feedbacks';
-import { sendFeedback } from '@utils/requests/send-feedback';
+import { getFeedbacks } from '@utils/requests/feedback/get-feedbacks';
+import { sendFeedback } from '@utils/requests/feedback/send-feedback';
 import { Button, Form, Input, Modal, Rate } from 'antd';
 
 import 'antd/dist/antd.css';

@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EROUTE, EStatus } from '@constants/enums';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { getTraining } from '@utils/requests/get-training';
-import { getTrainingList } from '@utils/requests/get-training-list';
+import { getTraining } from '@utils/requests/training/get-training';
+import { getTrainingList } from '@utils/requests/catalogs/get-training-list';
 import { Layout, Tabs } from 'antd';
 
 import { JointTraining } from './joint-training/joint-training';

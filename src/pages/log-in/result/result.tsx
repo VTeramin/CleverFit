@@ -3,9 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { CheckCircleFilled,CloseCircleFilled, WarningFilled } from '@ant-design/icons';
 import { EROUTE } from '@constants/enums';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
-import { changePassword } from '@utils/requests/change-password';
-import { checkEmail } from '@utils/requests/check-email';
-import { register } from '@utils/requests/register';
+import { changePassword } from '@utils/requests/auth/change-password';
+import { checkEmail } from '@utils/requests/auth/check-email';
+import { register } from '@utils/requests/auth/register';
 import { Button } from 'antd';
 
 import '../modal.css';

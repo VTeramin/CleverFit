@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { TrainingSelect } from '@pages/calendar-page/calendar-modal/inner-new-training/training-select/training-select';
 import { changeModalType, changeResultType, selectCalendarModalData, toggleIsDrawer } from '@redux/calendar-modal-slice';
 import { getNamesInForm } from '@utils/calendar-utils/get-names-in-form';
-import { saveTraining } from '@utils/requests/save-training';
+import { saveTraining } from '@utils/requests/training/save-training';
 import { Button, Divider, Empty } from 'antd';
 
 import emptyIcon from '../../../../assets/icon/empty.svg';

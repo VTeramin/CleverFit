@@ -6,8 +6,8 @@ import { changeModalType, selectCalendarModalData, toggleIsModal } from '@redux/
 import { selectTraining } from '@redux/training-slice';
 import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
 import { getListData } from '@utils/calendar-utils/get-list-data';
-import { getTraining } from '@utils/requests/get-training';
-import { getTrainingList } from '@utils/requests/get-training-list';
+import { getTraining } from '@utils/requests/training/get-training';
+import { getTrainingList } from '@utils/requests/catalogs/get-training-list';
 import { Calendar, ConfigProvider, Layout } from 'antd';
 import locale from 'antd/es/locale/ru_RU';
 import moment, { Moment } from 'moment';

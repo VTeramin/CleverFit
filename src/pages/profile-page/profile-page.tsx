@@ -9,7 +9,7 @@ import { changeUserInfo, selectUserData } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { validEmail } from '@utils/auth-utils/valid-email';
 import { checkIsSubmitProfileDisabled } from '@utils/profile-utils/check-is-submit-profile-disabled';
-import { changeRemoteUserData } from '@utils/requests/change-remote-user-data';
+import { changeRemoteUserData } from '@utils/requests/user/change-remote-user-data';
 import { Alert, Button, DatePicker, Form, Input, Layout, Upload } from 'antd';
 import { UploadChangeParam, UploadFile } from 'antd/lib/upload';
 import moment from 'moment';

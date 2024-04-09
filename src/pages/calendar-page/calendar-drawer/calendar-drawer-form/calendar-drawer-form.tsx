@@ -107,8 +107,8 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
             onValuesChange={(_, allValues) => setFormBackUp(allValues)}
             initialValues={initialFormValues}
         >
-            {isMyTrainingPage && selectedPalData && <div className={styles['drawer__no-date-group']}>
-                {isJoint && <div className={styles['joint-training-pal']}>
+            {isMyTrainingPage && <div className={styles['drawer__no-date-group']}>
+                {isJoint && selectedPalData && <div className={styles['joint-training-pal']}>
                     <Avatar
                         src={selectedPalData.imageSrc || <UserOutlined />}
                         alt={selectedPalData.name}

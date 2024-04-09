@@ -4,7 +4,7 @@ import { ResultModal } from '@components/result-modal/result-modal';
 import { EROUTE, EStatus } from '@constants/enums';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectFeedback } from '@redux/feedback-slice';
-import { getFeedbacks } from '@utils/requests/get-feedbacks';
+import { getFeedbacks } from '@utils/requests/feedback/get-feedbacks';
 import { Button, Layout } from 'antd';
 
 import { FeedbackCards } from './feeback-cards/feedback-cards';

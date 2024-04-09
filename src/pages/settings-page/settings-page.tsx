@@ -10,8 +10,8 @@ import { FeedbackModal } from '@pages/feedbacks-page/feedback-modal/feedback-mod
 import { changeUserInfo, selectUserData } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { convertDate } from '@utils/convert-date';
-import { changeRemoteUserData } from '@utils/requests/change-remote-user-data';
-import { getTariffList } from '@utils/requests/get-tariff-list';
+import { getTariffList } from '@utils/requests/catalogs/get-tariff-list';
+import { changeRemoteUserData } from '@utils/requests/user/change-remote-user-data';
 import { Button, Layout, Switch, Tooltip } from 'antd';
 
 import freeTarif from '../../assets/img/tarif-free.png';

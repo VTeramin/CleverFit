@@ -4,7 +4,7 @@ import { Passwords } from '@components/passwords/passwords';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectLogin } from '@redux/login-slice';
 import { checkDisabledChangePassword } from '@utils/auth-utils/check-valid-status';
-import { changePassword } from '@utils/requests/change-password';
+import { changePassword } from '@utils/requests/auth/change-password';
 import { Button, Form } from 'antd';
 
 import 'antd/dist/antd.css';

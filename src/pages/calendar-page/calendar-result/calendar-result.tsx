@@ -4,8 +4,8 @@ import { EStatus } from '@constants/enums';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { changeResultType, selectCalendarModalData, toggleIsModal } from '@redux/calendar-modal-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { getTrainingList } from '@utils/requests/get-training-list';
-import { getUserJointTrainingList } from '@utils/requests/get-user-joint-training-list';
+import { getTrainingList } from '@utils/requests/catalogs/get-training-list';
+import { getUserJointTrainingList } from '@utils/requests/catalogs/get-user-joint-training-list';
 import { Button, Modal, Result } from 'antd';
 
 import 'antd/dist/antd.css';

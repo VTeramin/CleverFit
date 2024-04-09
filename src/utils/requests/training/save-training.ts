@@ -9,8 +9,9 @@ import { findTrainingId } from '@utils/calendar-utils/find-training-id';
 import { checkIsFuture } from '@utils/check-is-future';
 import axios, { AxiosResponse } from 'axios';
 
+import { sendInvite } from '../invite/send-invite';
+
 import { getTraining } from './get-training';
-import { sendInvite } from './send-invite';
 
 axios.defaults.withCredentials = true;
 

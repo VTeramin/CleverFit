@@ -5,7 +5,7 @@ import { CloseCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
 import { EStatus } from '@constants/enums';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectLogin } from '@redux/login-slice';
-import { confirmEmail } from '@utils/requests/confirm-email';
+import { confirmEmail } from '@utils/requests/auth/confirm-email';
 
 import '../modal.css';
 import styles from './confirm-email.module.css';

@@ -6,8 +6,8 @@ import { changeExerciseFormFields, changeInterval, changeSelectedPal, changeSele
 import { selectTrainingPals } from '@redux/training-pals-slice';
 import { selectUserJointTrainingList } from '@redux/user-joint-training-list-slice';
 import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
-import { getTrainingPals } from '@utils/requests/get-training-pals';
-import { getUserJointTrainingList } from '@utils/requests/get-user-joint-training-list';
+import { getTrainingPals } from '@utils/requests/catalogs/get-training-pals';
+import { getUserJointTrainingList } from '@utils/requests/catalogs/get-user-joint-training-list';
 import { getJointUserName } from '@utils/training-utils/get-joint-user-name';
 import { getMostPopularTraining } from '@utils/training-utils/get-most-popular-training';
 import { Avatar, Button, Divider, Input, Layout, Pagination } from 'antd';

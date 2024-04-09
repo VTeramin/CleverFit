@@ -10,7 +10,7 @@ import { useWindowSize } from '@uidotdev/usehooks';
 import { sortDrawerFormFromEmpty } from '@utils/calendar-utils/sort-drawer-form-from-empty';
 import { checkIsFuture } from '@utils/check-is-future';
 import { convertDate } from '@utils/convert-date';
-import { saveTraining } from '@utils/requests/save-training';
+import { saveTraining } from '@utils/requests/training/save-training';
 import { Button, Divider, Drawer } from 'antd';
 import { Moment } from 'moment';
 

@@ -8,10 +8,10 @@ import { changeLoginData, selectLogin } from '@redux/login-slice';
 import { checkDisabledAuth, checkValidAuth, checkValidRegistraion } from '@utils/auth-utils/check-valid-status';
 import { validEmail } from '@utils/auth-utils/valid-email';
 import { validPassword } from '@utils/auth-utils/valid-password';
-import { checkEmail } from '@utils/requests/check-email';
-import { googleAuth } from '@utils/requests/google-auth';
-import { login } from '@utils/requests/login';
-import { register } from '@utils/requests/register';
+import { googleAuth } from '@utils/requests/auth/google-auth';
+import { login } from '@utils/requests/auth/login';
+import { checkEmail } from '@utils/requests/auth/check-email';
+import { register } from '@utils/requests/auth/register';
 import { Button, Checkbox, Form, Input } from 'antd';
 
 import 'antd/dist/antd.css';
