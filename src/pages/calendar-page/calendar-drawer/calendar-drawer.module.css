@@ -15,7 +15,7 @@
 }
 
 .drawer [class*="drawer-body"] {
-    overflow: hidden;
+    height: 100%;
     padding: 24px 32px 12px;
     display: grid;
     grid-template-rows: max-content max-content 1fr;
@@ -77,6 +77,10 @@
 .joint-training-pal__training-type {
     align-self: flex-end;
     margin-left: auto;
+}
+
+.drawer__no-date-group {
+    margin-bottom: 24px;
 }
 
 .drawer__no-date-group [class*="select-show-arrow"] {
@@ -255,24 +259,74 @@
     color: var(--character-light-secondary-45);
 }
 
+.drawer__form {
+    height: 100%;
+}
+
+.drawer [class="ant-form"] {
+    height: 100%;
+}
+
 .drawer__form-wrapper {
-    margin-top: 24px;
+    height: max-content;
+    max-height: calc(100vh - 180px);
+    overflow-y: scroll;
+    margin-bottom: auto;
+    padding-right: 8px;
+    margin-right: -8px;
+    margin-bottom: 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.drawer__form-wrapper-my-training {
+    max-height: calc(100vh - 340px);
+}
+
+.drawer__form-wrapper-interval {
+    max-height: calc(100vh - 376px);
+}
+
+.drawer__form-wrapper-edit-past {
+    max-height: calc(100vh - 406px);
+}
+
+.drawer__form-wrapper-interval.drawer__form-wrapper-edit-past {
+    max-height: calc(100vh - 442px);
 }
 
 @media (max-width: 800px) {
     .drawer__form-wrapper {
-        margin-top: 16px;
+        max-height: 370px;
     }
-}
 
-.drawer__form {
-    height: 100%;
-    overflow-y: auto;
-    margin-bottom: auto;
+    .drawer__form-wrapper-my-training {
+        max-height: 240px;
+    }
+
+    .drawer__form-wrapper-interval {
+        max-height: 204px;
+    }
+
+    .drawer__form-wrapper-edit-past {
+        max-height: 165px;
+    }
+
+    .drawer__form-wrapper-interval.drawer__form-wrapper-edit-past {
+        max-height: 129px;
+    }
 }
 
 .drawer__form::-webkit-scrollbar {
     width: 8px;
+}
+
+@media (max-width: 800px) {
+    .drawer__form::-webkit-scrollbar {
+        width: 4px;
+    }
 }
 
 .drawer__form::-webkit-scrollbar-track {
@@ -317,7 +371,7 @@
 
 .drawer__inputs-wrapper {
     margin-top: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 0;
 }
 
 .drawer [class*="label"] label {

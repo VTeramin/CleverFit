@@ -14,6 +14,7 @@ import { getListData } from '@utils/calendar-utils/get-list-data';
 import { sortCheckboxListFromEmpty } from '@utils/calendar-utils/sort-checkbox-list-from-empty';
 import { sortDrawerFormFromEmpty } from '@utils/calendar-utils/sort-drawer-form-from-empty';
 import { checkIsDatesEqual } from '@utils/check-is-dates-equal';
+import { checkIsFuture } from '@utils/check-is-future';
 import { getFixedDate } from '@utils/get-fixed-date';
 import { checkIsSaveDisabled } from '@utils/training-utils/check-is-save-disabled';
 import { Avatar, Badge, Button, Checkbox, ConfigProvider, DatePicker, Form, FormInstance, Input, InputNumber, Select } from 'antd';
@@ -47,6 +48,13 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
     const [isInterval, setIsInterval] = useState(false);
     const [checkboxList, setCheckboxList] = useState<{ [key: number]: boolean }>({});
     const [isDeleteDisabled, setIsDeleteDisabled] = useState(true);
+    const isWarning = date ? !checkIsFuture(date) : false;
+    const formWrapperClassNames = [
+        'drawer__form-wrapper',
+        isMyTrainingPage && 'drawer__form-wrapper-my-training',
+        isInterval && 'drawer__form-wrapper-interval',
+        isWarning && 'drawer__form-wrapper-edit-past'
+    ].map(el => el ? styles[el] : '').join(' ');
 
     useEffect(() => {
         if (!isDrawer) dispatch(toggleIsSaveDisabled(true));
@@ -157,49 +165,50 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
             <Form.List name="exercises">
                 {(fields, { add, remove }) => (
                     <React.Fragment>
-
-                        {fields.map(({ name, key }) => (
-                            <div key={key} className={styles['drawer__form-wrapper']}>
-                                <Form.Item name={[name, 'name']} required={true}>
-                                    <Input
-                                        placeholder="Упражнение"
-                                        addonAfter={isEdit && <Checkbox
-                                            checked={checkboxList[name]}
-                                            onChange={(event) => handleCheckboxChange(event, name)}
-                                            name="checkbox"
-                                            data-test-id={`modal-drawer-right-checkbox-exercise${name}`}
-                                        />}
-                                        className={styles['drawer__training-name-input']}
-                                        data-test-id={`modal-drawer-right-input-exercise${name}`}
-                                    />
-                                </Form.Item>
-                                <div className={styles['drawer__inputs-wrapper']}>
-                                    <Form.Item name={[name, 'replays']} label="Подходы" colon={false}>
-                                        <InputNumber
-                                            addonBefore="+"
-                                            placeholder="1"
-                                            min={1}
-                                            data-test-id={`modal-drawer-right-input-approach${name}`}
+                        <div className={formWrapperClassNames}>
+                            {fields.map(({ name, key }) => (
+                                <div key={key} className={styles['drawer__form-item-wrapper']}>
+                                    <Form.Item name={[name, 'name']} required={true}>
+                                        <Input
+                                            placeholder="Упражнение"
+                                            addonAfter={isEdit && <Checkbox
+                                                checked={checkboxList[name]}
+                                                onChange={(event) => handleCheckboxChange(event, name)}
+                                                name="checkbox"
+                                                data-test-id={`modal-drawer-right-checkbox-exercise${name}`}
+                                            />}
+                                            className={styles['drawer__training-name-input']}
+                                            data-test-id={`modal-drawer-right-input-exercise${name}`}
                                         />
                                     </Form.Item>
-                                    <Form.Item name={[name, 'weight']} label="Вес, кг" colon={false}>
-                                        <InputNumber
-                                            placeholder="0"
-                                            min={0}
-                                            data-test-id={`modal-drawer-right-input-weight${name}`}
-                                        />
-                                    </Form.Item>
-                                    <p className={styles.drawer__x}>X</p>
-                                    <Form.Item name={[name, 'approaches']} label="Количество" colon={false}>
-                                        <InputNumber
-                                            placeholder="3"
-                                            min={1}
-                                            data-test-id={`modal-drawer-right-input-quantity${name}`}
-                                        />
-                                    </Form.Item>
+                                    <div className={styles['drawer__inputs-wrapper']}>
+                                        <Form.Item name={[name, 'replays']} label="Подходы" colon={false}>
+                                            <InputNumber
+                                                addonBefore="+"
+                                                placeholder="1"
+                                                min={1}
+                                                data-test-id={`modal-drawer-right-input-approach${name}`}
+                                            />
+                                        </Form.Item>
+                                        <Form.Item name={[name, 'weight']} label="Вес, кг" colon={false}>
+                                            <InputNumber
+                                                placeholder="0"
+                                                min={0}
+                                                data-test-id={`modal-drawer-right-input-weight${name}`}
+                                            />
+                                        </Form.Item>
+                                        <p className={styles.drawer__x}>X</p>
+                                        <Form.Item name={[name, 'approaches']} label="Количество" colon={false}>
+                                            <InputNumber
+                                                placeholder="3"
+                                                min={1}
+                                                data-test-id={`modal-drawer-right-input-quantity${name}`}
+                                            />
+                                        </Form.Item>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                         <div className={`${styles['drawer__button-wrapper']} ${isEdit && styles.edit}`}>
                             <Form.Item>
                                 <Button
