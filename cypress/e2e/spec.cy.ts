@@ -393,6 +393,54 @@ const inviteJointTraining = [
         createdAt: dayBeforeToday,
     },
 ];
+const newInviteJointTraining = {
+    _id: '66156a6568b4b7f6e6bc2cf6',
+    from: {
+        _id: '65b809899adc9e39e3660ae0',
+        firstName: 'Алексей',
+        lastName: 'Володько',
+        imageSrc: null,
+    },
+    training: {
+        _id: '13',
+        name: 'Ноги',
+        date: dayAfterTomorrow,
+        isImplementation: false,
+        userId: '65b809899adc9e39e3660ae0',
+        parameters: {
+            repeat: false,
+            period: null,
+            jointTraining: true,
+            participants: [],
+        },
+        exercises: [
+            {
+                _id: '66156a6568b4b7f6e6bc2ce6',
+                name: 'Присяд',
+                replays: 3,
+                weight: 50,
+                approaches: 10,
+                isImplementation: false,
+            },
+            {
+                _id: '66156a6568b4b7f6e6bc2ce7',
+                name: 'Толкание нагрузки',
+                replays: 3,
+                weight: 50,
+                approaches: 10,
+                isImplementation: false,
+            },
+        ],
+    },
+    status: 'pending',
+    createdAt: today,
+    to: {
+        _id: '65fafa2677536b7e4569a98e',
+        firstName: 'Максим',
+        lastName: 'Рудак',
+        imageSrc: '/media/avatar/65fafa2677536b7e4569a98e.png',
+    },
+};
 
 function returnUpdateUserTraining(id: string, date: number, isImplementation: boolean) {
     return {
@@ -906,10 +954,7 @@ describe('Sprint 6', () => {
             cy.intercept('POST', 'invite', (req) => {
                 req.reply({
                     statusCode: 200,
-                    body: {
-                        to: '65fafa2677536b7e4569a98e',
-                        trainingId: '13',
-                    },
+                    body: newInviteJointTraining,
                 });
             }).as('postInvite');
 
