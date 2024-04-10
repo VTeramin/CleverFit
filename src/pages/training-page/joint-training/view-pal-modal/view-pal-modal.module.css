@@ -1,0 +1,40 @@
+.modal [class*="modal-body"] {
+    padding: 40px 64px 40px 32px;
+    display: grid;
+    grid-template-areas: "avatar info"
+        "status button";
+    grid-template-columns: 1fr max-content;
+    row-gap: 24px;
+    align-items:center;
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+}
+
+.modal [class*="modal-body"]>* {
+    margin: 0;
+}
+
+.modal [class*="info"] {
+    justify-content: center;
+}
+
+.modal__status {
+    height: max-content;
+}
+
+.modal__status svg {
+    fill: var(--character-dark-success);
+}
+
+.modal__button {
+    display: block;
+    width: 209px;
+    height: var(--button-height);
+}
+
+.modal [class*="modal-close"]>svg {
+    width: 14px;
+    height: 14px;
+}

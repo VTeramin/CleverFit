@@ -6,8 +6,10 @@ import { jointCardsStatus } from '@constants/joint-cards-status';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarDrawer } from '@pages/calendar-page/calendar-drawer/calendar-drawer';
 import { changeExerciseFormFields, changeInterval, changeSelectedPal, changeSelectedTraining, toggleIsDrawer, toggleIsEdit, toggleIsJoint, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
+import { selectTrainingPals } from '@redux/training-pals-slice';
 import { selectUserJointTrainingList } from '@redux/user-joint-training-list-slice';
 import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
+import { rejectAcceptedInvite } from '@utils/requests/invite/reject-accepted-invite';
 import { statusSortJoinUsers } from '@utils/training-utils/status-sort-joint-users';
 import { Button, Input, Pagination, Tooltip } from 'antd';
 
@@ -25,13 +27,14 @@ type TProps = {
 export const JointUsers: React.FC<TProps> = ({ setInner }) => {
     const dispatch = useAppDispatch();
     const userJointTrainingList = useAppSelector(selectUserJointTrainingList);
+    const trainingPals = useAppSelector(selectTrainingPals);
     const [currentPage, setCurrentPage] = useState(1);
     const pageWidth = useWindowSize().width || 0;
     const isTablet = pageWidth < 1300;
     const [ref, { width }] = useMeasure();
     const [pageSize, setPageSize] = useState(0);
     const [searchInputValue, setSearchInputValue] = useState('');
-    const statusSortedUsers = statusSortJoinUsers(userJointTrainingList);
+    const statusSortedUsers = statusSortJoinUsers([...userJointTrainingList, ...trainingPals]);
     const usersInfoAfterSearch = statusSortedUsers.filter(el => el.name.includes(searchInputValue));
     const cardsData = usersInfoAfterSearch.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
@@ -60,6 +63,10 @@ export const JointUsers: React.FC<TProps> = ({ setInner }) => {
         dispatch(toggleIsDrawer(true));
     }
 
+    function handleRejectTraining(palId: string, inviteId: string) {
+        dispatch(rejectAcceptedInvite(palId, inviteId));
+    }
+
     return (
         <React.Fragment>
             <div className={styles.pals__header}>
@@ -81,13 +88,20 @@ export const JointUsers: React.FC<TProps> = ({ setInner }) => {
                 {cardsData.map(user => (
                     <div key={user.id} className={styles.cards__card}>
                         <UserCard user={user} searchInputValue={searchInputValue} />
-                        <Button
-                            onClick={() => handleAddTraining(user.trainingType, user.id)}
-                            disabled={user.status === EJointStatus.pending || user.status === EJointStatus.rejected}
-                            className={`${styles['card__conf-button']} ${styles['conf-button']}`}
-                        >
-                            Создать тренировку
-                        </Button>
+                        {user.status === EJointStatus.accepted
+                            ? <Button
+                                onClick={() => handleRejectTraining(user.id, user.inviteId || '')}
+                                className={`${styles['card__conf-button']}`}
+                            >
+                                Отменить тренировку
+                            </Button>
+                            : <Button
+                                onClick={() => handleAddTraining(user.trainingType, user.id)}
+                                disabled={user.status === EJointStatus.pending || user.status === EJointStatus.rejected}
+                                className={`${styles['card__conf-button']} ${styles['conf-button']}`}
+                            >
+                                Создать тренировку
+                            </Button>}
                         {user.status !== null &&
                             <p className={styles.card__status}>
                                 {jointCardsStatus[user.status]}

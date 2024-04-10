@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { selectTrainingPals } from '@redux/training-pals-slice';
+import { selectTrainingPals,TPalData } from '@redux/training-pals-slice';
 import { selectUserData } from '@redux/user-data-slice';
 import { getTrainingPals } from '@utils/requests/catalogs/get-training-pals';
 import { getUserJointTrainingList } from '@utils/requests/catalogs/get-user-joint-training-list';
@@ -10,6 +10,7 @@ import { getMostPopularTraining } from '@utils/training-utils/get-most-popular-t
 import { Button, Divider, } from 'antd';
 
 import { UserCard } from '../user-card/user-card';
+import { ViewPalModal } from '../view-pal-modal/view-pal-modal';
 
 import { InviteCard } from './invite-card/invite-card';
 
@@ -26,6 +27,8 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
     const [invitesDisplayed, setInvitesDisplayed] = useState(1);
     const trainingPals = useAppSelector(selectTrainingPals);
     const [hide, setHide] = useState(false);
+    const [isModal, setIsModal] = useState(false);
+    const [modalPalData, setModalPalData]= useState<TPalData>();
 
     useEffect(() => {
         dispatch(getTrainingPals());
@@ -41,6 +44,11 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
 
         dispatch(getUserJointTrainingList(trainingName));
         setInner('users');
+    }
+
+    function openModal(palData: TPalData) {
+        setModalPalData(palData);
+        setIsModal(true);
     }
 
     return (
@@ -90,13 +98,20 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
                 {trainingPals.length === 0 && <p className={styles['participants-section__subtitle']}>
                     У вас пока нет партнёров для совместных тренировок
                 </p>}
-                <div className={styles['participants-section__pals']}>
-                    {trainingPals.length > 0 && trainingPals.map(palData => (
-                        <div key={palData.id} className={styles['pals__pal-card']}>
-                            <UserCard user={palData} />
+                {trainingPals.length > 0 && <div className={styles['participants-section__pals']}>
+                    {trainingPals.map(palData => (
+                        <div key={palData.id}>
+                            <Button
+                                type='text'
+                                onClick={() => openModal(palData)}
+                                className={styles['pals__pal-card']}
+                            >
+                                <UserCard user={palData} />
+                            </Button>
                         </div>
                     ))}
-                </div>
+                </div>}
+                {modalPalData && <ViewPalModal isModal={isModal} setIsModal={setIsModal} palData={modalPalData} />}
             </div>
         </React.Fragment>
     );

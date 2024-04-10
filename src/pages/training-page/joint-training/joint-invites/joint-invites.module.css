@@ -95,6 +95,7 @@
 
 .pals__pal-card {
     width: 234px;
+    height: max-content;
     padding: 12px;
     display: flex;
     flex-direction: column;

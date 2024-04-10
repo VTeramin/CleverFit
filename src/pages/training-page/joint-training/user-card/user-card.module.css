@@ -25,6 +25,7 @@
     margin: 0;
     color: var(--character-light-title-85);
     line-height: var(--line-height);
+    text-align: left;
 }
 
 .card__info {
@@ -32,6 +33,7 @@
     flex-direction: row;
     gap: var(--flex-gap-small);
     margin-bottom: 20px;
+    text-align: left;
 }
 
 .card__info p {
