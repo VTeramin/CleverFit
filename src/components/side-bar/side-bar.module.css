@@ -157,6 +157,8 @@
     width: var(--icon-size);
     height: var(--icon-size);
     background-image: var(--exit-icon);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 @media (max-width: 800px) {

@@ -100,6 +100,7 @@
     --logo-collapsed: url(./assets/logo/logoCollapsed.svg);
     --exit-icon: url(./assets/icon/exit.svg);
     --error-img: url(./assets/img/error-image.png);
+    --dropdown: url(./assets/icon/dropown.svg);
     --trigger-clip-path: path("M0 -1.52588e-05L20 7.99998V58L0 66V-1.52588e-05Z");
     --trigger-collapsed-clip-path: path("M0 0L32 5.81818V42.1818L0 48V0Z");
     --background-blur-filter: blur(6px);

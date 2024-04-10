@@ -28,8 +28,23 @@
     color: var(--primary-light-6);
 }
 
-.invites-section__show-btn svg {
+.invites-section__show-btn [class*="anticon-down"],
+.invites-section__show-btn [class*="anticon-up"] {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    background-image: var(--dropdown);
+    background-repeat: no-repeat;
+    background-position: center;
+
     margin-right: 10px;
+}
+
+.invites-section__show-btn [class*="anticon-up"] {
+    transform: rotate(180deg);
+}
+
+.invites-section__show-btn svg {
+    display: none;
 }
 
 .joint-training__add-training-card {

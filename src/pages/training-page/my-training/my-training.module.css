@@ -108,6 +108,18 @@
     background: var(--character-light-dividers);
 }
 
+.header__training-sort [class*="select-arrow"] {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    background-image: var(--dropdown);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.header__training-sort [class*="select-arrow"] svg {
+    display: none;
+}
+
 .training__row {
     display: flex;
     flex-direction: row;
