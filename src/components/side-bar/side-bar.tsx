@@ -59,7 +59,7 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
 
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
         key: index,
-        icon: icon === HeartTwoTone
+        icon: icon === HeartTwoTone && isFullWidth
             ? <Badge
                 count={invites.length}
                 size='small'

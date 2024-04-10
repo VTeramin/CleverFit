@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { selectTrainingPals,TPalData } from '@redux/training-pals-slice';
+import { selectTrainingPals, TPalData } from '@redux/training-pals-slice';
 import { selectUserData } from '@redux/user-data-slice';
 import { getTrainingPals } from '@utils/requests/catalogs/get-training-pals';
 import { getUserJointTrainingList } from '@utils/requests/catalogs/get-user-joint-training-list';
@@ -28,7 +28,7 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
     const trainingPals = useAppSelector(selectTrainingPals);
     const [hide, setHide] = useState(false);
     const [isModal, setIsModal] = useState(false);
-    const [modalPalData, setModalPalData]= useState<TPalData>();
+    const [modalPalData, setModalPalData] = useState<TPalData>();
 
     useEffect(() => {
         dispatch(getTrainingPals());
@@ -55,7 +55,7 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
         <React.Fragment>
             {invites.length > 0 && !hide && <div className={styles['joint-training__invites-section']}>
                 <p className={styles['invites-section__new-messages']}>Новое сообщение ({invites.length})</p>
-                {invites.slice(0, invitesDisplayed).map(invite => <InviteCard invite={invite} setHide={setHide} />)}
+                {invites.slice(0, invitesDisplayed).map(invite => <InviteCard key={invite._id} invite={invite} setHide={setHide} />)}
                 {invites.length > 1 && <Button
                     type='text'
                     className={styles['invites-section__show-btn']}
@@ -75,7 +75,7 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
                     Хочешь тренироваться с тем, кто разделяет твои цели и темп?<br />Можешь найти друга для совместных тренировок среди других пользователей.
                 </h3>
                 <p className={styles['add-training-card__subtitle']}>
-                    Можешь воспользоваться случайным выбором или выбрать друга с похожим на твой уровень и вид тренировки, и мы найдем тебе идеального спортивного друга.
+                    Можешь воспользоваться случайным выбором или выбрать друга с похожим на твой уровень и вид тренировки, и&#160;мы найдем тебе идеального спортивного друга.
                 </p>
                 <Divider className={styles['add-training-card__divider']} />
                 <div className={styles['add-training-card__buttons-wrapper']}>

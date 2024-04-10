@@ -2,6 +2,7 @@ import React from 'react';
 import { CheckCircleFilled } from '@ant-design/icons';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { TPalData } from '@redux/training-pals-slice';
+import { useWindowSize } from '@uidotdev/usehooks';
 import { rejectAcceptedInvite } from '@utils/requests/invite/reject-accepted-invite';
 import { Button, Modal } from 'antd';
 
@@ -18,6 +19,8 @@ type TProps = {
 
 export const ViewPalModal: React.FC<TProps> = ({ isModal, setIsModal, palData }) => {
     const dispatch = useAppDispatch();
+    const pageWidth = useWindowSize().width || 0;
+    const isMobile = pageWidth < 800;
 
     function handleRejectInvite(palId: string, inviteId: string) {
         setIsModal(false);
@@ -31,7 +34,7 @@ export const ViewPalModal: React.FC<TProps> = ({ isModal, setIsModal, palData })
             backdropFilter: 'var(--background-blur-filter)',
             background: 'var(--background-blur-color)'
         }}
-        width={539}
+        width={isMobile ? 312 : 539}
         className={styles.modal}
         open={isModal}
         maskClosable={true}

@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarDrawer } from '@pages/calendar-page/calendar-drawer/calendar-drawer';
 import { changeExerciseFormFields, changeInterval, changeSelectedPal, changeSelectedTraining, toggleIsDrawer, toggleIsEdit, toggleIsJoint, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
 import { selectTrainingPals } from '@redux/training-pals-slice';
+import { selectUserData } from '@redux/user-data-slice';
 import { selectUserJointTrainingList } from '@redux/user-joint-training-list-slice';
 import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
 import { rejectAcceptedInvite } from '@utils/requests/invite/reject-accepted-invite';
@@ -28,15 +29,26 @@ export const JointUsers: React.FC<TProps> = ({ setInner }) => {
     const dispatch = useAppDispatch();
     const userJointTrainingList = useAppSelector(selectUserJointTrainingList);
     const trainingPals = useAppSelector(selectTrainingPals);
+    const { invites } = useAppSelector(selectUserData);
     const [currentPage, setCurrentPage] = useState(1);
     const pageWidth = useWindowSize().width || 0;
     const isTablet = pageWidth < 1300;
     const [ref, { width }] = useMeasure();
     const [pageSize, setPageSize] = useState(0);
     const [searchInputValue, setSearchInputValue] = useState('');
-    const statusSortedUsers = statusSortJoinUsers([...userJointTrainingList, ...trainingPals]);
+    const statusSortedUsers = statusSortJoinUsers(userJointTrainingList);
     const usersInfoAfterSearch = statusSortedUsers.filter(el => el.name.includes(searchInputValue));
     const cardsData = usersInfoAfterSearch.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+    const [availableRequests, setAvailableRequests] = useState(0);
+
+    useEffect(() => {
+        const palsCounter = trainingPals.length;
+        const invitesCounter = invites.length;
+        const pendingPalsCounter = userJointTrainingList.filter(el => el.status === EJointStatus.pending).length;
+
+        setAvailableRequests(palsCounter + invitesCounter + pendingPalsCounter);
+    }, [trainingPals, invites, userJointTrainingList]);
 
     useEffect(() => {
         const sideBar = document.getElementById('side-bar');
@@ -67,6 +79,11 @@ export const JointUsers: React.FC<TProps> = ({ setInner }) => {
         dispatch(rejectAcceptedInvite(palId, inviteId));
     }
 
+    function handleSearch(value: string) {
+        setSearchInputValue(value);
+        setCurrentPage(1);
+    }
+
     return (
         <React.Fragment>
             <div className={styles.pals__header}>
@@ -79,7 +96,7 @@ export const JointUsers: React.FC<TProps> = ({ setInner }) => {
                 </Button>
                 <Search
                     value={searchInputValue}
-                    onChange={event => setSearchInputValue(event.target.value)}
+                    onChange={event => handleSearch(event.target.value)}
                     placeholder="Поиск по имени"
                     className={styles.header__search}
                 />
@@ -97,31 +114,30 @@ export const JointUsers: React.FC<TProps> = ({ setInner }) => {
                             </Button>
                             : <Button
                                 onClick={() => handleAddTraining(user.trainingType, user.id)}
-                                disabled={user.status === EJointStatus.pending || user.status === EJointStatus.rejected}
+                                disabled={user.status === EJointStatus.pending || user.status === EJointStatus.rejected || availableRequests >= 4}
                                 className={`${styles['card__conf-button']} ${styles['conf-button']}`}
                             >
                                 Создать тренировку
                             </Button>}
-                        {user.status !== null &&
-                            <p className={styles.card__status}>
-                                {jointCardsStatus[user.status]}
-                                {user.status === EJointStatus.rejected && <Tooltip
-                                    title={<p className={styles.tooltip}>
-                                        повторный запрос <br />будет доступен <br />через 2 недели
-                                    </p>}
-                                    placement='topRight'
-                                    color='var(--neutral-gray-13)'
-                                >
-                                    <ExclamationCircleOutlined
-                                        size={16}
-                                        className={styles.exclamation}
-                                    />
-                                </Tooltip>}
-                                {user.status === EJointStatus.accepted && <CheckCircleFilled
+                        {user.status !== null && <p className={styles.card__status}>
+                            {jointCardsStatus[user.status]}
+                            {user.status === EJointStatus.rejected && <Tooltip
+                                title={<p className={styles.tooltip}>
+                                    повторный запрос <br />будет доступен <br />через 2 недели
+                                </p>}
+                                placement='topRight'
+                                color='var(--neutral-gray-13)'
+                            >
+                                <ExclamationCircleOutlined
                                     size={16}
-                                    className={styles.checked}
-                                />}
-                            </p>}
+                                    className={styles.exclamation}
+                                />
+                            </Tooltip>}
+                            {user.status === EJointStatus.accepted && <CheckCircleFilled
+                                size={16}
+                                className={styles.checked}
+                            />}
+                        </p>}
                     </div>
                 ))}
             </div>

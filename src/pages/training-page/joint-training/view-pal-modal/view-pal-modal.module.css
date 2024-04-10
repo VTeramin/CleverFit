@@ -1,15 +1,52 @@
 .modal [class*="modal-body"] {
     padding: 40px 64px 40px 32px;
     display: grid;
-    grid-template-areas: "avatar info"
+    grid-template-areas:
+        "avatar info"
         "status button";
     grid-template-columns: 1fr max-content;
     row-gap: 24px;
-    align-items:center;
+    align-items: center;
 
     font-family: var(--font-family);
     font-weight: var(--font-weight);
     font-size: var(--font-size);
+}
+
+@media (max-width: 800px) {
+    .modal [class*="modal-body"] {
+        padding: 16px 12px;
+        grid-template-areas:
+            "header"
+            "info"
+            "button"
+            "status";
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+        row-gap: 0;
+    }
+
+    .modal [class*="modal-body"]>* {
+        width: 100%;
+    }
+
+    .modal [class*="modal-body"] [class*="header"] {
+        margin-bottom: 12px;
+    }
+
+    .modal [class*="modal-body"] [class*="info"],
+    .modal [class*="modal-body"] [class*="button"] {
+        margin-bottom: 16px;
+    }
+
+    .modal [class*="modal-body"] [class*="status"] {
+        grid-area: status;
+        text-align: center;
+    }
+
+    .modal [class*="modal-body"] [class*="info"] {
+        justify-content: flex-start;
+    }
 }
 
 .modal [class*="modal-body"]>* {
@@ -37,4 +74,17 @@
 .modal [class*="modal-close"]>svg {
     width: 14px;
     height: 14px;
+}
+
+@media (max-width: 800px) {
+    .modal [class*="modal-close-x"] {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .modal [class*="modal-close"]>svg {
+        width: 10px;
+        height: 10px;
+    }
 }

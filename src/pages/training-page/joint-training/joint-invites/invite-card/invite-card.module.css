@@ -13,6 +13,13 @@
     border-radius: var(--border-radius) 16px 16px 16px;
 }
 
+@media (max-width: 1400px) {
+    .invites-section__invite-card {
+        margin-bottom: 16px;
+        flex-direction: column;
+    }
+}
+
 .invite-card__user-info {
     width: 174px;
     padding: 2px 0;
@@ -27,6 +34,20 @@
     font-size: var(--font-size-larger);
     line-height: var(--line-height);
     color: var(--character-light-title-85);
+}
+
+.invite-card__user-info>p {
+    margin: 0;
+}
+
+@media (max-width: 1400px) {
+    .invite-card__user-info {
+        width: 100%;
+        margin: 0;
+        margin-bottom: 16px;
+        padding: 0;
+        flex-direction: row;
+    }
 }
 
 .invite-card__avatar[class*="ant-avatar"] {
@@ -53,6 +74,13 @@
     flex-shrink: 1;
     gap: 8px;
     margin-right: auto;
+}
+
+@media (max-width: 1400px) {
+    .invite-card__invite-info {
+        padding-right: 0;
+        margin-bottom: 32px;
+    }
 }
 
 .invite-card__date {
@@ -83,6 +111,13 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+@media (max-width: 1400px) {
+    .invite-card__btns-wrapper {
+        width: 100%;
+        gap: 12px;
+    }
 }
 
 .invite-card__conf-btn,

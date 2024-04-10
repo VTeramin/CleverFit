@@ -1,8 +1,6 @@
 .modal {
     width: 312px;
     position: absolute;
-    top: 94px;
-    left: 196px;
     z-index: 2;
 
     border-radius: var(--border-radius);
@@ -12,6 +10,12 @@
     font-family: var(--font-family);
     font-weight: var(--font-weight);
     font-size: var(--font-size);
+}
+
+@media (max-width: 800px) {
+    .modal {
+        width: 288px;
+    }
 }
 
 .modal p {

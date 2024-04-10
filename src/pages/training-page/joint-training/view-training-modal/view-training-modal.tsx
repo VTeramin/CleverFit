@@ -5,6 +5,7 @@ import { EBadgeColors } from '@constants/enums';
 import { intervalOptions } from '@constants/interval-options';
 import { TTraining } from '@constants/types';
 import { useOutsideClick } from '@hooks/use-outside-click';
+import { useWindowSize } from '@uidotdev/usehooks';
 import { convertDate } from '@utils/convert-date';
 import { Badge, Button, Divider } from 'antd';
 
@@ -19,9 +20,21 @@ type TProps = {
 export const ViewTrainingModal: React.FC<TProps> = ({ trainingData, setIsView }) => {
     const modalRef = useOutsideClick(() => setIsView(false));
     const { name, parameters, date, exercises } = trainingData;
+    const width = useWindowSize().width || 0;
+    const isMobile = width < 800;
+    const isTablet = width < 1400;
+    const mobileCoords = { top: '220px', left: '0' };
+    const tabletCoords = { top: '160px', left: '12px' };
+    const desctopCoords = { top: '94px', left: '196px' };
+
+    const modalCoords = isTablet ? tabletCoords : desctopCoords;
 
     return (
-        <div className={styles.modal} ref={modalRef}>
+        <div
+            className={styles.modal}
+            ref={modalRef}
+            style={isMobile ? mobileCoords : modalCoords}
+        >
             <div className={styles.modal__header}>
                 <Badge
                     text={name}
@@ -38,7 +51,9 @@ export const ViewTrainingModal: React.FC<TProps> = ({ trainingData, setIsView })
             <Divider className={styles.modal__divider} />
             <div className={styles.modal__info}>
                 <div className={styles.info__header}>
-                    <p className={styles.info__period}>{parameters?.repeat && intervalOptions[parameters.period].label}</p>
+                    <p className={styles.info__period}>
+                        {parameters?.repeat && intervalOptions.find(el => el.value === parameters.period)?.label}
+                    </p>
                     <p>{convertDate(new Date(date))}</p>
                 </div>
                 <div className={styles.info__rows}>
@@ -46,9 +61,9 @@ export const ViewTrainingModal: React.FC<TProps> = ({ trainingData, setIsView })
                         <div key={exercise._id} className={styles.info__row}>
                             <p className={styles['info__exercise-name']}>{exercise.name}</p>
                             <p className={styles['info__exercise-repeat']}>
-                                {exercise.approaches && exercise.replays && <p>
+                                {exercise.approaches && exercise.replays && <span>
                                     {`${exercise.approaches} x (${exercise.weight ? `${exercise.weight} кг` : exercise.replays})`}
-                                </p>}
+                                </span>}
                             </p>
                         </div>
                     ))}

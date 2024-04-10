@@ -9,10 +9,10 @@ export function getJointUserName(name: string, searchInputValue: string) {
             const isNotLast = ind !== nameParts.length - 1;
 
             return isOdd && isNotLast
-                ? <span key={part}>
-                    <span key={part}>{part}</span><span style={{ color: 'var(--character-light-red-4)' }}>{searchInputValue}</span>
+                ? <span key={`${ind * 2} ${part}`}>
+                    <span>{part}</span><span style={{ color: 'var(--character-light-red-4)' }}>{searchInputValue}</span>
                 </span>
-                : <span>{part}</span>
+                : <span key={`${ind * 2} ${part}`}>{part}</span>
         })
 
         return isNothingSearched ? nameHalf : nameHalfWithRed;

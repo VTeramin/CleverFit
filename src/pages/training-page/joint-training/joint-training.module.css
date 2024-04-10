@@ -5,3 +5,9 @@
     font-weight: var(--font-weight);
     font-size: var(--font-size);
 }
+
+@media (max-width: 800px) {
+    .joint-training {
+        padding: 0 12px 18px;
+    }
+}

@@ -8,6 +8,13 @@
     margin-bottom: 24px;
 }
 
+@media (max-width: 800px) {
+    .joint-training__invites-section {
+        padding: 12px;
+        margin-bottom: 20px;
+    }
+}
+
 .invites-section__new-messages {
     color: var(--character-light-secondary-45);
     margin-bottom: 16px;
@@ -44,12 +51,36 @@
     color: var(--primary-light-9);
 }
 
+@media (max-width: 1400px) {
+    .add-training-card__title {
+        max-width: 482px;
+    }
+}
+
+@media (max-width: 800px) {
+    .add-training-card__title {
+        padding: 0 10px;
+    }
+}
+
 .add-training-card__subtitle {
-    width: 80%;
+    padding: 0 180px;
     margin-bottom: 24px;
     line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-secondary-45);
+}
+
+@media (max-width: 1400px) {
+    .add-training-card__subtitle {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 800px) {
+    .add-training-card__subtitle {
+        padding: 0 15px;
+    }
 }
 
 .add-training-card__divider {
@@ -65,9 +96,28 @@
     gap: var(--flex-gap-small);
 }
 
+@media (max-width: 1400px) {
+    .add-training-card__buttons-wrapper {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 800px) {
+    .add-training-card__buttons-wrapper {
+        width: 100%;
+        padding: 16px 0;
+    }
+}
+
 .add-training-card__buttons-wrapper>button {
     width: 50%;
     height: 32px;
+}
+
+@media (max-width: 1400px) {
+    .add-training-card__buttons-wrapper>button {
+        width: 100%;
+    }
 }
 
 .add-training-card__buttons-wrapper>button:first-child {
@@ -93,6 +143,12 @@
     gap: var(--flex-gap-small);
 }
 
+@media (max-width: 800px) {
+    .participants-section__pals {
+        flex-direction: column;
+    }
+}
+
 .pals__pal-card {
     width: 234px;
     height: max-content;
@@ -103,6 +159,12 @@
     border: var(--button-border-auth);
     border-radius: var(--border-radius);
     background: var(--character-light-primary-inverse);
+}
+
+@media (max-width: 800px) {
+    .pals__pal-card {
+        width: 100%;
+    }
 }
 
 .pals__pal-card div:nth-child(2) {
