@@ -80,6 +80,7 @@
     .invite-card__invite-info {
         padding-right: 0;
         margin-bottom: 32px;
+        text-align: left;
     }
 }
 
@@ -120,6 +121,19 @@
     }
 }
 
+@media (max-width: 900px) {
+    .invite-card__btns-wrapper {
+        align-self: flex-end;
+        width: 95%;
+    }
+}
+
+@media (max-width: 800px) {
+    .invite-card__btns-wrapper {
+        width: 100%;
+    }
+}
+
 .invite-card__conf-btn,
 .invite-card__default-btn {
     height: var(--button-height);
@@ -137,4 +151,13 @@
     font-size: var(--font-size);
     line-height: var(--line-height);
     color: var(--character-light-primary-inverse);
+}
+
+@media (max-width: 900px) {
+
+    .invite-card__conf-btn,
+    .invite-card__default-btn {
+        width: 100%;
+        gap: 12px;
+    }
 }

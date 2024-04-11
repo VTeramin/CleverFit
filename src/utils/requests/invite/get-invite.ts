@@ -16,5 +16,6 @@ export const getInvite = () => async (dispatch: AppDispatch, getState: GetState)
     };
 
     return axios.get(`${API}/invite`, params)
-        .then((response: AxiosResponse<TInvite[]>) => dispatch(changeInvites(response.data)));
+        .then((response: AxiosResponse<TInvite[]>) => dispatch(changeInvites(response.data)))
+        .catch(() => dispatch(changeInvites([])));
 };

@@ -22,11 +22,19 @@ export const CalendarResult: React.FC = () => {
     }
 
     function handleUpdateJoint() {
+        dispatch(changeResultType(EStatus.empty));
         dispatch(getUserJointTrainingList());
     }
 
     function handleClose() {
         dispatch(changeResultType(EStatus.empty));
+    }
+
+    function handleBackToInvites() {
+        handleClose();
+        const arrowBack = document.getElementById('joint-users-back');
+
+        arrowBack?.click();
     }
 
     function handleCloseAll() {
@@ -78,7 +86,7 @@ export const CalendarResult: React.FC = () => {
                 width={width > 800 ? 384 : 539}
                 className={styles.result}
                 open={resultType !== EStatus.empty}
-                onCancel={() => handleClose()}
+                onCancel={() => handleBackToInvites()}
                 maskClosable={false}
                 closable={true}
                 closeIcon={<CloseOutlined data-test-id="modal-error-user-training-button-close" />}

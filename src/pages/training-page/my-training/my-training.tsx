@@ -11,6 +11,7 @@ import { selectTrainingList } from '@redux/training-list-slice';
 import { selectTraining } from '@redux/training-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { findExercises } from '@utils/calendar-utils/find-exercises';
+import { checkIsFuture } from '@utils/check-is-future';
 import { getMyTrainingModalCoords } from '@utils/training-utils/get-my-training-modal-coords';
 import { Alert, Badge, Button, Layout, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
@@ -37,10 +38,10 @@ export const MyTraining: React.FC = () => {
     const isTraingListEmpty = trainingList.length === 0;
     const { resultType } = useAppSelector(selectCalendarModalData);
     const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = isMobile ? 8 : 14;
+    const pageSize = isMobile ? 8 : 10;
     const alertMessages: { [name: string]: string } = {
         [EStatus.success]: 'Новая тренировка успешно добавлена',
-        [EStatus.successEdit]: 'Тренирока успешно обновлена'
+        [EStatus.successEdit]: 'Тренировка успешно обновлена'
     }
     const [isModal, setIsModal] = useState(false);
     const frequency = (el: TTraining) => intervalOptions.find(option => option.value === el.parameters?.period)?.label;
@@ -94,8 +95,8 @@ export const MyTraining: React.FC = () => {
         {
             title: 'Периодичность',
             dataIndex: 'frequency',
-            defaultSortOrder: 'descend',
-            sorter: (a, b) => getFrequencyValue(a.frequency.key || '') - getFrequencyValue(b.frequency.key || ''),
+            defaultSortOrder: 'ascend',
+            sorter: (a, b) => getFrequencyValue(b.frequency.key || '') - getFrequencyValue(a.frequency.key || ''),
         },
         {
             title: '',
@@ -103,7 +104,9 @@ export const MyTraining: React.FC = () => {
         }
     ];
 
-    const data: TColumns[] = training.map((el, ind) => ({
+    const trainingData = [...training].reverse();
+
+    const data: TColumns[] = trainingData.map(el => ({
         key: el._id || '',
         trainingName: (
             <div className={styles['row__select-wrapper']}>
@@ -112,8 +115,7 @@ export const MyTraining: React.FC = () => {
                     <p>{el.name}</p>
                     <Button
                         type='text'
-                        id={`Dropdown ${el._id}`}
-                        disabled={el.isImplementation}
+                        disabled={!checkIsFuture(new Date(el.date))}
                         onClick={() => showModal(el)}
                         className={styles.row__dropdown}
                     >
@@ -133,7 +135,7 @@ export const MyTraining: React.FC = () => {
                 disabled={el.isImplementation}
                 onClick={() => handleEdit(el)}
                 className={`${styles.row__edit} ${el.isImplementation && styles['row__edit-disabled']}`}
-                data-test-id={`update-my-training-table-icon${ind}`}
+                data-test-id={`update-my-training-table-icon${Number(el._id) - 1}`}
             >
                 <EditOutlined />
             </Button>

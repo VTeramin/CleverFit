@@ -74,7 +74,15 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
                 twoToneColor: 'var(--primary-light-9)',
                 className: styles.menu__icon
             }),
-        label: ['Календарь', 'Тренировки', 'Достижения', 'Профиль'][index],
+        label: ['Календарь', 'Тренировки', 'Достижения', 'Профиль'].map(label => (
+            <Button
+                type='text'
+                data-test-id={label === 'Тренировки' ? 'menu-button-training' : ''}
+                style={{ padding: 0 }}
+            >
+                {label}
+            </Button>
+        ))[index],
         style: collapsed ? {} : { paddingLeft: isFullWidth ? '16px' : '0' },
         className: styles.menu__item
     }));

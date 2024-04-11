@@ -8,9 +8,9 @@ import { changeLoginData, selectLogin } from '@redux/login-slice';
 import { checkDisabledAuth, checkValidAuth, checkValidRegistraion } from '@utils/auth-utils/check-valid-status';
 import { validEmail } from '@utils/auth-utils/valid-email';
 import { validPassword } from '@utils/auth-utils/valid-password';
+import { checkEmail } from '@utils/requests/auth/check-email';
 import { googleAuth } from '@utils/requests/auth/google-auth';
 import { login } from '@utils/requests/auth/login';
-import { checkEmail } from '@utils/requests/auth/check-email';
 import { register } from '@utils/requests/auth/register';
 import { Button, Checkbox, Form, Input } from 'antd';
 
@@ -65,8 +65,8 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
         setIsValid(prev => ({ ...prev, pasword2: formData.password === event.target.value }))
     }
 
-    function handleCheckboxChange() {
-        dispatch(changeLoginData({ isRemember: !formData.isRemember }));
+    function handleCheckboxChange(checked: boolean) {
+        dispatch(changeLoginData({ isRemember: checked }));
     }
 
     function handleForgetClick() {
@@ -157,8 +157,9 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
                             <Form.Item className={styles['remember-group__checkbox']} name="remember" valuePropName="checked" noStyle={true}>
                                 <Checkbox
                                     className={styles.checkbox__label}
+                                    defaultChecked={formData.isRemember}
                                     checked={formData.isRemember}
-                                    onChange={() => handleCheckboxChange()}
+                                    onChange={event => handleCheckboxChange(event.target.checked)}
                                     data-test-id="login-remember"
                                 >
                                     Запомнить меня

@@ -25,6 +25,6 @@ export const intervalOptions = [
     },
     {
         value: 7,
-        label: '1 раз неделю',
+        label: '1 раз в неделю',
     },
 ]

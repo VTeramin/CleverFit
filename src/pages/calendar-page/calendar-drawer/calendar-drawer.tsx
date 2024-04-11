@@ -121,7 +121,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
                 <React.Fragment>
                     <Divider className={styles.drawer__divider} />
                     <Button
-                        disabled={isSaveDisabled}
+                        disabled={!isEdit || isJoint ? isSaveDisabled : false}
                         className={styles['drawer__conf-button']}
                         onClick={() => handleSave()}
                     >

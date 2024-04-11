@@ -24,7 +24,7 @@ export const ViewTrainingModal: React.FC<TProps> = ({ trainingData, setIsView })
     const isMobile = width < 800;
     const isTablet = width < 1400;
     const mobileCoords = { top: '220px', left: '0' };
-    const tabletCoords = { top: '160px', left: '12px' };
+    const tabletCoords = { top: '160px', left: '0' };
     const desctopCoords = { top: '94px', left: '196px' };
 
     const modalCoords = isTablet ? tabletCoords : desctopCoords;
@@ -34,6 +34,7 @@ export const ViewTrainingModal: React.FC<TProps> = ({ trainingData, setIsView })
             className={styles.modal}
             ref={modalRef}
             style={isMobile ? mobileCoords : modalCoords}
+            data-test-id='joint-training-review-card'
         >
             <div className={styles.modal__header}>
                 <Badge
@@ -43,6 +44,7 @@ export const ViewTrainingModal: React.FC<TProps> = ({ trainingData, setIsView })
                 <Button
                     type='text'
                     onClick={() => setIsView(false)}
+                    onScrollCapture={() => setIsView(false)}
                     className={styles.modal__close}
                 >
                     <CloseOutlined />

@@ -16,6 +16,7 @@
 
 .drawer [class*="drawer-body"] {
     height: 100%;
+    overflow: hidden;
     padding: 24px 32px 12px;
     display: grid;
     grid-template-rows: max-content max-content 1fr;

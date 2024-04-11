@@ -20,11 +20,8 @@ export const TrainingPage: React.FC = () => {
 
     useEffect(() => {
         dispatch(getTraining()).then(resp => {
-            if (resp === EStatus.noToken) {
-                navigate(EROUTE.MAIN);
-            }
-
-            return dispatch(getTrainingList());
+            if (resp === EStatus.noToken) navigate(EROUTE.MAIN);
+            if (resp !== EStatus.noToken) dispatch(getTrainingList());
         });
     }, [dispatch, navigate]);
 
@@ -37,7 +34,7 @@ export const TrainingPage: React.FC = () => {
         {
             label: (
                 <React.Fragment>
-                    Соместные тренировки<Badge count={invites.length} className={styles.tablist__badge} />
+                    Совместные тренировки<Badge count={invites.length} className={styles.tablist__badge} />
                 </React.Fragment>
             ),
             key: 'item-2',

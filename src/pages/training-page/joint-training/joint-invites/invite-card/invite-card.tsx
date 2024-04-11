@@ -60,12 +60,14 @@ export const InviteCard: React.FC<TProps> = ({ invite, setHide }) => {
                 <Button
                     className={`${styles['invite-card__conf-btn']} ${styles['conf-button']}`}
                     onClick={() => handleAcceptInvite(invite._id)}
+                    onMouseOver={() => setIsView(false)}
                 >
                     Тренироваться вместе
                 </Button>
                 <Button
                     className={styles['invite-card__default-btn']}
                     onClick={() => handleRejectInvite(invite._id)}
+                    onMouseOver={() => setIsView(false)}
                 >
                     Отклонить запрос
                 </Button>
@@ -73,7 +75,6 @@ export const InviteCard: React.FC<TProps> = ({ invite, setHide }) => {
             {isView && <ViewTrainingModal
                 trainingData={invite.training}
                 setIsView={setIsView}
-                data-test-id='joint-training-review-card'
             />}
         </div>
     )

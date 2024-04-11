@@ -3,7 +3,7 @@ import { API } from '@constants/api';
 import { AppDispatch, GetState } from '@redux/configure-store';
 import { changeTrainingPalsData, TPalData } from '@redux/training-pals-slice';
 import { changeInvites } from '@redux/user-data-slice';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
@@ -19,8 +19,22 @@ export const handleInvite = (id: string, status: 'accepted' | 'rejected') => asy
     };
 
     return axios.put(`${API}/invite`, { id, status }, params)
-        .then((response: AxiosResponse<TPalData>) => {
+        .then(() => {
             dispatch(changeInvites(invites.filter(invite => invite._id !== id)));
-            if(status === 'accepted') dispatch(changeTrainingPalsData([...trainingPals, response.data]));
+            const inviteData = invites.find(invite => invite._id === id);
+            const palData = inviteData?.from;
+            const newPal: TPalData = {
+                id: palData?._id || '',
+                name: `${palData?.lastName} ${palData?.firstName}`,
+                trainingType: inviteData?.training.name || '',
+                imageSrc: palData?.imageSrc || '',
+                avgWeightInWeek: 0,
+                inviteId: id,
+                status: 'accepted'
+            };
+
+            if (status === 'accepted') dispatch(changeTrainingPalsData([
+                ...trainingPals, newPal
+            ]));
         });
 };

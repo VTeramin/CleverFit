@@ -56,9 +56,20 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
         isWarning && 'drawer__form-wrapper-edit-past'
     ].map(el => el ? styles[el] : '').join(' ');
 
+    const [addButtonText, setAddButtonText] = useState(() => {
+        if (isEdit) return 'Добавить ещё';
+        if (isMyTrainingPage && !isEdit) return 'Добавление упражнений';
+
+        return 'Добавить ещё упражнение';
+    })
+
     useEffect(() => {
         if (!isDrawer) dispatch(toggleIsSaveDisabled(true));
     }, [dispatch, isDrawer]);
+
+    useEffect(() => {
+        form.current?.resetFields();
+    }, [dispatch, selectedTraining]);
 
     useEffect(() => {
         if (fixedDate !== '') {
@@ -85,13 +96,13 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
     }
 
     function handleFormChange() {
-        const chekcResult = checkIsSaveDisabled({ form, date, pickedMoment, selectedTraining, exerciseFormFields });
+        const checkResult = checkIsSaveDisabled({ form, date, pickedMoment, selectedTraining, exerciseFormFields });
 
-        dispatch(toggleIsSaveDisabled(chekcResult));
+        dispatch(toggleIsSaveDisabled(checkResult));
     }
 
     function onFinish(values: { exercises: TDrawerFormFields }) {
-        dispatch(changeExerciseFormFields(sortDrawerFormFromEmpty(values)));
+        if (values) dispatch(changeExerciseFormFields(sortDrawerFormFromEmpty(values)));
         dispatch(toggleIsDrawer(false));
     }
 
@@ -105,6 +116,16 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                 {cellMoment.toDate().getDate()}
             </div>
         );
+    }
+
+    function handleAddLine(add: () => void) {
+        add();
+        if(isMyTrainingPage) setAddButtonText('Добавить ещё');
+        if(selectedTraining === null) {
+            const select = document.getElementById('select-training');
+
+            select?.focus();
+        }
     }
 
     return (
@@ -123,7 +144,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                         size={42}
                     />
                     <p className={styles['joint-training-pal__name']}>
-                        <span>{selectedPalData.name.split(' ')[0]}</span>
+                        <span>{`${selectedPalData.name.split(' ')[0]} `}</span>
                         <br />
                         <span>{selectedPalData.name.split(' ')[1]}</span>
                     </p>
@@ -133,7 +154,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                         className={styles['joint-training-pal__training-type']}
                     />
                 </div>}
-                {!isJoint && <TrainingSelect disabled={isEdit} data-test-id='modal-drawer-right-select-period' />}
+                {!isJoint && <TrainingSelect date={date || pickedMoment?.toDate()} />}
                 <div className={styles['no-date-group__date']}>
                     <ConfigProvider locale={locale}>
                         <DatePicker
@@ -162,6 +183,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                     value={interval}
                     onChange={value => dispatch(changeInterval(value))}
                     className={styles['no-date-group__interval-select']}
+                    data-test-id='modal-drawer-right-select-period'
                 />}
             </div>}
             <Form.List name="exercises">
@@ -215,11 +237,12 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                             <Form.Item>
                                 <Button
                                     className={styles.drawer__button}
-                                    onClick={() => add()}
+                                    onClick={() => handleAddLine(add)}
                                     type="text"
                                     icon={<PlusOutlined />}
+                                    data-test-id='modal-create-exercise-select'
                                 >
-                                    {isMyTrainingPage && !isEdit ? 'Добавить ещё упражнение' : 'Добавить ещё'}
+                                    {addButtonText}
                                 </Button>
                             </Form.Item>
                             {isEdit && <Form.Item>

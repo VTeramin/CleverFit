@@ -10,7 +10,9 @@ import { selectTrainingPals } from '@redux/training-pals-slice';
 import { selectUserData } from '@redux/user-data-slice';
 import { selectUserJointTrainingList } from '@redux/user-joint-training-list-slice';
 import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
+import { getUserJointTrainingList } from '@utils/requests/catalogs/get-user-joint-training-list';
 import { rejectAcceptedInvite } from '@utils/requests/invite/reject-accepted-invite';
+import { getMostPopularTraining } from '@utils/training-utils/get-most-popular-training';
 import { statusSortJoinUsers } from '@utils/training-utils/status-sort-joint-users';
 import { Button, Input, Pagination, Tooltip } from 'antd';
 
@@ -22,10 +24,11 @@ import styles from './joint-users.module.css';
 const { Search } = Input;
 
 type TProps = {
+    isRandom: boolean,
     setInner: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const JointUsers: React.FC<TProps> = ({ setInner }) => {
+export const JointUsers: React.FC<TProps> = ({ isRandom, setInner }) => {
     const dispatch = useAppDispatch();
     const userJointTrainingList = useAppSelector(selectUserJointTrainingList);
     const trainingPals = useAppSelector(selectTrainingPals);
@@ -41,6 +44,12 @@ export const JointUsers: React.FC<TProps> = ({ setInner }) => {
     const cardsData = usersInfoAfterSearch.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
     const [availableRequests, setAvailableRequests] = useState(0);
+
+    useEffect(() => {
+        const trainingName = dispatch(getMostPopularTraining());
+
+        dispatch(getUserJointTrainingList(isRandom ? trainingName : undefined));
+    }, [dispatch, isRandom]);
 
     useEffect(() => {
         const palsCounter = trainingPals.length;
@@ -91,6 +100,7 @@ export const JointUsers: React.FC<TProps> = ({ setInner }) => {
                     type='text'
                     onClick={() => handleBack()}
                     className={styles['header__arrow-back']}
+                    id='joint-users-back'
                 >
                     <ArrowLeftOutlined /> Назад
                 </Button>
@@ -103,8 +113,8 @@ export const JointUsers: React.FC<TProps> = ({ setInner }) => {
                 />
             </div>
             <div className={styles.pals__cards} ref={ref}>
-                {cardsData.map(user => (
-                    <div key={user.id} className={styles.cards__card}>
+                {cardsData.map((user, ind) => (
+                    <div key={user.id} className={styles.cards__card} data-test-id={`joint-training-cards${ind}`}>
                         <UserCard user={user} searchInputValue={searchInputValue} />
                         {user.status === EJointStatus.accepted
                             ? <Button

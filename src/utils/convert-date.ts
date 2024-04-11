@@ -1,3 +1,5 @@
 export function convertDate(date: Date) {
-    return date.toISOString().substring(0, 10).split('-').reverse().join('.');
+    const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0));
+
+    return utcDate.toISOString().substring(0, 10).split('-').reverse().join('.');
 }

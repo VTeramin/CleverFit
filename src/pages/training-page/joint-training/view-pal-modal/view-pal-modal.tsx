@@ -42,6 +42,7 @@ export const ViewPalModal: React.FC<TProps> = ({ isModal, setIsModal, palData })
         closable={true}
         destroyOnClose={true}
         footer={null}
+        data-test-id='partner-modal'
     >
         <UserCard user={palData} />
         <p className={styles.modal__status}>тренировка одобрена <CheckCircleFilled /></p>

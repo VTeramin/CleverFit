@@ -10,11 +10,12 @@ import styles from './joint-training.module.css';
 
 export const JointTraining: React.FC = () => {
     const [inner, setInner] = useState('invites');
+    const [isRandom, setIsRandom] = useState(false);
 
     return (
         <Layout className={styles['joint-training']}>
-            {inner === 'invites' && <JointInvites setInner={setInner} />}
-            {inner === 'users' && <JointUsers setInner={setInner} />}
+            {inner === 'invites' && <JointInvites inner={inner} setInner={setInner} setIsRandom={setIsRandom} />}
+            {inner === 'users' && <JointUsers setInner={setInner} isRandom={isRandom} />}
         </Layout>
     );
 };

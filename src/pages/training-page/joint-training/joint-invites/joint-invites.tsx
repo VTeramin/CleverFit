@@ -4,9 +4,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectTrainingPals, TPalData } from '@redux/training-pals-slice';
 import { selectUserData } from '@redux/user-data-slice';
-import { getTrainingPals } from '@utils/requests/catalogs/get-training-pals';
-import { getUserJointTrainingList } from '@utils/requests/catalogs/get-user-joint-training-list';
-import { getMostPopularTraining } from '@utils/training-utils/get-most-popular-training';
+import { getInvite } from '@utils/requests/invite/get-invite';
 import { Button, Divider, } from 'antd';
 
 import { UserCard } from '../user-card/user-card';
@@ -18,10 +16,12 @@ import 'antd/dist/antd.css';
 import styles from './joint-invites.module.css';
 
 type TProps = {
-    setInner: React.Dispatch<React.SetStateAction<string>>
+    inner: string;
+    setInner: React.Dispatch<React.SetStateAction<string>>,
+    setIsRandom: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const JointInvites: React.FC<TProps> = ({ setInner }) => {
+export const JointInvites: React.FC<TProps> = ({ inner, setInner, setIsRandom }) => {
     const dispatch = useAppDispatch();
     const { invites } = useAppSelector(selectUserData);
     const [invitesDisplayed, setInvitesDisplayed] = useState(1);
@@ -31,18 +31,16 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
     const [modalPalData, setModalPalData] = useState<TPalData>();
 
     useEffect(() => {
-        dispatch(getTrainingPals());
-    }, [dispatch]);
+        dispatch(getInvite());
+    }, [dispatch, inner]);
 
     function handleRandomChoice() {
-        dispatch(getUserJointTrainingList());
+        setIsRandom(false);
         setInner('users');
     }
 
     function handleStaticChoice() {
-        const trainingName = dispatch(getMostPopularTraining());
-
-        dispatch(getUserJointTrainingList(trainingName));
+        setIsRandom(true);
         setInner('users');
     }
 
@@ -96,7 +94,7 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
                         type='text'
                         onClick={() => handleStaticChoice()}
                     >
-                        Выбор друга по моим видам тренировок
+                        Выбор друга по моим тренировкам
                     </Button>
                 </div>
             </div>}
@@ -106,8 +104,8 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
                     У вас пока нет партнёров для совместных тренировок
                 </p>}
                 {trainingPals.length > 0 && <div className={styles['participants-section__pals']}>
-                    {trainingPals.map(palData => (
-                        <div key={palData.id}>
+                    {trainingPals.map((palData, ind) => (
+                        <div key={palData.id} data-test-id={`joint-training-cards${ind}`}>
                             <Button
                                 type='text'
                                 onClick={() => openModal(palData)}
@@ -122,7 +120,6 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
                     isModal={isModal}
                     setIsModal={setIsModal}
                     palData={modalPalData}
-                    data-test-id='partner-modal'
                 />}
             </div>
         </React.Fragment>
