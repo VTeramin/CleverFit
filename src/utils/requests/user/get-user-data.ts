@@ -14,8 +14,5 @@ export const getUserData = () => async (dispatch: AppDispatch, getState: GetStat
     };
 
     return axios.get(`${API}/user/me`, params)
-    .then(response => dispatch(changeUserInfo(response.data)))
-    .catch(() => {
-        dispatch(getUserData());
-    });
+        .then(response => dispatch(changeUserInfo(response.data)));
 };
