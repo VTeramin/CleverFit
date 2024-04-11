@@ -1,4 +1,7 @@
-export const getMyTrainingModalCoords = (ind: number, pageSize: number, isMobile: boolean) => {
+export const getMyTrainingModalCoords = (id: string, pageSize: number, isMobile: boolean) => {
+    const elements = document.querySelectorAll('.table-cell');
+    const ind = [...elements].findIndex(el => el.id === id);
+
     if (isMobile) {
         return {
             x: 24,
@@ -9,7 +12,7 @@ export const getMyTrainingModalCoords = (ind: number, pageSize: number, isMobile
     }
 
     return {
-        x: 18,
-        y: 57 + 37 * (ind % pageSize) - (ind === 0 ? 0 : 5)
+        x: 12,
+        y: 53 + 37 * (ind % pageSize) - (ind === 0 ? 0 : 5)
     }
 };
