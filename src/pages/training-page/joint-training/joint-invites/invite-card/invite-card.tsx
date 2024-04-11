@@ -70,7 +70,11 @@ export const InviteCard: React.FC<TProps> = ({ invite, setHide }) => {
                     Отклонить запрос
                 </Button>
             </div>
-            {isView && <ViewTrainingModal trainingData={invite.training} setIsView={setIsView} />}
+            {isView && <ViewTrainingModal
+                trainingData={invite.training}
+                setIsView={setIsView}
+                data-test-id='joint-training-review-card'
+            />}
         </div>
     )
 }

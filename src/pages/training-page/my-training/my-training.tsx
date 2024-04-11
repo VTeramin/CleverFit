@@ -103,7 +103,7 @@ export const MyTraining: React.FC = () => {
         }
     ];
 
-    const data: TColumns[] = training.map(el => ({
+    const data: TColumns[] = training.map((el, ind) => ({
         key: el._id || '',
         trainingName: (
             <div className={styles['row__select-wrapper']}>
@@ -133,6 +133,7 @@ export const MyTraining: React.FC = () => {
                 disabled={el.isImplementation}
                 onClick={() => handleEdit(el)}
                 className={`${styles.row__edit} ${el.isImplementation && styles['row__edit-disabled']}`}
+                data-test-id={`update-my-training-table-icon${ind}`}
             >
                 <EditOutlined />
             </Button>
@@ -165,11 +166,13 @@ export const MyTraining: React.FC = () => {
                             hideOnSinglePage: true,
                             className: styles.training__pagination,
                         }}
+                        data-test-id='my-trainings-table'
                     />
                     {!isTraingListEmpty &&
                         <Button
                             className={styles['training__conf-button']}
                             onClick={() => handleNewTraining()}
+                            data-test-id='create-new-training-button'
                         >
                             <PlusOutlined />Новая тренировка
                         </Button>}
@@ -180,7 +183,7 @@ export const MyTraining: React.FC = () => {
                         closable={true}
                         onClose={() => dispatch(changeResultType(EStatus.empty))}
                         className={styles.training__alert}
-                        data-test-id='alert'
+                        data-test-id='create-training-success-alert'
                     />}
                     {isModal && <MyTrainingModal
                         setIsModal={setIsModal}

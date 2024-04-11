@@ -133,7 +133,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                         className={styles['joint-training-pal__training-type']}
                     />
                 </div>}
-                {!isJoint && <TrainingSelect disabled={isEdit} />}
+                {!isJoint && <TrainingSelect disabled={isEdit} data-test-id='modal-drawer-right-select-period' />}
                 <div className={styles['no-date-group__date']}>
                     <ConfigProvider locale={locale}>
                         <DatePicker
@@ -145,11 +145,13 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                             suffixIcon={<CalendarTwoTone twoToneColor='var(--character-light-disable-25)' />}
                             dateRender={cellMoment => dateCellRender(cellMoment)}
                             popupClassName={styles['no-date-group__calendar-popup']}
+                            data-test-id='modal-drawer-right-date-picker'
                         />
                     </ConfigProvider>
                     <Checkbox
                         checked={isInterval}
                         onChange={event => setIsInterval(event.target.checked)}
+                        data-test-id='modal-drawer-right-checkbox-period'
                     >
                         С периодичностью
                     </Checkbox>

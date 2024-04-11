@@ -55,7 +55,14 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
         <React.Fragment>
             {invites.length > 0 && !hide && <div className={styles['joint-training__invites-section']}>
                 <p className={styles['invites-section__new-messages']}>Новое сообщение ({invites.length})</p>
-                {invites.slice(0, invitesDisplayed).map(invite => <InviteCard key={invite._id} invite={invite} setHide={setHide} />)}
+                {invites.slice(0, invitesDisplayed).map((invite, ind) => (
+                    <InviteCard
+                        key={invite._id}
+                        invite={invite}
+                        setHide={setHide}
+                        data-test-id={`joint-training-cards${ind}`}
+                    />
+                ))}
                 {invites.length > 1 && <Button
                     type='text'
                     className={styles['invites-section__show-btn']}
@@ -111,7 +118,12 @@ export const JointInvites: React.FC<TProps> = ({ setInner }) => {
                         </div>
                     ))}
                 </div>}
-                {modalPalData && <ViewPalModal isModal={isModal} setIsModal={setIsModal} palData={modalPalData} />}
+                {modalPalData && <ViewPalModal
+                    isModal={isModal}
+                    setIsModal={setIsModal}
+                    palData={modalPalData}
+                    data-test-id='partner-modal'
+                />}
             </div>
         </React.Fragment>
     );

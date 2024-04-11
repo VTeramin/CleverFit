@@ -99,6 +99,7 @@ export const JointUsers: React.FC<TProps> = ({ setInner }) => {
                     onChange={event => handleSearch(event.target.value)}
                     placeholder="Поиск по имени"
                     className={styles.header__search}
+                    data-test-id='search-input'
                 />
             </div>
             <div className={styles.pals__cards} ref={ref}>

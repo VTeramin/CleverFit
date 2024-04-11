@@ -63,6 +63,7 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
             ? <Badge
                 count={invites.length}
                 size='small'
+                data-test-id='notification-about-joint-training'
             >
                 {React.createElement(icon, {
                     twoToneColor: 'var(--primary-light-9)',

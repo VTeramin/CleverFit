@@ -270,7 +270,7 @@
 .drawer__form-wrapper {
     height: max-content;
     max-height: calc(100vh - 180px);
-    overflow-y: scroll;
+    overflow-y: auto;
     margin-bottom: auto;
     padding-right: 8px;
     margin-right: -8px;
@@ -323,6 +323,10 @@
     width: 8px;
 }
 
+.drawer__form::-webkit-scrollbar-button {
+    display: none;
+}
+
 @media (max-width: 800px) {
     .drawer__form::-webkit-scrollbar {
         width: 4px;
@@ -346,6 +350,8 @@
     display: flex;
     flex-direction: row;
     height: max-content;
+    margin-top: 6px;
+    margin-bottom: 2px;
 }
 
 .drawer input {
@@ -367,11 +373,6 @@
 .drawer__form [class*="ant-checkbox-inner"] {
     border-radius: 2px;
     border: 1px solid var(--character-light-border);
-}
-
-.drawer__inputs-wrapper {
-    margin-top: 8px;
-    margin-bottom: 0;
 }
 
 .drawer [class*="label"] label {
