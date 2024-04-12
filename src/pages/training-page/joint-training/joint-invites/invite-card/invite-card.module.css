@@ -124,7 +124,7 @@
 @media (max-width: 900px) {
     .invite-card__btns-wrapper {
         align-self: flex-end;
-        width: 95%;
+        width: 90%;
     }
 }
 
