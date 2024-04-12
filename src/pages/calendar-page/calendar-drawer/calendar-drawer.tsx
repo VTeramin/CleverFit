@@ -12,6 +12,7 @@ import { checkIsFuture } from '@utils/check-is-future';
 import { convertDate } from '@utils/convert-date';
 import { saveTraining } from '@utils/requests/training/save-training';
 import { Button, Divider, Drawer } from 'antd';
+import classNames from 'classnames';
 import { Moment } from 'moment';
 
 import { CalendarDrawerForm } from './calendar-drawer-form/calendar-drawer-form';
@@ -61,7 +62,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
         const dateValue = isEdit && date ? date : dateFromMoment;
 
         dispatch(saveTraining(dateValue)).then(() => {
-            if(isJoint) dispatch(changeResultType(EStatus.empty));
+            if (isJoint) dispatch(changeResultType(EStatus.empty));
         });
     }
 
@@ -91,7 +92,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
             onClose={closeDrawer}
             placement={isMobile ? 'bottom' : 'right'}
             height={555}
-            className={`${styles.drawer} ${isMyTrainingPage && styles['drawer-my-page']}`}
+            className={classNames(styles.drawer, { [styles['drawer-my-page']]: isMyTrainingPage })}
             data-test-id="modal-drawer-right"
         >
             <p className={styles.drawer__title}>

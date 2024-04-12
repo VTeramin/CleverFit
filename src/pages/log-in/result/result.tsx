@@ -1,12 +1,13 @@
 import React, { ReactElement } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CheckCircleFilled,CloseCircleFilled, WarningFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled, WarningFilled } from '@ant-design/icons';
 import { EROUTE } from '@constants/enums';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { changePassword } from '@utils/requests/auth/change-password';
 import { checkEmail } from '@utils/requests/auth/check-email';
 import { register } from '@utils/requests/auth/register';
 import { Button } from 'antd';
+import classNames from 'classnames';
 
 import '../modal.css';
 import styles from './result.module.css';
@@ -34,7 +35,7 @@ export const Result: React.FC = () => {
             title: 'Вход не выполнен',
             subtitle: 'Что-то пошло не так. Попробуйте еще раз',
             button: <Button
-                className={`${styles['result-modal__button']}`}
+                className={styles['result-modal__button']}
                 onClick={() => navigate(EROUTE.AUTH)}
                 data-test-id="login-retry-button"
             >Повторить</Button>
@@ -85,7 +86,7 @@ export const Result: React.FC = () => {
             title: 'Такой e-mail не зарегистрирован',
             subtitle: 'Мы не нашли в базе вашего e-mail. Попробуйте\u000Aвойти с другим e-mail.',
             button: <Button
-                className={`${styles['result-modal__button']} ${styles.medium} ${styles.margin}`}
+                className={classNames(styles['result-modal__button'], styles.medium, styles.margin)}
                 onClick={() => navigate(EROUTE.AUTH)}
                 data-test-id="check-retry-button"
             >Попробовать снова</Button>
@@ -97,7 +98,7 @@ export const Result: React.FC = () => {
             title: 'Пароль успешно изменен',
             subtitle: 'Теперь можно войти в аккаунт, используя\u000Aсвой логин и новый пароль',
             button: <Button
-                className={`${styles['result-modal__button']} ${styles['margin-shrink']} ${styles.margin}`}
+                className={classNames(styles['result-modal__button'], styles['margin-shrink'], styles.margin)}
                 onClick={() => navigate(EROUTE.AUTH)}
                 data-test-id="change-entry-button"
             >Вход</Button>
@@ -109,7 +110,7 @@ export const Result: React.FC = () => {
             title: 'Данные не сохранились',
             subtitle: 'Что-то пошло не так. Попробуйте еще раз',
             button: <Button
-                className={`${styles['result-modal__button']} ${styles['margin-shrink']} ${styles.margin}`}
+                className={classNames(styles['result-modal__button'], styles['margin-shrink'], styles.margin)}
                 onClick={() => {
                     navigate(EROUTE.CHANGE_PASSWORD);
                     dispatch(changePassword()).then(navigate);
@@ -122,7 +123,7 @@ export const Result: React.FC = () => {
             title: 'Что-то пошло не так',
             subtitle: 'Произошла ошибка, попробуйте отправить форму ещё раз.',
             button: <Button
-                className={`${styles['result-modal__button']} ${styles['margin-shrink']} ${styles.margin} ${styles.small}`}
+                className={classNames(styles['result-modal__button'], styles['margin-shrink'], styles.margin, styles.small)}
                 onClick={() => {
                     navigate(EROUTE.AUTH);
                     dispatch(checkEmail()).then(navigate);
@@ -134,7 +135,7 @@ export const Result: React.FC = () => {
 
     return (
         <div className="modal-wrapper">
-            <div className={`${styles['result-modal']} modal`}>
+            <div className={classNames(styles['result-modal'], 'modal')}>
                 {resultData[resultType].icon}
                 <div className={styles['result-modal__text-wrapper']}>
                     <p className={styles['result-modal__title']}>{resultData[resultType].title}</p>

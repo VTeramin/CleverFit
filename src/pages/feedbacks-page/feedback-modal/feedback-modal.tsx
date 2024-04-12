@@ -7,6 +7,7 @@ import { useWindowSize } from '@uidotdev/usehooks';
 import { getFeedbacks } from '@utils/requests/feedback/get-feedbacks';
 import { sendFeedback } from '@utils/requests/feedback/send-feedback';
 import { Button, Form, Input, Modal, Rate } from 'antd';
+import classNames from 'classnames';
 
 import 'antd/dist/antd.css';
 import styles from './feedback-modal.module.css';
@@ -59,7 +60,7 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
             maskStyle={{ backdropFilter: 'blur(6px)', background: 'rgba(121, 156, 212, 0.5)' }}
             className={styles.modal}
             footer={<Button
-                className={`${styles['conf-button']} ${styles.modal__button}`}
+                className={classNames(styles['conf-button'], styles.modal__button)}
                 onClick={handleFeedback}
                 disabled={feedback.rating === 0}
                 data-test-id="new-review-submit-button"
@@ -73,7 +74,7 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
                         value={feedback.rating}
                         character={<StarTwoTone twoToneColor="var(--character-light-warning)" className={styles.rate__star} />}
                         onChange={handleRating}
-                        className={`${styles.modal__rate} ${styles.rate}`}
+                        className={classNames(styles.modal__rate, styles.rate)}
                     />
                 </Form.Item>
                 <Form.Item name="message">

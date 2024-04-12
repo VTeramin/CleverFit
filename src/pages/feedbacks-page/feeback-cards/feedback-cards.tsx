@@ -3,6 +3,7 @@ import { StarTwoTone, UserOutlined } from '@ant-design/icons';
 import { TFeedback } from '@constants/types';
 import { convertDate } from '@utils/convert-date';
 import { Avatar, Card, Comment, Rate } from 'antd';
+import classNames from 'classnames';
 
 import 'antd/dist/antd.css';
 import styles from './feedback-cards.module.css';
@@ -29,7 +30,7 @@ export const FeedbackCards: React.FC<TProps> = ({ cardsData }) => (
                             disabled={true}
                             value={cardData.rating}
                             character={<StarTwoTone twoToneColor="var(--character-light-warning)" className={styles.rate__star} />}
-                            className={`${styles.card__rate} ${styles.rate}`}
+                            className={classNames(styles.card__rate, styles.rate)}
                         />}
                         datetime={<span className={styles.card__time}>
                             {convertDate(new Date(cardData.createdAt))}

@@ -15,6 +15,7 @@ import { rejectAcceptedInvite } from '@utils/requests/invite/reject-accepted-inv
 import { getMostPopularTraining } from '@utils/training-utils/get-most-popular-training';
 import { statusSortJoinUsers } from '@utils/training-utils/status-sort-joint-users';
 import { Button, Input, Pagination, Tooltip } from 'antd';
+import classNames from 'classnames';
 
 import { UserCard } from '../user-card/user-card';
 
@@ -119,14 +120,14 @@ export const JointUsers: React.FC<TProps> = ({ isRandom, setInner }) => {
                         {user.status === EJointStatus.accepted
                             ? <Button
                                 onClick={() => handleRejectTraining(user.id, user.inviteId || '')}
-                                className={`${styles['card__conf-button']}`}
+                                className={styles['card__conf-button']}
                             >
                                 Отменить тренировку
                             </Button>
                             : <Button
                                 onClick={() => handleAddTraining(user.trainingType, user.id)}
                                 disabled={user.status === EJointStatus.pending || user.status === EJointStatus.rejected || availableRequests >= 4}
-                                className={`${styles['card__conf-button']} ${styles['conf-button']}`}
+                                className={classNames(styles['card__conf-button'], styles['conf-button'])}
                             >
                                 Создать тренировку
                             </Button>}

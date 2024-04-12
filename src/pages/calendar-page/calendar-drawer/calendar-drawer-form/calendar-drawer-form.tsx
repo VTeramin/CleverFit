@@ -20,6 +20,7 @@ import { checkIsSaveDisabled } from '@utils/training-utils/check-is-save-disable
 import { Avatar, Badge, Button, Checkbox, ConfigProvider, DatePicker, Form, FormInstance, Input, InputNumber, Select } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import locale from 'antd/es/locale/ru_RU';
+import classNames from 'classnames';
 import moment, { Moment } from 'moment';
 
 import 'antd/dist/antd.css';
@@ -114,7 +115,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
         const emtyClass = trainingList.length === 0 ? 'empty' : 'no-empty'
 
         return (
-            <div className={`${styles[emtyClass]} ${styles[todayClass]}`}>
+            <div className={classNames(styles[emtyClass], styles[todayClass])}>
                 {cellMoment.toDate().getDate()}
             </div>
         );
@@ -235,7 +236,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                                 </div>
                             ))}
                         </div>
-                        <div className={`${styles['drawer__button-wrapper']} ${isEdit && styles.edit}`}>
+                        <div className={classNames(styles['drawer__button-wrapper'], { [styles.edit]: isEdit })}>
                             <Form.Item>
                                 <Button
                                     className={styles.drawer__button}
@@ -271,6 +272,6 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
             >
                 <CloseOutlined />
             </Button>
-        </Form>
+        </Form >
     );
 };

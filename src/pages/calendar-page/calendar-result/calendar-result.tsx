@@ -7,6 +7,7 @@ import { useWindowSize } from '@uidotdev/usehooks';
 import { getTrainingList } from '@utils/requests/catalogs/get-training-list';
 import { getUserJointTrainingList } from '@utils/requests/catalogs/get-user-joint-training-list';
 import { Button, Modal, Result } from 'antd';
+import classNames from 'classnames';
 
 import 'antd/dist/antd.css';
 import styles from './calendar-result.module.css';
@@ -67,7 +68,7 @@ export const CalendarResult: React.FC = () => {
                     extra={[
                         <Button
                             key="Обновить"
-                            className={`${styles['conf-button']}`}
+                            className={styles['conf-button']}
                             onClick={handleUpdate}
                             data-test-id="modal-error-user-training-button"
                         >
@@ -100,7 +101,7 @@ export const CalendarResult: React.FC = () => {
                     extra={[
                         <Button
                             key="Обновить"
-                            className={`${styles['conf-button']}`}
+                            className={styles['conf-button']}
                             onClick={handleUpdateJoint}
                             data-test-id="modal-error-user-training-button"
                         >
@@ -117,7 +118,7 @@ export const CalendarResult: React.FC = () => {
                     background: 'var(--background-blur-color-light)'
                 }}
                 width={width > 800 ? 416 : 328}
-                className={`${styles.result} ${styles['result-error-save']}`}
+                className={classNames(styles.result, styles['result-error-save'])}
                 open={resultType !== EStatus.empty}
                 onCancel={handleClose}
                 maskClosable={false}
@@ -132,7 +133,7 @@ export const CalendarResult: React.FC = () => {
                     extra={[
                         <Button
                             key="Закрыть"
-                            className={`${styles['conf-button']}`}
+                            className={styles['conf-button']}
                             onClick={handleCloseAll}
                             data-test-id="modal-error-user-training-button"
                         >

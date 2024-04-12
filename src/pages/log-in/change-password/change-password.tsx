@@ -6,6 +6,7 @@ import { selectLogin } from '@redux/login-slice';
 import { checkDisabledChangePassword } from '@utils/auth-utils/check-valid-status';
 import { changePassword } from '@utils/requests/auth/change-password';
 import { Button, Form } from 'antd';
+import classNames from 'classnames';
 
 import 'antd/dist/antd.css';
 import '../modal.css';
@@ -23,7 +24,7 @@ export const ChangePassword: React.FC = () => {
 
     return (
         <div className="modal-wrapper">
-            <div className={`${styles['change-modal']} modal`}>
+            <div className={classNames(styles['change-modal'], 'modal')}>
                 <p className={styles['change-modal__title']}>Восстановление аккаунта</p>
                 <Form
                     name="normal_login"

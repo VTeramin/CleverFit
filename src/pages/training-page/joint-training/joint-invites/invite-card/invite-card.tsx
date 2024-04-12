@@ -7,6 +7,7 @@ import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { convertDate } from '@utils/convert-date';
 import { handleInvite } from '@utils/requests/invite/handle-invite';
 import { Avatar, Button } from 'antd';
+import classNames from 'classnames';
 
 import { ViewTrainingModal } from '../../view-training-modal/view-training-modal';
 
@@ -58,7 +59,7 @@ export const InviteCard: React.FC<TProps> = ({ invite, setHide }) => {
             </div>
             <div className={styles['invite-card__btns-wrapper']}>
                 <Button
-                    className={`${styles['invite-card__conf-btn']} ${styles['conf-button']}`}
+                    className={classNames(styles['invite-card__conf-btn'], styles['conf-button'])}
                     onClick={() => handleAcceptInvite(invite._id)}
                     onMouseOver={() => setIsView(false)}
                 >

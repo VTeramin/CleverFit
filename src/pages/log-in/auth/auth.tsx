@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { EyeInvisibleOutlined,EyeTwoTone, GooglePlusOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone, GooglePlusOutlined } from '@ant-design/icons';
 import { EROUTE, EValid } from '@constants/enums';
 import { TValidAuth } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
@@ -13,6 +13,7 @@ import { googleAuth } from '@utils/requests/auth/google-auth';
 import { login } from '@utils/requests/auth/login';
 import { register } from '@utils/requests/auth/register';
 import { Button, Checkbox, Form, Input } from 'antd';
+import classNames from 'classnames';
 
 import 'antd/dist/antd.css';
 import '../modal.css';
@@ -88,25 +89,25 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
 
     return (
         <div className="modal-wrapper">
-            <div className={`${styles['auth-modal']} modal`}>
+            <div className={classNames(styles['auth-modal'], 'modal')}>
                 <div className={styles['auth-modal__logo']} />
                 <Form
                     name="normal_login"
-                    className={`${styles['auth-modal__login-form']} ${isRegistration && styles.registration}`}
+                    className={classNames(styles['auth-modal__login-form'], { [styles.registration]: isRegistration })}
                     validateMessages={{ required: '' }}
                 >
                     <Form.Item className={styles['login-form__form-select-buttons']}>
                         <Button
                             type="text"
                             onClick={() => navigate(EROUTE.AUTH)}
-                            className={`${styles['text-button']} ${!isRegistration && styles.active}`}
+                            className={classNames(styles['text-button'], { [styles.active]: !isRegistration })}
                         >
                             Вход
                         </Button>
                         <Button
                             type="text"
                             onClick={() => navigate(EROUTE.REGISTRATION)}
-                            className={`${styles['text-button']} ${isRegistration && styles.active}`}
+                            className={classNames(styles['text-button'], { [styles.active]: isRegistration })}
                         >
                             Регистрация
                         </Button>
@@ -177,7 +178,7 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
                         </Form.Item>}
                     <Form.Item>
                         <Button
-                            className={`${styles['login-form__button']} ${styles['conf-button']}`}
+                            className={classNames(styles['login-form__button'], styles['conf-button'])}
                             type="primary"
                             htmlType="submit"
                             disabled={isDisabled}

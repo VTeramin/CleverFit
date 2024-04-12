@@ -6,6 +6,7 @@ import { EStatus } from '@constants/enums';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectLogin } from '@redux/login-slice';
 import { confirmEmail } from '@utils/requests/auth/confirm-email';
+import classNames from 'classnames';
 
 import '../modal.css';
 import styles from './confirm-email.module.css';
@@ -18,7 +19,7 @@ export const ConfirmEmail: React.FC = () => {
     const [isError, setIsError] = useState(false);
 
     const handleVerifInputComplete = (value: string) => {
-        if(!email) return;
+        if (!email) return;
         dispatch(confirmEmail(value)).then(resp => {
             if (resp !== EStatus.error) navigate(resp);
             setIsError(true);
@@ -32,7 +33,7 @@ export const ConfirmEmail: React.FC = () => {
 
     return (
         <div className="modal-wrapper">
-            <div className={`${styles['confirm-modal']} modal`}>
+            <div className={classNames(styles['confirm-modal'], 'modal')}>
                 <div className={styles['confirm-modal__icon-wrapper']}>
                     {isError
                         ? <CloseCircleFilled className={styles['confirm-modal__icon']} style={{ color: 'var(--character-light-error)' }} />
@@ -49,7 +50,7 @@ export const ConfirmEmail: React.FC = () => {
                     placeholder=""
                     classNames={{
                         container: styles['verif-input'],
-                        character: `${styles['verif-input__char']} ${styles[isError ? 'valid-error' : '']}`,
+                        character: classNames(styles['verif-input__char'], { [styles['valid-error']]: isError }),
                         characterInactive: styles['verif-input__char--inactive'],
                         characterSelected: styles['verif-input__char--selected']
                     }}

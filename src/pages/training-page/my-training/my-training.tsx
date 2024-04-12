@@ -15,6 +15,7 @@ import { checkIsFuture } from '@utils/check-is-future';
 import { getMyTrainingModalCoords } from '@utils/training-utils/get-my-training-modal-coords';
 import { Alert, Badge, Button, Layout, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import classNames from 'classnames';
 
 import { MyTrainingModal } from './my-training-modal/my-training-modal';
 
@@ -111,7 +112,7 @@ export const MyTraining: React.FC = () => {
         trainingName: (
             <div className={styles['row__select-wrapper']}>
                 <Badge color={EBadgeColors[el.name as keyof typeof EBadgeColors]} />
-                <div className={`${styles.row__select} table-cell`} id={el._id}>
+                <div className={classNames(styles.row__select, 'table-cell')} id={el._id}>
                     <p>{el.name}</p>
                     <Button
                         type='text'
@@ -134,7 +135,7 @@ export const MyTraining: React.FC = () => {
                 type='text'
                 disabled={el.isImplementation}
                 onClick={() => handleEdit(el)}
-                className={`${styles.row__edit} ${el.isImplementation && styles['row__edit-disabled']}`}
+                className={classNames(styles.row__edit, {[styles['row__edit-disabled']]: el.isImplementation})}
                 data-test-id={`update-my-training-table-icon${Number(el._id) - 1}`}
             >
                 <EditOutlined />
@@ -145,7 +146,7 @@ export const MyTraining: React.FC = () => {
     return (
         <React.Fragment>
             {isNoTraining
-                ? <Layout className={`${styles.training} ${styles['new-training']}`}>
+                ? <Layout className={classNames(styles.training, styles['new-training'])}>
                     <h3 className={styles.training__title}>У вас ещё нет созданных тренировок</h3>
                     <Button
                         className={styles['training__conf-button']}
