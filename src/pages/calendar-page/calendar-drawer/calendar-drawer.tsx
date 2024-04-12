@@ -35,12 +35,6 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
     const [pickedMoment, setPickedMoment] = useState<Moment | null>(null);
     const [formBackUp, setFormBackUp] = useState<{ exercises: TDrawerFormFields } | null>(null);
 
-    function closeDrawer() {
-        const closeBtn = document.getElementById('drawer__close') as HTMLElement;
-
-        closeBtn.click();
-    }
-
     useEffect(() => {
         if (!isDrawer) setPickedMoment(null);
     }, [isDrawer])
@@ -52,7 +46,13 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
         if (isJoint) setDrawerType(EDrawer.joint);
     }, [isEdit, isMyTrainingPage, isJoint, dispatch]);
 
-    function handleSave() {
+    const closeDrawer = () => {
+        const closeBtn = document.getElementById('drawer__close') as HTMLElement;
+
+        closeBtn.click();
+    }
+
+    const handleSave = () => {
         closeDrawer();
         dispatch(toggleIsSaveDisabled(true));
         if (formBackUp !== null) dispatch(changeExerciseFormFields(sortDrawerFormFromEmpty(formBackUp)));
@@ -88,7 +88,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
             headerStyle={{ display: 'none' }}
             maskStyle={{ background: 'transparent' }}
             maskClosable={true}
-            onClose={() => closeDrawer()}
+            onClose={closeDrawer}
             placement={isMobile ? 'bottom' : 'right'}
             height={555}
             className={`${styles.drawer} ${isMyTrainingPage && styles['drawer-my-page']}`}
@@ -123,7 +123,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
                     <Button
                         disabled={!isEdit || isJoint ? isSaveDisabled : false}
                         className={styles['drawer__conf-button']}
-                        onClick={() => handleSave()}
+                        onClick={handleSave}
                     >
                         {isJoint ? 'Отправить приглашение' : 'Сохранить'}
                     </Button>

@@ -17,7 +17,7 @@ export const ConfirmEmail: React.FC = () => {
     const [code, setCode] = useState('');
     const [isError, setIsError] = useState(false);
 
-    function handleVerifInputComplete(value: string) {
+    const handleVerifInputComplete = (value: string) => {
         if(!email) return;
         dispatch(confirmEmail(value)).then(resp => {
             if (resp !== EStatus.error) navigate(resp);
@@ -56,7 +56,7 @@ export const ConfirmEmail: React.FC = () => {
                     value={code}
                     autoFocus={true}
                     onChange={value => setCode(value)}
-                    onComplete={value => handleVerifInputComplete(value)}
+                    onComplete={handleVerifInputComplete}
                     inputProps={{ 'data-test-id': 'verification-input' }}
                 />
                 <p className={styles['confirm-modal__desc']}>Не пришло письмо? Проверьте папку Спам.</p>

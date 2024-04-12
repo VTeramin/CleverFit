@@ -16,28 +16,28 @@ export const CalendarResult: React.FC = () => {
     const { resultType } = useAppSelector(selectCalendarModalData);
     const width = useWindowSize().width || 0;
 
-    function handleUpdate() {
+    const handleUpdate = () => {
         dispatch(changeResultType(EStatus.empty));
         dispatch(getTrainingList());
     }
 
-    function handleUpdateJoint() {
+    const handleUpdateJoint = () => {
         dispatch(changeResultType(EStatus.empty));
         dispatch(getUserJointTrainingList());
     }
 
-    function handleClose() {
+    const handleClose = () => {
         dispatch(changeResultType(EStatus.empty));
     }
 
-    function handleBackToInvites() {
+    const handleBackToInvites = () => {
         handleClose();
         const arrowBack = document.getElementById('joint-users-back');
 
         arrowBack?.click();
     }
 
-    function handleCloseAll() {
+    const handleCloseAll = () => {
         dispatch(changeResultType(EStatus.empty));
         dispatch(toggleIsModal(false));
     }
@@ -53,7 +53,7 @@ export const CalendarResult: React.FC = () => {
                 width={width > 800 ? 384 : 539}
                 className={styles.result}
                 open={resultType !== EStatus.empty}
-                onCancel={() => handleClose()}
+                onCancel={handleClose}
                 maskClosable={false}
                 closable={true}
                 closeIcon={<CloseOutlined data-test-id="modal-error-user-training-button-close" />}
@@ -68,7 +68,7 @@ export const CalendarResult: React.FC = () => {
                         <Button
                             key="Обновить"
                             className={`${styles['conf-button']}`}
-                            onClick={() => handleUpdate()}
+                            onClick={handleUpdate}
                             data-test-id="modal-error-user-training-button"
                         >
                             Обновить
@@ -86,7 +86,7 @@ export const CalendarResult: React.FC = () => {
                 width={width > 800 ? 384 : 539}
                 className={styles.result}
                 open={resultType !== EStatus.empty}
-                onCancel={() => handleBackToInvites()}
+                onCancel={handleBackToInvites}
                 maskClosable={false}
                 closable={true}
                 closeIcon={<CloseOutlined data-test-id="modal-error-user-training-button-close" />}
@@ -101,7 +101,7 @@ export const CalendarResult: React.FC = () => {
                         <Button
                             key="Обновить"
                             className={`${styles['conf-button']}`}
-                            onClick={() => handleUpdateJoint()}
+                            onClick={handleUpdateJoint}
                             data-test-id="modal-error-user-training-button"
                         >
                             Обновить
@@ -119,7 +119,7 @@ export const CalendarResult: React.FC = () => {
                 width={width > 800 ? 416 : 328}
                 className={`${styles.result} ${styles['result-error-save']}`}
                 open={resultType !== EStatus.empty}
-                onCancel={() => handleClose()}
+                onCancel={handleClose}
                 maskClosable={false}
                 closable={false}
                 footer={null}
@@ -133,7 +133,7 @@ export const CalendarResult: React.FC = () => {
                         <Button
                             key="Закрыть"
                             className={`${styles['conf-button']}`}
-                            onClick={() => handleCloseAll()}
+                            onClick={handleCloseAll}
                             data-test-id="modal-error-user-training-button"
                         >
                             Закрыть

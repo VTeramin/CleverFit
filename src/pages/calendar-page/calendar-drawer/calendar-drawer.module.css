@@ -193,7 +193,7 @@
     width: 100%;
 }
 
-.no-date-group__calendar-popup .today::after {
+.no-date-group__calendar-popup .today:after {
     content: "";
     display: block;
     width: 32px;
@@ -208,7 +208,7 @@
 }
 
 @media (max-width: 800px) {
-    .no-date-group__calendar-popup .today::after {
+    .no-date-group__calendar-popup .today:after {
         width: 25px;
         transform: translate(16%, 10%);
     }

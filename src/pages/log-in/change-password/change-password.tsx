@@ -17,7 +17,7 @@ export const ChangePassword: React.FC = () => {
     const { password, confirmPassword, valid } = useAppSelector(selectLogin);
     const isSubmitDisabled = checkDisabledChangePassword({ password, confirmPassword }, valid);
 
-    function handleSubmit() {
+    const handleSubmit = () => {
         dispatch(changePassword()).then(navigate);
     }
 
@@ -37,7 +37,7 @@ export const ChangePassword: React.FC = () => {
                             type="primary"
                             htmlType="submit"
                             disabled={isSubmitDisabled}
-                            onClick={() => handleSubmit()}
+                            onClick={handleSubmit}
                             data-test-id="change-submit-button"
                         >
                             Сохранить

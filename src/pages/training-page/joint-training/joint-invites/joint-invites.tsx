@@ -34,12 +34,12 @@ export const JointInvites: React.FC<TProps> = ({ inner, setInner, setIsRandom })
         dispatch(getInvite());
     }, [dispatch, inner]);
 
-    function handleRandomChoice() {
+    const handleRandomChoice = () => {
         setIsRandom(false);
         setInner('users');
     }
 
-    function handleStaticChoice() {
+    const handleStaticChoice = () => {
         setIsRandom(true);
         setInner('users');
     }
@@ -86,13 +86,13 @@ export const JointInvites: React.FC<TProps> = ({ inner, setInner, setIsRandom })
                 <div className={styles['add-training-card__buttons-wrapper']}>
                     <Button
                         type='text'
-                        onClick={() => handleRandomChoice()}
+                        onClick={handleRandomChoice}
                     >
                         Случайный выбор
                     </Button>
                     <Button
                         type='text'
-                        onClick={() => handleStaticChoice()}
+                        onClick={handleStaticChoice}
                     >
                         Выбор друга по моим тренировкам
                     </Button>

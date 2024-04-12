@@ -44,7 +44,7 @@ export const Passwords: React.FC = () => {
         dispatch(changeValidStatus(validStatus));
     }, [dispatch, validStatus]);
 
-    function handlePassword(event: ChangeEvent<HTMLInputElement>) {
+    const handlePassword = (event: ChangeEvent<HTMLInputElement>) => {
         setPasswords(prev => ({
             ...prev,
             [event.target.name]: event.target.value
@@ -66,7 +66,7 @@ export const Passwords: React.FC = () => {
                     name="password"
                     placeholder={pathname === '/profile' ? 'Пароль' : 'Новый пароль'}
                     value={passwords.password}
-                    onChange={event => handlePassword(event)}
+                    onChange={handlePassword}
                     aria-invalid={validStatus.password === EValid.error ? true : undefined}
                     data-test-id={pathname === '/profile' ? 'profile-password' : 'change-password'}
                 />
@@ -82,7 +82,7 @@ export const Passwords: React.FC = () => {
                     name="confirmPassword"
                     placeholder="Повторите пароль"
                     value={passwords.confirmPassword}
-                    onChange={event => handlePassword(event)}
+                    onChange={handlePassword}
                     aria-invalid={validStatus.confirmPassword === EValid.error ? true : undefined}
                     data-test-id={pathname === '/profile' ? 'profile-repeat-password' : 'change-confirm-password'}
                 />

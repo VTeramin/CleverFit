@@ -118,7 +118,7 @@
     display: none;
 }
 
-.profile-form [class*="list-item-uploading"] [class*="upload-span"]::after {
+.profile-form [class*="list-item-uploading"] [class*="upload-span"]:after {
     content: "Загружаем";
     text-align: center;
     line-height: 50px;

@@ -61,7 +61,7 @@ export const ProfilePage: React.FC = () => {
 
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-    function onUploadChange(info: UploadChangeParam<UploadFile>) {
+    const onUploadChange = (info: UploadChangeParam<UploadFile>) => {
         if (info.file.status === 'error') {
             setFileList([{
                 uid: '-1',
@@ -82,7 +82,7 @@ export const ProfilePage: React.FC = () => {
         setFileList(info.fileList);
     }
 
-    function handleFormChange(event: React.ChangeEvent<HTMLInputElement> | moment.Moment | null, field: string) {
+    const handleFormChange = (event: React.ChangeEvent<HTMLInputElement> | moment.Moment | null, field: string) => {
         if (moment.isMoment(event)) {
             setUserFormInfo(prev => ({
                 ...prev,
@@ -97,7 +97,7 @@ export const ProfilePage: React.FC = () => {
         setIsSubmitDisabled(checkIsSubmitProfileDisabled(fileList, valid, password, emailValidStatus, userFormInfo.email));
     }
 
-    function handleSaveChanges() {
+    const handleSaveChanges = () => {
         dispatch(changeRemoteUserData()).then(response => setResultType(response));
         dispatch(changePasswords({
             password: '',
@@ -135,7 +135,7 @@ export const ProfilePage: React.FC = () => {
                                 withCredentials={true}
                                 maxCount={1}
                                 fileList={fileList}
-                                onChange={info => onUploadChange(info)}
+                                onChange={onUploadChange}
                                 progress={{
                                     strokeWidth: 4,
                                     showInfo: false
@@ -188,7 +188,7 @@ export const ProfilePage: React.FC = () => {
                             <Button
                                 className={styles['profile-form__conf-button']}
                                 disabled={isSubmitDisabled}
-                                onClick={() => handleSaveChanges()}
+                                onClick={handleSaveChanges}
                                 data-test-id='profile-submit'
                             >
                                 Сохранить изменения

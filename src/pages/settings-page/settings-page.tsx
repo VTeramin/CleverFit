@@ -62,7 +62,7 @@ export const SettingsPage: React.FC = () => {
         dispatch(changeRemoteUserData());
     }, [dispatch, switchValues]);
 
-    function handleSwitchChange(checked: boolean, switchItem: string) {
+    const handleSwitchChange = (checked: boolean, switchItem: string) => {
         setSwitchValues(prev => ({
             ...prev,
             [switchItem]: checked

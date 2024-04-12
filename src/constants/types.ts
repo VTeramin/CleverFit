@@ -147,3 +147,7 @@ export type TTariffsInfo = {
 export type TDrawerTitles = {
     [name: string]: JSX.Element
 }
+
+export type TFormData = {
+    exercises: TDrawerFormFields
+}

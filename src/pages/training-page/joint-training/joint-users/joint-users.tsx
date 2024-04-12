@@ -67,13 +67,13 @@ export const JointUsers: React.FC<TProps> = ({ isRandom, setInner }) => {
         setPageSize(isTablet ? 8 : fullPageSize);
     }, [isTablet, width]);
 
-    function handleBack() {
+    const handleBack = () => {
         setInner('invites');
         setCurrentPage(1);
         setSearchInputValue('');
     }
 
-    function handleAddTraining(trainingType: string, palId: string) {
+    const handleAddTraining = (trainingType: string, palId: string) => {
         dispatch(changeSelectedTraining(trainingType));
         dispatch(changeSelectedPal(palId));
         dispatch(changeExerciseFormFields({}));
@@ -84,12 +84,12 @@ export const JointUsers: React.FC<TProps> = ({ isRandom, setInner }) => {
         dispatch(toggleIsDrawer(true));
     }
 
-    function handleRejectTraining(palId: string, inviteId: string) {
+    const handleRejectTraining = (palId: string, inviteId: string) => {
         dispatch(rejectAcceptedInvite(palId, inviteId));
     }
 
-    function handleSearch(value: string) {
-        setSearchInputValue(value);
+    const handleSearch = (event: { target: { value: string } }) => {
+        setSearchInputValue(event.target.value);
         setCurrentPage(1);
     }
 
@@ -98,7 +98,7 @@ export const JointUsers: React.FC<TProps> = ({ isRandom, setInner }) => {
             <div className={styles.pals__header}>
                 <Button
                     type='text'
-                    onClick={() => handleBack()}
+                    onClick={handleBack}
                     className={styles['header__arrow-back']}
                     id='joint-users-back'
                 >
@@ -106,7 +106,7 @@ export const JointUsers: React.FC<TProps> = ({ isRandom, setInner }) => {
                 </Button>
                 <Search
                     value={searchInputValue}
-                    onChange={event => handleSearch(event.target.value)}
+                    onChange={handleSearch}
                     placeholder="Поиск по имени"
                     className={styles.header__search}
                     data-test-id='search-input'

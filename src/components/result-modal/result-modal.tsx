@@ -21,8 +21,17 @@ export const ResultModal: React.FC<TProps> = ({ resultType, setResultType, setIs
     const width = useWindowSize().width || 0;
     const resultWidth = width > 800 ? 539 : 328;
 
-    function handleWriteReview() {
+    const handleWriteReview = () => {
         if (setIsModalOpen) setIsModalOpen(true);
+        setResultType(EStatus.empty);
+    }
+
+    const handleBackToHomePage = () => {
+        navigate(EROUTE.HOME);
+        dispatch(changeResultType(EStatus.empty));
+    }
+
+    const close = () => {
         setResultType(EStatus.empty);
     }
 
@@ -35,7 +44,7 @@ export const ResultModal: React.FC<TProps> = ({ resultType, setResultType, setIs
                 <Button
                     key="Написать отзыв"
                     className={styles['conf-button']}
-                    onClick={() => handleWriteReview()}
+                    onClick={handleWriteReview}
                     data-test-id="write-review-not-saved-modal"
                 >
                     Написать отзыв
@@ -43,7 +52,7 @@ export const ResultModal: React.FC<TProps> = ({ resultType, setResultType, setIs
                 <Button
                     key="Закрыть"
                     className={`${styles['conf-button']} ${styles['conf-button-white']}`}
-                    onClick={() => setResultType(EStatus.empty)}
+                    onClick={close}
                 >
                     Закрыть
                 </Button>
@@ -56,7 +65,7 @@ export const ResultModal: React.FC<TProps> = ({ resultType, setResultType, setIs
                 <Button
                     key="Отлично"
                     className={`${styles['conf-button']}`}
-                    onClick={() => setResultType(EStatus.empty)}
+                    onClick={close}
                 >
                     Отлично
                 </Button>
@@ -71,10 +80,7 @@ export const ResultModal: React.FC<TProps> = ({ resultType, setResultType, setIs
                 <Button
                     key="Назад"
                     className={`${styles['conf-button']}`}
-                    onClick={() => {
-                        navigate(EROUTE.HOME);
-                        dispatch(changeResultType(EStatus.empty));
-                    }}
+                    onClick={handleBackToHomePage}
                 >
                     Назад
                 </Button>

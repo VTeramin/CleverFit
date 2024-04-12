@@ -22,7 +22,7 @@ export const ViewPalModal: React.FC<TProps> = ({ isModal, setIsModal, palData })
     const pageWidth = useWindowSize().width || 0;
     const isMobile = pageWidth < 800;
 
-    function handleRejectInvite(palId: string, inviteId: string) {
+    const handleRejectInvite = (palId: string, inviteId: string) => {
         setIsModal(false);
         dispatch(rejectAcceptedInvite(palId, inviteId));
     }

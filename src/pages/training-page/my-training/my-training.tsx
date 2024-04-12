@@ -47,7 +47,7 @@ export const MyTraining: React.FC = () => {
     const frequency = (el: TTraining) => intervalOptions.find(option => option.value === el.parameters?.period)?.label;
     const [selectedDate, setSelectdDate] = useState<Date | null>(null);
 
-    function handleEdit(el: TTraining) {
+    const handleEdit = (el: TTraining) => {
         const exercises = dispatch(findExercises(el.date, el.name));
 
         setIsModal(false);
@@ -59,7 +59,7 @@ export const MyTraining: React.FC = () => {
         dispatch(toggleIsDrawer(true));
     }
 
-    function handleNewTraining() {
+    const handleNewTraining = () => {
         setIsModal(false);
         dispatch(changeSelectedTraining(null));
         dispatch(changeExerciseFormFields({}));
@@ -70,7 +70,7 @@ export const MyTraining: React.FC = () => {
         dispatch(toggleIsDrawer(true));
     }
 
-    function showModal(el: TTraining) {
+    const showModal = (el: TTraining) => {
         const exercises = dispatch(findExercises(el.date, el.name));
 
         setSelectdDate(new Date(el.date));
@@ -81,7 +81,7 @@ export const MyTraining: React.FC = () => {
         setIsModal(true);
     }
 
-    function getFrequencyValue(label: string) {
+    const getFrequencyValue = (label: string) => {
         const optionValue = intervalOptions.find(interval => interval.label === label);
 
         return optionValue?.value || 0;
@@ -163,7 +163,7 @@ export const MyTraining: React.FC = () => {
                             current: currentPage,
                             total: training.length,
                             pageSize,
-                            onChange: (page) => setCurrentPage(page),
+                            onChange: setCurrentPage,
                             showSizeChanger: false,
                             hideOnSinglePage: true,
                             className: styles.training__pagination,
@@ -173,7 +173,7 @@ export const MyTraining: React.FC = () => {
                     {!isTraingListEmpty &&
                         <Button
                             className={styles['training__conf-button']}
-                            onClick={() => handleNewTraining()}
+                            onClick={handleNewTraining}
                             data-test-id='create-new-training-button'
                         >
                             <PlusOutlined />Новая тренировка

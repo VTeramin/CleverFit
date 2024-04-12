@@ -26,7 +26,7 @@ export const InnerDefault: React.FC<TProps> = ({ date }) => {
     const trainingNames = getListData(training, date);
     const isNoTrainings = trainingNames.length === 0;
 
-    function handleAddTraining() {
+    const handleAddTraining = () => {
         dispatch(toggleIsEdit(false));
         dispatch(changeSelectedTraining(null));
         dispatch(changeEditTraining(null));
@@ -57,7 +57,7 @@ export const InnerDefault: React.FC<TProps> = ({ date }) => {
             <Divider className={styles.modal__divider} />
             <div className={styles['modal__button-wrapper']}>
                 <Button
-                    onClick={() => handleAddTraining()}
+                    onClick={handleAddTraining}
                     disabled={isAddTrainingDisabled}
                     className={styles.modal__button}
                 >Создать тренировку</Button>

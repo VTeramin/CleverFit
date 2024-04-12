@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { CheckCircleFilled, CheckCircleOutlined, CloseCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import { EStatus } from '@constants/enums';
@@ -33,8 +34,7 @@ export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer, setRes
         ? convertDate(new Date(userInfo.tariff.expired)).slice(0, 5)
         : '';
 
-    function handleSubmit() {
-        // eslint-disable-next-line no-underscore-dangle
+    const handleSubmit = () => {
         dispatch(changeTariff(proTariff?._id as string, selectedTariff))
             .then(response => setResultType(response));
         setIsDrawer(false);
@@ -102,7 +102,7 @@ export const SettingsDrawer: React.FC<TProps> = ({ isDrawer, setIsDrawer, setRes
                 <Button
                     className={styles['drawer__conf-button']}
                     disabled={selectedTariff === 0}
-                    onClick={() => handleSubmit()}
+                    onClick={handleSubmit}
                     data-test-id='tariff-submit'
                 >
                     Выбрать и оплатить

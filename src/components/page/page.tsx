@@ -156,7 +156,7 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
 
     return (
         <Layout className={styles.page}>
-            <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
+            <SideBar collapsed={collapsed} />
             <Layout className={styles['page-layout']}>
                 {header[pathname]}
                 {innerLayout}

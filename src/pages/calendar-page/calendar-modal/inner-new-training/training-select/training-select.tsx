@@ -26,7 +26,7 @@ export const TrainingSelect: React.FC<TProps> = ({ date }) => {
     const selectOptions = dispatch(getTrainingSelectOptions(date));
     const [isOpen, setIsOpen] = useState(false);
 
-    function handleSelect(value: string) {
+    const handleSelect = (value: string) => {
         if (!isMyTrainingPage) {
             if (trainingNames.includes(value)) {
                 dispatch(toggleIsEdit(true));
@@ -59,7 +59,7 @@ export const TrainingSelect: React.FC<TProps> = ({ date }) => {
             bordered={false}
             defaultOpen={true}
             className={styles.modal__input}
-            onSelect={value => handleSelect(value)}
+            onSelect={handleSelect}
             popupClassName={styles.modal__dropdown}
             onFocus={() => setIsOpen(true)}
             onDropdownVisibleChange={(visible) => setIsOpen(visible)}

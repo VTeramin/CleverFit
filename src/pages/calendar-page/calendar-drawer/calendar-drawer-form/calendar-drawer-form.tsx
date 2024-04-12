@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { CalendarTwoTone, CloseOutlined, MinusOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
 import { EBadgeColors } from '@constants/enums';
 import { intervalOptions } from '@constants/interval-options';
-import { TDrawerFormFields } from '@constants/types';
+import { TDrawerFormFields, TFormData } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { TrainingSelect } from '@pages/calendar-page/calendar-modal/inner-new-training/training-select/training-select';
 import { changeExerciseFormFields, changeInterval, selectCalendarModalData, toggleIsDrawer, toggleIsSaveDisabled } from '@redux/calendar-modal-slice';
@@ -95,13 +95,15 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
         setCheckboxList(prev => sortCheckboxListFromEmpty(checkboxList, prev, remove));
     }
 
-    function handleFormChange() {
+    const handleFormChange = () => {
         const checkResult = checkIsSaveDisabled({ form, date, pickedMoment, selectedTraining, exerciseFormFields });
 
         dispatch(toggleIsSaveDisabled(checkResult));
     }
 
-    function onFinish(values: { exercises: TDrawerFormFields }) {
+    const handleFormValuesChange = (_: TFormData, allValues: TFormData) => setFormBackUp(allValues)
+
+    const onFinish = (values: TFormData) => {
         if (values) dispatch(changeExerciseFormFields(sortDrawerFormFromEmpty(values)));
         dispatch(toggleIsDrawer(false));
     }
@@ -120,8 +122,8 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
 
     function handleAddLine(add: () => void) {
         add();
-        if(isMyTrainingPage) setAddButtonText('Добавить ещё');
-        if(selectedTraining === null) {
+        if (isMyTrainingPage) setAddButtonText('Добавить ещё');
+        if (selectedTraining === null) {
             const select = document.getElementById('select-training');
 
             select?.focus();
@@ -131,9 +133,9 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
     return (
         <Form
             ref={form}
-            onFinish={values => onFinish(values)}
-            onChange={() => handleFormChange()}
-            onValuesChange={(_, allValues) => setFormBackUp(allValues)}
+            onFinish={onFinish}
+            onChange={handleFormChange}
+            onValuesChange={handleFormValuesChange}
             initialValues={initialFormValues}
         >
             {isMyTrainingPage && <div className={styles['drawer__no-date-group']}>
@@ -197,7 +199,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                                             placeholder="Упражнение"
                                             addonAfter={isEdit && <Checkbox
                                                 checked={checkboxList[name]}
-                                                onChange={(event) => handleCheckboxChange(event, name)}
+                                                onChange={event => handleCheckboxChange(event, name)}
                                                 name="checkbox"
                                                 data-test-id={`modal-drawer-right-checkbox-exercise${name}`}
                                             />}

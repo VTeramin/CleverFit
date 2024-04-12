@@ -1,7 +1,6 @@
-import { combineReducers } from 'redux';
 import { createReduxHistoryContext } from 'redux-first-history';
 import { thunk } from 'redux-thunk';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers , configureStore } from '@reduxjs/toolkit';
 import { createBrowserHistory } from 'history';
 
 import calendarModalReducer from './calendar-modal-slice';

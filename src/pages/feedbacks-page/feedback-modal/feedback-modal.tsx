@@ -27,7 +27,7 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
         rating: 0
     });
 
-    function handleFeedback() {
+    const handleFeedback = () => {
         dispatch(sendFeedback(feedback.message, feedback.rating))
             .then((response) => {
                 setResultType(response);
@@ -41,11 +41,11 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
             });
     }
 
-    function handleRating(value: number) {
+    const handleRating = (value: number) => {
         setFeedback(prev => ({ ...prev, rating: value }));
     }
 
-    function handleTextArea(event: ChangeEvent<HTMLTextAreaElement>) {
+    const handleTextArea = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setFeedback(prev => ({ ...prev, message: event.target.value }));
     }
 
@@ -60,7 +60,7 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
             className={styles.modal}
             footer={<Button
                 className={`${styles['conf-button']} ${styles.modal__button}`}
-                onClick={() => handleFeedback()}
+                onClick={handleFeedback}
                 disabled={feedback.rating === 0}
                 data-test-id="new-review-submit-button"
             >
@@ -72,7 +72,7 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
                     <Rate
                         value={feedback.rating}
                         character={<StarTwoTone twoToneColor="var(--character-light-warning)" className={styles.rate__star} />}
-                        onChange={value => handleRating(value)}
+                        onChange={handleRating}
                         className={`${styles.modal__rate} ${styles.rate}`}
                     />
                 </Form.Item>
@@ -82,7 +82,7 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
                         placeholder="Autosize height based on content lines"
                         style={{ resize: 'vertical' }}
                         autoSize={{ minRows: 1.64 }}
-                        onChange={event => handleTextArea(event)}
+                        onChange={handleTextArea}
                         className={styles.modal__textarea}
                     />
                 </Form.Item>

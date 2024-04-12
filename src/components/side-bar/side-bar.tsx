@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { CalendarTwoTone, HeartTwoTone, IdcardTwoTone, TrophyTwoTone } from '@ant-design/icons';
 import { EROUTE } from '@constants/enums';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { useOutsideClick } from '@hooks/use-outside-click';
 import { selectUserData, toggleIsAuthorized } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { Badge, Button, Layout, Menu } from 'antd';
@@ -15,16 +14,14 @@ import styles from './side-bar.module.css';
 const { Sider } = Layout;
 
 type TProps = {
-    collapsed: boolean,
-    setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
+    collapsed: boolean
 }
 
-export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
+export const SideBar: React.FC<TProps> = ({ collapsed }) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const width = useWindowSize().width || 0;
     const isFullWidth = width > 800;
-    const siderRef = useOutsideClick(() => setCollapsed(true));
     const { pathname } = useLocation();
     const paths = useMemo(() => [
         EROUTE.CALENDAR,
@@ -40,17 +37,17 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
         setSelectedMenuItem([String(paths.indexOf(pathname as EROUTE))]);
     }, [paths, pathname]);
 
-    function handleLogoClick() {
+    const handleLogoClick = () => {
         navigate(EROUTE.MAIN);
     }
 
-    function handleExit() {
+    const handleExit = () => {
         localStorage.clear();
         dispatch(toggleIsAuthorized(false));
         navigate(EROUTE.AUTH);
     }
 
-    function handleMenuClick(item: MenuInfo) {
+    const handleMenuClick = (item: MenuInfo) => {
         const index = Number(item.key);
 
         navigate(paths[index]);
@@ -90,7 +87,6 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
     return (
         <Sider
             trigger={null}
-            ref={siderRef}
             collapsible={true}
             collapsed={collapsed}
             width={isFullWidth ? '208' : '106'}
@@ -100,7 +96,7 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
             className={styles.sider}
         >
             <Button
-                onClick={() => handleLogoClick()}
+                onClick={handleLogoClick}
                 className={styles['logo-button']}
                 type='text'
             >
@@ -111,12 +107,12 @@ export const SideBar: React.FC<TProps> = ({ collapsed, setCollapsed }) => {
                 mode="inline"
                 selectedKeys={selectedMenuItem}
                 className={styles.sider__menu}
-                onClick={item => handleMenuClick(item)}
+                onClick={handleMenuClick}
                 items={menuItems}
             />
             <Button
                 className={styles.sider__exit}
-                onClick={() => handleExit()}
+                onClick={handleExit}
                 type='text'
                 id='side-bar__exit'
             >

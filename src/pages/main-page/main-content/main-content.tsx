@@ -12,7 +12,7 @@ const { Content } = Layout;
 export const MainContent: React.FC = () => {
     const navigate = useNavigate();
 
-    function handleBlockClick(event: MouseEvent<HTMLButtonElement>) {
+    const handleBlockClick = (event: MouseEvent<HTMLButtonElement>) => {
         const text = event.currentTarget.textContent || '';
         const paths: { [name: string]: string } = {
             'Тренировки': EROUTE.TRAINING,
@@ -31,7 +31,7 @@ export const MainContent: React.FC = () => {
                 <p className={styles.block__title}>{navBlocksTitles[index]}</p>
                 <Button
                     className={styles.block__content}
-                    onClick={event => handleBlockClick(event as MouseEvent<HTMLButtonElement>)}
+                    onClick={handleBlockClick}
                     data-test-id={['', 'menu-button-calendar', 'menu-button-profile'][index]}
                 >
                     {React.createElement(icon, { className: styles.block__icon, twoToneColor: 'var(--primary-light-6)' })}

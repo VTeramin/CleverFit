@@ -6,8 +6,8 @@ import { changeModalType, selectCalendarModalData, toggleIsModal } from '@redux/
 import { selectTraining } from '@redux/training-slice';
 import { useMeasure, useWindowSize } from '@uidotdev/usehooks';
 import { getListData } from '@utils/calendar-utils/get-list-data';
-import { getTraining } from '@utils/requests/training/get-training';
 import { getTrainingList } from '@utils/requests/catalogs/get-training-list';
+import { getTraining } from '@utils/requests/training/get-training';
 import { Calendar, ConfigProvider, Layout } from 'antd';
 import locale from 'antd/es/locale/ru_RU';
 import moment, { Moment } from 'moment';
@@ -41,7 +41,7 @@ export const CalendarPage: React.FC = () => {
         dispatch(toggleIsModal(false));
     }, [dispatch, navigate]);
 
-    function handleDateSelect(target: Moment) {
+    const handleDateSelect = (target: Moment) => {
         setDate(target);
         const isCurrentMonth = date.toDate().getMonth() !== target.toDate().getMonth();
 
@@ -70,7 +70,7 @@ export const CalendarPage: React.FC = () => {
                     className={styles.calendar}
                     fullscreen={!isMobile}
                     value={date}
-                    onSelect={target => handleDateSelect(target)}
+                    onSelect={handleDateSelect}
                     onPanelChange={() => dispatch(toggleIsModal(false))}
                     dateCellRender={cellMoment => dateCellRender(cellMoment)}
                 />

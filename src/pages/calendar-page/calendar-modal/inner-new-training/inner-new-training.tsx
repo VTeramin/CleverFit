@@ -24,12 +24,16 @@ export const InnerNewTraining: React.FC<TProps> = ({ date }) => {
     const isNoExercise = exerciseNames[0]?.name === undefined;
     const isSaveDisabled = !isEdit && isNoExercise;
 
-    function handleAddTraining() {
+    const handleAddTraining = () => {
         dispatch(toggleIsDrawer(true));
     }
 
-    function handleSaveTraining() {
+    const handleSaveTraining = () => {
         dispatch(saveTraining(date)).then(() => dispatch(changeResultType(EStatus.empty)));
+    }
+
+    const handleBack = () => {
+        dispatch(changeModalType(ECalendarModalType.default));
     }
 
     const trainings = isNoExercise
@@ -39,7 +43,7 @@ export const InnerNewTraining: React.FC<TProps> = ({ date }) => {
                 <p className={styles.trainings__name}>{el.name}</p>
                 <EditOutlined
                     className={styles.trainings__edit}
-                    onClick={() => handleAddTraining()}
+                    onClick={handleAddTraining}
                     data-test-id={`modal-update-training-edit-button${ind}`}
                 />
             </div>
@@ -49,7 +53,7 @@ export const InnerNewTraining: React.FC<TProps> = ({ date }) => {
         <div data-test-id="modal-create-exercise">
             <div className={styles.modal__header}>
                 <ArrowLeftOutlined
-                    onClick={() => dispatch(changeModalType(ECalendarModalType.default))}
+                    onClick={handleBack}
                     data-test-id="modal-exercise-training-button-close"
                 />
                 <TrainingSelect date={date} />
@@ -61,7 +65,7 @@ export const InnerNewTraining: React.FC<TProps> = ({ date }) => {
             <Divider className={styles.modal__divider} />
             <div className={styles.modal__buttons}>
                 <Button
-                    onClick={() => handleAddTraining()}
+                    onClick={handleAddTraining}
                     disabled={selectedTraining === null}
                 >
                     Добавить упражнения
@@ -69,7 +73,7 @@ export const InnerNewTraining: React.FC<TProps> = ({ date }) => {
                 <Button
                     type="text"
                     disabled={isSaveDisabled}
-                    onClick={() => handleSaveTraining()}
+                    onClick={handleSaveTraining}
                 >{date < new Date(Date.now()) ? 'Сохранить изменения' : 'Сохранить'}</Button>
             </div>
         </div>
