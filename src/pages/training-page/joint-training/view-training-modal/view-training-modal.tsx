@@ -24,7 +24,7 @@ export const ViewTrainingModal: React.FC<TProps> = ({ trainingData, setIsView })
     const isMobile = width < 800;
     const isTablet = width < 1400;
     const mobileCoords = { top: '220px', left: '0' };
-    const tabletCoords = { top: '160px', left: '0' };
+    const tabletCoords = { top: '70px', left: '0' };
     const desctopCoords = { top: '94px', left: '196px' };
 
     const modalCoords = isTablet ? tabletCoords : desctopCoords;
