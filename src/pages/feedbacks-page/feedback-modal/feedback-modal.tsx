@@ -4,9 +4,10 @@ import { StarTwoTone } from '@ant-design/icons';
 import { EROUTE, EStatus } from '@constants/enums';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { getFeedbacks } from '@utils/requests/get-feedbacks';
-import { sendFeedback } from '@utils/requests/send-feedback';
+import { getFeedbacks } from '@utils/requests/feedback/get-feedbacks';
+import { sendFeedback } from '@utils/requests/feedback/send-feedback';
 import { Button, Form, Input, Modal, Rate } from 'antd';
+import classNames from 'classnames';
 
 import 'antd/dist/antd.css';
 import styles from './feedback-modal.module.css';
@@ -27,7 +28,7 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
         rating: 0
     });
 
-    function handleFeedback() {
+    const handleFeedback = () => {
         dispatch(sendFeedback(feedback.message, feedback.rating))
             .then((response) => {
                 setResultType(response);
@@ -41,11 +42,11 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
             });
     }
 
-    function handleRating(value: number) {
+    const handleRating = (value: number) => {
         setFeedback(prev => ({ ...prev, rating: value }));
     }
 
-    function handleTextArea(event: ChangeEvent<HTMLTextAreaElement>) {
+    const handleTextArea = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setFeedback(prev => ({ ...prev, message: event.target.value }));
     }
 
@@ -59,8 +60,8 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
             maskStyle={{ backdropFilter: 'blur(6px)', background: 'rgba(121, 156, 212, 0.5)' }}
             className={styles.modal}
             footer={<Button
-                className={`${styles['conf-button']} ${styles.modal__button}`}
-                onClick={() => handleFeedback()}
+                className={classNames(styles['conf-button'], styles.modal__button)}
+                onClick={handleFeedback}
                 disabled={feedback.rating === 0}
                 data-test-id="new-review-submit-button"
             >
@@ -72,8 +73,8 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
                     <Rate
                         value={feedback.rating}
                         character={<StarTwoTone twoToneColor="var(--character-light-warning)" className={styles.rate__star} />}
-                        onChange={value => handleRating(value)}
-                        className={`${styles.modal__rate} ${styles.rate}`}
+                        onChange={handleRating}
+                        className={classNames(styles.modal__rate, styles.rate)}
                     />
                 </Form.Item>
                 <Form.Item name="message">
@@ -82,7 +83,7 @@ export const FeedbackModal: React.FC<TProps> = ({ isModalOpen, setIsModalOpen, s
                         placeholder="Autosize height based on content lines"
                         style={{ resize: 'vertical' }}
                         autoSize={{ minRows: 1.64 }}
-                        onChange={event => handleTextArea(event)}
+                        onChange={handleTextArea}
                         className={styles.modal__textarea}
                     />
                 </Form.Item>

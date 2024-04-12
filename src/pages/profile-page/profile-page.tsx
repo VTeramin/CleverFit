@@ -9,7 +9,7 @@ import { changeUserInfo, selectUserData } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { validEmail } from '@utils/auth-utils/valid-email';
 import { checkIsSubmitProfileDisabled } from '@utils/profile-utils/check-is-submit-profile-disabled';
-import { changeRemoteUserData } from '@utils/requests/change-remote-user-data';
+import { changeRemoteUserData } from '@utils/requests/user/change-remote-user-data';
 import { Alert, Button, DatePicker, Form, Input, Layout, Upload } from 'antd';
 import { UploadChangeParam, UploadFile } from 'antd/lib/upload';
 import moment from 'moment';
@@ -61,7 +61,7 @@ export const ProfilePage: React.FC = () => {
 
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-    function onUploadChange(info: UploadChangeParam<UploadFile>) {
+    const onUploadChange = (info: UploadChangeParam<UploadFile>) => {
         if (info.file.status === 'error') {
             setFileList([{
                 uid: '-1',
@@ -82,7 +82,7 @@ export const ProfilePage: React.FC = () => {
         setFileList(info.fileList);
     }
 
-    function handleFormChange(event: React.ChangeEvent<HTMLInputElement> | moment.Moment | null, field: string) {
+    const handleFormChange = (event: React.ChangeEvent<HTMLInputElement> | moment.Moment | null, field: string) => {
         if (moment.isMoment(event)) {
             setUserFormInfo(prev => ({
                 ...prev,
@@ -97,7 +97,7 @@ export const ProfilePage: React.FC = () => {
         setIsSubmitDisabled(checkIsSubmitProfileDisabled(fileList, valid, password, emailValidStatus, userFormInfo.email));
     }
 
-    function handleSaveChanges() {
+    const handleSaveChanges = () => {
         dispatch(changeRemoteUserData()).then(response => setResultType(response));
         dispatch(changePasswords({
             password: '',
@@ -135,7 +135,7 @@ export const ProfilePage: React.FC = () => {
                                 withCredentials={true}
                                 maxCount={1}
                                 fileList={fileList}
-                                onChange={info => onUploadChange(info)}
+                                onChange={onUploadChange}
                                 progress={{
                                     strokeWidth: 4,
                                     showInfo: false
@@ -164,6 +164,7 @@ export const ProfilePage: React.FC = () => {
                             <DatePicker
                                 placeholder='Дата рождения'
                                 format='DD.MM.YYYY'
+                                value={moment(userInfo.birthday)}
                                 onChange={value => handleFormChange(value, 'birthday')}
                                 data-test-id='profile-birthday'
                             />
@@ -187,7 +188,7 @@ export const ProfilePage: React.FC = () => {
                             <Button
                                 className={styles['profile-form__conf-button']}
                                 disabled={isSubmitDisabled}
-                                onClick={() => handleSaveChanges()}
+                                onClick={handleSaveChanges}
                                 data-test-id='profile-submit'
                             >
                                 Сохранить изменения

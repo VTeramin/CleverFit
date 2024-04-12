@@ -1,11 +1,12 @@
 import { ECalendarModalType, EStatus } from '@constants/enums';
 import { TCalendarModal, TDrawerFormFields } from '@constants/types';
-import { createSlice,PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from './configure-store';
 
 const initialState: TCalendarModal = {
     isEdit: false,
+    isJoint: false,
     isModal: false,
     isDrawer: false,
     resultType: EStatus.empty,
@@ -16,7 +17,17 @@ const initialState: TCalendarModal = {
     },
     selectedTraining: null,
     editTraining: null,
-    exerciseFormFields: {}
+    selectedPal: null,
+    interval: null,
+    isSaveDisabled: true,
+    exerciseFormFields: {
+        0: {
+            name: undefined,
+            replays: undefined,
+            weight: undefined,
+            approaches: undefined
+        }
+    }
 };
 
 export const calendarModalSlice = createSlice({
@@ -26,50 +37,73 @@ export const calendarModalSlice = createSlice({
         toggleIsEdit: (state, action: PayloadAction<boolean>) => {
             state.isEdit = action.payload;
         },
+        toggleIsJoint: (state, action: PayloadAction<boolean>) => {
+            state.isJoint = action.payload;
+        },
         toggleIsModal: (state, action: PayloadAction<boolean>) => {
             state.isModal = action.payload;
         },
         toggleIsDrawer: (state, action: PayloadAction<boolean>) => {
+            if(!action.payload) state.isJoint = false;
             state.isDrawer = action.payload;
         },
         changeResultType: (state, action: PayloadAction<EStatus>) => {
             state.resultType = action.payload;
         },
         changeModalType: (state, action: PayloadAction<ECalendarModalType>) => {
-            if(action.payload === ECalendarModalType.default) {
-                state.selectedTraining = null;
-                state.editTraining = null;
-                Object.keys(state.exerciseFormFields).forEach(key => delete state.exerciseFormFields[key]);
-            }
             state.modalType = action.payload;
         },
         changeModalCoord: (state, action: PayloadAction<{ x: number, y: number }>) => {
-            if(action.payload.x === 0 && action.payload.y === 0) state.isModal = false
+            if (action.payload.x === 0 && action.payload.y === 0) state.isModal = false
             state.modalCoord.x = action.payload.x;
             state.modalCoord.y = action.payload.y;
         },
         changeSelectedTraining: (state, action: PayloadAction<string | null>) => {
             state.selectedTraining = action.payload;
         },
+        changeSelectedPal: (state, action: PayloadAction<string | null>) => {
+            state.selectedPal = action.payload;
+        },
         changeEditTraining: (state, action: PayloadAction<string | null>) => {
             state.editTraining = action.payload;
         },
+        changeInterval: (state, action: PayloadAction<number | null>) => {
+            state.interval = action.payload;
+        },
+        toggleIsSaveDisabled: (state, action: PayloadAction<boolean>) => {
+            state.isSaveDisabled = action.payload;
+        },
         changeExerciseFormFields: (state, action: PayloadAction<TDrawerFormFields>) => {
             Object.keys(state.exerciseFormFields).forEach(key => delete state.exerciseFormFields[key]);
-            Object.assign(state.exerciseFormFields, action.payload);
+            if (Object.keys(action.payload).length === 0) {
+                Object.assign(state.exerciseFormFields, {
+                    0: {
+                        name: undefined,
+                        replays: undefined,
+                        weight: undefined,
+                        approaches: undefined
+                    }
+                });
+            } else {
+                Object.assign(state.exerciseFormFields, action.payload);
+            }
         }
     }
 });
 
 export const {
     toggleIsEdit,
+    toggleIsJoint,
     toggleIsModal,
     toggleIsDrawer,
     changeResultType,
     changeModalType,
     changeModalCoord,
     changeSelectedTraining,
+    changeSelectedPal,
     changeEditTraining,
+    changeInterval,
+    toggleIsSaveDisabled,
     changeExerciseFormFields
 } = calendarModalSlice.actions;
 export const selectCalendarModalData = (state: RootState) => state.calendarModal;

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { TTraining } from '@constants/types';
 import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 
@@ -11,7 +12,9 @@ export const trainingSlice = createSlice({
     reducers: {
         changeTrainingData: (state, action: PayloadAction<TTraining[]>) => {
             state.splice(0, state.length);
-            state.push(...action.payload);
+            const trainingSorted = action.payload.sort((a, b) => a.date > b.date ? 1 : -1);
+
+            state.push(...trainingSorted);
         }
     }
 });

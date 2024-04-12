@@ -59,6 +59,16 @@
         margin-top: 0;
         align-items: flex-start;
     }
+
+    .training>.page-layout__breadcrumbs {
+        height: 34px;
+        padding-bottom: 0;
+    }
+
+    .training-header {
+        margin-top: 0;
+        padding-bottom: 16px;
+    }
 }
 
 .header__title {
@@ -123,6 +133,10 @@
     }
 
     .profile-header .settings__icon {
+        display: flex;
+    }
+
+    .training-header .settings__icon {
         display: flex;
     }
 }

@@ -3,7 +3,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import { ECalendarModalType } from '@constants/enums';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarTrainingList } from '@pages/calendar-page/calendar-training-list/calendar-training-list';
-import { changeModalType, toggleIsEdit, toggleIsModal } from '@redux/calendar-modal-slice';
+import { changeEditTraining, changeExerciseFormFields, changeModalType, changeSelectedTraining, toggleIsEdit, toggleIsModal } from '@redux/calendar-modal-slice';
 import { selectTrainingList } from '@redux/training-list-slice';
 import { selectTraining } from '@redux/training-slice';
 import { getListData } from '@utils/calendar-utils/get-list-data';
@@ -26,8 +26,11 @@ export const InnerDefault: React.FC<TProps> = ({ date }) => {
     const trainingNames = getListData(training, date);
     const isNoTrainings = trainingNames.length === 0;
 
-    function handleAddTraining() {
+    const handleAddTraining = () => {
         dispatch(toggleIsEdit(false));
+        dispatch(changeSelectedTraining(null));
+        dispatch(changeEditTraining(null));
+        dispatch(changeExerciseFormFields({}));
         dispatch(changeModalType(ECalendarModalType.newTraining));
     }
     const isAddTrainingDisabled = trainingNames.length === trainingList.length || date < new Date(Date.now());
@@ -54,7 +57,7 @@ export const InnerDefault: React.FC<TProps> = ({ date }) => {
             <Divider className={styles.modal__divider} />
             <div className={styles['modal__button-wrapper']}>
                 <Button
-                    onClick={() => handleAddTraining()}
+                    onClick={handleAddTraining}
                     disabled={isAddTrainingDisabled}
                     className={styles.modal__button}
                 >Создать тренировку</Button>

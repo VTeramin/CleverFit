@@ -118,7 +118,7 @@
     display: none;
 }
 
-.profile-form [class*="list-item-uploading"] [class*="upload-span"]::after {
+.profile-form [class*="list-item-uploading"] [class*="upload-span"]:after {
     content: "Загружаем";
     text-align: center;
     line-height: 50px;
@@ -219,8 +219,6 @@
     border: var(--button-border-light);
     border-radius: var(--border-radius);
     padding: var(--button-padding);
-    width: 206px;
-    height: var(--button-height);
     box-shadow: var(--box-shadow-button);
     background: var(--primary-light-6);
 

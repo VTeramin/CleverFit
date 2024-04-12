@@ -89,6 +89,7 @@
     --font-size-larger: 16px;
     --font-size: 14px;
     --font-size-smaller: 12px;
+    --font-weight-thin: 100;
     --font-weight: 400;
     --font-weight-medium: 500;
     --font-weight-bold: 700;
@@ -99,6 +100,7 @@
     --logo-collapsed: url(./assets/logo/logoCollapsed.svg);
     --exit-icon: url(./assets/icon/exit.svg);
     --error-img: url(./assets/img/error-image.png);
+    --dropdown: url(./assets/icon/dropown.svg);
     --trigger-clip-path: path("M0 -1.52588e-05L20 7.99998V58L0 66V-1.52588e-05Z");
     --trigger-collapsed-clip-path: path("M0 0L32 5.81818V42.1818L0 48V0Z");
     --background-blur-filter: blur(6px);
@@ -106,6 +108,7 @@
     --background-blur-color-light: rgba(121, 156, 212, 0.1);
     --box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
     --box-shadow-exit: inset 0 1px 0 0 var(--character-light-dividers);
+    --box-shadow-training: inset 0 -1px 0 0 var(--character-light-dividers);
     --box-shadow-button: 0 2px 0 0 rgba(0, 0, 0, 0.04);
     --icon-large: 32px;
     --icon-size: 16px;
@@ -138,4 +141,8 @@ html {
     font-family: var(--font-family);
     font-weight: var(--font-weight);
     font-size: var(--font-size);
+}
+
+[class*="ant-tooltip-content"] {
+    display: none;
 }

@@ -10,9 +10,10 @@ import { FeedbackModal } from '@pages/feedbacks-page/feedback-modal/feedback-mod
 import { changeUserInfo, selectUserData } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { convertDate } from '@utils/convert-date';
-import { changeRemoteUserData } from '@utils/requests/change-remote-user-data';
-import { getTariffList } from '@utils/requests/get-tariff-list';
+import { getTariffList } from '@utils/requests/catalogs/get-tariff-list';
+import { changeRemoteUserData } from '@utils/requests/user/change-remote-user-data';
 import { Button, Layout, Switch, Tooltip } from 'antd';
+import classNames from 'classnames';
 
 import freeTarif from '../../assets/img/tarif-free.png';
 import proTarif from '../../assets/img/tarif-pro.png'
@@ -62,7 +63,7 @@ export const SettingsPage: React.FC = () => {
         dispatch(changeRemoteUserData());
     }, [dispatch, switchValues]);
 
-    function handleSwitchChange(checked: boolean, switchItem: string) {
+    const handleSwitchChange = (checked: boolean, switchItem: string) => {
         setSwitchValues(prev => ({
             ...prev,
             [switchItem]: checked
@@ -105,7 +106,7 @@ export const SettingsPage: React.FC = () => {
                                     src={tariff === 'FREE' ? freeTarif : proTarif}
                                     alt='tarif'
                                     className={isTariffFree && tariff !== 'FREE'
-                                        ? `${styles['tariffs-card__img--disabled']} ${styles['tariffs-card__img']}`
+                                        ? classNames(styles['tariffs-card__img--disabled'], styles['tariffs-card__img'])
                                         : styles['tariffs-card__img']}
                                 />
                             </div>

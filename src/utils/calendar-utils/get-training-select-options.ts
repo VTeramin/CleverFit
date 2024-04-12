@@ -5,15 +5,17 @@ import { checkIsFuture } from '@utils/check-is-future';
 import { checkIsTrainingDone } from './check-is-training-done';
 import { findAllTraining } from './find-all-training';
 
-export const getTrainingSelectOptions = (date: Date) => (_: AppDispatch, getState: GetState) => {
+export const getTrainingSelectOptions = (date: Date | undefined) => (dispatch: AppDispatch, getState: GetState) => {
     const { training, trainingList } = getState();
     const { isEdit } = getState().calendarModal;
     const trainingNames = findAllTraining(training, date).map(el => el.name);
     const allTrainingNames = trainingList.map((el: TTrainingListItem) => ({ value: el.name }));
+
+    if (date === undefined) return allTrainingNames;
     const isFuture = checkIsFuture(date);
 
     if (!isFuture) {
-        return allTrainingNames.filter(el => trainingNames.includes(el.value) && !checkIsTrainingDone(el.value, date));
+        return allTrainingNames.filter(el => !dispatch(checkIsTrainingDone(el.value, date)));
     }
     if (isEdit) {
         return allTrainingNames;

@@ -15,7 +15,7 @@ type TProps = {
 export const ProfileResult: React.FC<TProps> = ({ resultType, setResultType }) => {
     const width = useWindowSize().width || 0;
 
-    function handleClose() {
+    const handleClose = () => {
         setResultType(EStatus.empty);
     }
 
@@ -28,8 +28,8 @@ export const ProfileResult: React.FC<TProps> = ({ resultType, setResultType }) =
                 extra={[
                     <Button
                         key="Закрыть"
-                        className={`${styles['conf-button']}`}
-                        onClick={() => handleClose()}
+                        className={styles['conf-button']}
+                        onClick={handleClose}
                         data-test-id='big-file-error-close'
                     >
                         Закрыть
@@ -44,8 +44,8 @@ export const ProfileResult: React.FC<TProps> = ({ resultType, setResultType }) =
                 extra={[
                     <Button
                         key="Закрыть"
-                        className={`${styles['conf-button']}`}
-                        onClick={() => handleClose()}
+                        className={styles['conf-button']}
+                        onClick={handleClose}
                     >
                         Закрыть
                     </Button>
@@ -63,7 +63,7 @@ export const ProfileResult: React.FC<TProps> = ({ resultType, setResultType }) =
             width={width > 800 ? 416 : 328}
             className={styles.result}
             open={resultType !== EStatus.empty}
-            onCancel={() => handleClose()}
+            onCancel={handleClose}
             maskClosable={false}
             closable={false}
             footer={null}

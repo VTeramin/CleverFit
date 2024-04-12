@@ -4,8 +4,9 @@ import { Passwords } from '@components/passwords/passwords';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectLogin } from '@redux/login-slice';
 import { checkDisabledChangePassword } from '@utils/auth-utils/check-valid-status';
-import { changePassword } from '@utils/requests/change-password';
+import { changePassword } from '@utils/requests/auth/change-password';
 import { Button, Form } from 'antd';
+import classNames from 'classnames';
 
 import 'antd/dist/antd.css';
 import '../modal.css';
@@ -17,13 +18,13 @@ export const ChangePassword: React.FC = () => {
     const { password, confirmPassword, valid } = useAppSelector(selectLogin);
     const isSubmitDisabled = checkDisabledChangePassword({ password, confirmPassword }, valid);
 
-    function handleSubmit() {
+    const handleSubmit = () => {
         dispatch(changePassword()).then(navigate);
     }
 
     return (
         <div className="modal-wrapper">
-            <div className={`${styles['change-modal']} modal`}>
+            <div className={classNames(styles['change-modal'], 'modal')}>
                 <p className={styles['change-modal__title']}>Восстановление аккаунта</p>
                 <Form
                     name="normal_login"
@@ -37,7 +38,7 @@ export const ChangePassword: React.FC = () => {
                             type="primary"
                             htmlType="submit"
                             disabled={isSubmitDisabled}
-                            onClick={() => handleSubmit()}
+                            onClick={handleSubmit}
                             data-test-id="change-submit-button"
                         >
                             Сохранить

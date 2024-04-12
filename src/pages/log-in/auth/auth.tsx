@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { EyeInvisibleOutlined,EyeTwoTone, GooglePlusOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone, GooglePlusOutlined } from '@ant-design/icons';
 import { EROUTE, EValid } from '@constants/enums';
 import { TValidAuth } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
@@ -8,11 +8,12 @@ import { changeLoginData, selectLogin } from '@redux/login-slice';
 import { checkDisabledAuth, checkValidAuth, checkValidRegistraion } from '@utils/auth-utils/check-valid-status';
 import { validEmail } from '@utils/auth-utils/valid-email';
 import { validPassword } from '@utils/auth-utils/valid-password';
-import { checkEmail } from '@utils/requests/check-email';
-import { googleAuth } from '@utils/requests/google-auth';
-import { login } from '@utils/requests/login';
-import { register } from '@utils/requests/register';
+import { checkEmail } from '@utils/requests/auth/check-email';
+import { googleAuth } from '@utils/requests/auth/google-auth';
+import { login } from '@utils/requests/auth/login';
+import { register } from '@utils/requests/auth/register';
 import { Button, Checkbox, Form, Input } from 'antd';
+import classNames from 'classnames';
 
 import 'antd/dist/antd.css';
 import '../modal.css';
@@ -46,12 +47,12 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
         setIsDisabled(checkDisabledAuth(isRegistration, isValid, formData));
     }, [isRegistration, isValid, formData]);
 
-    function handleEmailChange(event: { target: HTMLInputElement }) {
+    const handleEmailChange = (event: { target: HTMLInputElement }) => {
         dispatch(changeLoginData({ email: event.target.value }));
         setIsValid(prev => ({ ...prev, email: validEmail(event.target.value) }));
     }
 
-    function handlePasswordChange(event: { target: HTMLInputElement }) {
+    const handlePasswordChange = (event: { target: HTMLInputElement }) => {
         dispatch(changeLoginData({ password: event.target.value }));
         setIsValid(prev => ({
             ...prev,
@@ -60,20 +61,20 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
         }));
     }
 
-    function handleConfirmPasswordChange(event: { target: HTMLInputElement }) {
+    const handleConfirmPasswordChange = (event: { target: HTMLInputElement }) => {
         dispatch(changeLoginData({ confirmPassword: event.target.value }));
         setIsValid(prev => ({ ...prev, pasword2: formData.password === event.target.value }))
     }
 
-    function handleCheckboxChange() {
-        dispatch(changeLoginData({ isRemember: !formData.isRemember }));
+    const handleCheckboxChange = (event: { target: { checked: boolean } }) => {
+        dispatch(changeLoginData({ isRemember: event.target.checked }));
     }
 
-    function handleForgetClick() {
+    const handleForgetClick = () => {
         if (isValid.email && formData.email !== '') dispatch(checkEmail()).then(navigate);
     }
 
-    function handleLoginButton() {
+    const handleLoginButton = () => {
         if (isRegistration) {
             dispatch(register()).then(navigate);
         } else if (isValid.email && isValid.password) dispatch(login()).then(navigate);
@@ -88,25 +89,25 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
 
     return (
         <div className="modal-wrapper">
-            <div className={`${styles['auth-modal']} modal`}>
+            <div className={classNames(styles['auth-modal'], 'modal')}>
                 <div className={styles['auth-modal__logo']} />
                 <Form
                     name="normal_login"
-                    className={`${styles['auth-modal__login-form']} ${isRegistration && styles.registration}`}
+                    className={classNames(styles['auth-modal__login-form'], { [styles.registration]: isRegistration })}
                     validateMessages={{ required: '' }}
                 >
                     <Form.Item className={styles['login-form__form-select-buttons']}>
                         <Button
                             type="text"
                             onClick={() => navigate(EROUTE.AUTH)}
-                            className={`${styles['text-button']} ${!isRegistration && styles.active}`}
+                            className={classNames(styles['text-button'], { [styles.active]: !isRegistration })}
                         >
                             Вход
                         </Button>
                         <Button
                             type="text"
                             onClick={() => navigate(EROUTE.REGISTRATION)}
-                            className={`${styles['text-button']} ${isRegistration && styles.active}`}
+                            className={classNames(styles['text-button'], { [styles.active]: isRegistration })}
                         >
                             Регистрация
                         </Button>
@@ -117,7 +118,7 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
                             addonBefore="e-mail:"
                             type="email"
                             value={formData.email}
-                            onChange={event => handleEmailChange(event)}
+                            onChange={handleEmailChange}
                             data-test-id={isRegistration ? 'registration-email' : 'login-email'}
                         />
                     </Form.Item>
@@ -132,7 +133,7 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
                             type="password"
                             placeholder="Пароль"
                             value={formData.password}
-                            onChange={event => handlePasswordChange(event)}
+                            onChange={handlePasswordChange}
                             data-test-id={isRegistration ? 'registration-password' : 'login-password'}
                         />
                     </Form.Item>
@@ -148,7 +149,7 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
                                 type="password"
                                 placeholder="Повторите пароль"
                                 value={formData.confirmPassword}
-                                onChange={event => handleConfirmPasswordChange(event)}
+                                onChange={handleConfirmPasswordChange}
                                 data-test-id="registration-confirm-password"
                             />
                         </Form.Item>}
@@ -157,8 +158,9 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
                             <Form.Item className={styles['remember-group__checkbox']} name="remember" valuePropName="checked" noStyle={true}>
                                 <Checkbox
                                     className={styles.checkbox__label}
+                                    defaultChecked={formData.isRemember}
                                     checked={formData.isRemember}
-                                    onChange={() => handleCheckboxChange()}
+                                    onChange={handleCheckboxChange}
                                     data-test-id="login-remember"
                                 >
                                     Запомнить меня
@@ -168,7 +170,7 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
                                 className={styles['remember-group__link']}
                                 type="text"
                                 htmlType="button"
-                                onClick={() => handleForgetClick()}
+                                onClick={handleForgetClick}
                                 data-test-id="login-forgot-button"
                             >
                                 Забыли пароль?
@@ -176,11 +178,11 @@ export const Auth: React.FC<TProps> = ({ isRegistration }) => {
                         </Form.Item>}
                     <Form.Item>
                         <Button
-                            className={`${styles['login-form__button']} ${styles['conf-button']}`}
+                            className={classNames(styles['login-form__button'], styles['conf-button'])}
                             type="primary"
                             htmlType="submit"
                             disabled={isDisabled}
-                            onClick={() => handleLoginButton()}
+                            onClick={handleLoginButton}
                             data-test-id={isRegistration ? 'registration-submit-button' : 'login-submit-button'}
                         >
                             Войти

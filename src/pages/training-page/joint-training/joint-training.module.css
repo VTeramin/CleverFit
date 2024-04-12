@@ -1,0 +1,7 @@
+.joint-training {
+    height: 100%;
+    background: transparent;
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+}

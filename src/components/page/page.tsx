@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeftOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons';
 import { ResultModal } from '@components/result-modal/result-modal';
 import { SideBar } from '@components/side-bar/side-bar';
+import { calendarConfig } from '@constants/calendar-config';
 import { EROUTE, EStatus } from '@constants/enums';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { CalendarResult } from '@pages/calendar-page/calendar-result/calendar-result';
@@ -10,10 +11,14 @@ import { changeResultType, selectCalendarModalData } from '@redux/calendar-modal
 import { history } from '@redux/configure-store';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { Breadcrumb, Button, Layout } from 'antd';
+import moment from 'moment';
 
 import 'antd/dist/antd.css';
 import styles from './page.module.css';
 
+import 'moment/locale/ru';
+
+moment.updateLocale('ru', calendarConfig);
 const { Header } = Layout;
 
 type TProps = {
@@ -32,7 +37,8 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
 
     const breadCrumbs: { [url: string]: string } = {
         '/feedbacks': 'Отзывы пользователей',
-        '/calendar': 'Календарь'
+        '/calendar': 'Календарь',
+        '/training': 'Тренировки'
     };
     const isCrumbs = Object.keys(breadCrumbs).includes(pathname);
 
@@ -124,12 +130,33 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
                     <h1 className={`${styles.header__title} ${styles['profile-title']}`}>Настройки</h1>
                 </Header>
             </div>
+        ),
+        [EROUTE.TRAINING]: (
+            <div className={styles.training}>
+                <Breadcrumb className={styles['page-layout__breadcrumbs']}>
+                    <Breadcrumb.Item onClick={() => navigate(EROUTE.MAIN)}>Главная</Breadcrumb.Item>
+                    {isCrumbs && <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>}
+                </Breadcrumb>
+                <Header className={`${styles.header} ${styles['training-header']}`}>
+                    <Button
+                        type='text'
+                        className={styles['header__settings-button']}
+                        onClick={() => navigate(EROUTE.SETTINGS)}
+                        data-test-id='header-settings'
+                    >
+                        <div className={styles.header__settings}>
+                            <SettingOutlined className={styles.settings__icon} />
+                            <p className={styles.settings__line}>Настройки</p>
+                        </div>
+                    </Button>
+                </Header>
+            </div>
         )
     };
 
     return (
         <Layout className={styles.page}>
-            <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
+            <SideBar collapsed={collapsed} />
             <Layout className={styles['page-layout']}>
                 {header[pathname]}
                 {innerLayout}

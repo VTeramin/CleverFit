@@ -12,7 +12,7 @@ export const SettingsResult: React.FC = () => {
     const resultWidth = width > 800 ? 539 : 328;
     const { userInfo } = useAppSelector(selectUserData);
 
-    function handleClose() {
+    const handleClose = () => {
         const element = document.getElementById('side-bar__exit') as HTMLElement;
 
         element.click();
@@ -30,7 +30,7 @@ export const SettingsResult: React.FC = () => {
             open={true}
             maskClosable={true}
             closable={true}
-            onCancel={() => handleClose()}
+            onCancel={handleClose}
             footer={null}
             wrapClassName={styles.result}
             data-test-id='tariff-modal-success'

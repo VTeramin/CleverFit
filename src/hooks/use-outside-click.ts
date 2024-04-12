@@ -8,9 +8,9 @@ export const useOutsideClick = (callback: () => void) => {
             if (ref.current && !ref.current.contains(event.target as Node)) callback()
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('mouseup', handleClickOutside);
 
-        return () => document.removeEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mouseup', handleClickOutside)
     }, [callback]);
 
     return ref;

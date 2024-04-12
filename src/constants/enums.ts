@@ -4,12 +4,11 @@ export enum ECalendarModalType {
 }
 
 export enum EBadgeColors {
-    'Ноги' = 'volcano',
-    'Силовая' = 'yellow',
-    'Руки' = 'cyan',
-    'Грудь' = 'green',
-    'Спина' = 'orange',
-    'Кардио' = 'pink'
+    'Ноги' = '#fa541c',
+    'Силовая' = '#fadb14',
+    'Руки' = '#13c2c2',
+    'Грудь' = '#52c41a',
+    'Спина' = '#fa8c16'
 }
 
 export enum EValid {
@@ -24,10 +23,12 @@ export enum EStatus {
     noToken = 'noToken',
     error = 'error',
     success = 'success',
+    successEdit = 'successEdit',
     successFeedback = 'successFeedback',
     errorFeedback = 'errorFeedback',
     successTariff = 'successTarif',
     errorTrainingList = 'errorTrainingList',
+    errorUserJointTrainingList = 'errorUserJointTrainingList',
     errorSaveTraining = 'errorSaveTraining',
     errorUploadPicture = 'errorUploadPicture',
     errorSaveUserData = 'errorSaveUserData'
@@ -44,6 +45,7 @@ export enum EROUTE {
     CALENDAR = '/calendar',
     PROFILE = '/profile',
     SETTINGS = '/settings',
+    TRAINING = '/training',
     RESULT = '/result/:result',
     SUCCESS='/result/success',
     SUCCESS_CHANGE_PASSWORD='/result/success-change-password',
@@ -53,4 +55,17 @@ export enum EROUTE {
     ERROR_EMAIL_NO_EXIST='/result/error-check-email-no-exist',
     ERROR_CHANGE_PASSWORD='/result/error-change-password',
     ERROR_CHECK_EMAIL='/result/error-check-email'
+}
+
+export enum EDrawer {
+    default='default',
+    edit='edit',
+    noDate='noDate',
+    joint='joint'
+}
+
+export enum EJointStatus {
+    accepted='accepted',
+    pending='pending',
+    rejected='rejected'
 }

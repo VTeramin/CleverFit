@@ -4,8 +4,9 @@ import { ResultModal } from '@components/result-modal/result-modal';
 import { EROUTE, EStatus } from '@constants/enums';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectFeedback } from '@redux/feedback-slice';
-import { getFeedbacks } from '@utils/requests/get-feedbacks';
+import { getFeedbacks } from '@utils/requests/feedback/get-feedbacks';
 import { Button, Layout } from 'antd';
+import classNames from 'classnames';
 
 import { FeedbackCards } from './feeback-cards/feedback-cards';
 import { FeedbackModal } from './feedback-modal/feedback-modal';
@@ -38,13 +39,13 @@ export const FeedbacksPage: React.FC = () => {
     );
 
     return (
-        <Layout className={`${styles.page} ${isNoCards && styles['no-feedback']}`}>
+        <Layout className={classNames(styles.page, { [styles['no-feedback']]: isNoCards })}>
             {isNoCards
                 ? firstFeedback
                 : <FeedbackCards cardsData={cardsData} />}
             <div className={styles.page__buttons}>
                 <Button
-                    className={`${styles['conf-button']}`}
+                    className={styles['conf-button']}
                     onClick={() => setIsModalOpen(true)}
                     data-test-id="write-review"
                 >
