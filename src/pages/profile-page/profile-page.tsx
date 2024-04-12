@@ -164,6 +164,7 @@ export const ProfilePage: React.FC = () => {
                             <DatePicker
                                 placeholder='Дата рождения'
                                 format='DD.MM.YYYY'
+                                value={moment(userInfo.birthday)}
                                 onChange={value => handleFormChange(value, 'birthday')}
                                 data-test-id='profile-birthday'
                             />
