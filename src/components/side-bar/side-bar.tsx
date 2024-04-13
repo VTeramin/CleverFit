@@ -26,7 +26,7 @@ export const SideBar: React.FC<TProps> = ({ collapsed }) => {
     const paths = useMemo(() => [
         EROUTE.CALENDAR,
         EROUTE.TRAINING,
-        '',
+        EROUTE.ACHIEVEMENTS,
         EROUTE.PROFILE
     ], []);
     const { invites } = useAppSelector(selectUserData);

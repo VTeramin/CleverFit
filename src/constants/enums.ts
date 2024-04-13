@@ -46,6 +46,7 @@ export enum EROUTE {
     PROFILE = '/profile',
     SETTINGS = '/settings',
     TRAINING = '/training',
+    ACHIEVEMENTS = '/achievements',
     RESULT = '/result/:result',
     SUCCESS='/result/success',
     SUCCESS_CHANGE_PASSWORD='/result/success-change-password',

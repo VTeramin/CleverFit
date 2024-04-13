@@ -6,3 +6,4 @@ export { SettingsPage } from './settings-page';
 export { TrainingPage } from './training-page';
 export { NotFoundPage } from './not-found-page';
 export { Auth, Result, ConfirmEmail, ChangePassword } from './log-in';
+export { AchievementsPage } from './achievements-page';

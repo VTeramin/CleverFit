@@ -1,0 +1,14 @@
+.page {
+    background: transparent;
+    padding: 24px 24px 42px;
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+}
+
+@media (max-width: 800px) {
+    .page {
+        padding: 24px 0 42px;
+    }
+}
