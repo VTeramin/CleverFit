@@ -1,0 +1,220 @@
+.achievements {
+    background: transparent;
+
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-size: var(--font-size);
+}
+
+.achievements__filters-section {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.achievements__filters-section p {
+    margin: 0;
+}
+
+.filters-section__filters {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.filters-section__filter {
+    width: max-content;
+    height: 18px;
+    padding: 0 8px;
+    border: var(--button-border-auth);
+    border-radius: var(--border-radius);
+
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.filters-section__filter[class*="checked"] {
+    background: var(--primary-light-1);
+    color: var(--primary-light-6);
+}
+
+.filters-section__filter-close {
+    margin-left: 3px;
+    vertical-align: middle;
+}
+
+.filters-section__filter-close svg {
+    width: 8px;
+    height: 8px;
+    fill: var(--neutral-gray-7);
+}
+
+.achievements__load-section,
+.achievements__frequency-section {
+    display: flex;
+    flex-direction: row;
+    gap: 150px;
+    align-items: center;
+    margin-bottom: 48px;
+}
+
+.load-section__chart {
+    border: var(--button-border-auth);
+    border-radius: var(--border-radius);
+}
+
+.load-section__load,
+.frequency-section__frequency {
+    width: max-content;
+}
+
+.load__label,
+.frequency__label {
+    width: 130px;
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+    margin-bottom: 28px;
+}
+
+.load__list,
+.frequency__list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.load__list-item,
+.frequency__list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.load__list-item p,
+.frequency__list-item p {
+    margin: 0;
+}
+
+.load__badge [class*="badge-count"],
+.frequency__badge [class*="badge-count"] {
+    min-width: 0;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    padding: 0;
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--character-light-primary-inverse);
+    background: var(--primary-light-6);
+}
+
+.load__badge.empty [class*="badge-count"] {
+    color: var(--primary-light-6);
+    background: var(--primary-light-1);
+}
+
+.load__badge [class*="number-only"],
+.frequency__badge [class*="number-only"] {
+    height: 100%;
+}
+
+.load__day,
+.frequency__day {
+    width: 92px;
+    line-height: var(--line-height);
+    color: var(--character-light-secondary-45);
+}
+
+.load__weight,
+.frequency__exercise {
+    justify-self: flex-end;
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.achievements__cards-section {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    margin-bottom: 72px;
+}
+
+.cards-section__card {
+    width: 156px;
+    height: 138px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: var(--button-border-auth);
+    border-radius: var(--border-radius);
+}
+
+.card__value {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    font-size: 38px;
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.card__label {
+    margin: 0;
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--character-light-secondary-45);
+}
+
+.achievements__plain-section {
+    padding: 12px;
+    margin-bottom: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.plain-section__row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 105px;
+}
+
+.plain-section__row p {
+    margin: 0;
+}
+
+.plain-section__row p:first-child {
+    width: 99px;
+    line-height: var(--line-height);
+    color: var(--character-light-secondary-45);
+}
+
+.plain-section__row p:nth-child(2) {
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-large);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.achievements__frequency-section {
+    margin-bottom: 0;
+}
+
+.requency-section__chart {
+    width: max-content;
+}
+
+.frequency__label {
+    width: 200px;
+}
+
+.frequency__badge [class*="badge-count"] {
+    background: var(--character-light-error);
+    color: var(--character-light-primary-inverse);
+}

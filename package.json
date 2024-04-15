@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@ant-design/charts": "^2.0.3",
+    "@ant-design/colors": "^7.0.2",
     "@ant-design/icons": "^4.8.1",
     "@ant-design/plots": "^2.1.15",
     "@crello/react-lottie": "^0.0.11",

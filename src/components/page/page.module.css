@@ -24,10 +24,6 @@
     cursor: pointer;
 }
 
-.page-layout__breadcrumbs:last-child {
-    color: var(--character-light-title-85);
-}
-
 .header {
     height: max-content;
     background-color: var(--primary-light-1);

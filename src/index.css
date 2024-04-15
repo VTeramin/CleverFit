@@ -142,7 +142,3 @@ html {
     font-weight: var(--font-weight);
     font-size: var(--font-size);
 }
-
-[class*="ant-tooltip-content"] {
-    display: none;
-}

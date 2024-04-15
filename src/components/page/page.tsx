@@ -38,9 +38,9 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
     const breadCrumbs: { [url: string]: string } = {
         '/feedbacks': 'Отзывы пользователей',
         '/calendar': 'Календарь',
-        '/training': 'Тренировки'
+        '/training': 'Тренировки',
+        '/achievements': 'Достижения'
     };
-    const isCrumbs = Object.keys(breadCrumbs).includes(pathname);
 
     useEffect(() => {
         dispatch(changeResultType(resultTypeCalendar));
@@ -51,7 +51,7 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
             <div>
                 <Breadcrumb className={styles['page-layout__breadcrumbs']}>
                     <Breadcrumb.Item onClick={() => navigate(EROUTE.MAIN)}>Главная</Breadcrumb.Item>
-                    {isCrumbs && <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>}
+                    <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>
                 </Breadcrumb>
                 <Header className={styles.header}>
                     <h1 className={styles.header__title}>Приветствуем тебя в&nbsp;CleverFit — приложении,<br />которое поможет тебе добиться своей мечты!</h1>
@@ -73,7 +73,7 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
             <div>
                 <Breadcrumb className={styles['page-layout__breadcrumbs']}>
                     <Breadcrumb.Item onClick={() => navigate(EROUTE.MAIN)}>Главная</Breadcrumb.Item>
-                    {isCrumbs && <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>}
+                    <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>
                 </Breadcrumb>
             </div>
         ),
@@ -81,7 +81,7 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
             <div>
                 <Breadcrumb className={styles['page-layout__breadcrumbs']}>
                     <Breadcrumb.Item onClick={() => navigate(EROUTE.MAIN)}>Главная</Breadcrumb.Item>
-                    {isCrumbs && <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>}
+                    <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>
                 </Breadcrumb>
                 <Header className={styles.header}>
                     <Button
@@ -135,7 +135,28 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
             <div className={styles.training}>
                 <Breadcrumb className={styles['page-layout__breadcrumbs']}>
                     <Breadcrumb.Item onClick={() => navigate(EROUTE.MAIN)}>Главная</Breadcrumb.Item>
-                    {isCrumbs && <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>}
+                    <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>
+                </Breadcrumb>
+                <Header className={`${styles.header} ${styles['training-header']}`}>
+                    <Button
+                        type='text'
+                        className={styles['header__settings-button']}
+                        onClick={() => navigate(EROUTE.SETTINGS)}
+                        data-test-id='header-settings'
+                    >
+                        <div className={styles.header__settings}>
+                            <SettingOutlined className={styles.settings__icon} />
+                            <p className={styles.settings__line}>Настройки</p>
+                        </div>
+                    </Button>
+                </Header>
+            </div>
+        ),
+        [EROUTE.ACHIEVEMENTS]: (
+            <div className={styles.training}>
+                <Breadcrumb className={styles['page-layout__breadcrumbs']}>
+                    <Breadcrumb.Item onClick={() => navigate(EROUTE.MAIN)}>Главная</Breadcrumb.Item>
+                    <Breadcrumb.Item>{breadCrumbs[pathname]}</Breadcrumb.Item>
                 </Breadcrumb>
                 <Header className={`${styles.header} ${styles['training-header']}`}>
                     <Button
