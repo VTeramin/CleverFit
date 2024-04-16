@@ -60,9 +60,23 @@
     margin-bottom: 48px;
 }
 
-.load-section__chart {
+.achievements__load-section.month {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.load-section__chart-wrapper {
+    width: 520px;
+    height: 374px;
+
     border: var(--button-border-auth);
     border-radius: var(--border-radius);
+}
+
+.month .load-section__chart-wrapper {
+    width: 100%;
+    overflow: hidden;
 }
 
 .load-section__load,
@@ -134,6 +148,26 @@
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height);
     color: var(--character-light-title-85);
+}
+
+.load__lists {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+}
+
+.load__lists .load__list {
+    width: 183px;
+}
+
+.load__lists .load__label {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.load__lists .load__day {
+    width: 75px;
+    letter-spacing: -1px;
 }
 
 .achievements__cards-section {

@@ -57,10 +57,10 @@ export const Achievements: React.FC<TProps> = ({ achievementsType }) => {
                     ))}
                 </div>
             </section>
-            <AchievementsLoad trainingData={filteredData} />
+            <AchievementsLoad trainingData={filteredData} achievementsType={achievementsType} />
             <AchievementsCards trainingData={filteredData} achievementsType={achievementsType} />
             <AchievementsPlain trainingData={filteredData} selectedFilter={selectedFilter} />
-            <AchievementsFrequency trainingData={filteredData} />
+            <AchievementsFrequency trainingData={filteredData} achievementsType={achievementsType} />
         </Layout>
     );
 };

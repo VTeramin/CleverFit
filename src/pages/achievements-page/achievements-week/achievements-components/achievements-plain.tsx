@@ -14,11 +14,11 @@ type TProps = {
 export const AchievementsPlain: React.FC<TProps> = ({ trainingData, selectedFilter }) => {
     const plainData = [
         {
-            value: getMostFrequentTraining(trainingData),
+            value: getMostFrequentTraining(trainingData).toLowerCase(),
             label: 'Самая частая тренировка'
         },
         {
-            value: getMostFrequentExercise(trainingData),
+            value: getMostFrequentExercise(trainingData).toLowerCase(),
             label: 'Самое частое упражнение'
         }
     ].slice(selectedFilter === 'Все' ? 0 : 1, 2);

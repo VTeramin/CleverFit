@@ -16,5 +16,5 @@ export function getMostFrequentExercise(training: TTraining[]) {
         }
     });
 
-    return name.toLowerCase();
+    return name;
 }

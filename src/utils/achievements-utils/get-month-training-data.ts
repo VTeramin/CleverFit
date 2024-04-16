@@ -1,14 +1,22 @@
 import { AppDispatch, GetState } from '@redux/configure-store';
+import { moveDay } from '@utils/move-day';
+
+import { fillInMissingTrainings } from './fill-in-missing-trainings';
 
 export const getMonthTrainingData = () => (_: AppDispatch, getState: GetState) => {
     const { training } = getState();
+    const todayDate = new Date(Date.now());
+    const todayMidnightDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate());
+    const daysUntilMonday = (todayMidnightDate.getDay() === 0 ? 0 : 7) - todayMidnightDate.getDay();
 
-    return training.filter(el => {
+    const endDate = moveDay(todayMidnightDate, daysUntilMonday + 1);
+    const startDate = moveDay(endDate, -28);
+
+    const monthTraining = training.filter(el => {
         const trainingDate = new Date(el.date);
-        const todayDate = new Date(Date.now());
-        const endDate = new Date(new Date(Date.now()).setDate(todayDate.getDate() + (todayDate.getDay() === 0 ? 0 : 7) - todayDate.getDay()));
-        const startDate = new Date(new Date(Date.now()).setDate(endDate.getDate() - 27));
 
-        return trainingDate > startDate && trainingDate <= endDate;
+        return trainingDate >= startDate && trainingDate < endDate;
     });
+
+    return fillInMissingTrainings(monthTraining, startDate, endDate);
 }

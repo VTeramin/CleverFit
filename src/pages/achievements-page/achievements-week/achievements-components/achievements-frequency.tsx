@@ -11,21 +11,23 @@ import 'antd/dist/antd.css';
 import styles from '../achievements.module.css';
 
 type TProps = {
-    trainingData: TTraining[]
+    trainingData: TTraining[],
+    achievementsType: string
 }
 
 function shuffle(array: string[]) {
     return array.sort(() => Math.random() - 0.5);
 }
 
-export const AchievementsFrequency: React.FC<TProps> = ({ trainingData }) => {
+export const AchievementsFrequency: React.FC<TProps> = ({ trainingData, achievementsType }) => {
     const pieData = getPieChartData([...trainingData]);
+    const isMonth = achievementsType === 'month'
 
     const pieConfig = {
         data: pieData,
         angleField: 'value',
         colorField: 'exerciseName',
-        radius: 0.5,
+        radius: 0.515,
         innerRadius: 0.35,
         legend: false,
         width: 520,
@@ -35,10 +37,13 @@ export const AchievementsFrequency: React.FC<TProps> = ({ trainingData }) => {
         label: {
             text: 'exerciseName',
             position: 'outside',
-            fontSize: 14,
             connector: false,
-            fontWeight: 500,
-            fill: '#262626'
+            style: {
+                fontSize: 12,
+                opacity: 2,
+                fontWeight: 100,
+            },
+            transform: [{ type: 'overlapDodgeY' }]
         },
         style: {
             fill: ({ key }: { key: number }) => shuffle(pieColors)[key],
@@ -51,7 +56,9 @@ export const AchievementsFrequency: React.FC<TProps> = ({ trainingData }) => {
         <section className={styles['achievements__frequency-section']}>
             <Pie {...pieConfig} className={styles['requency-section__chart']}/>
             <div className={styles['frequency-section__frequency']}>
-                <p className={styles.frequency__label}>Самые частые упражнения по дням недели</p>
+                <p className={styles.frequency__label}>
+                    {`Самые частые упражнения по дням недели${isMonth ? ' за месяц' : ''}`}
+                    </p>
                 <div className={styles.frequency__list}>
                     {daysOfTheWeek.map((el, ind) => (
                         <div
