@@ -252,3 +252,28 @@
     background: var(--character-light-error);
     color: var(--character-light-primary-inverse);
 }
+
+.achievements__not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 112px;
+}
+
+.not-found__image {
+    width: 200px;
+    height: 175px;
+    background: var(--not-found-img);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin-bottom: 24px;
+}
+
+.not-found__title {
+    font-weight: 500;
+    font-size: var(--font-size-large);
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--character-light-title-85);
+}

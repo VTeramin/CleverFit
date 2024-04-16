@@ -74,7 +74,7 @@ export const SideBar: React.FC<TProps> = ({ collapsed }) => {
         label: ['Календарь', 'Тренировки', 'Достижения', 'Профиль'].map(label => (
             <Button
                 type='text'
-                data-test-id={label === 'Тренировки' ? 'menu-button-training' : ''}
+                data-test-id={['', 'menu-button-training', 'sidebar-achievements', ''][index]}
                 style={{ padding: 0 }}
             >
                 {label}

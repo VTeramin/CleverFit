@@ -4,7 +4,6 @@ import { changeResultType } from '@redux/calendar-modal-slice';
 import { AppDispatch, GetState } from '@redux/configure-store';
 import { toggleLoader } from '@redux/loader-slice';
 import { changeTrainingListData } from '@redux/training-list-slice';
-import { changeTrainingData } from '@redux/training-slice';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
@@ -21,7 +20,7 @@ export const getTrainingList = () => async (dispatch: AppDispatch, getState: Get
     return axios.get(`${API}/catalogs/training-list`, params)
         .then(response => dispatch(changeTrainingListData(response.data)))
         .catch(() => {
-            dispatch(changeTrainingData([]));
+            dispatch(changeTrainingListData([]));
             dispatch(changeResultType(EStatus.errorTrainingList));
         })
         .finally(() => dispatch(toggleLoader(false)));

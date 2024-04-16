@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CloseOutlined } from '@ant-design/icons';
+import { TTraining } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectTrainingList } from '@redux/training-list-slice';
 import { getEmptyTraining } from '@utils/achievements-utils/get-empty-training';
@@ -30,13 +31,20 @@ export const Achievements: React.FC<TProps> = ({ achievementsType }) => {
     const trainingData = dispatch(achievementsType === 'week' ? getWeekTrainingData() : getMonthTrainingData());
     const [filteredData, setFilteredData] = useState(trainingData);
 
+    const checkIsExercises = (training: TTraining[]) => training.find(el => el.exercises.length !== 0);
+    const [isExercises, setIsExercise] = useState(checkIsExercises(filteredData));
+
     const handleFilterClick = (filter: string) => {
         setSelectedFilter(filter);
-        if(filter === 'Все') {
+        if (filter === 'Все') {
             setFilteredData(trainingData);
+            setIsExercise(checkIsExercises(filteredData));
         }
-        if(filter !== 'Все') {
-            setFilteredData(trainingData.map(el => el.name === filter ? el : getEmptyTraining(new Date(el.date))));
+        if (filter !== 'Все') {
+            const updatedData = trainingData.map(el => el.name === filter ? el : getEmptyTraining(new Date(el.date)));
+
+            setFilteredData(updatedData);
+            setIsExercise(checkIsExercises(updatedData));
         }
     }
 
@@ -57,10 +65,20 @@ export const Achievements: React.FC<TProps> = ({ achievementsType }) => {
                     ))}
                 </div>
             </section>
-            <AchievementsLoad trainingData={filteredData} achievementsType={achievementsType} />
-            <AchievementsCards trainingData={filteredData} achievementsType={achievementsType} />
-            <AchievementsPlain trainingData={filteredData} selectedFilter={selectedFilter} />
-            <AchievementsFrequency trainingData={filteredData} achievementsType={achievementsType} />
+            {isExercises && (
+                <div>
+                    <AchievementsLoad trainingData={filteredData} achievementsType={achievementsType} />
+                    <AchievementsCards trainingData={filteredData} achievementsType={achievementsType} />
+                    <AchievementsPlain trainingData={filteredData} selectedFilter={selectedFilter} />
+                    <AchievementsFrequency trainingData={filteredData} achievementsType={achievementsType} />
+                </div>
+            )}
+            {!isExercises && (
+                <div className={styles['achievements__not-found']}>
+                    <div className={styles['not-found__image']} />
+                    <p className={styles['not-found__title']}>Ой, такой тренировки на этой неделе не было.</p>
+                </div>
+            )}
         </Layout>
     );
 };
