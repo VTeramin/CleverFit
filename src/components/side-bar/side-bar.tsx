@@ -56,30 +56,21 @@ export const SideBar: React.FC<TProps> = ({ collapsed }) => {
 
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
         key: index,
-        icon: icon === HeartTwoTone && isFullWidth
-            ? <Badge
-                count={invites.length}
-                size='small'
-                data-test-id='notification-about-joint-training'
-            >
-                {React.createElement(icon, {
-                    twoToneColor: 'var(--primary-light-9)',
-                    className: styles.menu__icon
-                })}
-            </Badge>
-            : React.createElement(icon, {
-                twoToneColor: 'var(--primary-light-9)',
-                className: styles.menu__icon
-            }),
-        label: ['Календарь', 'Тренировки', 'Достижения', 'Профиль'].map(label => (
-            <Button
-                type='text'
-                data-test-id={['', 'menu-button-training', 'sidebar-achievements', ''][index]}
-                style={{ padding: 0 }}
-            >
-                {label}
-            </Button>
-        ))[index],
+        icon: (
+            <div data-test-id={['', 'menu-button-training', 'sidebar-achievements', ''][index]}>
+                <Badge
+                    count={icon === HeartTwoTone && isFullWidth ? invites.length : 0}
+                    size='small'
+                    data-test-id='notification-about-joint-training'
+                >
+                    {React.createElement(icon, {
+                        twoToneColor: 'var(--primary-light-9)',
+                        className: styles.menu__icon
+                    })}
+                </Badge>
+            </div>
+        ),
+        label: ['Календарь', 'Тренировки', 'Достижения', 'Профиль'][index],
         style: collapsed ? {} : { paddingLeft: isFullWidth ? '16px' : '0' },
         className: styles.menu__item
     }));
