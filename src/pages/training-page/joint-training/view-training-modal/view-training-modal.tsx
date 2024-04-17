@@ -21,19 +21,15 @@ export const ViewTrainingModal: React.FC<TProps> = ({ trainingData, setIsView })
     const modalRef = useOutsideClick(() => setIsView(false));
     const { name, parameters, date, exercises } = trainingData;
     const width = useWindowSize().width || 0;
-    const isMobile = width < 800;
-    const isTablet = width < 1400;
-    const mobileCoords = { top: '220px', left: '0' };
-    const tabletCoords = { top: '70px', left: '0' };
+    const isFullWidth = width > 1400;
+    const mobileCoords = { bottom: '20px', left: '10px' };
     const desctopCoords = { top: '94px', left: '196px' };
-
-    const modalCoords = isTablet ? tabletCoords : desctopCoords;
 
     return (
         <div
             className={styles.modal}
             ref={modalRef}
-            style={isMobile ? mobileCoords : modalCoords}
+            style={isFullWidth ? desctopCoords : mobileCoords}
             data-test-id='joint-training-review-card'
         >
             <div className={styles.modal__header}>
