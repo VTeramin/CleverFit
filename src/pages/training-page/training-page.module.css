@@ -28,9 +28,24 @@
     background: var(--character-light-primary-inverse);
 }
 
+.marathons .page__inner {
+    background: var(--background-marathons);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top right;
+}
+
+.marathons [class*="tabs-nav"]::before {
+    border-color: transparent;
+}
+
 @media (max-width: 1400px) {
     .page__inner {
         padding: 24px 24px 18px;
+    }
+
+    .marathons .page__inner {
+        background-position: top center;
     }
 }
 
