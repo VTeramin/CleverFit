@@ -9,7 +9,7 @@ import { Badge } from 'antd';
 import classNames from 'classnames';
 
 import 'antd/dist/antd.css';
-import styles from '../achievements.module.css';
+import styles from './achievements-load.module.css';
 
 type TProps = {
     trainingData: TTraining[],
@@ -96,7 +96,7 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
             </div>}
             {isMonth && <div className={styles.load__lists}>
                 {monthListData.map(week => (
-                    <div className={styles.load__list}>
+                    <div key={week[0].date} className={styles.load__list}>
                         <p className={styles.load__label}>
                             {`Неделя ${getChartDate(week[0].date)}-${getChartDate(week[6].date)}`}
                         </p>

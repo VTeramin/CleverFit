@@ -1,0 +1,33 @@
+.achievements__cards-section {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    margin-bottom: 72px;
+}
+
+.cards-section__card {
+    width: 156px;
+    height: 138px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: var(--button-border-auth);
+    border-radius: var(--border-radius);
+}
+
+.card__value {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    font-size: 38px;
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.card__label {
+    margin: 0;
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--character-light-secondary-45);
+}

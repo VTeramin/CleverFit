@@ -1,0 +1,68 @@
+.achievements__frequency-section {
+    display: flex;
+    flex-direction: row;
+    gap: 150px;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.frequency-section__chart {
+    width: max-content;
+}
+
+.frequency-section__frequency {
+    width: max-content;
+}
+
+.frequency__label {
+    width: 200px;
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+    margin-bottom: 28px;
+}
+
+.frequency__list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.frequency__list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.frequency__list-item p {
+    margin: 0;
+}
+
+.frequency__badge [class*="badge-count"] {
+    min-width: 0;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    padding: 0;
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
+    text-align: center;
+    background: var(--character-light-error);
+    color: var(--character-light-primary-inverse);
+}
+
+.frequency__badge [class*="number-only"] {
+    height: 100%;
+}
+
+.frequency__day {
+    width: 92px;
+    line-height: var(--line-height);
+    color: var(--character-light-secondary-45);
+}
+
+.frequency__exercise {
+    justify-self: flex-end;
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}

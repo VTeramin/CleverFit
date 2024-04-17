@@ -8,7 +8,7 @@ import { getPieChartData } from '@utils/achievements-utils/get-pie-chart-data';
 import { Badge } from 'antd';
 
 import 'antd/dist/antd.css';
-import styles from '../achievements.module.css';
+import styles from './achievements-frequency.module.css';
 
 type TProps = {
     trainingData: TTraining[],

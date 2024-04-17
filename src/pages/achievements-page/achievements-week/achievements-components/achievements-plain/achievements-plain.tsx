@@ -4,7 +4,7 @@ import { getMostFrequentExercise } from '@utils/achievements-utils/get-most-freq
 import { getMostFrequentTraining } from '@utils/achievements-utils/get-most-frequent-training';
 
 import 'antd/dist/antd.css';
-import styles from '../achievements.module.css';
+import styles from './achievements-plain.module.css';
 
 type TProps = {
     trainingData: TTraining[],

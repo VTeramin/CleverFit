@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 import { TTraining } from '@constants/types';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
@@ -9,10 +9,10 @@ import { getWeekTrainingData } from '@utils/achievements-utils/get-week-training
 import { Layout } from 'antd';
 import CheckableTag from 'antd/lib/tag/CheckableTag';
 
-import { AchievementsCards } from './achievements-components/achievements-cards';
-import { AchievementsFrequency } from './achievements-components/achievements-frequency';
-import { AchievementsLoad } from './achievements-components/achievements-load';
-import { AchievementsPlain } from './achievements-components/achievements-plain';
+import { AchievementsCards } from './achievements-components/achievements-cards/achievements-cards';
+import { AchievementsFrequency } from './achievements-components/achievements-frequency/achievements-frequency';
+import { AchievementsLoad } from './achievements-components/achievements-load/achievements-load';
+import { AchievementsPlain } from './achievements-components/achievements-plain/achievements-plain';
 
 import 'antd/dist/antd.css';
 import styles from './achievements.module.css';
@@ -34,17 +34,19 @@ export const Achievements: React.FC<TProps> = ({ achievementsType }) => {
     const checkIsExercises = (training: TTraining[]) => training.find(el => el.exercises.length !== 0);
     const [isExercises, setIsExercise] = useState(checkIsExercises(filteredData));
 
+    useEffect(() => {
+        setIsExercise(checkIsExercises(filteredData));
+    }, [filteredData]);
+
     const handleFilterClick = (filter: string) => {
         setSelectedFilter(filter);
         if (filter === 'Все') {
             setFilteredData(trainingData);
-            setIsExercise(checkIsExercises(filteredData));
         }
         if (filter !== 'Все') {
             const updatedData = trainingData.map(el => el.name === filter ? el : getEmptyTraining(new Date(el.date)));
 
             setFilteredData(updatedData);
-            setIsExercise(checkIsExercises(updatedData));
         }
     }
 

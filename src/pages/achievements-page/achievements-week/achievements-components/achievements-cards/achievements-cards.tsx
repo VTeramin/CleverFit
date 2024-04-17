@@ -5,7 +5,7 @@ import { getTotalApproaches } from '@utils/achievements-utils/get-total-approach
 import { getTotalReplays } from '@utils/achievements-utils/get-total-replays';
 
 import 'antd/dist/antd.css';
-import styles from '../achievements.module.css';
+import styles from './achievements-cards.module.css';
 
 type TProps = {
     trainingData: TTraining[],

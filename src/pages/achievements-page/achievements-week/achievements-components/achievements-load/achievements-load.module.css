@@ -1,0 +1,108 @@
+.achievements__load-section {
+    display: flex;
+    flex-direction: row;
+    gap: 150px;
+    align-items: center;
+    margin-bottom: 48px;
+}
+
+.achievements__load-section.month {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.load-section__chart-wrapper {
+    width: 520px;
+    height: 374px;
+
+    border: var(--button-border-auth);
+    border-radius: var(--border-radius);
+}
+
+.month .load-section__chart-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+.load-section__load {
+    width: max-content;
+}
+
+.load__label {
+    width: 130px;
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+    margin-bottom: 28px;
+}
+
+.load__list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.load__list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.load__list-item p {
+    margin: 0;
+}
+
+.load__badge [class*="badge-count"] {
+    min-width: 0;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    padding: 0;
+    font-size: var(--font-size-smaller);
+    line-height: var(--line-height);
+    text-align: center;
+    color: var(--character-light-primary-inverse);
+    background: var(--primary-light-6);
+}
+
+.load__badge.empty [class*="badge-count"] {
+    color: var(--primary-light-6);
+    background: var(--primary-light-1);
+}
+
+.load__badge [class*="number-only"] {
+    height: 100%;
+}
+
+.load__day {
+    width: 92px;
+    line-height: var(--line-height);
+    color: var(--character-light-secondary-45);
+}
+
+.load__weight {
+    justify-self: flex-end;
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+}
+
+.load__lists {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+}
+
+.load__lists .load__list {
+    width: 183px;
+}
+
+.load__lists .load__label {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.load__lists .load__day {
+    width: 75px;
+    letter-spacing: -1px;
+}
