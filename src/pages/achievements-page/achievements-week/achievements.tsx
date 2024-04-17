@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 import { TTraining } from '@constants/types';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectTrainingList } from '@redux/training-list-slice';
+import { selectTraining } from '@redux/training-slice';
 import { getEmptyTraining } from '@utils/achievements-utils/get-empty-training';
 import { getMonthTrainingData } from '@utils/achievements-utils/get-month-training-data';
 import { getWeekTrainingData } from '@utils/achievements-utils/get-week-training-data';
@@ -22,17 +23,17 @@ type TProps = {
 }
 
 export const Achievements: React.FC<TProps> = ({ achievementsType }) => {
-    const dispatch = useAppDispatch();
     const trainingList = useAppSelector(selectTrainingList);
+    const training = useAppSelector(selectTraining);
     const trainingNames = trainingList.map(el => el.name);
     const filters = ['Все', ...trainingNames];
 
     const [selectedFilter, setSelectedFilter] = useState('Все');
-    const trainingData = dispatch(achievementsType === 'week' ? getWeekTrainingData() : getMonthTrainingData());
-    const [filteredData, setFilteredData] = useState(trainingData);
+    const trainingData = achievementsType === 'week' ? getWeekTrainingData(training) : getMonthTrainingData(training);
+    const [filteredData, setFilteredData] = useState<TTraining[]>(trainingData);
 
-    const checkIsExercises = (training: TTraining[]) => training.find(el => el.exercises.length !== 0);
-    const [isExercises, setIsExercise] = useState(checkIsExercises(filteredData));
+    const checkIsExercises = (trainingToCheck: TTraining[]) => trainingToCheck.find(el => el.exercises.length !== 0) !== undefined;
+    const [isExercises, setIsExercise] = useState(true);
 
     useEffect(() => {
         setIsExercise(checkIsExercises(filteredData));
@@ -42,11 +43,13 @@ export const Achievements: React.FC<TProps> = ({ achievementsType }) => {
         setSelectedFilter(filter);
         if (filter === 'Все') {
             setFilteredData(trainingData);
+            setIsExercise(checkIsExercises(trainingData));
         }
         if (filter !== 'Все') {
             const updatedData = trainingData.map(el => el.name === filter ? el : getEmptyTraining(new Date(el.date)));
 
             setFilteredData(updatedData);
+            setIsExercise(checkIsExercises(updatedData));
         }
     }
 

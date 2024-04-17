@@ -1,10 +1,9 @@
-import { AppDispatch, GetState } from '@redux/configure-store';
+import { TTraining } from '@constants/types';
 import { moveDay } from '@utils/move-day';
 
 import { fillInMissingTrainings } from './fill-in-missing-trainings';
 
-export const getMonthTrainingData = () => (_: AppDispatch, getState: GetState) => {
-    const { training } = getState();
+export const getMonthTrainingData = (training: TTraining[]) => {
     const todayDate = new Date(Date.now());
     const todayMidnightDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate());
     const daysUntilMonday = (todayMidnightDate.getDay() === 0 ? 0 : 7) - todayMidnightDate.getDay();

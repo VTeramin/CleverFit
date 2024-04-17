@@ -44,7 +44,7 @@ export const AchievementsFrequency: React.FC<TProps> = ({ trainingData, achievem
             style: {
                 fontSize: 12,
                 opacity: 2,
-                fontWeight: 100
+                fontWeight: 400
             },
             transform: [{ type: 'overlapDodgeY', padding: -4 }]
         },

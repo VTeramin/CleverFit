@@ -36,8 +36,8 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
     const [isListVissible, setIsListVissible] = useState(monthListData.map(() => false));
 
     useEffect(() => {
-        if(isFullWidth) setIsListVissible(prev => prev.map(() => true));
-        if(!isFullWidth) setIsListVissible(prev => prev.map(() => false));
+        if (isFullWidth) setIsListVissible(prev => prev.map(() => true));
+        if (!isFullWidth) setIsListVissible(prev => prev.map(() => false));
     }, [isFullWidth]);
 
     const handleDropownClick = (weekInd: number) => setIsListVissible(prev => prev.map((el, ind) => ind === weekInd ? !el : el));
@@ -81,6 +81,7 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
         scrollbar: isMonth
             ? {
                 x: {
+                    ratio: width / (isMobile ? 1440 : 2100),
                     value: 1
                 }
             }
