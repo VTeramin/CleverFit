@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Pie } from '@ant-design/plots';
 import { daysOfTheWeek } from '@constants/calendar-config';
 import { pieColors } from '@constants/pie-colors';
@@ -25,6 +25,7 @@ export const AchievementsFrequency: React.FC<TProps> = ({ trainingData, achievem
     const isMonth = achievementsType === 'month';
     const width = useWindowSize().width || 0;
     const isFullWidth = width > 1200;
+    const colors = useMemo(() => shuffle(pieColors), []);
 
     const pieConfig = {
         data: pieData,
@@ -49,7 +50,7 @@ export const AchievementsFrequency: React.FC<TProps> = ({ trainingData, achievem
             transform: [{ type: 'overlapDodgeY', padding: -4 }]
         },
         style: {
-            fill: ({ key }: { key: number }) => shuffle(pieColors)[key],
+            fill: ({ key }: { key: number }) => colors[key],
             stroke: '#fff',
             inset: 0.1
         }

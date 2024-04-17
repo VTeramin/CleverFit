@@ -7,7 +7,7 @@ export function getMostFrequentTraining(training: TTraining[]) {
     let name = '';
 
     sortedNames.forEach(el => {
-        const occurNumber = sortedNames.lastIndexOf(el) - sortedNames.indexOf(el);
+        const occurNumber = sortedNames.lastIndexOf(el) - sortedNames.indexOf(el) + 1;
 
         if(occurNumber > counter && el !== '') {
             counter = occurNumber;
