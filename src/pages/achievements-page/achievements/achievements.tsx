@@ -10,10 +10,10 @@ import { getWeekTrainingData } from '@utils/achievements-utils/get-week-training
 import { Layout } from 'antd';
 import CheckableTag from 'antd/lib/tag/CheckableTag';
 
-import { AchievementsCards } from './achievements-components/achievements-cards/achievements-cards';
-import { AchievementsFrequency } from './achievements-components/achievements-frequency/achievements-frequency';
-import { AchievementsLoad } from './achievements-components/achievements-load/achievements-load';
-import { AchievementsPlain } from './achievements-components/achievements-plain/achievements-plain';
+import { AchievementsCards } from '../achievements-components/achievements-cards/achievements-cards';
+import { AchievementsFrequency } from '../achievements-components/achievements-frequency/achievements-frequency';
+import { AchievementsLoad } from '../achievements-components/achievements-load/achievements-load';
+import { AchievementsPlain } from '../achievements-components/achievements-plain/achievements-plain';
 
 import 'antd/dist/antd.css';
 import styles from './achievements.module.css';

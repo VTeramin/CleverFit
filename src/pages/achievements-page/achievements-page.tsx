@@ -8,7 +8,7 @@ import { getTrainingList } from '@utils/requests/catalogs/get-training-list';
 import { getTraining } from '@utils/requests/training/get-training';
 import { Layout, Tabs } from 'antd';
 
-import { Achievements } from './achievements-week/achievements';
+import { Achievements } from './achievements/achievements';
 
 import 'antd/dist/antd.css';
 import styles from './achievements-page.module.css';
