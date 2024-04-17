@@ -56,10 +56,10 @@ export const SideBar: React.FC<TProps> = ({ collapsed }) => {
 
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
         key: index,
-        icon: (
+        icon: isFullWidth && (
             <div data-test-id={['', 'menu-button-training', 'sidebar-achievements', ''][index]}>
                 <Badge
-                    count={icon === HeartTwoTone && isFullWidth ? invites.length : 0}
+                    count={icon === HeartTwoTone ? invites.length : 0}
                     size='small'
                     data-test-id='notification-about-joint-training'
                 >
@@ -71,7 +71,7 @@ export const SideBar: React.FC<TProps> = ({ collapsed }) => {
             </div>
         ),
         label: ['Календарь', 'Тренировки', 'Достижения', 'Профиль'][index],
-        style: collapsed ? {} : { paddingLeft: isFullWidth ? '16px' : '0' },
+        style: collapsed ? {} : { paddingLeft: isFullWidth ? '16px' : '10px' },
         className: styles.menu__item
     }));
 
