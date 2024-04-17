@@ -6,10 +6,24 @@
     margin-bottom: 48px;
 }
 
+@media (max-width: 1400px) {
+    .achievements__load-section {
+        margin-bottom: 24px;
+    }
+}
+
 .achievements__load-section.month {
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
+}
+
+@media (max-width: 1400px) {
+    .achievements__load-section {
+        flex-direction: column;
+        gap: 24px;
+        align-items: flex-start;
+    }
 }
 
 .load-section__chart-wrapper {
@@ -18,6 +32,13 @@
 
     border: var(--button-border-auth);
     border-radius: var(--border-radius);
+}
+
+@media (max-width: 800px) {
+    .load-section__chart-wrapper {
+        width: 328px;
+        height: 236px;
+    }
 }
 
 .month .load-section__chart-wrapper {
@@ -29,12 +50,25 @@
     width: max-content;
 }
 
+@media (max-width: 800px) {
+    .load-section__load {
+        width: 100%;
+    }
+}
+
 .load__label {
     width: 130px;
     line-height: var(--line-height);
     color: var(--character-light-title-85);
     margin-bottom: 28px;
 }
+
+@media (max-width: 800px) {
+    .load__label {
+        width: 100%;
+    }
+}
+
 
 .load__list {
     display: flex;
@@ -93,6 +127,21 @@
     gap: 100px;
 }
 
+@media (max-width: 1400px) {
+    .load__lists {
+        width: 100%;
+        gap: 0;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 1100px) {
+    .load__lists {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+
 .load__lists .load__list {
     width: 183px;
 }
@@ -100,6 +149,12 @@
 .load__lists .load__label {
     width: 100%;
     margin-bottom: 0;
+}
+
+.load__dropown {
+    margin-left: 16px;
+    padding: 0;
+    cursor: pointer;
 }
 
 .load__lists .load__day {

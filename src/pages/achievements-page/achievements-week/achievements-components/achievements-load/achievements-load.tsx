@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { DownOutlined } from '@ant-design/icons';
 import { Column } from '@ant-design/plots';
 import { daysOfTheWeek } from '@constants/calendar-config';
 import { TTraining } from '@constants/types';
+import { useWindowSize } from '@uidotdev/usehooks';
 import { getColumnChartData } from '@utils/achievements-utils/get-column-chart-data';
 import { getDay } from '@utils/achievements-utils/get-day';
 import { convertDate } from '@utils/convert-date';
-import { Badge } from 'antd';
+import { Badge, Button } from 'antd';
 import classNames from 'classnames';
 
 import 'antd/dist/antd.css';
@@ -20,6 +22,9 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
     const columnChartData = getColumnChartData(trainingData);
     const isMonth = achievementsType === 'month';
     const isWeek = achievementsType === 'week';
+    const width = useWindowSize().width || 0;
+    const isMobile = width < 800;
+    const isFullWidth = width > 1100;
 
     const listData = [...columnChartData].sort((a, b) => getDay(a.date) - getDay(b.date));
     const monthListData = [
@@ -28,6 +33,14 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
         [...columnChartData].splice(14, 7),
         [...columnChartData].splice(21, 7)
     ];
+    const [isListVissible, setIsListVissible] = useState(monthListData.map(() => false));
+
+    useEffect(() => {
+        if(isFullWidth) setIsListVissible(prev => prev.map(() => true));
+        if(!isFullWidth) setIsListVissible(prev => prev.map(() => false));
+    }, [isFullWidth]);
+
+    const handleDropownClick = (weekInd: number) => setIsListVissible(prev => prev.map((el, ind) => ind === weekInd ? !el : el));
 
     const getChartDate = (date: string) => convertDate(new Date(date)).slice(0, 5);
 
@@ -36,21 +49,22 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
         xField: 'date',
         yField: 'weight',
         colorField: '#85a5ff',
-        sizeField: 30,
-        margin: 16,
-        marginTop: 24,
+        sizeField: isMobile ? 19 : 30,
+        margin: isMobile ? 10 : 16,
+        marginTop: isMobile ? 10 : 24,
         marginBottom: 10,
         tooltip: false,
+        animate: false,
         axis: {
             x: {
                 tick: false,
                 labelFormatter: getChartDate,
-                labelFontSize: 13,
-                labelSpacing: 16,
+                labelFontSize: isMobile ? 7 : 13,
+                labelSpacing: isMobile ? 10 : 16,
                 title: 'Нагрузка, кг',
                 titleFontWeight: 400,
-                titleFontSize: 14,
-                titleSpacing: 18,
+                titleFontSize: isMobile ? 8 : 14,
+                titleSpacing: isMobile ? 10 : 18,
                 line: true,
                 lineLineDash: [2, 4],
                 lineExtension: [-20, 0]
@@ -58,8 +72,10 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
             y: {
                 tick: false,
                 labelFormatter: (label: number) => `${label} кг`,
-                labelSpacing: -12,
-                tickCount: 7
+                labelFontSize: isMobile ? 7 : 13,
+                labelSpacing: isMobile ? -8 : -12,
+                tickCount: 7,
+
             },
         },
         scrollbar: isMonth
@@ -95,12 +111,19 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
                 </div>
             </div>}
             {isMonth && <div className={styles.load__lists}>
-                {monthListData.map(week => (
+                {monthListData.map((week, weekInd) => (
                     <div key={week[0].date} className={styles.load__list}>
                         <p className={styles.load__label}>
                             {`Неделя ${getChartDate(week[0].date)}-${getChartDate(week[6].date)}`}
+                            {!isFullWidth && <Button
+                                type='text'
+                                onClick={() => handleDropownClick(weekInd)}
+                                className={styles.load__dropown}
+                            >
+                                <DownOutlined style={isListVissible[weekInd] ? { transform: 'rotate(180deg)' } : {}} />
+                            </Button>}
                         </p>
-                        {week.map((el, ind) => (
+                        {isListVissible[weekInd] && week.map((el, ind) => (
                             <div
                                 key={`${el} ${ind + 1}`}
                                 className={styles['load__list-item']}

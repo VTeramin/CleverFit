@@ -46,9 +46,7 @@ export const AchievementsCards: React.FC<TProps> = ({ trainingData, achievements
                     className={styles['cards-section__card']}
                 >
                     <p className={styles.card__value}>{card.value}</p>
-                    <p className={styles.card__label}>
-                        {card.label.split(' ')[0]}<br />{card.label.split(' ').splice(1).join(' ')}
-                    </p>
+                    <p className={styles.card__label}>{card.label}</p>
                 </div>
             ))}
         </section>

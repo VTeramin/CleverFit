@@ -6,11 +6,23 @@
     gap: 16px;
 }
 
+@media (max-width: 1400px) {
+    .achievements__plain-section {
+        margin-bottom: 24px;
+    }
+}
+
 .plain-section__row {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 105px;
+    gap: 95px;
+}
+
+@media (max-width: 800px) {
+    .plain-section__row {
+        gap: 74px;
+    }
 }
 
 .plain-section__row p {
@@ -18,7 +30,7 @@
 }
 
 .plain-section__row p:first-child {
-    width: 99px;
+    width: 110px;
     line-height: var(--line-height);
     color: var(--character-light-secondary-45);
 }
@@ -28,4 +40,10 @@
     font-size: var(--font-size-large);
     line-height: var(--line-height);
     color: var(--character-light-title-85);
+}
+
+@media (max-width: 800px) {
+    .plain-section__row p:nth-child(2) {
+        font-size: 20px;
+    }
 }

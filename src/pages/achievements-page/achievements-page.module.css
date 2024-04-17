@@ -24,7 +24,7 @@
 
 @media (max-width: 1400px) {
     .page__inner {
-        padding: 24px 24px 18px;
+        padding: 24px;
     }
 }
 
@@ -58,8 +58,6 @@
     }
 
     .tablist>[class*="tabs-nav"] {
-        transform: translateX(-30px);
-        width: max-content;
         margin-bottom: 25px;
     }
 
@@ -140,8 +138,8 @@
     .tablist [class*="content-holder"] {
         height: 100%;
         overflow-y: auto;
-        padding-right: 12px;
         margin-right: 0;
+        padding: 0;
     }
 }
 
@@ -162,4 +160,10 @@
 .page ::-webkit-scrollbar-thumb {
     background: var(--character-light-disable-25);
     border-radius: 20px;
+}
+
+@media (max-width: 800px) {
+    .page ::-webkit-scrollbar {
+        width: 0;
+    }
 }

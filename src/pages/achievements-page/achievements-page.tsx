@@ -10,7 +10,7 @@ import { Layout, Tabs } from 'antd';
 import { Achievements } from './achievements-week/achievements';
 
 import 'antd/dist/antd.css';
-import styles from './achievements.module.css';
+import styles from './achievements-page.module.css';
 
 export const AchievementsPage: React.FC = () => {
     const navigate = useNavigate();

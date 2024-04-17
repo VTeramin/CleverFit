@@ -5,6 +5,21 @@
     margin-bottom: 72px;
 }
 
+@media (max-width: 1400px) {
+    .achievements__cards-section {
+        width: 350px;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+}
+
+@media (max-width: 800px) {
+    .achievements__cards-section {
+        width: 100%;
+    }
+}
+
 .cards-section__card {
     width: 156px;
     height: 138px;
@@ -15,6 +30,22 @@
     gap: 8px;
     border: var(--button-border-auth);
     border-radius: var(--border-radius);
+}
+
+@media (max-width: 1400px) {
+    .cards-section__card {
+        box-shadow: var(--box-shadow);
+    }
+}
+
+@media (max-width: 800px) {
+    .cards-section__card {
+        width: 100%;
+        height: 64px;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 16px;
+    }
 }
 
 .card__value {
@@ -30,4 +61,19 @@
     line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-secondary-45);
+}
+
+.cards-section__card:first-child .card__label {
+    width: 100px;
+}
+
+.cards-section__card:nth-child(2) .card__label,
+.cards-section__card:nth-child(4) .card__label {
+    width: 70px;
+}
+
+@media (max-width: 800px) {
+    .achievements__cards-section .cards-section__card .card__label {
+        width: max-content;
+    }
 }

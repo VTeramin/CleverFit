@@ -13,20 +13,37 @@
     margin-bottom: 40px;
 }
 
+@media (max-width: 1400px) {
+    .achievements__filters-section {
+        margin-bottom: 24px;
+    }
+}
+
 .achievements__filters-section p {
+    width: 118px;
     margin: 0;
+    flex-shrink: 0;
 }
 
 .filters-section__filters {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 12px;
+    flex-shrink: 1;
+}
+
+@media (max-width: 1400px) {
+    .filters-section__filters {
+        gap: 8px;
+    }
 }
 
 .filters-section__filter {
     width: max-content;
     height: 18px;
     padding: 0 8px;
+    margin: 0;
     border: var(--button-border-auth);
     border-radius: var(--border-radius);
 
@@ -58,6 +75,12 @@
     padding-top: 112px;
 }
 
+@media (max-width: 800px) {
+    .achievements__not-found {
+        padding-top: 0;
+    }
+}
+
 .not-found__image {
     width: 200px;
     height: 175px;
@@ -74,4 +97,17 @@
     line-height: var(--line-height);
     text-align: center;
     color: var(--character-light-title-85);
+    margin: 0;
+}
+
+@media (max-width: 1200px) {
+    .not-found__title {
+        width: 450px;
+    }
+}
+
+@media (max-width: 800px) {
+    .not-found__title {
+        width: 87%;
+    }
 }

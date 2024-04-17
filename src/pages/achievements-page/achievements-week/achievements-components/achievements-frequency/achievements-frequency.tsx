@@ -3,6 +3,7 @@ import { Pie } from '@ant-design/plots';
 import { daysOfTheWeek } from '@constants/calendar-config';
 import { pieColors } from '@constants/pie-colors';
 import { TTraining } from '@constants/types';
+import { useWindowSize } from '@uidotdev/usehooks';
 import { getMostFrequentExerciseByDay } from '@utils/achievements-utils/get-most-frequent-exercie-by-day';
 import { getPieChartData } from '@utils/achievements-utils/get-pie-chart-data';
 import { Badge } from 'antd';
@@ -21,19 +22,21 @@ function shuffle(array: string[]) {
 
 export const AchievementsFrequency: React.FC<TProps> = ({ trainingData, achievementsType }) => {
     const pieData = getPieChartData([...trainingData]);
-    const isMonth = achievementsType === 'month'
+    const isMonth = achievementsType === 'month';
+    const width = useWindowSize().width || 0;
+    const isFullWidth = width > 1200;
 
     const pieConfig = {
         data: pieData,
         angleField: 'value',
         colorField: 'exerciseName',
-        radius: 0.515,
-        innerRadius: 0.35,
+        radius: isFullWidth ? 0.515 : 0.87,
+        innerRadius: isFullWidth ? 0.35 : 0.6,
+        autoFit: true,
         legend: false,
-        width: 520,
-        height: 334,
         tooltip: false,
         animate: false,
+        position: 'surround',
         label: {
             text: 'exerciseName',
             position: 'outside',
@@ -41,9 +44,9 @@ export const AchievementsFrequency: React.FC<TProps> = ({ trainingData, achievem
             style: {
                 fontSize: 12,
                 opacity: 2,
-                fontWeight: 100,
+                fontWeight: 100
             },
-            transform: [{ type: 'overlapDodgeY' }]
+            transform: [{ type: 'overlapDodgeY', padding: -4 }]
         },
         style: {
             fill: ({ key }: { key: number }) => shuffle(pieColors)[key],
@@ -54,11 +57,13 @@ export const AchievementsFrequency: React.FC<TProps> = ({ trainingData, achievem
 
     return (
         <section className={styles['achievements__frequency-section']}>
-            <Pie {...pieConfig} className={styles['requency-section__chart']}/>
+            <div className={styles['frequency-section__chart-wrapper']}>
+                <Pie {...pieConfig} />
+            </div>
             <div className={styles['frequency-section__frequency']}>
                 <p className={styles.frequency__label}>
                     {`Самые частые упражнения по дням недели${isMonth ? ' за месяц' : ''}`}
-                    </p>
+                </p>
                 <div className={styles.frequency__list}>
                     {daysOfTheWeek.map((el, ind) => (
                         <div

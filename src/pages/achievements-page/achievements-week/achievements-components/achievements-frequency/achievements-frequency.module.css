@@ -6,8 +6,29 @@
     margin-bottom: 0;
 }
 
-.frequency-section__chart {
-    width: max-content;
+@media (max-width: 1400px) {
+    .achievements__frequency-section {
+        flex-direction: column;
+        gap: 24px;
+        align-items: flex-start;
+    }
+}
+
+.frequency-section__chart-wrapper {
+    width: 520px;
+    height: 334px;
+}
+
+@media (max-width: 1200px) {
+    .frequency-section__chart-wrapper {
+        height: 211px;
+    }
+}
+
+@media (max-width: 800px) {
+    .frequency-section__chart-wrapper {
+        width: 328px;
+    }
 }
 
 .frequency-section__frequency {
