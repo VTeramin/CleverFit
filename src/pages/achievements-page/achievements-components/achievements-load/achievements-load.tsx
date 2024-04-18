@@ -6,6 +6,7 @@ import { TTraining } from '@constants/types';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { getColumnChartData } from '@utils/achievements-utils/get-column-chart-data';
 import { getDay } from '@utils/achievements-utils/get-day';
+import { titleAlign } from '@utils/achievements-utils/title-align';
 import { convertDate } from '@utils/convert-date';
 import { Badge, Button } from 'antd';
 import classNames from 'classnames';
@@ -61,7 +62,7 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
                 labelFormatter: getChartDate,
                 labelFontSize: isMobile ? 7 : 13,
                 labelSpacing: isMobile ? 10 : 16,
-                title: 'Нагрузка, кг',
+                title: titleAlign('Нагрузка, кг', 12),
                 titleFontWeight: 400,
                 titleFontSize: isMobile ? 8 : 14,
                 titleSpacing: isMobile ? 10 : 18,
@@ -74,9 +75,8 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
                 labelFormatter: (label: number) => `${label} кг`,
                 labelFontSize: isMobile ? 7 : 13,
                 labelSpacing: isMobile ? -8 : -12,
-                tickCount: 7,
-                textAlign: 'left'
-            },
+                tickCount: 7
+            }
         },
         scrollbar: isMonth
             ? {
