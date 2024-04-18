@@ -7,6 +7,7 @@ import { AppDispatch, GetState } from '@redux/configure-store';
 import { toggleLoader } from '@redux/loader-slice';
 import { findTrainingId } from '@utils/calendar-utils/find-training-id';
 import { checkIsFuture } from '@utils/check-is-future';
+import { getPureDate } from '@utils/get-pure-date';
 import axios, { AxiosResponse } from 'axios';
 
 import { sendInvite } from '../invite/send-invite';
@@ -30,7 +31,7 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
 
     const data = {
         name: selectedTraining as string,
-        date,
+        date: getPureDate(date),
         exercises: Object.values(exerciseFormFields),
         parameters
     };
