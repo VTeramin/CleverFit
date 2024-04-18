@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { CloseOutlined } from '@ant-design/icons';
 import { TTraining } from '@constants/types';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { selectTrainingList } from '@redux/training-list-slice';
@@ -65,7 +64,7 @@ export const Achievements: React.FC<TProps> = ({ achievementsType }) => {
                             onChange={() => handleFilterClick(filter)}
                             className={styles['filters-section__filter']}
                         >
-                            {filter}{selectedFilter === filter && <CloseOutlined className={styles['filters-section__filter-close']} />}
+                            {filter}
                         </CheckableTag>
                     ))}
                 </div>

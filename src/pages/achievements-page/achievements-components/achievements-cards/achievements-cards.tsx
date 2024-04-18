@@ -1,7 +1,7 @@
 import React from 'react';
 import { TTraining } from '@constants/types';
-import { getColumnChartData } from '@utils/achievements-utils/get-column-chart-data';
 import { getTotalApproaches } from '@utils/achievements-utils/get-total-approaches';
+import { getTotalLoad } from '@utils/achievements-utils/get-total-load';
 import { getTotalReplays } from '@utils/achievements-utils/get-total-replays';
 
 import 'antd/dist/antd.css';
@@ -13,8 +13,7 @@ type TProps = {
 }
 
 export const AchievementsCards: React.FC<TProps> = ({ trainingData, achievementsType }) => {
-    const columnChartData = getColumnChartData(trainingData);
-    const totalLoad = columnChartData.reduce((acc, next) => acc + next.weight, 0);
+    const totalLoad = getTotalLoad(trainingData);
     const loadPerDay = (totalLoad / (achievementsType === 'week' ? 7 : 28)).toFixed(1).split('.').join(',');
     const totalReplays = getTotalReplays(trainingData);
     const totalApproaches = getTotalApproaches(trainingData);

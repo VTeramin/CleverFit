@@ -7,8 +7,10 @@ function getExerciseLoad(exercises: TExercise[]) {
 
 function getTrainingLoad(trainingData: TTraining[], date: string) {
     const todayTraining = trainingData.filter(el => checkIsDatesEqual(new Date(el.date), new Date(date)));
+    const totalLoad = todayTraining.reduce((prev, curr) => prev + getExerciseLoad(curr.exercises) || 0, 0);
+    const exercisesCounter = todayTraining.reduce((prev, curr) => prev + curr.exercises.length || 0, 0);
 
-    return todayTraining.reduce((prev, curr) => prev + getExerciseLoad(curr.exercises) || 0, 0);
+    return exercisesCounter === 0 ? 0 : Math.round(totalLoad / exercisesCounter);
 }
 
 export function getColumnChartData(trainingData: TTraining[]) {
