@@ -10,6 +10,7 @@ import { changeExerciseFormFields, changeInterval, selectCalendarModalData, togg
 import { selectTraining } from '@redux/training-slice';
 import { selectUserJointTrainingList } from '@redux/user-joint-training-list-slice';
 import { findTraining } from '@utils/calendar-utils/find-training';
+import { getCheckboxDeleteKeys } from '@utils/calendar-utils/get-checkbox-delete-keys';
 import { getListData } from '@utils/calendar-utils/get-list-data';
 import { sortCheckboxListFromEmpty } from '@utils/calendar-utils/sort-checkbox-list-from-empty';
 import { sortDrawerFormFromEmpty } from '@utils/calendar-utils/sort-drawer-form-from-empty';
@@ -93,7 +94,11 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
     }
 
     function handleDelete(remove: (index: number | number[]) => void) {
-        setCheckboxList(prev => sortCheckboxListFromEmpty(checkboxList, prev, remove));
+        const deleteKeys = getCheckboxDeleteKeys(checkboxList);
+
+        setCheckboxList(prev => sortCheckboxListFromEmpty(checkboxList, prev));
+
+        remove(deleteKeys);
     }
 
     const handleFormChange = () => {
