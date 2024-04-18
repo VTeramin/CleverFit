@@ -7,7 +7,6 @@ import { AppDispatch, GetState } from '@redux/configure-store';
 import { toggleLoader } from '@redux/loader-slice';
 import { findTrainingId } from '@utils/calendar-utils/find-training-id';
 import { checkIsFuture } from '@utils/check-is-future';
-import { getPureDate } from '@utils/get-pure-date';
 import axios, { AxiosResponse } from 'axios';
 
 import { sendInvite } from '../invite/send-invite';
@@ -31,7 +30,7 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
 
     const data = {
         name: selectedTraining as string,
-        date: getPureDate(date),
+        date,
         exercises: Object.values(exerciseFormFields),
         parameters
     };
@@ -46,12 +45,13 @@ export const saveTraining = (date: Date) => async (dispatch: AppDispatch, getSta
         ? axios.put(`${API}/training/${trainingId}`, { ...data, isImplementation }, params)
         : axios.post(`${API}/training`, data, params);
 
-    return action.then((response: AxiosResponse<TTraining>) => {
-        dispatch(changeModalType(ECalendarModalType.default));
-        dispatch(changeResultType(isEdit ? EStatus.successEdit : EStatus.success));
-        dispatch(getTraining());
-        if (isJoint) dispatch(sendInvite(response.data._id as string));
-    })
+    return action
+        .then((response: AxiosResponse<TTraining>) => {
+            dispatch(changeModalType(ECalendarModalType.default));
+            dispatch(changeResultType(isEdit ? EStatus.successEdit : EStatus.success));
+            dispatch(getTraining());
+            if (isJoint) dispatch(sendInvite(response.data._id as string));
+        })
         .catch(() => dispatch(changeResultType(EStatus.errorSaveTraining)))
         .finally(() => dispatch(toggleLoader(false)));
 };

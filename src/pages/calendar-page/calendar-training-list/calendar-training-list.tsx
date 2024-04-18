@@ -22,7 +22,7 @@ export const CalendarTrainingList: React.FC<TProps> = ({ date, listData, edit })
     function handleEdit(name: string) {
         dispatch(changeSelectedTraining(name));
         dispatch(changeEditTraining(name));
-        const exercises = dispatch(findExercises(date.toISOString(), name));
+        const exercises = dispatch(findExercises(date.toString(), name));
 
         dispatch(changeExerciseFormFields(exercises));
         dispatch(toggleIsEdit(true));

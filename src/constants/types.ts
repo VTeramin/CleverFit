@@ -151,3 +151,7 @@ export type TDrawerTitles = {
 export type TFormData = {
     exercises: TDrawerFormFields
 }
+
+export type TCheckboxList = {
+    [key: number]: boolean
+}
