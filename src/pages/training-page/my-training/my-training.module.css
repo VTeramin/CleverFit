@@ -96,7 +96,7 @@
     transform: translateX(24px);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 830px) {
     .training [class*="table-thead"]>tr>[class*="table-cell"] {
         width: 116px;
         padding: 2px 8px;

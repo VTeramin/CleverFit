@@ -6,10 +6,15 @@
     margin-bottom: 0;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1200px) {
+    .achievements__frequency-section {
+        gap: 24px;
+    }
+}
+
+@media (max-width: 1100px) {
     .achievements__frequency-section {
         flex-direction: column;
-        gap: 24px;
         align-items: flex-start;
     }
 }
