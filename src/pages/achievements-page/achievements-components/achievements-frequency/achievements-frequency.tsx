@@ -6,6 +6,7 @@ import { TTraining } from '@constants/types';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { getMostFrequentExerciseByDay } from '@utils/achievements-utils/get-most-frequent-exercie-by-day';
 import { getPieChartData } from '@utils/achievements-utils/get-pie-chart-data';
+import { wrapPieLabel } from '@utils/achievements-utils/wrap-pie-label';
 import { Badge } from 'antd';
 
 import 'antd/dist/antd.css';
@@ -39,7 +40,7 @@ export const AchievementsFrequency: React.FC<TProps> = ({ trainingData, achievem
         animate: false,
         position: 'surround',
         label: {
-            text: 'exerciseName',
+            text: (data: { exerciseName: string }) => wrapPieLabel(data.exerciseName, 12),
             position: 'outside',
             connector: false,
             style: {
@@ -47,7 +48,7 @@ export const AchievementsFrequency: React.FC<TProps> = ({ trainingData, achievem
                 opacity: 2,
                 fontWeight: 400
             },
-            transform: [{ type: 'overlapDodgeY', padding: -4 }]
+            transform: [{ type: 'overlapHide' }]
         },
         style: {
             fill: ({ key }: { key: number }) => colors[key],
