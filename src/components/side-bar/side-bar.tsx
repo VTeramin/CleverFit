@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { CalendarTwoTone, HeartTwoTone, IdcardTwoTone, TrophyTwoTone } from '@ant-design/icons';
 import { EROUTE } from '@constants/enums';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { changeInvites, changeUserInfo, selectUserData, toggleIsAuthorized } from '@redux/user-data-slice';
+import { changeInvites, deleteUserInfo, selectUserData, toggleIsAuthorized } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { Badge, Button, Layout, Menu } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
@@ -44,7 +44,7 @@ export const SideBar: React.FC<TProps> = ({ collapsed }) => {
     const handleExit = () => {
         localStorage.clear();
         dispatch(toggleIsAuthorized(false));
-        dispatch(changeUserInfo({}));
+        dispatch(deleteUserInfo());
         dispatch(changeInvites([]));
         navigate(EROUTE.AUTH);
     }
