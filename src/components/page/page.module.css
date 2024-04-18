@@ -203,7 +203,8 @@
     position: fixed;
     top: 47%;
     cursor: pointer;
-    z-index: 2;
+    z-index: 4;
+    border-radius: 0;
 }
 
 @media (max-width: 800px) {
