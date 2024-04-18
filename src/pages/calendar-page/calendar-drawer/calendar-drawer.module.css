@@ -424,15 +424,9 @@
     width: 89px;
 }
 
-.drawer__form [class*="input-wrap"]:focus,
-.drawer__form [class*="input-wrap"]:hover,
-.drawer__form [class*="input-wrap"]:active,
-.drawer [class="ant-input"]:focus,
-.drawer [class="ant-input"]:hover,
-.drawer [class="ant-input"]:active,
-.no-date-group__date>[class*="ant-picker"]:focus,
-.no-date-group__date>[class*="ant-picker"]:hover,
-.no-date-group__date>[class*="ant-picker"]:active {
+.drawer__form [class*="input-number-focused"],
+.drawer [class*="input-content"]>input:focus,
+.drawer [class*="input-content"] [class*="input-group"]>input:focus {
     border: 1px solid var(--primary-light-6);
 }
 

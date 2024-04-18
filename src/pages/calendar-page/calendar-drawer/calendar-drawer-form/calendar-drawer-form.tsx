@@ -209,6 +209,7 @@ export const CalendarDrawerForm: React.FC<TProps> = ({ date, pickedMoment, setPi
                                                 name="checkbox"
                                                 data-test-id={`modal-drawer-right-checkbox-exercise${name}`}
                                             />}
+                                            maxLength={32}
                                             className={styles['drawer__training-name-input']}
                                             data-test-id={`modal-drawer-right-input-exercise${name}`}
                                         />
