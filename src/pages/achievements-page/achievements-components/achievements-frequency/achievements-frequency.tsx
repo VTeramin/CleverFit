@@ -47,8 +47,7 @@ export const AchievementsFrequency: React.FC<TProps> = ({ trainingData, achievem
                 fontSize: 12,
                 opacity: 2,
                 fontWeight: 400
-            },
-            transform: [{ type: 'overlapHide' }]
+            }
         },
         style: {
             fill: ({ key }: { key: number }) => colors[key],
