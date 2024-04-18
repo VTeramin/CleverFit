@@ -75,7 +75,7 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
                 labelFontSize: isMobile ? 7 : 13,
                 labelSpacing: isMobile ? -8 : -12,
                 tickCount: 7,
-
+                textAlign: 'left'
             },
         },
         scrollbar: isMonth
