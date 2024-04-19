@@ -28,12 +28,7 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
     const isFullWidth = width > 1100;
 
     const listData = [...columnChartData].sort((a, b) => getDay(a.date) - getDay(b.date));
-    const monthListData = [
-        [...columnChartData].splice(0, 7),
-        [...columnChartData].splice(7, 7),
-        [...columnChartData].splice(14, 7),
-        [...columnChartData].splice(21, 7)
-    ];
+    const monthListData = ['', '', '', ''].map((_, ind) => [...columnChartData].splice(ind * 7, 7));
     const [isListVissible, setIsListVissible] = useState(monthListData.map(() => false));
 
     useEffect(() => {
@@ -106,7 +101,9 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
                                 className={classNames(styles.load__badge, { [styles.empty]: el.weight === 0 })}
                             />
                             <p className={styles.load__day}>{daysOfTheWeek[ind]}</p>
-                            <p className={styles.load__weight}>{el.weight === 0 ? '' : `${el.weight} кг`}</p>
+                            <p className={styles.load__weight}>
+                                {el.weight === 0 ? '' : `${el.weight} кг`}
+                            </p>
                         </div>
                     ))}
                 </div>
@@ -121,7 +118,9 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
                                 onClick={() => handleDropownClick(weekInd)}
                                 className={styles.load__dropown}
                             >
-                                <DownOutlined style={isListVissible[weekInd] ? { transform: 'rotate(180deg)' } : {}} />
+                                <DownOutlined
+                                    style={isListVissible[weekInd] ? { transform: 'rotate(180deg)' } : {}}
+                                />
                             </Button>}
                         </p>
                         {isListVissible[weekInd] && week.map((el, ind) => (
@@ -133,8 +132,12 @@ export const AchievementsLoad: React.FC<TProps> = ({ trainingData, achievementsT
                                     count={ind + 1}
                                     className={classNames(styles.load__badge, { [styles.empty]: el.weight === 0 })}
                                 />
-                                <p className={styles.load__day}>{convertDate(new Date(el.date))}</p>
-                                <p className={styles.load__weight}>{el.weight === 0 ? '' : `${el.weight} кг`}</p>
+                                <p className={styles.load__day}>
+                                    {convertDate(new Date(el.date))}
+                                </p>
+                                <p className={styles.load__weight}>
+                                    {el.weight === 0 ? '' : `${el.weight} кг`}
+                                </p>
                             </div>
                         ))}
                     </div>
