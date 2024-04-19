@@ -7,5 +7,9 @@ export const findAllTraining = (training: TTraining[], date: Date | undefined) =
         return training;
     }
 
-    return training.filter(el => checkIsDatesEqual(moment(el.date, 'YYYY-MM-DD HH:mm').toDate(), date));
+    return training.filter(el => {
+        const elDate = typeof el.date === 'number' ? new Date(el.date) : moment(el.date, 'YYYY-MM-DD HH:mm').toDate();
+
+        return checkIsDatesEqual(elDate, date)
+    });
 };

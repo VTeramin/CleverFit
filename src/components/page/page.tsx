@@ -43,10 +43,6 @@ export const Page: React.FC<TProps> = ({ innerLayout }) => {
     };
 
     useEffect(() => {
-        setCollapsed(true);
-    }, [width]);
-
-    useEffect(() => {
         dispatch(changeResultType(resultTypeCalendar));
     }, [resultTypeCalendar, dispatch]);
 
