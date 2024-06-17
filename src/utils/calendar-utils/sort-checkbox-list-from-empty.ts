@@ -1,17 +1,16 @@
+import { getCheckboxDeleteKeys } from './get-checkbox-delete-keys';
+
 type TCheckboxList = {
     [key: number]: boolean;
 }
 
-export function sortCheckboxListFromEmpty(checkboxList: TCheckboxList, prevCheckboxList: TCheckboxList, remove: (index: number | number[]) => void) {
-    const checkboxKeys = Object.keys(checkboxList).map(key => Number(key));
-    const checkboxTrueList = checkboxKeys.filter(key => checkboxList[key] === true);
+export function sortCheckboxListFromEmpty(checkboxList: TCheckboxList, prevCheckboxList: TCheckboxList) {
+    const deleteKeys = getCheckboxDeleteKeys(checkboxList);
     const newList = { ...prevCheckboxList };
 
-    checkboxTrueList.forEach(key => {
+    deleteKeys.forEach(key => {
         delete newList[key];
     });
-
-    remove(checkboxTrueList);
 
     return newList;
 }

@@ -19,7 +19,8 @@ export const FeedbackCards: React.FC<TProps> = ({ cardsData }) => (
                     <Comment
                         avatar={<div className={styles.card__person}>
                             <Avatar
-                                src={cardData.imageSrc || <UserOutlined />}
+                                src={cardData.imageSrc}
+                                icon={<UserOutlined />}
                                 alt={cardData.fullName}
                                 size={42}
                                 className={styles.person__img}

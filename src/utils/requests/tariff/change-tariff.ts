@@ -16,6 +16,7 @@ export const changeTariff = (tariffId: string, days: number) => async (dispatch:
     };
 
     return axios.post(`${API}/tariff`, { tariffId, days }, params)
-    .then(() => EStatus.successTariff)
-    .finally(() => dispatch(toggleLoader(false)));
+        .then(() => EStatus.successTariff)
+        .catch(() => EStatus.empty)
+        .finally(() => dispatch(toggleLoader(false)));
 };

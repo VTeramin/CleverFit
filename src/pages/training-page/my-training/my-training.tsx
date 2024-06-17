@@ -159,6 +159,7 @@ export const MyTraining: React.FC = () => {
                     <Table
                         columns={columns}
                         dataSource={data}
+                        showSorterTooltip={false}
                         pagination={{
                             size: 'small',
                             current: currentPage,

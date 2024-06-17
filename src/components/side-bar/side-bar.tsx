@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { CalendarTwoTone, HeartTwoTone, IdcardTwoTone, TrophyTwoTone } from '@ant-design/icons';
 import { EROUTE } from '@constants/enums';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { selectUserData, toggleIsAuthorized } from '@redux/user-data-slice';
+import { changeInvites, deleteUserInfo, selectUserData, toggleIsAuthorized } from '@redux/user-data-slice';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { Badge, Button, Layout, Menu } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
@@ -26,7 +26,7 @@ export const SideBar: React.FC<TProps> = ({ collapsed }) => {
     const paths = useMemo(() => [
         EROUTE.CALENDAR,
         EROUTE.TRAINING,
-        '',
+        EROUTE.ACHIEVEMENTS,
         EROUTE.PROFILE
     ], []);
     const { invites } = useAppSelector(selectUserData);
@@ -44,6 +44,8 @@ export const SideBar: React.FC<TProps> = ({ collapsed }) => {
     const handleExit = () => {
         localStorage.clear();
         dispatch(toggleIsAuthorized(false));
+        dispatch(deleteUserInfo());
+        dispatch(changeInvites([]));
         navigate(EROUTE.AUTH);
     }
 
@@ -56,31 +58,22 @@ export const SideBar: React.FC<TProps> = ({ collapsed }) => {
 
     const menuItems = [CalendarTwoTone, HeartTwoTone, TrophyTwoTone, IdcardTwoTone].map((icon, index) => ({
         key: index,
-        icon: icon === HeartTwoTone && isFullWidth
-            ? <Badge
-                count={invites.length}
-                size='small'
-                data-test-id='notification-about-joint-training'
-            >
-                {React.createElement(icon, {
-                    twoToneColor: 'var(--primary-light-9)',
-                    className: styles.menu__icon
-                })}
-            </Badge>
-            : React.createElement(icon, {
-                twoToneColor: 'var(--primary-light-9)',
-                className: styles.menu__icon
-            }),
-        label: ['Календарь', 'Тренировки', 'Достижения', 'Профиль'].map(label => (
-            <Button
-                type='text'
-                data-test-id={label === 'Тренировки' ? 'menu-button-training' : ''}
-                style={{ padding: 0 }}
-            >
-                {label}
-            </Button>
-        ))[index],
-        style: collapsed ? {} : { paddingLeft: isFullWidth ? '16px' : '0' },
+        icon: isFullWidth && (
+            <div data-test-id={['', 'menu-button-training', 'sidebar-achievements', ''][index]}>
+                <Badge
+                    count={icon === HeartTwoTone ? invites.length : 0}
+                    size='small'
+                    data-test-id='notification-about-joint-training'
+                >
+                    {React.createElement(icon, {
+                        twoToneColor: 'var(--primary-light-9)',
+                        className: styles.menu__icon
+                    })}
+                </Badge>
+            </div>
+        ),
+        label: ['Календарь', 'Тренировки', 'Достижения', 'Профиль'][index],
+        style: collapsed ? {} : { paddingLeft: isFullWidth ? '16px' : '10px' },
         className: styles.menu__item
     }));
 

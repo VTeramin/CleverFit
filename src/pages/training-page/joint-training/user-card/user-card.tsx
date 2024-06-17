@@ -14,26 +14,27 @@ type TProps = {
 }
 
 export const UserCard: React.FC<TProps> = ({ user, searchInputValue }) => (
-    <React.Fragment>
-        <div className={styles.card__header}>
-            <Avatar
-                src={user.imageSrc || <UserOutlined />}
-                alt={user.name}
-                size={42}
-            />
-            <p className={styles['card__pal-name']}>
-                {getJointUserName(user.name || '', searchInputValue || '')}
-            </p>
-        </div>
-        <div className={styles.card__info}>
-            <div className={styles.card__labels}>
-                <p>Тип тренировки:</p>
-                <p>Средняя нагрузка:</p>
+        <React.Fragment>
+            <div className={styles.card__header}>
+                <Avatar
+                    src={user.imageSrc}
+                    icon={<UserOutlined />}
+                    alt={user.name}
+                    size={42}
+                />
+                <p className={styles['card__pal-name']}>
+                    {getJointUserName(user.name || '', searchInputValue || '')}
+                </p>
             </div>
-            <div className={styles.card__data}>
-                <p>{user.trainingType}</p>
-                <p>{user.avgWeightInWeek} кг/нед</p>
+            <div className={styles.card__info}>
+                <div className={styles.card__labels}>
+                    <p>Тип тренировки:</p>
+                    <p>Средняя нагрузка:</p>
+                </div>
+                <div className={styles.card__data}>
+                    <p>{user.trainingType}</p>
+                    <p>{user.avgWeightInWeek} кг/нед</p>
+                </div>
             </div>
-        </div>
-    </React.Fragment>
-);
+        </React.Fragment>
+    );

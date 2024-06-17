@@ -83,10 +83,10 @@ export const ProfilePage: React.FC = () => {
     }
 
     const handleFormChange = (event: React.ChangeEvent<HTMLInputElement> | moment.Moment | null, field: string) => {
-        if (moment.isMoment(event)) {
+        if (moment.isMoment(event) || event === null) {
             setUserFormInfo(prev => ({
                 ...prev,
-                [field]: event === null ? '' : event.toDate().toISOString()
+                [field]: event === null ? undefined : event.toDate().toISOString()
             }));
         } else {
             setUserFormInfo(prev => ({
@@ -164,7 +164,7 @@ export const ProfilePage: React.FC = () => {
                             <DatePicker
                                 placeholder='Дата рождения'
                                 format='DD.MM.YYYY'
-                                value={moment(userInfo.birthday)}
+                                value={userInfo.birthday === undefined ? userInfo.birthday : moment(userInfo.birthday)}
                                 onChange={value => handleFormChange(value, 'birthday')}
                                 data-test-id='profile-birthday'
                             />

@@ -26,10 +26,13 @@ export const userDataSlice = createSlice({
         },
         changeUserInfo: (state, action: PayloadAction<TUserDataFormReponse>) => {
             Object.assign(state.userInfo, action.payload);
+        },
+        deleteUserInfo: (state) => {
+            state.userInfo = {};
         }
     }
 });
 
-export const { toggleIsAuthorized, changeSessionToken, changeInvites, changeUserInfo } = userDataSlice.actions;
+export const { toggleIsAuthorized, changeSessionToken, changeInvites, changeUserInfo, deleteUserInfo } = userDataSlice.actions;
 export const selectUserData = (state: RootState) => state.userData;
 export default userDataSlice.reducer;
