@@ -10,6 +10,7 @@ import { AuthRoutes } from './route/auth-routes';
 import { PrivateRoutes } from './route/private-routes';
 import { PushRoutes } from './route/push-routes';
 import {
+    AchievementsPage,
     Auth,
     CalendarPage,
     ChangePassword,
@@ -43,6 +44,7 @@ export const App: React.FC = () => (
                     <Route path={EROUTE.PROFILE} element={<ProfilePage />} />
                     <Route path={EROUTE.SETTINGS} element={<SettingsPage />} />
                     <Route path={EROUTE.TRAINING} element={<TrainingPage />} />
+                    <Route path={EROUTE.ACHIEVEMENTS} element={<AchievementsPage />} />
                     <Route path='*' element={<NotFoundPage />} />
                 </Route>
                 <Route element={<PushRoutes />}>

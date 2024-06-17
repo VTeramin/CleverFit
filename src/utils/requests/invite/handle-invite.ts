@@ -36,5 +36,6 @@ export const handleInvite = (id: string, status: 'accepted' | 'rejected') => asy
             if (status === 'accepted') dispatch(changeTrainingPalsData([
                 ...trainingPals, newPal
             ]));
-        });
+        })
+        .catch(() => dispatch(changeInvites(invites)));
 };

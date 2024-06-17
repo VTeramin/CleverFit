@@ -1,0 +1,188 @@
+.drawer__form-wrapper {
+    height: max-content;
+    max-height: calc(100vh - 180px);
+    overflow-y: auto;
+    margin-bottom: auto;
+    padding-right: 8px;
+    margin-right: -8px;
+    margin-bottom: 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.drawer__form-wrapper-my-training {
+    max-height: calc(100vh - 340px);
+}
+
+.drawer__form-wrapper-interval {
+    max-height: calc(100vh - 376px);
+}
+
+.drawer__form-wrapper-edit-past {
+    max-height: calc(100vh - 406px);
+}
+
+.drawer__form-wrapper-interval.drawer__form-wrapper-edit-past {
+    max-height: calc(100vh - 442px);
+}
+
+@media (max-width: 800px) {
+    .drawer__form-wrapper {
+        max-height: 370px;
+    }
+
+    .drawer__form-wrapper-my-training {
+        max-height: 240px;
+    }
+
+    .drawer__form-wrapper-joint {
+        max-height: 200px;
+    }
+
+    .drawer__form-wrapper-interval {
+        max-height: 204px;
+    }
+
+    .drawer__form-wrapper-edit-past {
+        max-height: 165px;
+    }
+
+    .drawer__form-wrapper-interval.drawer__form-wrapper-edit-past {
+        max-height: 129px;
+    }
+}
+
+.drawer__form::-webkit-scrollbar {
+    width: 8px;
+}
+
+.drawer__form::-webkit-scrollbar-button {
+    display: none;
+}
+
+@media (max-width: 800px) {
+    .drawer__form::-webkit-scrollbar {
+        width: 4px;
+    }
+}
+
+.drawer__form::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.drawer__form::-webkit-scrollbar-thumb {
+    background: var(--character-light-disable-25);
+    border-radius: 20px;
+}
+
+.drawer__form-wrapper [class*="form-item"] {
+    margin-bottom: 0;
+}
+
+.drawer__inputs-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: max-content;
+    margin-top: 6px;
+    margin-bottom: 2px;
+}
+
+.drawer__form-wrapper input {
+    height: 100%;
+    padding: 1px 0 1px 8px;
+    margin: 0;
+    line-height: var(--line-height);
+}
+
+.drawer__form-wrapper [class*="ant-input-group"] {
+    height: 24px;
+}
+
+.drawer__form-wrapper [class*="ant-input-disabled"] {
+    background: none;
+    color: inherit;
+}
+
+.drawer__form-wrapper [class*="ant-checkbox-inner"] {
+    border-radius: 2px;
+    border: 1px solid var(--character-light-border);
+}
+
+.drawer__form-wrapper [class*="label"] label {
+    width: 100%;
+    display: inline-block;
+    height: 24px;
+    margin-bottom: 6px;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    padding: 4px 8px;
+    background: var(--character-light-dividers);
+    font-size: var(--icon-size-small);
+    line-height: var(--line-height);
+    color: var(--character-light-title-85);
+    text-align: left;
+}
+
+@media (max-width: 800px) {
+    .drawer [class*="label"] {
+        padding-bottom: 0;
+    }
+}
+
+.drawer__inputs-wrapper [class*="group-addon"] {
+    width: 36px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0;
+}
+
+.drawer__inputs-wrapper [class*="ant-row"] {
+    display: flex;
+    flex-direction: column;
+    height: 54px;
+}
+
+@media (max-width: 575px) {
+    .drawer__inputs-wrapper [class*="ant-row"] {
+        flex-direction: row;
+        height: 62px;
+    }
+}
+
+.drawer__form-wrapper [class*="item-control-input"] {
+    min-height: 0;
+}
+
+.drawer__inputs-wrapper>[class*="ant-form-item"],
+.drawer__inputs-wrapper [class*="ant-input-number-in-form-item"] {
+    width: 89px;
+}
+
+.drawer__form-wrapper [class*="input-number-focused"],
+.drawer__form-wrapper [class*="input-content"]>input:focus,
+.drawer__form-wrapper [class*="input-content"] [class*="input-group"]>input:focus {
+    border: 1px solid var(--primary-light-6);
+}
+
+.drawer__inputs-wrapper>[class*="ant-form-item"]:first-child {
+    width: 120px;
+    margin-right: auto;
+}
+
+.drawer__inputs-wrapper>[class*="ant-form-item"]:first-child [class*="ant-input-number-in-form-item"] {
+    width: 85px;
+}
+
+.drawer__inputs-wrapper input::-webkit-outer-spin-button,
+.drawer__inputs-wrapper input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.drawer__x {
+    height: 20px;
+    margin: auto 3px 0;
+    font-size: 12px;
+    color: var(--character-light-disable-25);
+}

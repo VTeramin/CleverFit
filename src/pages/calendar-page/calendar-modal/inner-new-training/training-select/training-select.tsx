@@ -49,15 +49,12 @@ export const TrainingSelect: React.FC<TProps> = ({ date }) => {
 
     return (
         <Select
-            showSearch={isMyTrainingPage}
             placeholder="Выбор типа тренировки"
             value={selectedTraining}
             defaultValue={editTraining}
-            getPopupContainer={triggerNode => triggerNode.parentElement}
             open={isOpen}
             options={selectOptions}
             bordered={false}
-            defaultOpen={true}
             className={styles.modal__input}
             onSelect={handleSelect}
             popupClassName={styles.modal__dropdown}

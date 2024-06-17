@@ -18,7 +18,9 @@ export const getTraining = () => async (dispatch: AppDispatch, getState: GetStat
     };
 
     return axios.get(`${API}/training`, params)
-        .then(response => dispatch(changeTrainingData(response.data)))
+        .then(response => {
+            dispatch(changeTrainingData(response.data));
+        })
         .catch(() => {
             dispatch(changeResultType(EStatus.noToken));
 

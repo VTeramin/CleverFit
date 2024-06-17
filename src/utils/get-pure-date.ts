@@ -5,5 +5,6 @@ export function getPureDate(date: Date) {
         date.getDate(),
         date.getHours(),
         date.getMinutes(),
-        date.getSeconds()));
+        date.getSeconds())
+    );
 }

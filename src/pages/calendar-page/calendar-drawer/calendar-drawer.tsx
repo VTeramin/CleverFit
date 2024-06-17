@@ -67,18 +67,10 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
     }
 
     const drawerTitles: TDrawerTitles = {
-        default: <React.Fragment>
-            <PlusOutlined className={styles['drawer__title-icon']} />Добавление упражнений
-        </React.Fragment>,
-        edit: <React.Fragment>
-            <EditOutlined className={styles['drawer__title-icon']} />Редактирование
-        </React.Fragment>,
-        noDate: <React.Fragment>
-            <PlusOutlined className={styles['drawer__title-icon']} />Новая тренировка
-        </React.Fragment>,
-        joint: <React.Fragment>
-            <PlusOutlined className={styles['drawer__title-icon']} />Совместная тренировка
-        </React.Fragment>
+        default: <span><PlusOutlined className={styles['drawer__title-icon']} />Добавление упражнений</span>,
+        edit: <span><EditOutlined className={styles['drawer__title-icon']} />Редактирование</span>,
+        joint: <span><PlusOutlined className={styles['drawer__title-icon']} />Совместная тренировка</span>,
+        noDate: <span><PlusOutlined className={styles['drawer__title-icon']} />Новая тренировка</span>
     };
 
     return (
@@ -95,9 +87,7 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
             className={classNames(styles.drawer, { [styles['drawer-my-page']]: isMyTrainingPage })}
             data-test-id="modal-drawer-right"
         >
-            <p className={styles.drawer__title}>
-                {drawerTitles[drawerType]}
-            </p>
+            <p className={styles.drawer__title}>{drawerTitles[drawerType]}</p>
             {!isMyTrainingPage && date &&
                 <div className={styles['drawer__training-type-wrapper']}>
                     <CalendarTrainingList
@@ -106,14 +96,12 @@ export const CalendarDrawer: React.FC<TProps> = ({ date }) => {
                     />
                     <p>{convertDate(date)}</p>
                 </div>}
-            <div className={styles.drawer__form}>
-                <CalendarDrawerForm
-                    date={date}
-                    pickedMoment={pickedMoment}
-                    setPickedMoment={setPickedMoment}
-                    setFormBackUp={setFormBackUp}
-                />
-            </div>
+            <CalendarDrawerForm
+                date={date}
+                pickedMoment={pickedMoment}
+                setPickedMoment={setPickedMoment}
+                setFormBackUp={setFormBackUp}
+            />
             {isWarning &&
                 <p className={styles.drawer__warning}>
                     После сохранения внесенных изменений отредактировать проведенную тренировку будет невозможно
